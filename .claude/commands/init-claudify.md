@@ -43,6 +43,8 @@ Let me search for common architectural patterns:
 @Grep(pattern="IRepository|Repository<|RepositoryBase", path=".", output_mode="files_with_matches", head_limit=10)
 @Grep(pattern="Result<.*>|Result\\.Success|Result\\.Failure", path=".", output_mode="files_with_matches", head_limit=10)
 @Grep(pattern="OrganizationId|TenantId|CompanyId|CustomerId", path=".", output_mode="files_with_matches", head_limit=10)
+@Grep(pattern="async.*Task|await|async function|Promise", path=".", output_mode="files_with_matches", head_limit=10)
+@Grep(pattern="Controller|Service|Repository|Handler|Middleware", path=".", output_mode="files_with_matches", head_limit=10)
 
 <think about the analysis results and determine the tech stack and patterns>
 
@@ -78,9 +80,13 @@ Based on your project structure and the business domain "$ARGUMENTS", I'll deter
 - Hooks: `check-tenant-scoping`
 
 **Essential for all projects**:
-- Commands: `comprehensive-review`, `do-extensive-research`, `quick-research`, `create-command-and-or-agent`
-- Agents: `code-reviewer`
+- Commands: `comprehensive-review`, `do-extensive-research`, `quick-research`, `create-command-and-or-agent`, `generate-documentation`, `update-changelog`
+- Agents: `code-reviewer`, `infrastructure-architect`
+- Agent Tools: Security scanner, complexity analyzer, deployment analyzer
 - Generators: All generator scripts
+- Hooks: `add-context`, `pre-commit-quality-check`, `check-changelog-updates`
+- Validation: Architecture validator, code quality validator, test coverage analyzer
+- Documentation: Templates for API, architecture, development, and troubleshooting guides
 
 Would you like me to proceed with this setup? You can also choose:
 - **[S]tandard** (Recommended) - Components based on your tech stack (~15-25 files)
@@ -135,6 +141,7 @@ These essential commands will be installed for all projects:
 @Bash(command="cp '.claudify-temp/.claude/commands/do-extensive-research.md' .claude/commands/", description="Copy extensive research command")  
 @Bash(command="cp '.claudify-temp/.claude/commands/quick-research.md' .claude/commands/", description="Copy quick research command")
 @Bash(command="cp '.claudify-temp/.claude/commands/create-command-and-or-agent.md' .claude/commands/", description="Copy meta-generator command")
+@Bash(command="cp '.claudify-temp/.claude/commands/update-changelog.md' .claude/commands/", description="Copy changelog update command")
 
 #### Installing Backend Components (if backend detected)
 @Bash(command="cp '.claudify-temp/.claude/commands/add-backend-feature.md' .claude/commands/", description="Copy add backend feature command")
@@ -163,12 +170,39 @@ These essential commands will be installed for all projects:
 @Bash(command="cp '.claudify-temp/templates/generators/hook-generator.ps1' .claude/generators/", description="Copy hook generator")
 @Bash(command="cp '.claudify-temp/templates/META-GENERATOR-README.md' .claude/generators/README.md", description="Copy generator documentation")
 
+#### Installing Agent Tools
+@Bash(command="mkdir -p .claude/agent-tools", description="Create agent tools directory")
+@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/security-reviewer' .claude/agent-tools/", description="Copy security analysis tools")
+@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/", description="Copy technical debt tools")
+@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/", description="Copy infrastructure tools")
+@Bash(command="cp '.claudify-temp/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/", description="Copy agent tools config")
+
+#### Installing Enhanced Hooks
+@Bash(command="cp '.claudify-temp/.claude/hooks/add-context.ps1' .claude/hooks/", description="Copy context enhancement hook")
+@Bash(command="cp '.claudify-temp/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/", description="Copy pre-commit quality hook")
+@Bash(command="cp '.claudify-temp/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant validation hook")
+@Bash(command="cp '.claudify-temp/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/", description="Copy changelog reminder hook")
+@Bash(command="cp '.claudify-temp/.claude/hooks/hooks-config.json' .claude/hooks/", description="Copy hooks configuration")
+@Bash(command="cp '.claudify-temp/.claude/hooks/install-hooks.ps1' .claude/hooks/", description="Copy hooks installer")
+
+#### Installing Validation Tools
+@Bash(command="mkdir -p .claude/validation", description="Create validation directory")
+@Bash(command="cp '.claudify-temp/.claude/validation/architecture-validator.ps1' .claude/validation/", description="Copy architecture validator")
+@Bash(command="cp '.claudify-temp/.claude/validation/code-quality-validator.ps1' .claude/validation/", description="Copy code quality validator")
+@Bash(command="cp '.claudify-temp/.claude/validation/test-coverage-analyzer.ps1' .claude/validation/", description="Copy test coverage analyzer")
+
+#### Installing Documentation Templates
+@Bash(command="mkdir -p .claude/templates/documentation", description="Create documentation templates directory")
+@Bash(command="cp '.claudify-temp/.claude/templates/documentation/*.template' .claude/templates/documentation/", description="Copy documentation templates")
+@Bash(command="cp '.claudify-temp/.claude/templates/documentation/documentation-generator.ps1' .claude/templates/documentation/", description="Copy documentation generator")
+@Bash(command="cp '.claudify-temp/.claude/templates/documentation/template-config.json' .claude/templates/documentation/", description="Copy template configuration")
+
 #### Copying Additional Resources
 @Bash(command="cp '.claudify-temp/.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md' .claude/", description="Copy design guidelines")
 
 ### Verifying Installation
 
-@Bash(command="echo 'Components installed:' && echo '- Commands: '$(ls .claude/commands/*.md 2>/dev/null | wc -l) && echo '- Agents: '$(ls .claude/agents/*.md 2>/dev/null | wc -l) && echo '- Generators: '$(ls .claude/generators/*.ps1 2>/dev/null | wc -l)", description="Count installed components")
+@Bash(command="echo 'Components installed:' && echo '- Commands: '$(ls .claude/commands/*.md 2>/dev/null | wc -l) && echo '- Agents: '$(ls .claude/agents/*.md 2>/dev/null | wc -l) && echo '- Generators: '$(ls .claude/generators/*.ps1 2>/dev/null | wc -l) && echo '- Agent Tools: '$(find .claude/agent-tools -name '*.ps1' 2>/dev/null | wc -l) && echo '- Hooks: '$(ls .claude/hooks/*.ps1 2>/dev/null | wc -l) && echo '- Validation Tools: '$(ls .claude/validation/*.ps1 2>/dev/null | wc -l) && echo '- Doc Templates: '$(ls .claude/templates/documentation/*.template 2>/dev/null | wc -l)", description="Count all installed components")
 
 ### Generating CLAUDE.md
 
@@ -304,10 +338,27 @@ Your Claude Code environment is now configured for: **$ARGUMENTS**
 - `/analyze-technical-debt` - Identify and prioritize tech debt
 - `/do-extensive-research` - Deep technical research
 - `/quick-research` - Quick focused analysis
+- `/generate-documentation` - Create comprehensive documentation
+- `/update-changelog` - Update CHANGELOG.md with recent changes
+
+**Validation & Testing Commands**:
+- `.claude/validation/architecture-validator.ps1` - Validate architectural compliance
+- `.claude/validation/code-quality-validator.ps1` - Analyze code quality metrics
+- `.claude/validation/test-coverage-analyzer.ps1` - Measure test coverage
+
+**Infrastructure Commands**:
+- Deploy analysis with infrastructure architect agent
+- Cost optimization recommendations
+- Performance baseline generation
 
 **Meta Commands**:
 - `/create-command-and-or-agent` - Create custom components
 - `/sync-to-templates` - Share improvements back to claudify
+
+**Hooks (Auto-activated)**:
+- `add-context` - Enriches your prompts with project context
+- `pre-commit-quality-check` - Validates code before commits
+- `validate-tenant-scoping` - Ensures multi-tenant isolation (if applicable)
 
 Happy coding with Claude Code! 🚀
 

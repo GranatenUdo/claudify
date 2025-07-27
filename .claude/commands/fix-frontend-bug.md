@@ -20,6 +20,7 @@ I'll have the Frontend Developer lead the technical analysis while other agents 
 
 @Task(description="Frontend technical analysis and debugging", prompt="As an elite Frontend Developer, diagnose and fix the UI bug '$ARGUMENTS':
 1. **Framework-Specific Analysis**
+   - Angular 19 directive syntax (*ngIf, *ngFor, NOT @if/@for)
    - Angular version-specific issues and gotchas
    - Signal update patterns and reactivity problems
    - Change detection strategy conflicts

@@ -20,7 +20,7 @@ pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 
 Then in your repository:
 ```bash
-claude
+claude code
 ```
 
 In Claude Code:
@@ -159,6 +159,14 @@ Everything available (~40+ components):
 - Specialized tools
 - Advanced generators
 - Complete hook system
+
+## 📝 Changelog Integration
+
+Claudify includes automatic changelog management:
+- **/update-changelog** command for structured updates
+- **check-changelog-updates** hook reminds you after significant changes
+- Commands automatically update changelog when appropriate
+- Follows [Keep a Changelog](https://keepachangelog.com/) format
 
 ## 🛠️ Requirements
 

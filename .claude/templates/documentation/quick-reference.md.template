@@ -1,0 +1,278 @@
+# ${PROJECT_NAME} Quick Reference
+
+> Generated on ${TIMESTAMP} - Keep this handy!
+
+## 🚀 Quick Start
+
+```bash
+# Clone and setup
+git clone ${REPO_URL}
+cd ${PROJECT_DIR}
+${SETUP_COMMANDS}
+
+# Run locally
+${RUN_COMMAND}
+```
+
+**Local URLs:**
+- API: http://localhost:${API_PORT}
+- Frontend: http://localhost:${FRONTEND_PORT}
+- Docs: http://localhost:${DOCS_PORT}
+
+## 🔑 Common Commands
+
+### Development
+```bash
+# Start development
+${DEV_START_COMMAND}
+
+# Run tests
+${TEST_COMMAND}
+
+# Build
+${BUILD_COMMAND}
+
+# Lint/Format
+${LINT_COMMAND}
+```
+
+### Database
+```bash
+${IF_DOTNET}# Create migration
+dotnet ef migrations add MigrationName
+
+# Update database
+dotnet ef database update
+
+# Rollback
+dotnet ef database update PreviousMigration${END_IF}
+
+${IF_NODEJS}# Run migrations
+npm run db:migrate
+
+# Seed data
+npm run db:seed
+
+# Reset database
+npm run db:reset${END_IF}
+```
+
+## 📁 Project Structure
+
+```
+${PROJECT_ROOT}/
+├── src/
+│   ├── ${PRIMARY_PROJECT}/     # ${PRIMARY_PROJECT_DESC}
+│   ├── ${SECONDARY_PROJECT}/   # ${SECONDARY_PROJECT_DESC}
+│   └── ${SHARED_PROJECT}/      # Shared code
+├── tests/                      # Test files
+├── docs/                       # Documentation
+└── scripts/                    # Utility scripts
+```
+
+## 🏗️ Architecture Patterns
+
+${IF_MULTI_TENANT}### Multi-Tenant Isolation
+```${CODE_LANGUAGE}
+// Always filter by ${TENANT_FIELD}
+var data = await repository
+    .GetByOrganizationAsync(currentUser.${TENANT_FIELD});
+```
+${END_IF}
+
+${IF_RESULT_PATTERN}### Result Pattern
+```${CODE_LANGUAGE}
+// Service returns Result<T>
+var result = await service.CreateAsync(dto);
+if (!result.IsSuccess)
+{
+    return BadRequest(result.Error);
+}
+return Ok(result.Value);
+```
+${END_IF}
+
+${IF_REPOSITORY_PATTERN}### Repository Pattern
+```${CODE_LANGUAGE}
+// Data access via repositories only
+public interface I${ENTITY}Repository
+{
+    Task<${ENTITY}> GetByIdAsync(Guid id);
+    Task<IEnumerable<${ENTITY}>> GetAllAsync();
+    Task AddAsync(${ENTITY} entity);
+    Task UpdateAsync(${ENTITY} entity);
+}
+```
+${END_IF}
+
+## 🔌 API Endpoints
+
+### Authentication
+- `POST /auth/login` - Login
+- `POST /auth/refresh` - Refresh token
+- `POST /auth/logout` - Logout
+
+### Core Resources
+${FOREACH_CONTROLLER}
+**${CONTROLLER_NAME}**
+- `GET /api/${RESOURCE}` - List all
+- `GET /api/${RESOURCE}/{id}` - Get by ID
+- `POST /api/${RESOURCE}` - Create new
+- `PUT /api/${RESOURCE}/{id}` - Update
+- `DELETE /api/${RESOURCE}/{id}` - Delete
+${END_FOREACH}
+
+## 🔒 Security Headers
+
+Required headers for API calls:
+```http
+Authorization: Bearer ${YOUR_JWT_TOKEN}
+Content-Type: application/json
+${IF_MULTI_TENANT}X-Organization-ID: ${ORG_ID}  # Optional - derived from token${END_IF}
+```
+
+## 🌍 Environment Variables
+
+### Required
+```env
+# Database
+DATABASE_URL=${DB_CONNECTION_STRING}
+
+# Authentication
+${AUTH_ENV_VARS}
+
+# API Configuration
+API_PORT=${API_PORT}
+API_URL=${API_URL}
+```
+
+### Optional
+```env
+# Features
+ENABLE_FEATURE_X=true
+LOG_LEVEL=debug
+
+# Performance
+CACHE_TTL=300
+MAX_CONNECTIONS=100
+```
+
+## 🐛 Common Issues
+
+### Issue: ${COMMON_ISSUE_1_TITLE}
+```bash
+# Quick fix
+${COMMON_ISSUE_1_FIX}
+```
+
+### Issue: ${COMMON_ISSUE_2_TITLE}
+```bash
+# Quick fix
+${COMMON_ISSUE_2_FIX}
+```
+
+### Issue: Database connection fails
+```bash
+# Check connection string
+${DB_TEST_COMMAND}
+
+# Verify migrations
+${DB_MIGRATION_CHECK}
+```
+
+## 📊 Useful Queries
+
+### Debug Queries
+```sql
+-- Check tenant data distribution
+SELECT ${TENANT_FIELD}, COUNT(*) as count
+FROM ${MAIN_TABLE}
+GROUP BY ${TENANT_FIELD}
+ORDER BY count DESC;
+
+-- Find slow queries
+${SLOW_QUERY_SQL}
+```
+
+### Admin Queries
+```sql
+-- Active users today
+${ACTIVE_USERS_SQL}
+
+-- System health check
+${HEALTH_CHECK_SQL}
+```
+
+## 🧪 Testing
+
+### Unit Tests
+```bash
+# Run all tests
+${TEST_ALL_COMMAND}
+
+# Run specific test
+${TEST_SPECIFIC_COMMAND}
+
+# With coverage
+${TEST_COVERAGE_COMMAND}
+```
+
+### Integration Tests
+```bash
+# Setup test database
+${TEST_DB_SETUP}
+
+# Run integration tests
+${INTEGRATION_TEST_COMMAND}
+```
+
+## 🚢 Deployment
+
+### Local Docker
+```bash
+# Build
+docker build -t ${PROJECT_NAME} .
+
+# Run
+docker run -p ${API_PORT}:${API_PORT} ${PROJECT_NAME}
+```
+
+### Production
+```bash
+# Deploy to staging
+${DEPLOY_STAGING_COMMAND}
+
+# Deploy to production
+${DEPLOY_PROD_COMMAND}
+
+# Rollback
+${ROLLBACK_COMMAND}
+```
+
+## 📞 Support
+
+- **Docs**: ${DOCS_URL}
+- **Issues**: ${ISSUES_URL}
+- **Chat**: ${CHAT_URL}
+- **Emergency**: ${EMERGENCY_CONTACT}
+
+## 🎯 Keyboard Shortcuts
+
+${IF_VSCODE}### VS Code
+- `F5` - Start debugging
+- `Ctrl+Shift+B` - Build project
+- `Ctrl+Shift+T` - Run tests
+- `F12` - Go to definition
+${END_IF}
+
+### Application
+- `Ctrl+/` - Quick search
+- `Ctrl+N` - New item
+- `Ctrl+S` - Save
+- `Esc` - Cancel/Close
+
+---
+
+*Quick Reference v${DOC_VERSION} - Generated by Claudify*
+
+**Remember**: ${KEY_REMINDER}

@@ -61,7 +61,7 @@ When you run `/init-claudify`, Claude Code:
 ```
 Based on my analysis:
 - Backend: ASP.NET Core (.NET 8)
-- Frontend: Angular 20
+- Frontend: Angular 19
 - Patterns: Repository, Result<T>, Multi-tenancy (OrganizationId)
 - Domain: Multi-tenant SaaS for vineyard management
 
@@ -173,7 +173,7 @@ your-repo/
 
 ## 🧠 CONTEXT
 **System**: Multi-tenant SaaS Application
-**Stack**: ASP.NET Core (.NET 8) + Angular 20
+**Stack**: ASP.NET Core (.NET 8) + Angular 19
 **Security**: JWT with OrganizationId isolation
 
 ## ⚡ CRITICAL RULES

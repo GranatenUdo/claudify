@@ -206,6 +206,57 @@
         }
       ]
     },
+    "agentTools": [
+      {
+        "name": "security-scanner",
+        "path": "agent-tools/security-reviewer/security-scan.ps1",
+        "agent": "security-reviewer",
+        "description": "Comprehensive security vulnerability scanner",
+        "tags": ["security", "scanning", "validation"]
+      },
+      {
+        "name": "dependency-analyzer",
+        "path": "agent-tools/security-reviewer/dependency-analyzer.ps1",
+        "agent": "security-reviewer",
+        "description": "Analyze dependencies for vulnerabilities",
+        "tags": ["security", "dependencies", "supply-chain"]
+      },
+      {
+        "name": "complexity-analyzer",
+        "path": "agent-tools/technical-debt-analyst/complexity-analyzer.ps1",
+        "agent": "technical-debt-analyst",
+        "description": "Analyze code complexity and technical debt",
+        "tags": ["quality", "complexity", "debt"]
+      },
+      {
+        "name": "debt-tracker",
+        "path": "agent-tools/technical-debt-analyst/debt-tracker.ps1",
+        "agent": "technical-debt-analyst",
+        "description": "Track and manage technical debt",
+        "tags": ["debt", "tracking", "management"]
+      },
+      {
+        "name": "deployment-analyzer",
+        "path": "agent-tools/infrastructure-architect/deployment-analyzer.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Analyze deployment configurations",
+        "tags": ["infrastructure", "deployment", "kubernetes"]
+      },
+      {
+        "name": "cloud-cost-optimizer",
+        "path": "agent-tools/infrastructure-architect/cloud-cost-optimizer.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Optimize cloud resource costs",
+        "tags": ["cloud", "cost", "optimization"]
+      },
+      {
+        "name": "performance-baseline",
+        "path": "agent-tools/infrastructure-architect/performance-baseline.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Generate performance baselines",
+        "tags": ["performance", "monitoring", "baseline"]
+      }
+    ],
     "generators": [
       {
         "name": "command-generator",
@@ -239,8 +290,116 @@
         "file": "after-component-creation.ps1",
         "description": "Post-creation automation",
         "tags": ["automation", "workflow"]
+      },
+      {
+        "name": "validate-tenant-scoping",
+        "file": "validate-tenant-scoping.ps1",
+        "description": "Enhanced multi-tenant validation with auto-detection",
+        "tags": ["multi-tenant", "security", "validation", "parameterized"],
+        "requiredFor": ["multi-tenant"]
+      },
+      {
+        "name": "add-context",
+        "file": "add-context.ps1",
+        "description": "Enrich prompts with project context",
+        "tags": ["context", "enhancement", "automation"],
+        "requiredFor": ["all"]
+      },
+      {
+        "name": "pre-commit-quality-check",
+        "file": "pre-commit-quality-check.ps1",
+        "description": "Quality checks before commits",
+        "tags": ["quality", "validation", "git"],
+        "requiredFor": ["all"]
+      },
+      {
+        "name": "install-hooks",
+        "file": "install-hooks.ps1",
+        "description": "Hook installation wizard",
+        "tags": ["setup", "automation"]
+      },
+      {
+        "name": "check-changelog-updates",
+        "file": "check-changelog-updates.ps1",
+        "description": "Remind users to update changelog after significant changes",
+        "tags": ["changelog", "reminder", "automation"],
+        "requiredFor": ["all"]
       }
-    ]
+    ],
+    "validation": [
+      {
+        "name": "architecture-validator",
+        "file": "validation/architecture-validator.ps1",
+        "description": "Validate architectural compliance",
+        "tags": ["architecture", "validation", "compliance"]
+      },
+      {
+        "name": "code-quality-validator",
+        "file": "validation/code-quality-validator.ps1",
+        "description": "Comprehensive code quality checks",
+        "tags": ["quality", "validation", "metrics"]
+      },
+      {
+        "name": "test-coverage-analyzer",
+        "file": "validation/test-coverage-analyzer.ps1",
+        "description": "Analyze test coverage and quality",
+        "tags": ["testing", "coverage", "quality"]
+      }
+    ],
+    "templates": {
+      "documentation": [
+        {
+          "name": "api-documentation",
+          "file": "templates/documentation/api-documentation.md.template",
+          "description": "Comprehensive API reference template",
+          "tags": ["api", "documentation", "template"]
+        },
+        {
+          "name": "architecture-guide",
+          "file": "templates/documentation/architecture-guide.md.template",
+          "description": "System architecture documentation template",
+          "tags": ["architecture", "documentation", "template"]
+        },
+        {
+          "name": "development-guide",
+          "file": "templates/documentation/development-guide.md.template",
+          "description": "Developer onboarding and workflow template",
+          "tags": ["development", "onboarding", "template"]
+        },
+        {
+          "name": "troubleshooting-guide",
+          "file": "templates/documentation/troubleshooting-guide.md.template",
+          "description": "Common issues and solutions template",
+          "tags": ["troubleshooting", "support", "template"]
+        },
+        {
+          "name": "quick-reference",
+          "file": "templates/documentation/quick-reference.md.template",
+          "description": "Quick reference cheat sheet template",
+          "tags": ["reference", "quickstart", "template"]
+        },
+        {
+          "name": "documentation-generator",
+          "file": "templates/documentation/documentation-generator.ps1",
+          "description": "Intelligent documentation generation system",
+          "tags": ["generator", "automation", "documentation"]
+        },
+        {
+          "name": "project-analyzer",
+          "file": "scripts/analysis/project-analyzer.ps1",
+          "description": "Analyze project for documentation data",
+          "tags": ["analysis", "automation"]
+        }
+      ],
+      "infrastructure": [
+        {
+          "name": "kubernetes-deployment",
+          "file": "templates/infrastructure/kubernetes-deployment.yaml.template",
+          "description": "Parameterized Kubernetes deployment template",
+          "tags": ["kubernetes", "deployment", "infrastructure"]
+        }
+      ]
+    }
   },
   "selectionRules": {
     "minimal": {
@@ -248,7 +407,9 @@
       "includes": [
         "agents:code-reviewer",
         "commands:essential:*",
-        "commands:documentation:update-changelog"
+        "commands:documentation:update-changelog",
+        "hooks:add-context",
+        "generators:command-generator"
       ]
     },
     "standard": {
@@ -256,11 +417,18 @@
       "includes": [
         "minimal:*",
         "agents:security-reviewer",
+        "agents:infrastructure-architect",
         "agents:[frontend-developer if frontend]",
         "commands:backend:* if backend",
         "commands:frontend:* if frontend",
         "commands:quality:analyze-technical-debt",
-        "generators:command-generator"
+        "commands:documentation:generate-documentation",
+        "generators:*",
+        "hooks:pre-commit-quality-check",
+        "hooks:[validate-tenant-scoping if multi-tenant]",
+        "validation:code-quality-validator",
+        "agentTools:[security-scanner if security-reviewer]",
+        "agentTools:[deployment-analyzer if infrastructure-architect]"
       ]
     },
     "comprehensive": {

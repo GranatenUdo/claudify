@@ -52,7 +52,7 @@ All frontend-related commands have been updated to leverage the Frontend Develop
 
 ### 1. Specialized Expertise
 The Frontend Developer agent brings:
-- Deep Angular 20 knowledge including signals, standalone components
+- Deep Angular 19 knowledge including signals, standalone components
 - TypeScript mastery for type-safe implementations
 - Modern build tool and bundler expertise
 - Performance optimization techniques

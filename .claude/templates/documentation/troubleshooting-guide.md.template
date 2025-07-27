@@ -1,0 +1,629 @@
+# ${PROJECT_NAME} Troubleshooting Guide
+
+> Generated on ${TIMESTAMP} by Claudify Documentation System
+
+## Quick Diagnostics
+
+### System Health Check
+
+```bash
+# Check all services status
+${HEALTH_CHECK_COMMAND}
+
+# View recent logs
+${VIEW_LOGS_COMMAND}
+
+# Check database connectivity
+${DB_CHECK_COMMAND}
+
+# Verify API endpoints
+${API_CHECK_COMMAND}
+```
+
+### Common Issues Navigator
+
+Is your issue related to:
+- [🔴 Application won't start](#application-startup-issues)
+- [🔵 Authentication/Authorization](#authentication-issues)
+- [🟡 Performance problems](#performance-issues)
+- [🟢 Data/Database issues](#database-issues)
+- [🟣 Integration failures](#integration-issues)
+- [⚫ Deployment problems](#deployment-issues)
+${IF_MULTI_TENANT}- [🟤 Multi-tenant issues](#multi-tenant-issues)${END_IF}
+
+## Application Startup Issues
+
+### Issue: ${BACKEND_TECH} application fails to start
+
+**Symptoms:**
+- Application crashes on startup
+- Port binding errors
+- Configuration errors
+
+**Diagnostic Steps:**
+1. Check configuration
+   ```bash
+   ${CHECK_CONFIG_COMMAND}
+   ```
+
+2. Verify environment variables
+   ```bash
+   ${CHECK_ENV_COMMAND}
+   ```
+
+3. Check port availability
+   ```bash
+   ${CHECK_PORT_COMMAND}
+   ```
+
+**Common Solutions:**
+
+${IF_DOTNET}
+**Missing appsettings.json**
+```bash
+cp appsettings.example.json appsettings.json
+# Edit with your configuration
+```
+
+**Missing dependencies**
+```bash
+dotnet restore
+dotnet build
+```
+
+**Database migration pending**
+```bash
+dotnet ef database update
+```
+${END_IF}
+
+${IF_NODEJS}
+**Missing node_modules**
+```bash
+npm install
+# or
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Port already in use**
+```bash
+# Find process using port
+lsof -i :${DEFAULT_PORT}
+# Or use different port
+PORT=3001 npm start
+```
+${END_IF}
+
+### Issue: Frontend application build fails
+
+**Symptoms:**
+- Build errors
+- Module not found
+- Type errors
+
+**Solutions:**
+
+```bash
+# Clear cache and rebuild
+${CLEAR_CACHE_COMMAND}
+${REBUILD_COMMAND}
+
+# Update dependencies
+${UPDATE_DEPS_COMMAND}
+```
+
+## Authentication Issues
+
+### Issue: JWT token validation fails
+
+**Symptoms:**
+- 401 Unauthorized errors
+- Token expired messages
+- Invalid signature errors
+
+**Diagnostic Commands:**
+```bash
+# Decode JWT token
+${JWT_DECODE_COMMAND}
+
+# Check auth service
+${CHECK_AUTH_SERVICE}
+```
+
+**Common Causes & Solutions:**
+
+1. **Clock skew**
+   - Ensure server time is synchronized
+   ```bash
+   ${TIME_SYNC_COMMAND}
+   ```
+
+2. **Wrong auth configuration**
+   - Verify ${AUTH_PROVIDER} settings
+   - Check audience and issuer match
+
+3. **Token expiration**
+   - Default expiry: ${TOKEN_EXPIRY}
+   - Implement token refresh logic
+
+${IF_MULTI_TENANT}
+### Issue: Tenant context missing
+
+**Symptoms:**
+- "Organization not found" errors
+- Missing ${TENANT_FIELD} in requests
+
+**Solution:**
+1. Verify token contains ${TENANT_CLAIM}
+2. Check middleware configuration
+3. Ensure frontend includes tenant context
+${END_IF}
+
+## Performance Issues
+
+### Issue: Slow API responses
+
+**Diagnostic Tools:**
+```bash
+# API response time analysis
+${API_PERF_COMMAND}
+
+# Database query analysis
+${DB_PERF_COMMAND}
+
+# Resource usage
+${RESOURCE_USAGE_COMMAND}
+```
+
+**Common Bottlenecks:**
+
+#### 1. N+1 Query Problem
+**Symptom:** Multiple database queries for related data
+
+**Detection:**
+```${CODE_LANGUAGE}
+${N_PLUS_ONE_DETECTION}
+```
+
+**Solution:**
+```${CODE_LANGUAGE}
+${N_PLUS_ONE_SOLUTION}
+```
+
+#### 2. Missing Database Indexes
+**Symptom:** Slow queries on large tables
+
+**Detection:**
+```sql
+${MISSING_INDEX_QUERY}
+```
+
+**Solution:**
+```sql
+${CREATE_INDEX_EXAMPLE}
+```
+
+${IF_MULTI_TENANT}
+**Multi-tenant Index Pattern:**
+```sql
+CREATE INDEX idx_table_tenant_field 
+ON table_name (${TENANT_FIELD}, frequently_queried_field);
+```
+${END_IF}
+
+#### 3. Memory Leaks
+**Detection:**
+```bash
+${MEMORY_LEAK_DETECTION}
+```
+
+**Common Causes:**
+- Unbounded caches
+- Event listener accumulation
+- Large object retention
+
+### Issue: Frontend performance degradation
+
+**Symptoms:**
+- Slow page loads
+- Unresponsive UI
+- High memory usage
+
+**Diagnostics:**
+
+1. **Bundle size analysis**
+   ```bash
+   ${BUNDLE_ANALYZE_COMMAND}
+   ```
+
+2. **Performance profiling**
+   - Chrome DevTools Performance tab
+   - React DevTools Profiler
+   - Angular DevTools
+
+**Solutions:**
+
+- **Code splitting**
+  ```${CODE_LANGUAGE}
+  ${CODE_SPLITTING_EXAMPLE}
+  ```
+
+- **Lazy loading**
+  ```${CODE_LANGUAGE}
+  ${LAZY_LOADING_EXAMPLE}
+  ```
+
+- **Memoization**
+  ```${CODE_LANGUAGE}
+  ${MEMOIZATION_EXAMPLE}
+  ```
+
+## Database Issues
+
+### Issue: Connection pool exhausted
+
+**Symptoms:**
+- "Timeout waiting for connection" errors
+- Intermittent connection failures
+
+**Diagnostics:**
+```bash
+# Check active connections
+${DB_CONNECTIONS_COMMAND}
+
+# Monitor connection pool
+${MONITOR_POOL_COMMAND}
+```
+
+**Solutions:**
+
+1. **Increase pool size**
+   ```${CONFIG_LANGUAGE}
+   ${CONNECTION_POOL_CONFIG}
+   ```
+
+2. **Fix connection leaks**
+   ```${CODE_LANGUAGE}
+   ${CONNECTION_LEAK_FIX}
+   ```
+
+### Issue: Database migrations fail
+
+**Common Errors & Solutions:**
+
+${IF_DOTNET}
+**"Migration has already been applied"**
+```bash
+# Check migration history
+dotnet ef migrations list
+
+# Remove from history
+dotnet ef database update --migration PreviousMigration
+```
+
+**"Foreign key constraint fails"**
+- Check data dependencies
+- Use raw SQL in migration for complex changes
+${END_IF}
+
+### Issue: Data inconsistency
+
+${IF_MULTI_TENANT}
+**Cross-tenant data leak**
+- Verify all queries include ${TENANT_FIELD}
+- Check repository base class implementation
+- Review audit logs for access patterns
+${END_IF}
+
+**Orphaned records**
+```sql
+-- Find orphaned records
+${ORPHANED_RECORDS_QUERY}
+
+-- Clean up (with caution)
+${CLEANUP_ORPHANED_QUERY}
+```
+
+## Integration Issues
+
+### Issue: External API timeout
+
+**Symptoms:**
+- Timeout exceptions
+- Incomplete data synchronization
+
+**Diagnostics:**
+```bash
+# Test endpoint connectivity
+${TEST_ENDPOINT_COMMAND}
+
+# Check network latency
+${NETWORK_TEST_COMMAND}
+```
+
+**Solutions:**
+
+1. **Implement retry logic**
+   ```${CODE_LANGUAGE}
+   ${RETRY_LOGIC_EXAMPLE}
+   ```
+
+2. **Circuit breaker pattern**
+   ```${CODE_LANGUAGE}
+   ${CIRCUIT_BREAKER_EXAMPLE}
+   ```
+
+3. **Timeout configuration**
+   ```${CONFIG_LANGUAGE}
+   ${TIMEOUT_CONFIG}
+   ```
+
+### Issue: Webhook delivery failures
+
+**Common Causes:**
+- SSL certificate issues
+- Firewall blocking
+- Incorrect webhook URL
+
+**Debugging:**
+```bash
+# Test webhook endpoint
+${TEST_WEBHOOK_COMMAND}
+
+# View webhook logs
+${WEBHOOK_LOGS_COMMAND}
+```
+
+## Deployment Issues
+
+### Issue: Container fails to start
+
+**Diagnostics:**
+```bash
+# Check container logs
+${CONTAINER_LOGS_COMMAND}
+
+# Inspect container
+${CONTAINER_INSPECT_COMMAND}
+
+# Check resource limits
+${RESOURCE_LIMITS_COMMAND}
+```
+
+**Common Fixes:**
+
+1. **Missing environment variables**
+   ```yaml
+   ${ENV_VAR_K8S_EXAMPLE}
+   ```
+
+2. **Health check failures**
+   - Increase initial delay
+   - Verify health endpoint works
+   - Check dependencies are ready
+
+3. **Resource constraints**
+   ```yaml
+   ${RESOURCE_CONFIG_EXAMPLE}
+   ```
+
+### Issue: Zero-downtime deployment fails
+
+**Symptoms:**
+- Service interruption during deployment
+- Lost requests
+- Session errors
+
+**Solution Checklist:**
+- [ ] Implement graceful shutdown
+- [ ] Configure readiness probes
+- [ ] Use rolling update strategy
+- [ ] Handle in-flight requests
+
+${IF_MULTI_TENANT}
+## Multi-Tenant Issues
+
+### Issue: Tenant data isolation breach
+
+**CRITICAL: Security incident protocol**
+1. Immediately disable affected endpoints
+2. Audit all recent data access
+3. Notify security team
+4. Review and fix isolation logic
+
+**Prevention:**
+```${CODE_LANGUAGE}
+${TENANT_ISOLATION_CHECK}
+```
+
+### Issue: Tenant-specific performance degradation
+
+**Diagnostics:**
+```sql
+-- Check data distribution
+${TENANT_DATA_DISTRIBUTION_QUERY}
+
+-- Find slow queries by tenant
+${SLOW_QUERIES_BY_TENANT}
+```
+
+**Solutions:**
+- Implement tenant-specific rate limiting
+- Consider data partitioning
+- Add tenant-specific indexes
+${END_IF}
+
+## Error Messages Reference
+
+### Application Errors
+
+${FOREACH_ERROR}
+#### Error: "${ERROR_MESSAGE}"
+
+**Meaning:** ${ERROR_MEANING}  
+**Common Cause:** ${ERROR_CAUSE}  
+**Solution:** ${ERROR_SOLUTION}
+
+${IF_ERROR_CODE}
+**Code Reference:**
+```${CODE_LANGUAGE}
+${ERROR_CODE_EXAMPLE}
+```
+${END_IF}
+
+${END_FOREACH}
+
+## Logging & Monitoring
+
+### Log Locations
+
+| Component | Location | Format |
+|-----------|----------|--------|
+${FOREACH_LOG_SOURCE}| ${COMPONENT} | ${LOG_PATH} | ${LOG_FORMAT} |
+${END_FOREACH}
+
+### Useful Log Queries
+
+**Find errors in last hour:**
+```bash
+${ERROR_LOG_QUERY}
+```
+
+**Track specific user journey:**
+```bash
+${USER_JOURNEY_QUERY}
+```
+
+**Performance analysis:**
+```bash
+${PERF_LOG_QUERY}
+```
+
+### Monitoring Dashboards
+
+- **System Overview**: ${SYSTEM_DASHBOARD_URL}
+- **API Performance**: ${API_DASHBOARD_URL}
+- **Error Tracking**: ${ERROR_DASHBOARD_URL}
+${IF_MULTI_TENANT}- **Tenant Metrics**: ${TENANT_DASHBOARD_URL}${END_IF}
+
+## Emergency Procedures
+
+### System Down
+
+1. **Immediate Actions**
+   ```bash
+   # Check system status
+   ${SYSTEM_STATUS_COMMAND}
+   
+   # Restart services
+   ${RESTART_SERVICES_COMMAND}
+   ```
+
+2. **Escalation Path**
+   - L1: Check runbook → Basic diagnostics
+   - L2: Application team → Deep diagnostics
+   - L3: Infrastructure team → System issues
+
+### Data Recovery
+
+**Backup Locations:**
+- Database: ${DB_BACKUP_LOCATION}
+- Files: ${FILE_BACKUP_LOCATION}
+- Configurations: ${CONFIG_BACKUP_LOCATION}
+
+**Recovery Steps:**
+```bash
+${RECOVERY_STEPS}
+```
+
+## Performance Tuning
+
+### Quick Wins
+
+${FOREACH_QUICK_WIN}
+- **${WIN_TITLE}**: ${WIN_DESCRIPTION}
+  - Impact: ${WIN_IMPACT}
+  - Effort: ${WIN_EFFORT}
+  - Command: `${WIN_COMMAND}`
+${END_FOREACH}
+
+### Advanced Optimizations
+
+${FOREACH_OPTIMIZATION}
+#### ${OPT_TITLE}
+
+**Scenario:** ${OPT_SCENARIO}
+
+**Implementation:**
+```${CODE_LANGUAGE}
+${OPT_IMPLEMENTATION}
+```
+
+**Expected Improvement:** ${OPT_IMPROVEMENT}
+
+${END_FOREACH}
+
+## Tools & Commands
+
+### Diagnostic Tools
+
+```bash
+# System health
+${HEALTH_TOOLS}
+
+# Performance analysis
+${PERF_TOOLS}
+
+# Log analysis
+${LOG_TOOLS}
+
+# Database tools
+${DB_TOOLS}
+```
+
+### Useful Scripts
+
+Save these as shell scripts for quick access:
+
+**health-check.sh**
+```bash
+${HEALTH_CHECK_SCRIPT}
+```
+
+**diagnose-issue.sh**
+```bash
+${DIAGNOSE_SCRIPT}
+```
+
+## Getting Help
+
+### Before Asking for Help
+
+1. Check this troubleshooting guide
+2. Search existing issues/tickets
+3. Collect diagnostic information:
+   ```bash
+   ${COLLECT_DIAGNOSTICS_COMMAND}
+   ```
+
+### Information to Provide
+
+When reporting issues, include:
+- [ ] Error messages (full stack trace)
+- [ ] Steps to reproduce
+- [ ] Environment (dev/staging/prod)
+- [ ] Recent changes
+- [ ] Diagnostic command outputs
+${IF_MULTI_TENANT}- [ ] Tenant ID (if applicable)${END_IF}
+
+### Support Channels
+
+- **Slack**: ${SLACK_CHANNEL}
+- **Issue Tracker**: ${ISSUE_TRACKER_URL}
+- **On-Call**: ${ON_CALL_PROCESS}
+- **Emergency**: ${EMERGENCY_CONTACT}
+
+---
+
+*Generated by Claudify - Troubleshooting guides that solve real problems*

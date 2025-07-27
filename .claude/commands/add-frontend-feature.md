@@ -23,7 +23,7 @@ Internalize CLAUDE.md critical rules:
 - ⚡ API-first workflow mandatory
 - 🔒 Organization isolation required
 - 📊 Result<T> pattern enforcement
-- 🎨 Angular 19 signals only
+- 🎨 Angular 19 with traditional directives ONLY (*ngIf, *ngFor, NO @if/@for)
 - 🚀 Performance budget: FCP < 1.5s, TTI < 3s
 
 ## Phase 0: Frontend Developer-Led Feature Planning
@@ -42,12 +42,18 @@ TECHNICAL ARCHITECTURE:
    - Shared component opportunities
    - State management strategy (signals/stores)
    - Data flow architecture
-2. **Angular-Specific Implementation**
-   - Signal patterns for reactive state
+2. **Angular 19 Implementation (CRITICAL - OPUS 4 COMPATIBILITY)**
+   - **MANDATORY**: Use traditional directives ONLY
+     - *ngIf for conditionals (NOT @if)
+     - *ngFor for loops (NOT @for) 
+     - ng-template with #elseBlock (NOT @else)
+     - [ngSwitch] with *ngSwitchCase (NOT @switch)
+   - **REQUIRED**: Always include trackBy functions for *ngFor
+   - Signal patterns for reactive state management
    - Standalone component structure
-   - Dependency injection strategy
-   - Change detection optimization
-   - Route configuration and lazy loading
+   - Dependency injection using inject()
+   - OnPush change detection strategy
+   - Route configuration with lazy loading
 3. **TypeScript & Type Safety**
    - Interface and type definitions
    - Generic components where applicable
@@ -965,3 +971,21 @@ The Frontend Developer's leadership ensures:
 - **Developer Experience**: Clean, maintainable code structure
 
 Remember: **The Frontend Developer's 15+ years of expertise guides the entire implementation, ensuring technical excellence while the other agents provide complementary perspectives. This specialized leadership results in features that are not just beautiful, but also performant, maintainable, and bug-free.**
+
+## ⚠️ CRITICAL ANGULAR 19 COMPATIBILITY NOTE
+
+**OPUS 4 COMPATIBILITY REQUIREMENT**: This codebase uses Angular 19 with traditional structural directives to ensure compatibility with the Opus 4 AI model. 
+
+**NEVER USE Angular 20 control flow syntax:**
+- ❌ @if, @else, @else if
+- ❌ @for 
+- ❌ @switch, @case, @default
+- ❌ @empty
+
+**ALWAYS USE Angular 19 traditional directives:**
+- ✅ *ngIf with ng-template for else conditions
+- ✅ *ngFor with mandatory trackBy functions
+- ✅ [ngSwitch] with *ngSwitchCase/*ngSwitchDefault
+- ✅ ng-container for grouping without DOM elements
+
+This ensures all code remains processable by Opus 4 and maintains consistency across the codebase.
