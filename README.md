@@ -20,7 +20,7 @@ pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 
 Then in your repository:
 ```bash
-claude code
+claude
 ```
 
 In Claude Code:
