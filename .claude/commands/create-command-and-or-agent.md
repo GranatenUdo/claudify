@@ -381,8 +381,8 @@ This intelligent generator provides:
 
 ### Automatic Sync
 After creating components, they are automatically synchronized to the templating solution:
-1. New commands copied to `claude-code-base-repository-setup/.claude/commands/`
-2. New agents copied to `claude-code-base-repository-setup/.claude/agents/`
+1. New commands copied to `claudify/.claude/commands/`
+2. New agents copied to `claudify/.claude/agents/`
 3. Related configurations and tools included
 4. Template README updated with new components
 
