@@ -1,0 +1,63 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{SHELL_COMMAND}}",
+            "args": [
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              ".claude\\hooks\\check-{{TENANT_MODEL_LOWER}}-scoping.ps1",
+              "-FilePath",
+              "${file_path}",
+              "-ToolName",
+              "${tool_name}",
+              "-Arguments",
+              "${arguments}"
+            ]
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{SHELL_COMMAND}}",
+            "args": [
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              ".claude\\hooks\\add-context.ps1",
+              "-UserPrompt",
+              "${user_prompt}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "ASPNETCORE_ENVIRONMENT": "Development",
+    "{{AUTH_PROVIDER_UPPER}}_DOMAIN": "{{AUTH_DOMAIN}}",
+    "{{AUTH_PROVIDER_UPPER}}_AUDIENCE": "{{AUTH_AUDIENCE}}"
+  },
+  "permissions": {
+    "deny": [
+      "Write(**/bin/**)",
+      "Write(**/obj/**)",
+      "Write(**/node_modules/**)",
+      "Write(**/dist/**)",
+      "Write(**/*.dll)",
+      "Write(**/*.exe)",
+      "Edit(**/Migrations/**/*.cs)",
+      "Edit(**/appsettings.Production.json)"
+    ],
+    "additionalDirectories": [".claude", "src", "tests"]
+  }
+}

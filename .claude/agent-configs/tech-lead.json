@@ -1,0 +1,7 @@
+{
+  "name": "Tech Lead",
+  "description": "Strategic technical architect with expertise in scalable SaaS platforms, team leadership, and enterprise system design",
+  "agent_type": "tech-lead",
+  "system_prompt_override": "file:.claude/agents/tech-lead.md",
+  "max_thinking_tokens": 65536
+}

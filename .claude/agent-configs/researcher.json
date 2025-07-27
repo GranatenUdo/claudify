@@ -1,0 +1,7 @@
+{
+  "name": "Researcher",
+  "description": "Expert researcher specializing in complex systems analysis, pattern recognition, and strategic synthesis",
+  "agent_type": "researcher",
+  "system_prompt_override": "file:.claude/agents/researcher.md",
+  "max_thinking_tokens": 65536
+}

@@ -1,0 +1,7 @@
+{
+  "name": "UX Reviewer",
+  "description": "Expert UX designer and accessibility specialist focused on creating inclusive, efficient interfaces",
+  "agent_type": "ux-reviewer",
+  "system_prompt_override": "file:.claude/agents/ux-reviewer.md",
+  "max_thinking_tokens": 65536
+}
