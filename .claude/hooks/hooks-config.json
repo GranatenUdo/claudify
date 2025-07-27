@@ -1,0 +1,68 @@
+{
+  "hooks": {
+    "pre-tool-use": {
+      "validate-tenant-scoping": {
+        "enabled": true,
+        "description": "Validates multi-tenant isolation in code changes",
+        "script": "validate-tenant-scoping.ps1",
+        "config": {
+          "tenantFields": ["OrganizationId", "TenantId", "CompanyId"],
+          "checkPatterns": ["Repository", "Service", "Controller"],
+          "skipPatterns": ["Test", "Mock", "Migrations"],
+          "strictMode": false
+        }
+      }
+    },
+    "user-prompt-submit": {
+      "add-context": {
+        "enabled": true,
+        "description": "Adds contextual information based on prompt content",
+        "script": "add-context.ps1",
+        "config": {
+          "autoDetectPatterns": true,
+          "includeProjectConfig": true,
+          "contextCategories": [
+            "backend",
+            "frontend",
+            "security",
+            "testing",
+            "database",
+            "performance",
+            "domain"
+          ]
+        }
+      },
+      "pre-commit-quality-check": {
+        "enabled": true,
+        "description": "Enforces quality standards before commits",
+        "script": "pre-commit-quality-check.ps1",
+        "config": {
+          "runTests": true,
+          "runLinter": true,
+          "checkSecurity": true,
+          "blockOnErrors": true,
+          "blockOnWarnings": false
+        }
+      }
+    }
+  },
+  "global": {
+    "enabledByDefault": true,
+    "verboseLogging": false,
+    "hooks_directory": ".claude/hooks",
+    "timeout_seconds": 30
+  },
+  "projectOverrides": {
+    "_example": {
+      "comment": "Project-specific overrides can be added here",
+      "hooks": {
+        "validate-tenant-scoping": {
+          "config": {
+            "tenantFields": ["CustomerId"],
+            "strictMode": true
+          }
+        }
+      }
+    }
+  }
+}

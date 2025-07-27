@@ -1,128 +1,99 @@
 ---
-description: Intelligently update CHANGELOG.md based on recent changes and git history
-allowed-tools: [Read, Write, Edit, MultiEdit, Bash, Grep, Glob, LS]
-argument-hint: change description or --auto to analyze git history
-complexity: simple
+description: Update CHANGELOG.md with recent changes following Keep a Changelog format
+allowed-tools: [Read, Write, Edit, MultiEdit, Grep, TodoWrite]
+argument-hint: change description (e.g., "Added user authentication module" or "Fixed critical bug in payment processing")
+complexity: low
 estimated-time: 2-5 minutes
 category: documentation
 ---
 
-# 📝 Update Changelog
+# Update Changelog
 
-## Quick Context
-Update CHANGELOG.md with new entries based on recent changes. Supports manual entry or automatic detection from git history.
+I'll update the CHANGELOG.md file with your recent changes following the [Keep a Changelog](https://keepachangelog.com/) format.
 
-## Command Syntax
-```bash
-/update-changelog [description] [--auto] [--type=added|changed|fixed|security]
-```
+## Understanding Your Change
 
-## Execution Flow
+Let me analyze your change request: **$ARGUMENTS**
 
-### Phase 1: Analyze Current State
-1. Check if CHANGELOG.md exists
-2. Parse existing entries to avoid duplicates
-3. Determine current date (YYYY-MM-DD format)
+<think about the type of change and which section it belongs to>
 
-### Phase 2: Gather Changes
+Based on your description, I'll categorize this change and update the appropriate section.
 
-#### Manual Mode (with description)
-- Parse provided description
-- Determine change type from keywords or --type flag
-- Format entry according to Keep a Changelog standards
+## Checking Current Changelog
 
-#### Auto Mode (--auto flag)
-- Analyze recent git commits
-- Look for conventional commit patterns
-- Group by change type
-- Filter out merge commits and changelog updates
+First, let me read the current CHANGELOG.md to understand its structure:
 
-### Phase 3: Update Changelog
-1. Add entries to appropriate section under [Unreleased]
-2. Maintain proper formatting and structure
-3. Preserve all existing content
+@Read(file_path="CHANGELOG.md", limit=100)
 
-## Change Type Detection
+## Determining Change Category
 
-### Keywords for Automatic Classification
-- **Added**: feat, feature, add, implement, create
-- **Changed**: update, enhance, improve, refactor
-- **Fixed**: fix, bug, resolve, patch
-- **Security**: security, vulnerability, CVE
+<think about which category this change belongs to>
 
-### Git Commit Analysis Pattern
-```bash
-# Analyze commits since last release tag or last 50 commits
-git log --oneline --no-merges -50 | grep -E "^[a-f0-9]+ (feat|fix|chore|docs|style|refactor|test|build|ci):"
-```
+Your change appears to be:
+- **Added**: New features or capabilities
+- **Changed**: Changes in existing functionality
+- **Deprecated**: Soon-to-be removed features
+- **Removed**: Removed features
+- **Fixed**: Bug fixes
+- **Security**: Vulnerability fixes
 
-## Entry Formatting
+## Updating Changelog
 
-### Standard Entry Format
+I'll add your change to the appropriate section under [Unreleased]:
+
+@Edit(file_path="CHANGELOG.md", old_string="[SECTION_MARKER]", new_string="[SECTION_MARKER]
+- $FORMATTED_CHANGE_DESCRIPTION")
+
+### Formatting Guidelines
+
+I follow these conventions:
+- Start with a verb (Added, Fixed, Changed, etc.)
+- Use present tense
+- Capitalize first letter
+- No period at the end
+- Include component name when relevant
+- Group related changes together
+
+### Change Entry Format
+
+For complex changes, I'll use sub-items:
 ```markdown
-### [Category]
-- Brief description of change
-  - Additional details if needed
-  - Technical specifics when relevant
+- **Component Name**
+  - Specific change 1
+  - Specific change 2
+  - Impact or technical details
 ```
 
-### Complex Feature Entry
-```markdown
-### Added
-- **Feature Name** - Brief description
-  - Technical implementation detail
-  - API endpoints: `POST /api/v1/resource`
-  - Database changes: New table/migration
-  - Frontend components: ComponentName
-```
+## Verification
 
-## Examples
+Let me verify the update was successful:
 
-### Manual Entry
-```bash
-/update-changelog "Added crop classification system with multi-source support"
-```
+@Read(file_path="CHANGELOG.md", offset=[UPDATED_LINE], limit=10)
 
-### Auto-detect from Git
-```bash
-/update-changelog --auto
-```
+## Best Practices Applied
 
-### Specific Type
-```bash
-/update-changelog "Fixed null reference in stock movement repository" --type=fixed
-```
+✅ **Categorized correctly** under the appropriate section
+✅ **Formatted consistently** with existing entries
+✅ **Descriptive yet concise** change description
+✅ **Chronologically ordered** (newest first in each section)
+✅ **User-focused** language (what changed, not how)
 
-### Security Update
-```bash
-/update-changelog "Patched XSS vulnerability in field name display" --type=security
-```
+## Next Steps
 
-## Implementation Details
+1. When ready to release, move items from [Unreleased] to a new version section
+2. Add the version number and date: `## [1.2.0] - 2024-01-27`
+3. Keep [Unreleased] section at the top for ongoing work
+4. Consider using semantic versioning:
+   - MAJOR: Breaking changes
+   - MINOR: New features (Added)
+   - PATCH: Bug fixes (Fixed)
 
-### Changelog Location
-- Primary: `./CHANGELOG.md`
-- Fallback: Create if doesn't exist using template
+## Automation Tip
 
-### Date Format
-- ISO 8601: YYYY-MM-DD
-- Example: 2025-01-27
+To ensure changelog updates aren't forgotten:
+1. Update after each significant change
+2. Include in your PR checklist
+3. Use git hooks for reminders
+4. Review during sprint retrospectives
 
-### Version Handling
-- Keep entries under [Unreleased] until release
-- During release, move to dated section
-- Follow semantic versioning
-
-## Quality Checks
-1. Verify entry doesn't already exist
-2. Ensure proper markdown formatting
-3. Check category is valid
-4. Validate date format if creating new section
-
-## Integration Points
-- Called by feature/bug fix commands
-- Git hooks can trigger auto-update
-- CI/CD can verify changelog updates
-- Release process moves Unreleased to versioned
-
-Remember: A well-maintained changelog helps users and developers understand the evolution of the project.
+Your CHANGELOG.md has been updated successfully! This helps users and developers track the evolution of your project.

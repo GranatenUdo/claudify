@@ -1,0 +1,607 @@
+# ${PROJECT_NAME} Development Guide
+
+> Generated on ${TIMESTAMP} by Claudify Documentation System
+
+## Quick Start
+
+### Prerequisites
+
+${FOREACH_PREREQUISITE}
+- **${PREREQ_NAME}** (${PREREQ_VERSION}): ${PREREQ_PURPOSE}
+  ```bash
+  ${PREREQ_INSTALL_COMMAND}
+  ```
+${END_FOREACH}
+
+### Initial Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone ${REPO_URL}
+   cd ${PROJECT_DIR}
+   ```
+
+2. **Install dependencies**
+   ${IF_DOTNET}
+   ```bash
+   dotnet restore
+   ```
+   ${END_IF}
+   ${IF_NODEJS}
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+   ${END_IF}
+   ${IF_PYTHON}
+   ```bash
+   pip install -r requirements.txt
+   # or with virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+   ${END_IF}
+
+3. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your local settings
+   ```
+
+4. **Setup database**
+   ${IF_DOTNET}
+   ```bash
+   dotnet ef database update
+   ```
+   ${END_IF}
+   ${IF_NODEJS}
+   ```bash
+   npm run db:migrate
+   ```
+   ${END_IF}
+
+5. **Run the application**
+   ${IF_DOTNET}
+   ```bash
+   dotnet run --project src/${API_PROJECT_NAME}
+   ```
+   ${END_IF}
+   ${IF_NODEJS}
+   ```bash
+   npm run dev
+   ```
+   ${END_IF}
+
+## Development Workflow
+
+### Code Style & Standards
+
+#### ${PRIMARY_LANGUAGE} Conventions
+
+${IF_DOTNET}
+- **Naming**: PascalCase for classes/methods, camelCase for parameters/variables
+- **File Organization**: One class per file, matching class name
+- **Async**: All I/O operations must be async with proper cancellation
+- **Error Handling**: Use Result<T> pattern, no exceptions in normal flow
+${END_IF}
+
+${IF_TYPESCRIPT}
+- **Naming**: PascalCase for types/interfaces, camelCase for variables/functions
+- **Imports**: Absolute imports using path aliases (@components, @services)
+- **Types**: Strict mode enabled, no implicit any
+- **Async**: Use async/await, handle Promise rejections
+${END_IF}
+
+#### Common Patterns
+
+${IF_REPOSITORY_PATTERN}
+**Repository Pattern**
+```${CODE_LANGUAGE}
+${REPOSITORY_EXAMPLE}
+```
+${END_IF}
+
+${IF_RESULT_PATTERN}
+**Result Pattern**
+```${CODE_LANGUAGE}
+${RESULT_EXAMPLE}
+```
+${END_IF}
+
+${IF_MULTI_TENANT}
+**Multi-Tenant Queries**
+```${CODE_LANGUAGE}
+${TENANT_QUERY_EXAMPLE}
+```
+${END_IF}
+
+### Feature Development
+
+#### 1. Planning Phase
+- [ ] Review requirements in issue/ticket
+- [ ] Identify affected components
+- [ ] Consider ${IF_MULTI_TENANT}multi-tenant implications${END_IF}
+- [ ] Plan test scenarios
+
+#### 2. Implementation
+
+**Backend Development Flow**:
+1. Define models/entities
+2. Create repository interface & implementation
+3. Implement service layer with business logic
+4. Add controller endpoints
+5. Write unit tests
+6. Update API documentation
+
+**Frontend Development Flow**:
+1. Design component structure
+2. Create type definitions/interfaces
+3. Implement services for API calls
+4. Build UI components
+5. Add state management
+6. Write component tests
+
+#### 3. Testing Requirements
+
+**Minimum Test Coverage**:
+- Unit tests: ${MIN_UNIT_COVERAGE}%
+- Integration tests: Key workflows
+- ${IF_E2E}E2E tests: Critical user paths${END_IF}
+
+**Test Structure**:
+```${CODE_LANGUAGE}
+${TEST_STRUCTURE_EXAMPLE}
+```
+
+### Git Workflow
+
+1. **Branch Naming**
+   - Feature: `feature/description-ticket-number`
+   - Bugfix: `bugfix/description-ticket-number`
+   - Hotfix: `hotfix/description`
+
+2. **Commit Messages**
+   ```
+   type(scope): subject
+   
+   body (optional)
+   
+   footer (optional)
+   ```
+   
+   Types: feat, fix, docs, style, refactor, test, chore
+
+3. **Pull Request Process**
+   - [ ] Self-review changes
+   - [ ] Run all tests locally
+   - [ ] Update documentation
+   - [ ] Add PR description with context
+   - [ ] Link related issues
+
+## Project Structure
+
+```
+${PROJECT_ROOT}/
+├── src/
+│   ├── ${BACKEND_PROJECT_STRUCTURE}
+│   ├── ${FRONTEND_PROJECT_STRUCTURE}
+│   └── ${SHARED_PROJECT_STRUCTURE}
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── ${IF_E2E}e2e/${END_IF}
+├── docs/
+│   ├── api/
+│   ├── architecture/
+│   └── guides/
+├── scripts/
+│   ├── setup/
+│   ├── build/
+│   └── deploy/
+└── infrastructure/
+    ├── docker/
+    ├── kubernetes/
+    └── terraform/
+```
+
+### Key Directories
+
+${FOREACH_DIRECTORY}
+**${DIR_PATH}**
+- Purpose: ${DIR_PURPOSE}
+- Contents: ${DIR_CONTENTS}
+- Conventions: ${DIR_CONVENTIONS}
+
+${END_FOREACH}
+
+## Database Development
+
+### Schema Management
+
+${IF_DOTNET}
+**Entity Framework Migrations**
+```bash
+# Add a new migration
+dotnet ef migrations add MigrationName
+
+# Update database
+dotnet ef database update
+
+# Rollback migration
+dotnet ef database update PreviousMigration
+```
+${END_IF}
+
+${IF_NODEJS}
+**Database Migrations**
+```bash
+# Create migration
+npm run db:migrate:create MigrationName
+
+# Run migrations
+npm run db:migrate
+
+# Rollback
+npm run db:migrate:rollback
+```
+${END_IF}
+
+### Database Conventions
+
+${IF_MULTI_TENANT}
+#### Multi-Tenant Requirements
+- **Every table** must have `${TENANT_FIELD}` column
+- **All indexes** must include `${TENANT_FIELD}` as first column
+- **Foreign keys** must validate same tenant
+- **Unique constraints** must be scoped to tenant
+
+Example:
+```sql
+CREATE TABLE Products (
+    Id ${ID_TYPE} PRIMARY KEY,
+    ${TENANT_FIELD} ${TENANT_ID_TYPE} NOT NULL,
+    Name NVARCHAR(100) NOT NULL,
+    -- other columns
+    
+    INDEX idx_products_tenant_name (${TENANT_FIELD}, Name),
+    CONSTRAINT uk_products_tenant_sku UNIQUE (${TENANT_FIELD}, Sku)
+);
+```
+${END_IF}
+
+## API Development
+
+### Creating New Endpoints
+
+1. **Define the contract** (request/response DTOs)
+   ```${CODE_LANGUAGE}
+   ${DTO_EXAMPLE}
+   ```
+
+2. **Implement service method**
+   ```${CODE_LANGUAGE}
+   ${SERVICE_METHOD_EXAMPLE}
+   ```
+
+3. **Add controller endpoint**
+   ```${CODE_LANGUAGE}
+   ${CONTROLLER_ENDPOINT_EXAMPLE}
+   ```
+
+4. **Update API documentation**
+   - Add endpoint description
+   - Include request/response examples
+   - Document error cases
+
+### API Conventions
+
+- **Naming**: RESTful resource names (plural nouns)
+- **Versioning**: ${API_VERSIONING_STRATEGY}
+- **Pagination**: Use offset/limit or cursor-based
+- **Filtering**: Query parameters for simple filters
+- **Sorting**: `sort` parameter with field and direction
+${IF_MULTI_TENANT}- **Tenant Scoping**: Automatic via authentication${END_IF}
+
+## Frontend Development
+
+### Component Guidelines
+
+${IF_ANGULAR}
+**Angular Components**
+```typescript
+@Component({
+  selector: 'app-${COMPONENT_NAME}',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './${COMPONENT_NAME}.component.html',
+  styleUrls: ['./${COMPONENT_NAME}.component.scss']
+})
+export class ${COMPONENT_CLASS_NAME} {
+  // Use signals for state
+  data = signal<DataType[]>([]);
+  loading = signal(false);
+  
+  constructor(
+    private service: DataService,
+    private errorHandler: ErrorHandlerService
+  ) {}
+}
+```
+${END_IF}
+
+${IF_REACT}
+**React Components**
+```typescript
+interface ${COMPONENT_NAME}Props {
+  // Props definition
+}
+
+export const ${COMPONENT_NAME}: React.FC<${COMPONENT_NAME}Props> = ({ 
+  prop1,
+  prop2 
+}) => {
+  const [state, setState] = useState<StateType>();
+  
+  useEffect(() => {
+    // Effect logic
+  }, [dependencies]);
+  
+  return (
+    <div>
+      {/* Component JSX */}
+    </div>
+  );
+};
+```
+${END_IF}
+
+### State Management
+
+${STATE_MANAGEMENT_PATTERN}
+
+### Styling Guidelines
+
+- **Approach**: ${STYLING_APPROACH}
+- **Naming**: ${CSS_NAMING_CONVENTION}
+- **Structure**: Component-scoped styles
+- **Variables**: Use design tokens
+- **Responsive**: Mobile-first approach
+
+## Testing
+
+### Unit Testing
+
+**${TEST_FRAMEWORK} Test Structure**:
+```${CODE_LANGUAGE}
+${UNIT_TEST_EXAMPLE}
+```
+
+**Testing Guidelines**:
+- Test behavior, not implementation
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
+- Test edge cases
+
+### Integration Testing
+
+```${CODE_LANGUAGE}
+${INTEGRATION_TEST_EXAMPLE}
+```
+
+${IF_E2E}
+### E2E Testing
+
+**${E2E_FRAMEWORK} Example**:
+```${CODE_LANGUAGE}
+${E2E_TEST_EXAMPLE}
+```
+${END_IF}
+
+### Running Tests
+
+```bash
+# Unit tests
+${RUN_UNIT_TESTS_COMMAND}
+
+# Integration tests
+${RUN_INTEGRATION_TESTS_COMMAND}
+
+# All tests with coverage
+${RUN_ALL_TESTS_COMMAND}
+
+${IF_E2E}
+# E2E tests
+${RUN_E2E_TESTS_COMMAND}
+${END_IF}
+```
+
+## Debugging
+
+### Local Debugging
+
+${IF_VSCODE}
+**VS Code Configuration**:
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    ${VSCODE_DEBUG_CONFIG}
+  ]
+}
+```
+${END_IF}
+
+### Common Issues
+
+${FOREACH_COMMON_ISSUE}
+#### ${ISSUE_TITLE}
+**Symptoms**: ${ISSUE_SYMPTOMS}  
+**Cause**: ${ISSUE_CAUSE}  
+**Solution**: 
+```bash
+${ISSUE_SOLUTION}
+```
+
+${END_FOREACH}
+
+### Logging
+
+**Log Levels**:
+- `ERROR`: System errors requiring attention
+- `WARN`: Potential issues or deprecated usage
+- `INFO`: Important business events
+- `DEBUG`: Detailed diagnostic information
+
+**Structured Logging Example**:
+```${CODE_LANGUAGE}
+${LOGGING_EXAMPLE}
+```
+
+## Performance
+
+### Performance Guidelines
+
+1. **Database Queries**
+   - Use includes/joins to prevent N+1
+   - Paginate large result sets
+   - Index frequently queried columns
+   ${IF_MULTI_TENANT}- Always filter by ${TENANT_FIELD} first${END_IF}
+
+2. **API Responses**
+   - Implement response compression
+   - Use pagination for lists
+   - Cache frequently accessed data
+   - Minimize payload size
+
+3. **Frontend Performance**
+   - Lazy load modules/components
+   - Implement virtual scrolling for long lists
+   - Optimize bundle size
+   - Use CDN for static assets
+
+### Profiling Tools
+
+${FOREACH_PROFILING_TOOL}
+- **${TOOL_NAME}**: ${TOOL_PURPOSE}
+  ```bash
+  ${TOOL_COMMAND}
+  ```
+${END_FOREACH}
+
+## Security
+
+### Security Checklist
+
+- [ ] Input validation on all user inputs
+- [ ] SQL injection prevention (parameterized queries)
+- [ ] XSS prevention (output encoding)
+- [ ] CSRF protection enabled
+- [ ] Authentication required for all endpoints
+- [ ] Authorization checks for data access
+${IF_MULTI_TENANT}- [ ] Tenant isolation verified${END_IF}
+- [ ] Sensitive data encrypted
+- [ ] Security headers configured
+- [ ] Dependencies regularly updated
+
+### Secure Coding Practices
+
+${FOREACH_SECURITY_PRACTICE}
+**${PRACTICE_NAME}**
+```${CODE_LANGUAGE}
+${PRACTICE_EXAMPLE}
+```
+
+${END_FOREACH}
+
+## Deployment
+
+### Build Process
+
+```bash
+# Development build
+${BUILD_DEV_COMMAND}
+
+# Production build
+${BUILD_PROD_COMMAND}
+
+# Docker build
+${BUILD_DOCKER_COMMAND}
+```
+
+### Environment Configuration
+
+**Required Environment Variables**:
+${FOREACH_ENV_VAR}
+- `${ENV_VAR_NAME}`: ${ENV_VAR_DESCRIPTION}
+${END_FOREACH}
+
+### Health Checks
+
+Ensure your service implements:
+- `/health` - Basic health check
+- `/health/ready` - Readiness check
+- `/health/live` - Liveness check
+
+## Monitoring
+
+### Application Metrics
+
+Key metrics to track:
+${FOREACH_METRIC}
+- **${METRIC_NAME}**: ${METRIC_DESCRIPTION}
+${END_FOREACH}
+
+### Error Tracking
+
+Errors are automatically reported to ${ERROR_TRACKING_SERVICE}.
+
+**Manual Error Reporting**:
+```${CODE_LANGUAGE}
+${ERROR_REPORTING_EXAMPLE}
+```
+
+## Tools & Resources
+
+### Development Tools
+
+${FOREACH_DEV_TOOL}
+- **${TOOL_NAME}**: ${TOOL_DESCRIPTION}
+  - Installation: `${TOOL_INSTALL}`
+  - Usage: ${TOOL_USAGE}
+${END_FOREACH}
+
+### Useful Commands
+
+```bash
+# Development
+${USEFUL_DEV_COMMANDS}
+
+# Testing
+${USEFUL_TEST_COMMANDS}
+
+# Database
+${USEFUL_DB_COMMANDS}
+
+# Deployment
+${USEFUL_DEPLOY_COMMANDS}
+```
+
+### Documentation
+
+- [API Documentation](./api-docs/)
+- [Architecture Guide](./architecture/)
+- [Troubleshooting Guide](./troubleshooting/)
+- [Security Guidelines](./security/)
+
+### External Resources
+
+${FOREACH_RESOURCE}
+- [${RESOURCE_NAME}](${RESOURCE_URL}): ${RESOURCE_DESCRIPTION}
+${END_FOREACH}
+
+---
+
+*Generated by Claudify - Development guides that grow with your team*

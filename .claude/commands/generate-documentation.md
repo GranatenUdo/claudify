@@ -37,6 +37,42 @@ Analysis Framework:
   Special Requirements: [Diagrams|Examples|i18n|Versioning]
 ```
 
+### Template System Detection
+I'll check if we can use our intelligent documentation templates:
+
+@Task(description="Check template availability", prompt="Check if the project has Claudify documentation templates available:
+1. Look for .claude/templates/documentation/ directory
+2. Check for documentation-generator.ps1
+3. Verify project analysis cache exists
+4. List available template types
+
+If templates are available, we can generate much more comprehensive documentation automatically.")
+
+## Phase 1.5: Template-Based Generation (If Available)
+
+### Automated Documentation Generation
+If Claudify templates are detected, I'll use our intelligent documentation system:
+
+@Bash(command="pwsh .claude/templates/documentation/documentation-generator.ps1 -DocumentType '$Analysis.DocumentationType' -Interactive", description="Generate documentation using templates")
+
+This provides:
+- **Automatic project analysis**: Detects tech stack, patterns, and architecture
+- **Smart variable substitution**: Fills templates with actual project data
+- **Conditional content**: Includes/excludes sections based on features
+- **Consistent formatting**: Professional documentation structure
+- **Multiple output types**: API, architecture, development, troubleshooting guides
+
+### Template Customization
+If templates need adjustment for specific requirements:
+
+@Task(description="Customize templates", prompt="Based on $ARGUMENTS, identify which template sections need customization:
+1. Additional sections required beyond standard templates
+2. Project-specific patterns to highlight
+3. Custom examples or use cases needed
+4. Special formatting requirements
+
+Provide specific edits to make to the generated documentation.")
+
 ## Phase 2: Documentation Research & Planning
 
 ### Comprehensive Analysis
@@ -498,6 +534,13 @@ Maintenance Plan:
 - **Time to First Success**: Under 5 minutes
 - **Documentation Debt**: Eliminated
 
+### Intelligent Documentation Evolution
+With Claudify's template system, documentation:
+- **Self-updates**: Analyzes codebase changes and suggests updates
+- **Adapts**: Adjusts to your tech stack and patterns automatically
+- **Scales**: From quick starts to comprehensive enterprise docs
+- **Maintains**: Includes lifecycle management and versioning
+
 ---
 
-**Remember**: Great documentation doesn't just explain code—it empowers success. By combining comprehensive coverage with clear explanations and practical examples, we create documentation that serves as a force multiplier for development productivity.
+**Remember**: Great documentation doesn't just explain code—it empowers success. By combining comprehensive coverage with clear explanations and practical examples, we create documentation that serves as a force multiplier for development productivity. With Claudify templates, this excellence becomes sustainable and scalable.

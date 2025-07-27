@@ -1,0 +1,112 @@
+{
+  "templates": {
+    "api-documentation": {
+      "name": "API Documentation",
+      "description": "Comprehensive REST API reference with examples",
+      "file": "api-documentation.md.template",
+      "requiredAnalysis": ["API", "Security", "TechStack"],
+      "variables": {
+        "API_VERSION": {
+          "default": "v1",
+          "source": "analysis.API.Version"
+        },
+        "AUTH_METHOD": {
+          "source": "analysis.Security.AuthMethod",
+          "default": "JWT"
+        },
+        "TENANT_FIELD": {
+          "source": "analysis.Patterns.TenantField",
+          "default": "OrganizationId"
+        }
+      }
+    },
+    "architecture-guide": {
+      "name": "Architecture Guide",
+      "description": "System architecture, patterns, and design decisions",
+      "file": "architecture-guide.md.template",
+      "requiredAnalysis": ["Architecture", "TechStack", "Patterns"],
+      "variables": {
+        "ARCHITECTURE_STYLE": {
+          "source": "analysis.Architecture.Style",
+          "default": "Microservices"
+        },
+        "DEPLOYMENT_MODEL": {
+          "default": "Cloud-native",
+          "options": ["Cloud-native", "On-premise", "Hybrid"]
+        }
+      }
+    },
+    "development-guide": {
+      "name": "Development Guide",
+      "description": "Setup, coding standards, and development workflow",
+      "file": "development-guide.md.template",
+      "requiredAnalysis": ["TechStack", "Testing"],
+      "conditionals": {
+        "DOTNET": "analysis.TechStack.Backend.Primary == '.NET'",
+        "NODEJS": "analysis.TechStack.Backend.Primary == 'Node.js'",
+        "ANGULAR": "analysis.TechStack.Frontend.Framework == 'Angular'",
+        "REACT": "analysis.TechStack.Frontend.Framework == 'React'"
+      }
+    },
+    "troubleshooting-guide": {
+      "name": "Troubleshooting Guide",
+      "description": "Common issues, solutions, and debugging procedures",
+      "file": "troubleshooting-guide.md.template",
+      "requiredAnalysis": ["TechStack"],
+      "dynamicSections": {
+        "commonIssues": {
+          "source": "analysis.CommonIssues",
+          "generator": "generateCommonIssues"
+        }
+      }
+    }
+  },
+  "variableMappings": {
+    "global": {
+      "PROJECT_NAME": "analysis.ProjectName",
+      "PROJECT_DESCRIPTION": "analysis.Description",
+      "BACKEND_TECH": "analysis.TechStack.Backend.Primary",
+      "FRONTEND_TECH": "analysis.TechStack.Frontend.Primary",
+      "PRIMARY_DB": "analysis.TechStack.Database.Primary",
+      "MULTI_TENANT": "analysis.Patterns.MultiTenant",
+      "REPOSITORY_PATTERN": "analysis.Patterns.RepositoryPattern",
+      "RESULT_PATTERN": "analysis.Patterns.ResultPattern"
+    }
+  },
+  "conditionalLogic": {
+    "IF_MULTI_TENANT": {
+      "condition": "analysis.Patterns.MultiTenant === true",
+      "includeVariables": ["TENANT_FIELD", "TENANT_CLAIM", "TENANT_ID_TYPE"]
+    },
+    "IF_DOTNET": {
+      "condition": "analysis.TechStack.Backend.Primary === '.NET'",
+      "includeVariables": ["DOTNET_VERSION", "EF_COMMANDS", "CSPROJ_EXAMPLES"]
+    },
+    "IF_NODEJS": {
+      "condition": "analysis.TechStack.Frontend.Primary !== null || analysis.TechStack.Backend.Framework.includes('Node')",
+      "includeVariables": ["NPM_SCRIPTS", "PACKAGE_JSON_EXAMPLES"]
+    }
+  },
+  "generators": {
+    "generateEndpointTOC": {
+      "description": "Generate table of contents for API endpoints",
+      "input": "analysis.API.Controllers",
+      "template": "- [{controller}](#{controller_lower})"
+    },
+    "generateControllerDocs": {
+      "description": "Generate documentation for each controller",
+      "input": "analysis.API.Controllers",
+      "template": "controller-section.md.partial"
+    }
+  },
+  "customizations": {
+    "vineyard": {
+      "description": "Vineyard management specific customizations",
+      "additionalVariables": {
+        "COORDINATE_SYSTEM": "ETRS89 (EPSG:4258)",
+        "AREA_UNITS": "hectares",
+        "IMPORT_FORMATS": ["iBALIS", "KML", "GeoJSON"]
+      }
+    }
+  }
+}
