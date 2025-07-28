@@ -1,6 +1,9 @@
 {
+  "claudifyVersion": "1.0.0",
   "version": "1.0.0",
-  "lastUpdated": "2025-01-27",
+  "releaseDate": "2025-07-27",
+  "lastUpdated": "2025-07-27",
+  "minimumClaudeCodeVersion": "1.0.0",
   "components": {
     "agents": [
       {

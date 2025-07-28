@@ -1,5 +1,8 @@
 # Claudify - Claude Code Intelligent Setup
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Released](https://img.shields.io/badge/released-2025--07--27-green)
+
 **Minimal Setup, Maximum Intelligence**
 
 Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Instead of copying dozens of files, it uses a streamlined two-step approach that lets Claude Code analyze your project and install only what you need.
@@ -17,6 +20,12 @@ Claudify provides an intelligent, minimal-footprint setup process for initializi
 # From claudify directory:
 pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 ```
+
+The setup script will:
+- Create/update `.gitignore` to exclude the `.claudify` folder
+- Copy all claudify resources to `.claudify` (persists for future updates)
+- Copy minimal initialization command to `.claude/commands/`
+- Prepare everything for intelligent component selection
 
 Then in your repository:
 ```bash
@@ -160,6 +169,16 @@ Everything available (~40+ components):
 - Advanced generators
 - Complete hook system
 
+## 🔄 Re-running Setup
+
+The `.claudify` directory persists in your repository (git-ignored) to allow:
+- **Re-initialization**: Run `/init-claudify` again with different options
+- **Mode Changes**: Switch between minimal/standard/comprehensive setups
+- **Updates**: Get newer versions of components when available
+- **Experimentation**: Try different configurations without re-running setup.ps1
+
+Simply run `/init-claudify` again at any time to reconfigure your Claude Code environment.
+
 ## 📝 Changelog Integration
 
 Claudify includes automatic changelog management:
@@ -181,6 +200,12 @@ Claudify includes automatic changelog management:
 
 ### All Platforms
 - Write permissions to target directory
+
+## 📚 Additional Documentation
+
+- [CHANGELOG.md](CHANGELOG.md) - Version history and release notes
+- [VERSIONING.md](VERSIONING.md) - Versioning strategy and release process
+- [SETUP-GUIDE.md](SETUP-GUIDE.md) - Detailed setup documentation
 
 ---
 
