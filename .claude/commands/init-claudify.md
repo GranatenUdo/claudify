@@ -13,6 +13,12 @@ category: setup
 
 I'll analyze your repository and set up a complete Claude Code environment tailored to your project: **$ARGUMENTS**
 
+## 📌 Claudify Version Check
+
+@Bash(command="test -f .claudify/VERSION && echo \"Claudify Version: $(cat .claudify/VERSION)\" || echo \"Claudify Version: Unknown\"", description="Check Claudify version")
+
+@Read(file_path=".claudify/components-manifest.json", limit=6)
+
 ## Phase 1: Repository Analysis
 
 Let me analyze your repository structure to understand your technology stack and patterns.
@@ -118,15 +124,15 @@ Now I'll set up your Claude Code environment:
 
 I'll use the claudify resources that were copied during setup:
 
-@Bash(command="test -d .claudify-temp && echo '✅ Claudify resources found' || echo '❌ Missing claudify resources - please run setup.ps1 first'", description="Check for claudify resources")
+@Bash(command="test -d .claudify && echo '✅ Claudify resources found' || echo '❌ Missing claudify resources - please run setup.ps1 first'", description="Check for claudify resources")
 
 Let me verify the temporary resources are complete:
 
-@Bash(command="test -f .claudify-temp/components-manifest.json && echo '✅ Components manifest found' || echo '❌ Missing components manifest'", description="Verify manifest exists")
+@Bash(command="test -f .claudify/components-manifest.json && echo '✅ Components manifest found' || echo '❌ Missing components manifest'", description="Verify manifest exists")
 
 Now reading the components manifest:
 
-@Read(file_path=".claudify-temp/components-manifest.json")
+@Read(file_path=".claudify/components-manifest.json")
 
 ### Installing Selected Components
 
@@ -137,68 +143,68 @@ Based on your selection, I'll now copy the components:
 #### Installing Core Commands
 These essential commands will be installed for all projects:
 
-@Bash(command="cp '.claudify-temp/.claude/commands/comprehensive-review.md' .claude/commands/", description="Copy comprehensive review command")
-@Bash(command="cp '.claudify-temp/.claude/commands/do-extensive-research.md' .claude/commands/", description="Copy extensive research command")  
-@Bash(command="cp '.claudify-temp/.claude/commands/quick-research.md' .claude/commands/", description="Copy quick research command")
-@Bash(command="cp '.claudify-temp/.claude/commands/create-command-and-or-agent.md' .claude/commands/", description="Copy meta-generator command")
-@Bash(command="cp '.claudify-temp/.claude/commands/update-changelog.md' .claude/commands/", description="Copy changelog update command")
+@Bash(command="cp '.claudify/.claude/commands/comprehensive-review.md' .claude/commands/", description="Copy comprehensive review command")
+@Bash(command="cp '.claudify/.claude/commands/do-extensive-research.md' .claude/commands/", description="Copy extensive research command")  
+@Bash(command="cp '.claudify/.claude/commands/quick-research.md' .claude/commands/", description="Copy quick research command")
+@Bash(command="cp '.claudify/.claude/commands/create-command-and-or-agent.md' .claude/commands/", description="Copy meta-generator command")
+@Bash(command="cp '.claudify/.claude/commands/update-changelog.md' .claude/commands/", description="Copy changelog update command")
 
 #### Installing Backend Components (if backend detected)
-@Bash(command="cp '.claudify-temp/.claude/commands/add-backend-feature.md' .claude/commands/", description="Copy add backend feature command")
-@Bash(command="cp '.claudify-temp/.claude/commands/fix-backend-bug.md' .claude/commands/", description="Copy fix backend bug command")
-@Bash(command="cp '.claudify-temp/.claude/commands/review-backend-code.md' .claude/commands/", description="Copy review backend code command")
-@Bash(command="cp '.claudify-temp/.claude/commands/fix-backend-build-and-tests.md' .claude/commands/", description="Copy fix backend build command")
+@Bash(command="cp '.claudify/.claude/commands/add-backend-feature.md' .claude/commands/", description="Copy add backend feature command")
+@Bash(command="cp '.claudify/.claude/commands/fix-backend-bug.md' .claude/commands/", description="Copy fix backend bug command")
+@Bash(command="cp '.claudify/.claude/commands/review-backend-code.md' .claude/commands/", description="Copy review backend code command")
+@Bash(command="cp '.claudify/.claude/commands/fix-backend-build-and-tests.md' .claude/commands/", description="Copy fix backend build command")
 
 #### Installing Frontend Components (if frontend detected)
-@Bash(command="cp '.claudify-temp/.claude/commands/add-frontend-feature.md' .claude/commands/", description="Copy add frontend feature command")
-@Bash(command="cp '.claudify-temp/.claude/commands/fix-frontend-bug.md' .claude/commands/", description="Copy fix frontend bug command")
-@Bash(command="cp '.claudify-temp/.claude/commands/review-frontend-code.md' .claude/commands/", description="Copy review frontend code command")
-@Bash(command="cp '.claudify-temp/.claude/commands/fix-frontend-build-and-tests.md' .claude/commands/", description="Copy fix frontend build command")
-@Bash(command="cp '.claudify-temp/.claude/agents/frontend-developer.md' .claude/agents/", description="Copy frontend developer agent")
+@Bash(command="cp '.claudify/.claude/commands/add-frontend-feature.md' .claude/commands/", description="Copy add frontend feature command")
+@Bash(command="cp '.claudify/.claude/commands/fix-frontend-bug.md' .claude/commands/", description="Copy fix frontend bug command")
+@Bash(command="cp '.claudify/.claude/commands/review-frontend-code.md' .claude/commands/", description="Copy review frontend code command")
+@Bash(command="cp '.claudify/.claude/commands/fix-frontend-build-and-tests.md' .claude/commands/", description="Copy fix frontend build command")
+@Bash(command="cp '.claudify/.claude/agents/frontend-developer.md' .claude/agents/", description="Copy frontend developer agent")
 
 #### Installing Essential Agents
-@Bash(command="cp '.claudify-temp/.claude/agents/code-reviewer.md' .claude/agents/", description="Copy code reviewer agent")
+@Bash(command="cp '.claudify/.claude/agents/code-reviewer.md' .claude/agents/", description="Copy code reviewer agent")
 
 #### Installing Security Components (if multi-tenant detected)
-@Bash(command="cp '.claudify-temp/.claude/agents/security-reviewer.md' .claude/agents/", description="Copy security reviewer agent")
-@Bash(command="cp '.claudify-temp/.claude/hooks/check-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant scoping validation hook")
+@Bash(command="cp '.claudify/.claude/agents/security-reviewer.md' .claude/agents/", description="Copy security reviewer agent")
+@Bash(command="cp '.claudify/.claude/hooks/check-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant scoping validation hook")
 
 #### Installing Generators
 @Bash(command="mkdir -p .claude/generators", description="Create generators directory")
-@Bash(command="cp '.claudify-temp/templates/generators/command-generator.ps1' .claude/generators/", description="Copy command generator")
-@Bash(command="cp '.claudify-temp/templates/generators/agent-generator.ps1' .claude/generators/", description="Copy agent generator")
-@Bash(command="cp '.claudify-temp/templates/generators/hook-generator.ps1' .claude/generators/", description="Copy hook generator")
-@Bash(command="cp '.claudify-temp/templates/META-GENERATOR-README.md' .claude/generators/README.md", description="Copy generator documentation")
+@Bash(command="cp '.claudify/templates/generators/command-generator.ps1' .claude/generators/", description="Copy command generator")
+@Bash(command="cp '.claudify/templates/generators/agent-generator.ps1' .claude/generators/", description="Copy agent generator")
+@Bash(command="cp '.claudify/templates/generators/hook-generator.ps1' .claude/generators/", description="Copy hook generator")
+@Bash(command="cp '.claudify/templates/META-GENERATOR-README.md' .claude/generators/README.md", description="Copy generator documentation")
 
 #### Installing Agent Tools
 @Bash(command="mkdir -p .claude/agent-tools", description="Create agent tools directory")
-@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/security-reviewer' .claude/agent-tools/", description="Copy security analysis tools")
-@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/", description="Copy technical debt tools")
-@Bash(command="cp -r '.claudify-temp/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/", description="Copy infrastructure tools")
-@Bash(command="cp '.claudify-temp/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/", description="Copy agent tools config")
+@Bash(command="cp -r '.claudify/.claude/agent-tools/security-reviewer' .claude/agent-tools/", description="Copy security analysis tools")
+@Bash(command="cp -r '.claudify/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/", description="Copy technical debt tools")
+@Bash(command="cp -r '.claudify/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/", description="Copy infrastructure tools")
+@Bash(command="cp '.claudify/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/", description="Copy agent tools config")
 
 #### Installing Enhanced Hooks
-@Bash(command="cp '.claudify-temp/.claude/hooks/add-context.ps1' .claude/hooks/", description="Copy context enhancement hook")
-@Bash(command="cp '.claudify-temp/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/", description="Copy pre-commit quality hook")
-@Bash(command="cp '.claudify-temp/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant validation hook")
-@Bash(command="cp '.claudify-temp/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/", description="Copy changelog reminder hook")
-@Bash(command="cp '.claudify-temp/.claude/hooks/hooks-config.json' .claude/hooks/", description="Copy hooks configuration")
-@Bash(command="cp '.claudify-temp/.claude/hooks/install-hooks.ps1' .claude/hooks/", description="Copy hooks installer")
+@Bash(command="cp '.claudify/.claude/hooks/add-context.ps1' .claude/hooks/", description="Copy context enhancement hook")
+@Bash(command="cp '.claudify/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/", description="Copy pre-commit quality hook")
+@Bash(command="cp '.claudify/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant validation hook")
+@Bash(command="cp '.claudify/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/", description="Copy changelog reminder hook")
+@Bash(command="cp '.claudify/.claude/hooks/hooks-config.json' .claude/hooks/", description="Copy hooks configuration")
+@Bash(command="cp '.claudify/.claude/hooks/install-hooks.ps1' .claude/hooks/", description="Copy hooks installer")
 
 #### Installing Validation Tools
 @Bash(command="mkdir -p .claude/validation", description="Create validation directory")
-@Bash(command="cp '.claudify-temp/.claude/validation/architecture-validator.ps1' .claude/validation/", description="Copy architecture validator")
-@Bash(command="cp '.claudify-temp/.claude/validation/code-quality-validator.ps1' .claude/validation/", description="Copy code quality validator")
-@Bash(command="cp '.claudify-temp/.claude/validation/test-coverage-analyzer.ps1' .claude/validation/", description="Copy test coverage analyzer")
+@Bash(command="cp '.claudify/.claude/validation/architecture-validator.ps1' .claude/validation/", description="Copy architecture validator")
+@Bash(command="cp '.claudify/.claude/validation/code-quality-validator.ps1' .claude/validation/", description="Copy code quality validator")
+@Bash(command="cp '.claudify/.claude/validation/test-coverage-analyzer.ps1' .claude/validation/", description="Copy test coverage analyzer")
 
 #### Installing Documentation Templates
 @Bash(command="mkdir -p .claude/templates/documentation", description="Create documentation templates directory")
-@Bash(command="cp '.claudify-temp/.claude/templates/documentation/*.template' .claude/templates/documentation/", description="Copy documentation templates")
-@Bash(command="cp '.claudify-temp/.claude/templates/documentation/documentation-generator.ps1' .claude/templates/documentation/", description="Copy documentation generator")
-@Bash(command="cp '.claudify-temp/.claude/templates/documentation/template-config.json' .claude/templates/documentation/", description="Copy template configuration")
+@Bash(command="cp '.claudify/.claude/templates/documentation/*.template' .claude/templates/documentation/", description="Copy documentation templates")
+@Bash(command="cp '.claudify/.claude/templates/documentation/documentation-generator.ps1' .claude/templates/documentation/", description="Copy documentation generator")
+@Bash(command="cp '.claudify/.claude/templates/documentation/template-config.json' .claude/templates/documentation/", description="Copy template configuration")
 
 #### Copying Additional Resources
-@Bash(command="cp '.claudify-temp/.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md' .claude/", description="Copy design guidelines")
+@Bash(command="cp '.claudify/.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md' .claude/", description="Copy design guidelines")
 
 ### Verifying Installation
 
@@ -291,13 +297,14 @@ Based on my analysis, I'll create a customized CLAUDE.md for your project:
 
 @TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "completed", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "completed", "priority": "high", "id": "setup-5"}])
 
-### Cleaning Up Temporary Files
+### Keeping Claudify Resources for Future Updates
 
-Now I'll remove the temporary claudify resources that were used during setup:
+The `.claudify` directory will remain in your repository (excluded from git via .gitignore) to allow for:
+- Re-running `/init-claudify` with different configurations
+- Updating components when new versions are available
+- Switching between minimal/standard/comprehensive setups
 
-@Bash(command="rm -rf .claudify-temp", description="Remove temporary claudify resources")
-
-@TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "completed", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "completed", "priority": "high", "id": "setup-5"}, {"content": "Clean up temporary files", "status": "completed", "priority": "high", "id": "setup-6"}])
+@TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "completed", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "completed", "priority": "high", "id": "setup-5"}])
 
 ## ✅ Setup Complete!
 
@@ -365,7 +372,18 @@ Happy coding with Claude Code! 🚀
 ### Troubleshooting
 
 If you encounter issues:
-1. Ensure the claudify path is correct
+1. Ensure the .claudify directory exists (created by setup.ps1)
 2. Check file permissions in .claude directory
-3. Re-run this command with the correct path
-4. Report issues at the claudify repository
+3. Re-run `/init-claudify` to reconfigure your setup
+4. The .claudify directory persists to allow updates - no manual cleanup needed
+5. Report issues at the claudify repository
+
+### Re-running Setup
+
+You can safely re-run `/init-claudify` at any time to:
+- Change your setup mode (minimal/standard/comprehensive)
+- Update to newer versions of components
+- Add components after initial setup
+- Refresh your configuration
+
+The .claudify directory contains all available components and will remain in your repository for future use.

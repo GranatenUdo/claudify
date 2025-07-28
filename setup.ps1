@@ -17,6 +17,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Get version
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$versionFile = Join-Path $scriptDir "VERSION"
+$version = if (Test-Path $versionFile) { Get-Content $versionFile -Raw -ErrorAction SilentlyContinue | ForEach-Object { $_.Trim() } } else { "unknown" }
+
 # Display Claudify banner
 Write-Host "`n"
 Write-Host "     ██████╗██╗      █████╗ ██╗   ██╗██████╗ ██╗███████╗██╗   ██╗" -ForegroundColor Cyan
@@ -26,11 +31,16 @@ Write-Host "    ██║     ██║     ██╔══██║██║   
 Write-Host "    ╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝██║██║        ██║   " -ForegroundColor Cyan
 Write-Host "     ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚═╝        ╚═╝   " -ForegroundColor Cyan
 Write-Host "`n    Intelligent Claude Code Setup for Your Repository" -ForegroundColor White
+Write-Host "    Version $version" -ForegroundColor DarkGray
 Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
 Write-Host "`n"
 Write-Host "    $ whoami" -ForegroundColor Yellow
 Write-Host "    > GranatenUdo | Tobias Ens" -ForegroundColor Yellow
 Write-Host "    > Claudify - Smart Claude Code Setup" -ForegroundColor Yellow
+Write-Host "`n"
+Write-Host "    ⚠️  Version Disclaimer:" -ForegroundColor DarkYellow
+Write-Host "    This is Claudify v$version - Check for updates regularly" -ForegroundColor DarkGray
+Write-Host "    https://github.com/yourorg/claudify/releases" -ForegroundColor DarkGray
 Write-Host "`n"
 
 # Sanitize the target repository path
@@ -80,7 +90,6 @@ Write-Host "`nCreating Claude Code directory structure..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Path $commandsPath -Force | Out-Null
 
 # Copy the init command from claudify
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $initCommand = Join-Path $scriptDir ".claude" "commands" "init-claudify.md"
 $destPath = Join-Path $commandsPath "init-claudify.md"
 
@@ -93,9 +102,36 @@ if (-not (Test-Path $initCommand)) {
 Write-Host "Copying initialization command..." -ForegroundColor Cyan
 Copy-Item $initCommand -Destination $destPath -Force
 
+# Handle .gitignore
+$gitignorePath = Join-Path $TargetRepository ".gitignore"
+Write-Host "Checking .gitignore..." -ForegroundColor Cyan
+
+$gitignoreUpdated = $false
+if (Test-Path $gitignorePath) {
+    # Read existing .gitignore
+    $gitignoreContent = Get-Content $gitignorePath -Raw
+    if ($gitignoreContent -notmatch '\.claudify') {
+        # Add .claudify if not already present
+        Write-Host "  - Adding .claudify to existing .gitignore" -ForegroundColor DarkGray
+        Add-Content -Path $gitignorePath -Value "`n# Claudify temporary resources`n.claudify" -NoNewline
+        $gitignoreUpdated = $true
+    } else {
+        Write-Host "  - .claudify already in .gitignore" -ForegroundColor DarkGray
+    }
+} else {
+    # Create new .gitignore
+    Write-Host "  - Creating .gitignore with .claudify exclusion" -ForegroundColor DarkGray
+    Set-Content -Path $gitignorePath -Value "# Claudify temporary resources`n.claudify" -NoNewline
+    $gitignoreUpdated = $true
+}
+
+if ($gitignoreUpdated) {
+    Write-Host "✓ .gitignore updated successfully" -ForegroundColor Green
+}
+
 # Create temporary claudify resources directory
-$tempClaudifyPath = Join-Path $TargetRepository ".claudify-temp"
-Write-Host "Copying claudify resources temporarily..." -ForegroundColor Cyan
+$tempClaudifyPath = Join-Path $TargetRepository ".claudify"
+Write-Host "`nCopying claudify resources to .claudify directory..." -ForegroundColor Cyan
 
 # Copy entire claudify directory structure (excluding .git and other unnecessary files)
 New-Item -ItemType Directory -Path $tempClaudifyPath -Force | Out-Null
@@ -117,6 +153,14 @@ if (Test-Path $sourceManifest) {
     Copy-Item -Path $sourceManifest -Destination $destManifest -Force
 }
 
+# Copy VERSION file
+$sourceVersion = Join-Path $scriptDir "VERSION"
+$destVersion = Join-Path $tempClaudifyPath "VERSION"
+if (Test-Path $sourceVersion) {
+    Write-Host "  - Copying version file..." -ForegroundColor DarkGray
+    Copy-Item -Path $sourceVersion -Destination $destVersion -Force
+}
+
 # Copy templates directory
 $sourceTemplates = Join-Path $scriptDir "templates"
 $destTemplates = Join-Path $tempClaudifyPath "templates"
@@ -125,7 +169,9 @@ if (Test-Path $sourceTemplates) {
     Copy-Item -Path $sourceTemplates -Destination $destTemplates -Recurse -Force
 }
 
-Write-Host "Temporary claudify resources copied successfully!" -ForegroundColor Green
+Write-Host "Claudify resources copied to .claudify successfully!" -ForegroundColor Green
+Write-Host "Note: .claudify is excluded from git via .gitignore" -ForegroundColor DarkGray
+Write-Host "      This directory will persist to allow re-running /init-claudify" -ForegroundColor DarkGray
 
 # Display success message and instructions
 Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray

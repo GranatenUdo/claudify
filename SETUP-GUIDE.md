@@ -39,11 +39,14 @@ In Claude Code:
 
 ### Step 1: Minimal Setup Script (setup.ps1)
 
-The PowerShell script (~50 lines) performs these simple tasks:
-1. Validates the target repository exists
-2. Creates `.claude/commands` directory
-3. Copies only the `init-claudify` command
-4. Displays clear instructions for next steps
+The PowerShell script performs these tasks:
+1. Validates the target repository exists (creates if needed)
+2. Creates/updates `.gitignore` to exclude `.claudify`
+3. Copies all claudify resources to `.claudify` directory
+4. Copies only the `init-claudify` command to `.claude/commands`
+5. Displays clear instructions for next steps
+
+**Note**: The `.claudify` directory persists to allow re-running `/init-claudify`
 
 ### Step 2: Intelligent Initialization (in Claude Code)
 
