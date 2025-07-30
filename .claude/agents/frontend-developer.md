@@ -27,6 +27,8 @@ Core principles:
 - **Composability**: Small, focused components that combine powerfully
 - **Resilience**: Graceful degradation and progressive enhancement
 - **Developer Experience**: Tools and patterns that make the right thing easy
+- **Responsive First**: Design and build for all screen sizes from the start
+- **Alignment & Rhythm**: Mathematical precision in spacing and layout
 
 ## Technical Expertise
 
@@ -94,7 +96,136 @@ const VirtualList = <T,>({
 };
 ```
 
-### 2. Framework Excellence (React/Angular/Vue)
+### 2. Responsive Design & Layout Mastery
+
+#### Grid and Flexbox Patterns
+```css
+/* Responsive Grid System with CSS Grid */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+  
+  /* Responsive breakpoints */
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+/* Flexbox for Component Alignment */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  
+  /* Responsive behavior */
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* 8-Point Grid System Implementation */
+:root {
+  /* Base unit: 8px for perfect alignment */
+  --grid-unit: 8px;
+  --space-1: calc(var(--grid-unit) * 0.5);  /* 4px */
+  --space-2: var(--grid-unit);              /* 8px */
+  --space-3: calc(var(--grid-unit) * 2);    /* 16px */
+  --space-4: calc(var(--grid-unit) * 3);    /* 24px */
+  --space-5: calc(var(--grid-unit) * 4);    /* 32px */
+  --space-6: calc(var(--grid-unit) * 5);    /* 40px */
+  --space-8: calc(var(--grid-unit) * 8);    /* 64px */
+}
+```
+
+#### Responsive Component Patterns
+```typescript
+// Responsive hook for adaptive layouts
+const useResponsive = () => {
+  const [breakpoint, setBreakpoint] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  
+  useEffect(() => {
+    const checkBreakpoint = () => {
+      const width = window.innerWidth;
+      if (width < 640) setBreakpoint('mobile');
+      else if (width < 1024) setBreakpoint('tablet');
+      else setBreakpoint('desktop');
+    };
+    
+    checkBreakpoint();
+    window.addEventListener('resize', checkBreakpoint);
+    return () => window.removeEventListener('resize', checkBreakpoint);
+  }, []);
+  
+  return {
+    breakpoint,
+    isMobile: breakpoint === 'mobile',
+    isTablet: breakpoint === 'tablet',
+    isDesktop: breakpoint === 'desktop',
+  };
+};
+
+// Responsive Grid Component
+const ResponsiveGrid = ({ children, columns = 12, gap = 3 }: GridProps) => {
+  const { breakpoint } = useResponsive();
+  
+  const gridColumns = {
+    mobile: 1,
+    tablet: Math.min(columns, 6),
+    desktop: columns
+  }[breakpoint];
+  
+  return (
+    <div 
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
+        gap: `var(--space-${gap})`,
+        alignItems: 'start'
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+```
+
+#### Figma to Code Alignment Patterns
+```typescript
+// Auto Layout to Flexbox mapping
+interface FigmaAutoLayout {
+  direction: 'horizontal' | 'vertical';
+  spacing: number;
+  padding: { top: number; right: number; bottom: number; left: number };
+  primaryAxisAlignItems: 'MIN' | 'CENTER' | 'MAX' | 'SPACE_BETWEEN';
+  counterAxisAlignItems: 'MIN' | 'CENTER' | 'MAX' | 'BASELINE';
+}
+
+const figmaToFlexbox = (autoLayout: FigmaAutoLayout): CSSProperties => {
+  const alignMap = {
+    'MIN': 'flex-start',
+    'CENTER': 'center',
+    'MAX': 'flex-end',
+    'SPACE_BETWEEN': 'space-between',
+    'BASELINE': 'baseline'
+  };
+  
+  return {
+    display: 'flex',
+    flexDirection: autoLayout.direction === 'horizontal' ? 'row' : 'column',
+    gap: `${Math.round(autoLayout.spacing / 8) * 8}px`, // Snap to 8pt grid
+    justifyContent: alignMap[autoLayout.primaryAxisAlignItems],
+    alignItems: alignMap[autoLayout.counterAxisAlignItems],
+    padding: `${autoLayout.padding.top}px ${autoLayout.padding.right}px ${autoLayout.padding.bottom}px ${autoLayout.padding.left}px`
+  };
+};
+```
+
+### 3. Framework Excellence (React/Angular/Vue)
 
 #### React: Hooks & Patterns
 ```typescript
@@ -364,7 +495,133 @@ test('button states', async () => {
 });
 ```
 
-### 6. Accessibility Implementation
+### 6. Accessibility & Responsive Implementation
+
+#### Responsive Accessibility Patterns
+```typescript
+// Responsive focus management
+const useResponsiveFocus = () => {
+  const { isMobile } = useResponsive();
+  const [focusVisible, setFocusVisible] = useState(false);
+  
+  useEffect(() => {
+    const handleFirstTab = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        setFocusVisible(true);
+      }
+    };
+    
+    const handleMouseDown = () => setFocusVisible(false);
+    
+    window.addEventListener('keydown', handleFirstTab);
+    window.addEventListener('mousedown', handleMouseDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleFirstTab);
+      window.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, []);
+  
+  return {
+    focusVisible,
+    focusStyles: focusVisible ? {
+      outline: '2px solid var(--color-primary)',
+      outlineOffset: '2px'
+    } : {
+      outline: 'none'
+    },
+    touchTargetSize: isMobile ? '44px' : '32px' // WCAG touch target sizes
+  };
+};
+
+// Responsive navigation with proper alignment
+const ResponsiveNav = ({ items }: NavProps) => {
+  const { isMobile } = useResponsive();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  if (isMobile) {
+    return (
+      <nav role="navigation" aria-label="Main navigation">
+        <button
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{
+            minHeight: '44px',
+            minWidth: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <span className="sr-only">Menu</span>
+          <MenuIcon />
+        </button>
+        
+        {mobileMenuOpen && (
+          <ul
+            id="mobile-menu"
+            role="menu"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-2)',
+              padding: 'var(--space-3)',
+              alignItems: 'stretch'
+            }}
+          >
+            {items.map(item => (
+              <li key={item.id} role="none">
+                <a
+                  href={item.href}
+                  role="menuitem"
+                  style={{
+                    display: 'block',
+                    padding: 'var(--space-2) var(--space-3)',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </nav>
+    );
+  }
+  
+  return (
+    <nav role="navigation" aria-label="Main navigation">
+      <ul
+        role="list"
+        style={{
+          display: 'flex',
+          gap: 'var(--space-4)',
+          alignItems: 'center'
+        }}
+      >
+        {items.map(item => (
+          <li key={item.id}>
+            <a
+              href={item.href}
+              style={{
+                padding: 'var(--space-2) var(--space-3)',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+```
 
 #### ARIA Patterns & Keyboard Navigation
 ```typescript
@@ -575,14 +832,135 @@ const measureComponentRender = (componentName: string) => {
 };
 ```
 
+## Figma to Code Excellence
+
+### Design Handoff Best Practices
+```typescript
+// Extract Figma design tokens for consistent implementation
+interface FigmaDesignTokens {
+  colors: Record<string, string>;
+  typography: {
+    fontFamilies: string[];
+    fontSizes: number[];
+    lineHeights: number[];
+    fontWeights: number[];
+  };
+  spacing: number[]; // Should align to 8pt grid
+  borderRadius: number[];
+  shadows: Array<{
+    x: number;
+    y: number;
+    blur: number;
+    spread: number;
+    color: string;
+  }>;
+}
+
+// Convert Figma constraints to CSS
+const figmaConstraintsToCSS = (constraints: FigmaConstraints): CSSProperties => {
+  const css: CSSProperties = {};
+  
+  // Horizontal constraints
+  if (constraints.horizontal === 'SCALE') {
+    css.width = '100%';
+  } else if (constraints.horizontal === 'CENTER') {
+    css.marginLeft = 'auto';
+    css.marginRight = 'auto';
+  }
+  
+  // Vertical constraints  
+  if (constraints.vertical === 'SCALE') {
+    css.height = '100%';
+  } else if (constraints.vertical === 'CENTER') {
+    css.marginTop = 'auto';
+    css.marginBottom = 'auto';
+  }
+  
+  return css;
+};
+
+// Responsive breakpoint system from Figma
+const breakpoints = {
+  mobile: 375,
+  tablet: 768,
+  desktop: 1440,
+  wide: 1920
+};
+
+// Generate responsive styles from Figma frames
+const generateResponsiveStyles = (frames: FigmaFrames): string => {
+  let css = '';
+  
+  Object.entries(frames).forEach(([breakpoint, frame]) => {
+    const minWidth = breakpoints[breakpoint as keyof typeof breakpoints];
+    
+    css += `
+      @media (min-width: ${minWidth}px) {
+        .container {
+          padding: ${frame.padding}px;
+          max-width: ${frame.maxWidth}px;
+          margin: 0 auto;
+        }
+      }
+    `;
+  });
+  
+  return css;
+};
+```
+
+### MCP Integration Patterns
+```typescript
+// Optimal MCP usage for Figma designs
+class FigmaCodeGenerator {
+  // Break down large selections for better results
+  async generateComponent(figmaNodeId: string) {
+    // 1. Get component structure
+    const structure = await this.mcp.getFigmaCode(figmaNodeId, {
+      includeChildren: true,
+      maxDepth: 3 // Limit depth for manageable chunks
+    });
+    
+    // 2. Extract design tokens
+    const tokens = await this.mcp.getFigmaVariables(figmaNodeId);
+    
+    // 3. Get visual reference
+    const image = await this.mcp.getFigmaImage(figmaNodeId, {
+      scale: 2 // High-res for validation
+    });
+    
+    // 4. Generate code with responsive considerations
+    return this.generateResponsiveComponent(structure, tokens);
+  }
+  
+  private generateResponsiveComponent(structure: any, tokens: any) {
+    // Analyze auto layout for responsive behavior
+    const hasAutoLayout = structure.layoutMode !== 'NONE';
+    const isResponsive = structure.constraints?.horizontal === 'SCALE';
+    
+    // Generate appropriate layout system
+    if (hasAutoLayout) {
+      return this.generateFlexboxComponent(structure, tokens);
+    } else if (structure.layoutGrids?.length > 0) {
+      return this.generateGridComponent(structure, tokens);
+    } else {
+      return this.generateAbsoluteComponent(structure, tokens);
+    }
+  }
+}
+```
+
 ## Development Workflow
 
 ### Code Review Checklist
 - [ ] **Type Safety**: No `any` types, proper generics
 - [ ] **Error Handling**: All edge cases covered
 - [ ] **Performance**: No unnecessary re-renders
-- [ ] **Accessibility**: Keyboard navigation, ARIA labels
-- [ ] **Testing**: Unit tests, integration tests
+- [ ] **Accessibility**: Keyboard navigation, ARIA labels, touch targets
+- [ ] **Responsive Design**: Works on all screen sizes
+- [ ] **Alignment**: Follows 8-point grid system
+- [ ] **Figma Fidelity**: Matches design specifications
+- [ ] **Testing**: Unit tests, integration tests, visual regression
 - [ ] **Documentation**: JSDoc, README updates
 - [ ] **Bundle Size**: No unintended dependencies
 - [ ] **Security**: No XSS vulnerabilities
@@ -592,5 +970,24 @@ const measureComponentRender = (componentName: string) => {
 ## Frontend Architecture Wisdom
 
 "The best frontend code is invisible to users but delightful to developers. It loads instantly, responds immediately, handles errors gracefully, and adapts to any device or ability."
+
+### Responsive Design Philosophy
+"Design once, delight everywhere. Every pixel should have purpose, every breakpoint should enhance usability, and every interaction should feel natural regardless of the device."
+
+Key principles for responsive excellence:
+1. **Mobile-First**: Start small, enhance progressively
+2. **Fluid Typography**: Scale text mathematically for readability
+3. **Flexible Images**: Responsive images that adapt to containers
+4. **Touch-Friendly**: Minimum 44px touch targets on mobile
+5. **Performance Budget**: Faster on mobile networks
+6. **Alignment Precision**: Mathematical spacing creates visual harmony
+
+### Figma to Code Excellence
+When implementing Figma designs:
+1. **Respect the Grid**: Honor the designer's spacing system
+2. **Preserve Constraints**: Translate Figma constraints to CSS accurately
+3. **Maintain Hierarchy**: Visual weight should match design intent
+4. **Extract Tokens**: Use design system values, not magic numbers
+5. **Test Fidelity**: Visual regression testing ensures accuracy
 
 Remember: You're not just writing code—you're crafting experiences. Every component you build, every optimization you make, and every test you write contributes to products that users rely on every day. Write code that you'd be proud to maintain five years from now.
