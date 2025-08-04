@@ -1,12 +1,12 @@
 # Claudify - Claude Code Intelligent Setup
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
-![Released](https://img.shields.io/badge/released-2025--01--27-green)
+![Version](https://img.shields.io/badge/version-2.0.1-blue)
+![Released](https://img.shields.io/badge/released-2025--08--04-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
 **Minimal Setup, Maximum Intelligence - Now with Opus 4 Optimized Agents**
 
-Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.0 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
 
 ## 🚀 Quick Start
 
@@ -49,8 +49,10 @@ claudify/
 ├── README.md                     # This file
 ├── SETUP-GUIDE.md                # Complete documentation
 ├── CHANGELOG.md                  # Version history
-├── AGENT-COLLABORATION-GUIDE.md  # How to use Opus 4 agents
-├── AGENT-COLLABORATION-EXAMPLES.md # Real-world examples
+├── docs/
+│   ├── AGENT-COLLABORATION-GUIDE.md  # How to use Opus 4 agents
+│   ├── AGENT-COLLABORATION-EXAMPLES.md # Real-world examples
+│   └── ... # Other documentation
 ├── .claude/                      # Template components
 │   ├── commands/                 # All available commands (40+)
 │   ├── agents/                   # Opus 4 optimized agents (15+)
@@ -135,8 +137,8 @@ The `sync-to-templates` command helps maintain this template repository:
 
 ## 📖 Documentation
 
-- **[AGENT-COLLABORATION-GUIDE.md](AGENT-COLLABORATION-GUIDE.md)** - How to use Opus 4 agents effectively
-- **[AGENT-COLLABORATION-EXAMPLES.md](AGENT-COLLABORATION-EXAMPLES.md)** - Real-world usage examples
+- **[AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md)** - How to use Opus 4 agents effectively
+- **[AGENT-COLLABORATION-EXAMPLES.md](docs/AGENT-COLLABORATION-EXAMPLES.md)** - Real-world usage examples
 - **[COMMAND-AGENT-DESIGN-GUIDELINES.md](.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md)** - Best practices for Opus 4
 - **[SETUP-GUIDE.md](SETUP-GUIDE.md)** - Complete setup documentation
 - **[META-GENERATOR-README.md](templates/META-GENERATOR-README.md)** - Create new generators

@@ -5,7 +5,21 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2025-01-27
+## [2.0.1] - 2025-08-04
+
+### Fixed
+- Corrected release date for version 2.0.0 in documentation
+- Removed temporary test scripts:
+  - fix-agent-references.ps1 (one-time fix already applied)
+  - fix-angular-detection.ps1 (documentation snippets)
+  - test-angular-detection.ps1 (temporary test)
+  - test-angular-detection-standalone.ps1 (temporary test)
+
+### Changed
+- Updated version to 2.0.1
+- Cleaned up project structure
+
+## [2.0.0] - 2025-08-04
 
 ### 🎉 Major Release - Complete Opus 4 Optimization
 

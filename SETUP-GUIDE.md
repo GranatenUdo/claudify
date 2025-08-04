@@ -261,7 +261,7 @@ A: Yes! Edit the manifest to add your own selection rules.
 After setup:
 1. Try `/add-backend-feature` to create your first feature with AI assistance
 2. Use `/comprehensive-review` for parallel multi-agent analysis (75% faster)
-3. Read [AGENT-COLLABORATION-GUIDE.md](AGENT-COLLABORATION-GUIDE.md) to understand Opus 4 capabilities
+3. Read [AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md) to understand Opus 4 capabilities
 4. Explore `/` to see all available commands with confidence scoring
 5. Create custom components with generators
 

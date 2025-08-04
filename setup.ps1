@@ -309,8 +309,8 @@ $docFiles = @(
     "README.md",
     "SETUP-GUIDE.md",
     "CHANGELOG.md",
-    "AGENT-COLLABORATION-GUIDE.md",
-    "AGENT-COLLABORATION-EXAMPLES.md"
+    "docs/AGENT-COLLABORATION-GUIDE.md",
+    "docs/AGENT-COLLABORATION-EXAMPLES.md"
 )
 
 Write-Host "  - Copying documentation files..." -ForegroundColor DarkGray
