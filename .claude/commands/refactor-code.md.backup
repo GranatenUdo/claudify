@@ -53,7 +53,7 @@ I'll invoke the Code Simplifier agent to identify simplification opportunities.
 5. Deep nesting levels
 6. Unclear naming conventions
 7. Violation of SOLID principles
-Provide specific refactoring recommendations with examples", subagent_type="Technical Debt Analyst")
+Provide specific refactoring recommendations with examples", subagent_type="Code Simplifier")
 
 #### Code Quality Review
 Next, I'll get a comprehensive code quality assessment.
@@ -65,7 +65,7 @@ Next, I'll get a comprehensive code quality assessment.
 4. Test coverage gaps
 5. Documentation needs
 6. Performance bottlenecks
-Prioritize issues by impact", subagent_type="general-purpose")
+Prioritize issues by impact", subagent_type="Code Reviewer")
 
 #### Technical Debt Assessment
 I'll identify technical debt that should be addressed during refactoring.
@@ -89,7 +89,7 @@ I'll ensure test coverage supports safe refactoring.
 4. Missing characterization tests
 5. Test quality and maintainability
 6. Recommended test additions before refactoring
-Identify test gaps that could make refactoring risky", subagent_type="general-purpose")
+Identify test gaps that could make refactoring risky", subagent_type="Test Quality Analyst")
 
 ## Phase 2: Refactoring Strategy
 
@@ -197,7 +197,7 @@ I'll have the Tech Lead validate that refactorings maintain architectural integr
 3. Scalability is maintained or enhanced
 4. Technical debt is reduced, not shifted
 5. Integration points remain stable
-Provide approval or additional recommendations", subagent_type="general-purpose")
+Provide approval or additional recommendations", subagent_type="Tech Lead")
 
 ### Documentation Updates
 After refactoring, I'll update:

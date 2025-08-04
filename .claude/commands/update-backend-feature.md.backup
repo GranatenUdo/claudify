@@ -65,7 +65,7 @@ category: development
 8. Scalability considerations
 9. Data migration requirements
 10. Rollback procedures
-Provide technical implementation plan with risk assessment", subagent_type="general-purpose")
+Provide technical implementation plan with risk assessment", subagent_type="Tech Lead")
 
 @Task(description="Security impact analysis", prompt="Analyze security implications of updating $ARGUMENTS:
 1. Authentication/authorization changes
@@ -78,7 +78,7 @@ Provide technical implementation plan with risk assessment", subagent_type="gene
 8. Token management changes
 9. Session handling impacts
 10. Multi-tenant isolation verification
-Provide security checklist with validation steps", subagent_type="general-purpose")
+Provide security checklist with validation steps", subagent_type="Security Reviewer")
 
 @Task(description="Code quality assessment", prompt="Review backend code quality for $ARGUMENTS:
 1. SOLID principle adherence
@@ -91,7 +91,7 @@ Provide security checklist with validation steps", subagent_type="general-purpos
 8. Method complexity metrics
 9. Class cohesion assessment
 10. Documentation coverage
-Provide refactoring recommendations", subagent_type="general-purpose")
+Provide refactoring recommendations", subagent_type="Code Reviewer")
 
 @Task(description="Test strategy planning", prompt="Design backend test strategy for $ARGUMENTS:
 1. Unit test coverage analysis
@@ -104,7 +104,7 @@ Provide refactoring recommendations", subagent_type="general-purpose")
 8. Test data management
 9. Performance test scenarios
 10. Contract test requirements
-Provide test implementation plan for 100% coverage", subagent_type="general-purpose")
+Provide test implementation plan for 100% coverage", subagent_type="Test Quality Analyst")
 
 ## Phase 2: Domain Model Updates
 

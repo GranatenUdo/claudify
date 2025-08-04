@@ -70,7 +70,7 @@ Provide detailed review with specific improvements, code examples, and severity 
 8. Error messaging clarity
 9. Loading state quality
 10. Animation performance
-Provide accessibility score and UX improvements", subagent_type="Visual Designer")
+Provide accessibility score and UX improvements", subagent_type="UX Reviewer")
 @Task(description="Security code review", prompt="Analyze security aspects of $ARGUMENTS:
 1. XSS vulnerability assessment
 2. Input sanitization verification
@@ -80,7 +80,7 @@ Provide accessibility score and UX improvements", subagent_type="Visual Designer
 6. Sensitive data exposure
 7. Third-party library risks
 8. CORS implementation
-Provide security assessment with risk ratings", subagent_type="general-purpose")
+Provide security assessment with risk ratings", subagent_type="Security Reviewer")
 
 ### Synthesis of Expert Reviews
 

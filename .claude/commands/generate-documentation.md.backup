@@ -137,7 +137,7 @@ I'll have our Tech Lead provide architectural insights for accuracy.
    - Performance optimization tips
    - Security guidelines
 
-Provide technical content for accurate documentation.", subagent_type="general-purpose")
+Provide technical content for accurate documentation.", subagent_type="Tech Lead")
 
 ## Phase 4: Documentation Generation
 
@@ -418,7 +418,7 @@ I'll have our Code Reviewer ensure documentation quality.
    - Link stability
    - Example testability
 
-Provide feedback and improvements for documentation.", subagent_type="general-purpose")
+Provide feedback and improvements for documentation.", subagent_type="Code Reviewer")
 
 ## Phase 7: Documentation Packaging
 

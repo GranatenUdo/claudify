@@ -1,0 +1,19 @@
+Agent Reference Fix Report
+Generated: 2025-08-04 20:26:28
+
+Available Agents:
+general-purpose
+Visual Designer
+Technical Debt Analyst
+Legacy System Analyzer
+Frontend Developer
+Business Domain Analyst
+
+Applied Mappings:
+UX Reviewer → Visual Designer Tech Lead → general-purpose Test Quality Analyst → general-purpose Security Reviewer → general-purpose Infrastructure Architect → general-purpose Code Simplifier → Technical Debt Analyst Code Reviewer → general-purpose Researcher → general-purpose
+
+Files Updated: 26 / 34
+References Fixed: 82
+
+Updated Files:
+

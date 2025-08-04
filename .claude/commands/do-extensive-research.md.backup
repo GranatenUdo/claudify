@@ -96,21 +96,21 @@ Parallel searches to understand existing patterns:
 4. Integration approaches
 5. Common pitfalls
 6. Success stories
-Provide evidence-based findings", subagent_type="general-purpose")
+Provide evidence-based findings", subagent_type="Researcher")
 @Task(description="Security research", prompt="Analyze security implications of $ARGUMENTS:
 1. Known vulnerabilities
 2. Attack vectors
 3. Mitigation strategies
 4. Compliance requirements
 5. Best practices
-Provide security assessment", subagent_type="general-purpose")
+Provide security assessment", subagent_type="Security Reviewer")
 @Task(description="Architecture analysis", prompt="Evaluate architectural patterns for $ARGUMENTS:
 1. Design patterns
 2. Anti-patterns
 3. Trade-offs
 4. Alternative approaches
 5. Future-proofing
-Provide architectural recommendations", subagent_type="general-purpose")
+Provide architectural recommendations", subagent_type="Tech Lead")
 
 ### Pattern Recognition
 <use extended thinking to identify patterns across the research>

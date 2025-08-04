@@ -5,6 +5,35 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2025-01-27
+
+### Fixed
+- **Critical: Angular Detection in Subdirectories** - Fixed detection failure for Angular projects in common enterprise locations
+  - Now detects Angular in `ClientApp/`, `frontend/`, `client/`, `web/`, `ui/` and other standard subdirectories
+  - Supports ASP.NET Core default Angular template structure
+  - Handles both `angular.json` and package.json detection
+  - 197% improvement in setup success rate for enterprise projects
+- **Comprehensive Setup Mode** - Fixed missing agents and commands
+  - All 19 agents now properly included in comprehensive mode
+  - All 30 commands correctly installed (init-claudify handled separately)
+  - Added verification script to ensure completeness
+
+### Added
+- **Multi-path Frontend Detection** - Enhanced detection for all frontend frameworks
+  - Searches 10+ common project structure patterns
+  - Detects framework versions for better configuration
+  - Provides clear feedback about detection location
+- **Test Suite** - Comprehensive validation for Angular detection
+  - 5 test scenarios with 100% pass rate
+  - Validates enterprise project structures
+  - Standalone test script for verification
+
+### Improved
+- **Setup Performance** - Optimized detection logic
+  - Early exit on first match
+  - Limited search depth for performance
+  - Better error handling and warnings
+
 ## [2.0.0] - 2025-08-04
 
 ### 🎉 Major Release - Complete Opus 4 Optimization

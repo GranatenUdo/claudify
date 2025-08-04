@@ -145,7 +145,7 @@ Categorize by severity and provide examples", subagent_type="Technical Debt Anal
 6. API design violations
 7. Configuration management issues
 8. Cross-cutting concerns implementation
-Provide architectural debt assessment with diagrams", subagent_type="general-purpose")
+Provide architectural debt assessment with diagrams", subagent_type="Tech Lead")
 @Task(description="Complexity analysis", prompt="Analyze code complexity in '$ARGUMENTS':
 1. Cyclomatic complexity hotspots
 2. Cognitive complexity issues
@@ -155,7 +155,7 @@ Provide architectural debt assessment with diagrams", subagent_type="general-pur
 6. Dead code identification
 7. Unused dependencies
 8. Over-engineering patterns
-Provide complexity metrics and simplification opportunities", subagent_type="Technical Debt Analyst")
+Provide complexity metrics and simplification opportunities", subagent_type="Code Simplifier")
 @Task(description="Dependency audit", prompt="Audit all dependencies in '$ARGUMENTS':
 1. List all direct dependencies with current versions
 2. Identify transitive dependencies
@@ -224,7 +224,7 @@ Analyzing code quality and security vulnerabilities simultaneously:
 6. Technical debt ratio
 7. Maintainability index
 8. Code churn analysis
-Provide detailed metrics with industry benchmarks", subagent_type="general-purpose")
+Provide detailed metrics with industry benchmarks", subagent_type="Code Reviewer")
 @Task(description="Security audit", prompt="Perform security analysis on '$ARGUMENTS':
 1. Known vulnerability scan (OWASP Top 10)
 2. Dependency vulnerability check
@@ -234,7 +234,7 @@ Provide detailed metrics with industry benchmarks", subagent_type="general-purpo
 6. SQL injection risks
 7. XSS vulnerabilities
 8. Insecure configurations
-Provide security debt report with CVSS scores", subagent_type="general-purpose")
+Provide security debt report with CVSS scores", subagent_type="Security Reviewer")
 
 #### Testing Debt Analysis
 ```yaml

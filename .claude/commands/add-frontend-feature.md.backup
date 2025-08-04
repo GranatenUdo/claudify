@@ -135,7 +135,7 @@ Provide comprehensive technical blueprint with specific implementation details, 
 6. Accessibility requirements
 7. Internationalization needs
 8. Performance perception
-Provide UX implementation guidelines", subagent_type="Visual Designer")
+Provide UX implementation guidelines", subagent_type="UX Reviewer")
 
 ### Visual Design System Creation (Parallel)
 Following the Frontend Developer's architecture, I'll have the Visual Designer create the design system.
@@ -237,7 +237,7 @@ CODE PATTERNS & ARCHITECTURE:
 7. Suggest component composition strategies
 8. Recommend performance optimizations
 
-Provide comprehensive technical assessment with specific recommendations for implementation.", subagent_type="general-purpose")
+Provide comprehensive technical assessment with specific recommendations for implementation.", subagent_type="Tech Lead")
 
 ### Manual Research Tasks (Execute Simultaneously)
 - Search similar UI patterns: @src/PTA.VineyardManagement.Web/src/app/features
@@ -729,7 +729,7 @@ CODE QUALITY:
 7. Security best practices
 8. Maintainability and documentation
 
-Provide integrated quality assessment with specific improvements and overall excellence score.", subagent_type="general-purpose")
+Provide integrated quality assessment with specific improvements and overall excellence score.", subagent_type="Code Reviewer")
 
 ### Enhanced Design Tokens Implementation
 ```typescript
@@ -813,7 +813,7 @@ SECURITY ASSESSMENT:
 7. CORS and CSP compliance
 8. OWASP Top 10 verification
 
-Provide unified testing report with security certification and performance metrics.", subagent_type="general-purpose")
+Provide unified testing report with security certification and performance metrics.", subagent_type="Security Reviewer")
 
 ## Phase 9: Documentation & Knowledge Capture
 
@@ -866,7 +866,7 @@ I'll have the Code Simplifier identify final improvements.
 5. State management optimization
 6. Performance improvements
 7. Code clarity enhancements
-Provide prioritized optimization checklist.", subagent_type="Technical Debt Analyst")
+Provide prioritized optimization checklist.", subagent_type="Code Simplifier")
 
 ## Phase 10: Beauty & Excellence Metrics (NEW)
 

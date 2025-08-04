@@ -42,7 +42,7 @@ First, I'll research the service we're integrating and its requirements.
 6. Known issues or limitations
 7. Alternative services comparison
 8. Data formats and protocols
-Provide comprehensive integration guide", subagent_type="general-purpose")
+Provide comprehensive integration guide", subagent_type="Researcher")
 
 ### Architectural Planning
 @Task(description="Design integration architecture", prompt="Design architecture for $ARGUMENTS integration:
@@ -54,7 +54,7 @@ Provide comprehensive integration guide", subagent_type="general-purpose")
 6. Multi-tenant considerations
 7. Performance impact assessment
 8. Monitoring and observability needs
-Provide architectural blueprint with diagrams", subagent_type="general-purpose")
+Provide architectural blueprint with diagrams", subagent_type="Tech Lead")
 
 ## Phase 2: Security & Compliance Design
 
@@ -70,7 +70,7 @@ Provide architectural blueprint with diagrams", subagent_type="general-purpose")
 6. Audit logging requirements
 7. Compliance implications (GDPR, etc.)
 8. Secret management strategy
-Provide security implementation checklist", subagent_type="general-purpose")
+Provide security implementation checklist", subagent_type="Security Reviewer")
 
 ### Integration Planning
 Based on the analysis, I'll create the integration structure:

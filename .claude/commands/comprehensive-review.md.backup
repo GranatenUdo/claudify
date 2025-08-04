@@ -120,7 +120,7 @@ Initiating comprehensive analysis across all domains simultaneously:
    - Offline capability requirements
    - Data visualization effectiveness
 
-Provide specific improvements with mockups where relevant", subagent_type="Visual Designer")
+Provide specific improvements with mockups where relevant", subagent_type="UX Reviewer")
 @Task(description="Architecture and scalability analysis", prompt="Analyze architectural aspects of $ARGUMENTS:
 1. **System Design**
    - Alignment with overall architecture
@@ -146,7 +146,7 @@ Provide specific improvements with mockups where relevant", subagent_type="Visua
    - Migration path clarity
    - Documentation completeness
 
-Rate architectural fitness from 1-10 with justification", subagent_type="general-purpose")
+Rate architectural fitness from 1-10 with justification", subagent_type="Tech Lead")
 @Task(description="Security and compliance audit", prompt="Conduct security review of $ARGUMENTS:
 1. **OWASP Top 10 Analysis**
    - Injection vulnerabilities
@@ -172,7 +172,7 @@ Rate architectural fitness from 1-10 with justification", subagent_type="general
    - Regulatory reporting needs
    - Data retention policies
 
-Classify all findings by severity: Critical/High/Medium/Low", subagent_type="general-purpose")
+Classify all findings by severity: Critical/High/Medium/Low", subagent_type="Security Reviewer")
 @Task(description="Domain research and best practices", prompt="Research context for $ARGUMENTS:
 1. **Industry Best Practices**
    - Similar implementations in agriculture
@@ -198,7 +198,7 @@ Classify all findings by severity: Critical/High/Medium/Low", subagent_type="gen
    - Differentiation opportunities
    - Market expectations
 
-Provide evidence-based recommendations", subagent_type="general-purpose")
+Provide evidence-based recommendations", subagent_type="Researcher")
 @Task(description="Code simplification opportunities", prompt="Analyze $ARGUMENTS for simplification:
 1. **Complexity Metrics**
    - Cyclomatic complexity scores
@@ -224,7 +224,7 @@ Provide evidence-based recommendations", subagent_type="general-purpose")
    - Risk assessment
    - Implementation order
 
-Provide before/after examples for top 5 simplifications", subagent_type="Technical Debt Analyst")
+Provide before/after examples for top 5 simplifications", subagent_type="Code Simplifier")
 @Task(description="Detailed code quality review", prompt="Review code quality in $ARGUMENTS:
 1. **Code Standards**
    - Naming conventions
@@ -250,7 +250,7 @@ Provide before/after examples for top 5 simplifications", subagent_type="Technic
    - Edge case handling
    - Mock appropriateness
 
-Highlight top 10 most impactful improvements", subagent_type="general-purpose")
+Highlight top 10 most impactful improvements", subagent_type="Code Reviewer")
 
 ### 🤝 Synthesis Phase
 

@@ -65,7 +65,7 @@ I'll invoke specialized agents in parallel for complete test quality analysis:
    - Insufficient error scenarios
    - Security and performance test gaps
 
-Generate specific test examples for critical gaps with confidence scores", subagent_type="general-purpose")
+Generate specific test examples for critical gaps with confidence scores", subagent_type="Test Quality Analyst")
 
 @Task(description="Review test code quality", prompt="Analyze test code quality in $ARGUMENTS:
 1. **Test Code Standards**
@@ -92,7 +92,7 @@ Generate specific test examples for critical gaps with confidence scores", subag
    - Proper setup/teardown
    - Meaningful test data
 
-Provide top 10 test code improvements with examples", subagent_type="general-purpose")
+Provide top 10 test code improvements with examples", subagent_type="Code Reviewer")
 
 @Task(description="Assess test-related technical debt", prompt="Analyze test technical debt in $ARGUMENTS:
 1. **Test Debt Accumulation**
@@ -146,7 +146,7 @@ Calculate test debt score and ROI of improvements", subagent_type="Technical Deb
    - Insufficient boundary testing
    - Compliance test gaps
 
-Prioritize security test additions by risk level", subagent_type="general-purpose")
+Prioritize security test additions by risk level", subagent_type="Security Reviewer")
 
 @Task(description="Architectural test assessment", prompt="Review architectural testing in $ARGUMENTS:
 1. **Architecture Test Coverage**
@@ -173,7 +173,7 @@ Prioritize security test additions by risk level", subagent_type="general-purpos
    - Test automation priorities
    - Quality gate definitions
 
-Rate test architecture maturity 1-10", subagent_type="general-purpose")
+Rate test architecture maturity 1-10", subagent_type="Tech Lead")
 
 ### 2. Coverage Analysis
 - Line coverage metrics

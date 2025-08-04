@@ -65,7 +65,7 @@ category: development
 8. Design GraphQL/gRPC APIs (no REST if not optimal)
 9. Implement modern authentication (OAuth2/OIDC only)
 10. Design for cloud-native deployment only
-Provide aggressive modernization blueprint with zero legacy constraints", subagent_type="general-purpose")
+Provide aggressive modernization blueprint with zero legacy constraints", subagent_type="Tech Lead")
 
 @Task(description="Modern frontend redesign", prompt="Completely redesign frontend for $ARGUMENTS using latest patterns:
 1. Use latest Angular 19 features aggressively
@@ -91,7 +91,7 @@ Design with zero legacy browser support", subagent_type="Frontend Developer")
 8. Implement threat detection
 9. Use security headers aggressively
 10. Implement CSP strictly
-Design assuming no legacy security constraints", subagent_type="general-purpose")
+Design assuming no legacy security constraints", subagent_type="Security Reviewer")
 
 @Task(description="Technical debt elimination", prompt="Identify and eliminate ALL technical debt for $ARGUMENTS:
 1. Find all workarounds to remove
@@ -117,7 +117,7 @@ Provide complete elimination plan", subagent_type="Technical Debt Analyst")
 8. Implement security testing
 9. Use AI-powered test generation
 10. Implement continuous testing
-Design for 100% coverage with modern tools only", subagent_type="general-purpose")
+Design for 100% coverage with modern tools only", subagent_type="Test Quality Analyst")
 
 ## Phase 2: Aggressive Legacy Removal
 

@@ -51,7 +51,7 @@ Analysis Framework:
 4. Hook integration patterns
 5. Agent tool usage patterns
 6. Common pitfalls to avoid
-Synthesize best practices for: $ARGUMENTS", subagent_type="general-purpose")
+Synthesize best practices for: $ARGUMENTS", subagent_type="Researcher")
 
 ### Domain Best Practices Investigation
 @Task(description="Domain research", prompt="Research industry best practices for: $ARGUMENTS
@@ -77,7 +77,7 @@ Provide comprehensive recommendations", subagent_type="general-purpose")
 4. Identify integration points with existing tools
 5. Plan for extensibility and maintenance
 6. Consider performance and scalability
-Provide detailed technical blueprint", subagent_type="general-purpose")
+Provide detailed technical blueprint", subagent_type="Tech Lead")
 
 #### Security Component Requirements
 @Task(description="Security design", prompt="Analyze security requirements for: $ARGUMENTS
@@ -87,7 +87,7 @@ Provide detailed technical blueprint", subagent_type="general-purpose")
 4. Design input validation strategies
 5. Plan output sanitization
 6. Consider multi-tenant implications
-Provide security implementation guide", subagent_type="general-purpose")
+Provide security implementation guide", subagent_type="Security Reviewer")
 
 ### Component Decision Matrix
 
@@ -270,7 +270,7 @@ Update existing generators to leverage meta-generator:
 4. Documentation quality
 5. Test coverage requirements
 6. Integration smoothness
-Provide improvement recommendations", subagent_type="general-purpose")
+Provide improvement recommendations", subagent_type="Code Reviewer")
 
 #### Opus 4 Optimization Review
 @Task(description="Opus4 optimization", prompt="Analyze generated components for Opus 4 optimization:

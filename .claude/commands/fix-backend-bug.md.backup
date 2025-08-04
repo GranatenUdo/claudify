@@ -72,7 +72,7 @@ Provide integrated analysis with:
 - Root cause hypotheses ranked by likelihood
 - Security risk rating (Low/Medium/High/Critical)
 - Attack scenarios if exploitable
-- Fix requirements prioritized by impact", subagent_type="general-purpose")
+- Fix requirements prioritized by impact", subagent_type="Security Reviewer")
 @Task(description="Code quality and pattern analysis", prompt="Analyze code patterns related to bug '$ARGUMENTS':
 1. Code duplication that might spread the bug
 2. Anti-patterns that contribute to the issue
@@ -80,7 +80,7 @@ Provide integrated analysis with:
 4. Incorrect assumptions in logic
 5. Test coverage gaps
 6. Related technical debt
-Provide code quality assessment", subagent_type="general-purpose")
+Provide code quality assessment", subagent_type="Code Reviewer")
 @Task(description="Architecture impact analysis", prompt="Assess architectural implications of bug '$ARGUMENTS':
 1. Layer violations
 2. Integration issues
@@ -88,7 +88,7 @@ Provide code quality assessment", subagent_type="general-purpose")
 4. Performance degradation
 5. Data consistency risks
 6. Transaction boundaries
-Provide architectural assessment", subagent_type="general-purpose")
+Provide architectural assessment", subagent_type="Tech Lead")
 
 ## Extended Thinking for Root Cause Analysis
 
@@ -470,7 +470,7 @@ Provide integrated review with:
 - Fix effectiveness score (0-100)
 - Code quality improvements
 - Simplification opportunities ranked by impact
-- Approval status with conditions", subagent_type="general-purpose")
+- Approval status with conditions", subagent_type="Code Reviewer")
 
 ## 📝 Documentation & Prevention
 

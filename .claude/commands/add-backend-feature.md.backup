@@ -92,7 +92,7 @@ ARCHITECTURE PLANNING:
 7. Assess performance implications
 8. Consider future extensibility
 
-Provide integrated security and architecture blueprint with risk assessment and mitigation strategies.", subagent_type="general-purpose")
+Provide integrated security and architecture blueprint with risk assessment and mitigation strategies.", subagent_type="Tech Lead")
 @Task(description="Security-specific analysis", prompt="Perform deep security analysis for $ARGUMENTS:
 1. OWASP API Security Top 10 assessment
 2. Multi-tenant isolation verification
@@ -102,7 +102,7 @@ Provide integrated security and architecture blueprint with risk assessment and 
 6. Input validation strategy
 7. Rate limiting requirements
 8. Security headers configuration
-Provide security implementation checklist", subagent_type="general-purpose")
+Provide security implementation checklist", subagent_type="Security Reviewer")
 
 ### Interactive Checkpoint
 ```markdown
@@ -136,7 +136,7 @@ Proceed with implementation? (yes/no/modify)
 4. Research agricultural best practices
 5. Identify regulatory requirements
 6. Analyze performance patterns in similar features
-Provide domain model with relationships and invariants", subagent_type="general-purpose")
+Provide domain model with relationships and invariants", subagent_type="Researcher")
 
 ### Domain Model Design
 Based on agent analysis, I'll design the domain model with:
@@ -228,7 +228,7 @@ public async Task<Result<T>> OperationAsync(/* parameters */)
 # Run all quality checks simultaneously
 @Bash(command="dotnet test", description="Run all tests")
 @Bash(command="dotnet build --no-restore", description="Verify build")
-@Task(description="Code review", prompt="Review the implementation for best practices", subagent_type="general-purpose")
+@Task(description="Code review", prompt="Review the implementation for best practices", subagent_type="Code Reviewer")
 ```
 
 ### Success Criteria
@@ -291,7 +291,7 @@ Provide integrated assessment with:
 - Code quality score (0-100)
 - Security risk rating (Low/Medium/High/Critical)
 - Actionable improvements prioritized by impact
-- Security certification status", subagent_type="general-purpose")
+- Security certification status", subagent_type="Security Reviewer")
 
 ## Success Criteria
 

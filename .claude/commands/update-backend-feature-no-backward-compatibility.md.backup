@@ -64,7 +64,7 @@ category: development
 8. Use gRPC for inter-service communication
 9. Implement distributed tracing
 10. Design for zero-downtime deployments
-Provide complete microservices blueprint", subagent_type="general-purpose")
+Provide complete microservices blueprint", subagent_type="Tech Lead")
 
 @Task(description="Modern security architecture", prompt="Design zero-trust security for $ARGUMENTS:
 1. Service-to-service authentication (mTLS)
@@ -77,7 +77,7 @@ Provide complete microservices blueprint", subagent_type="general-purpose")
 8. Pod security policies
 9. Image scanning in CI/CD
 10. Compliance automation
-Provide complete security implementation", subagent_type="general-purpose")
+Provide complete security implementation", subagent_type="Security Reviewer")
 
 @Task(description="Legacy elimination plan", prompt="Create complete legacy removal plan for $ARGUMENTS:
 1. Identify all legacy patterns

@@ -73,7 +73,7 @@ I'll invoke the Tech Lead agent for high-level performance architecture review.
 5. API response time bottlenecks
 6. Dependency injection lifecycle issues
 7. Third-party service call optimization
-Provide specific optimization recommendations with expected impact", subagent_type="general-purpose")
+Provide specific optimization recommendations with expected impact", subagent_type="Tech Lead")
 
 ### Code-Level Performance Review
 Next, I'll get detailed code-level performance insights.
@@ -86,7 +86,7 @@ Next, I'll get detailed code-level performance insights.
 5. Missing disposal of resources
 6. Inefficient collection usage
 7. Reflection or dynamic usage in critical paths
-Prioritize by performance impact", subagent_type="general-purpose")
+Prioritize by performance impact", subagent_type="Code Reviewer")
 
 ### Research Performance Best Practices
 I'll research latest performance optimization techniques.
@@ -98,7 +98,7 @@ I'll research latest performance optimization techniques.
 4. Memory pooling and span usage in .NET
 5. HTTP/2 and gRPC optimization techniques
 6. Container and cloud-native performance patterns
-Provide actionable recommendations", subagent_type="general-purpose")
+Provide actionable recommendations", subagent_type="Researcher")
 
 ### Infrastructure Performance Assessment
 I'll analyze system-level performance considerations.
@@ -111,7 +111,7 @@ I'll analyze system-level performance considerations.
 5. CDN and static asset delivery
 6. Service mesh performance impact
 7. Observability overhead assessment
-Provide infrastructure optimization recommendations with expected impact", subagent_type="general-purpose")
+Provide infrastructure optimization recommendations with expected impact", subagent_type="Infrastructure Architect")
 
 ### Technical Debt Performance Impact
 I'll identify technical debt affecting performance.

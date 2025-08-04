@@ -60,7 +60,7 @@ Provide expert diagnosis with specific fixes prioritized by impact", subagent_ty
 5. Visual regression risks
 6. Design system violations
 7. Loading performance impact
-Provide UX-focused priorities", subagent_type="Visual Designer")
+Provide UX-focused priorities", subagent_type="UX Reviewer")
 @Task(description="Security assessment", prompt="Review security implications of frontend failures for '$ARGUMENTS':
 1. XSS vulnerability risks
 2. Dependency vulnerabilities
@@ -69,7 +69,7 @@ Provide UX-focused priorities", subagent_type="Visual Designer")
 5. Authentication flow breaks
 6. Session handling issues
 7. Input validation failures
-Identify security-critical fixes", subagent_type="general-purpose")
+Identify security-critical fixes", subagent_type="Security Reviewer")
 
 ### Synthesis of Expert Findings
 
@@ -274,7 +274,7 @@ Provide final assessment and any remaining optimizations", subagent_type="Fronte
 5. Complexity metrics
 6. Documentation coverage
 7. Test maintainability
-Provide improvement suggestions", subagent_type="general-purpose")
+Provide improvement suggestions", subagent_type="Code Reviewer")
 
 ## Success Criteria
 

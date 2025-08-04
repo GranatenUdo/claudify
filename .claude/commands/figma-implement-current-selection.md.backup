@@ -205,7 +205,7 @@ FIGMA TO CODE MAPPING:
 Provide unified technical blueprint covering architecture, research insights, and implementation details.
 
 [Design context from Phase 1]
-[Enhanced design from previous task]", subagent_type="general-purpose")
+[Enhanced design from previous task]", subagent_type="Tech Lead")
 ```
 
 ## Phase 3: Frontend Developer-Driven Implementation

@@ -90,7 +90,7 @@ Design with zero legacy CSS", subagent_type="Visual Designer")
 8. Use Ambient Light API for auto-theming
 9. Implement WebXR for AR features
 10. Use Web NFC for contactless interactions
-Create futuristic user experience", subagent_type="Visual Designer")
+Create futuristic user experience", subagent_type="UX Reviewer")
 
 @Task(description="Legacy elimination", prompt="Remove ALL legacy patterns from $ARGUMENTS:
 1. Find and remove all RxJS usage

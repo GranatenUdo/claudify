@@ -110,7 +110,7 @@ Return structured feature inventory with categorization and competitive analysis
    - Scale capabilities
    - Technology stack benefits
 
-Rate technical feature maturity 1-10 with justification.", subagent_type="general-purpose")
+Rate technical feature maturity 1-10 with justification.", subagent_type="Tech Lead")
 
 ### Business Domain Analysis
 

@@ -440,26 +440,134 @@ if ($setupMode) {
         }
     }
     
-    # Frontend detection
-    if (Test-Path (Join-Path $TargetRepository "package.json")) {
-        $packageJson = Get-Content (Join-Path $TargetRepository "package.json") -Raw | ConvertFrom-Json
-        if ($packageJson.dependencies) {
-            if ($packageJson.dependencies.PSObject.Properties.Name -contains "react" -or 
-                $packageJson.dependencies.PSObject.Properties.Name -contains "next") {
-                $detectedStack.Frontend = "React"
-                Write-Success "  ✓ React frontend detected"
-            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "angular" -or
-                      $packageJson.dependencies.PSObject.Properties.Name -contains "@angular/core") {
-                $detectedStack.Frontend = "Angular"
-                Write-Success "  ✓ Angular frontend detected"
-            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "vue") {
-                $detectedStack.Frontend = "Vue"
-                Write-Success "  ✓ Vue frontend detected"
-            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "svelte") {
-                $detectedStack.Frontend = "Svelte"
-                Write-Success "  ✓ Svelte frontend detected"
+    # Frontend detection with enhanced Angular support
+    function Find-FrontendProject {
+        param([string]$RootPath)
+        
+        # Common frontend project locations in enterprise projects
+        $searchPaths = @(
+            "",                  # Root directory
+            "ClientApp",         # Default ASP.NET Core Angular template
+            "frontend",          # Common convention
+            "client",            # Alternative naming
+            "web",               # Web app folder
+            "ui",                # UI folder
+            "src",               # Source folder
+            "app",               # App folder
+            "wwwroot",           # ASP.NET static files
+            "apps"               # Nx workspace convention
+        )
+        
+        foreach ($subPath in $searchPaths) {
+            $checkPath = if ($subPath) { 
+                Join-Path $RootPath $subPath 
+            } else { 
+                $RootPath 
+            }
+            
+            if (-not (Test-Path $checkPath)) {
+                continue
+            }
+            
+            # Check for Angular-specific files first
+            $angularJson = Join-Path $checkPath "angular.json"
+            if (Test-Path $angularJson) {
+                return @{
+                    Type = "Angular"
+                    Path = $checkPath
+                    RelativePath = if ($subPath) { $subPath } else { "." }
+                    ConfigFile = "angular.json"
+                }
+            }
+            
+            # Check package.json for framework detection
+            $packageJsonPath = Join-Path $checkPath "package.json"
+            if (Test-Path $packageJsonPath) {
+                try {
+                    $packageJson = Get-Content $packageJsonPath -Raw | ConvertFrom-Json
+                    
+                    # Check both dependencies and devDependencies
+                    $allDeps = @()
+                    if ($packageJson.dependencies) {
+                        $allDeps += $packageJson.dependencies.PSObject.Properties.Name
+                    }
+                    if ($packageJson.devDependencies) {
+                        $allDeps += $packageJson.devDependencies.PSObject.Properties.Name
+                    }
+                    
+                    # Angular detection
+                    if ($allDeps | Where-Object { $_ -match "^@angular/" -or $_ -eq "angular" }) {
+                        $angularVersion = $null
+                        if ($packageJson.dependencies."@angular/core") {
+                            $angularVersion = $packageJson.dependencies."@angular/core"
+                        } elseif ($packageJson.devDependencies."@angular/core") {
+                            $angularVersion = $packageJson.devDependencies."@angular/core"
+                        }
+                        
+                        return @{
+                            Type = "Angular"
+                            Path = $checkPath
+                            RelativePath = if ($subPath) { $subPath } else { "." }
+                            Version = $angularVersion
+                            ConfigFile = "package.json"
+                        }
+                    }
+                    
+                    # React detection
+                    if ($allDeps -contains "react" -or $allDeps -contains "next") {
+                        return @{
+                            Type = "React"
+                            Path = $checkPath
+                            RelativePath = if ($subPath) { $subPath } else { "." }
+                            ConfigFile = "package.json"
+                        }
+                    }
+                    
+                    # Vue detection
+                    if ($allDeps -contains "vue" -or $allDeps -contains "@vue/cli") {
+                        return @{
+                            Type = "Vue"
+                            Path = $checkPath
+                            RelativePath = if ($subPath) { $subPath } else { "." }
+                            ConfigFile = "package.json"
+                        }
+                    }
+                    
+                    # Svelte detection
+                    if ($allDeps -contains "svelte") {
+                        return @{
+                            Type = "Svelte"
+                            Path = $checkPath
+                            RelativePath = if ($subPath) { $subPath } else { "." }
+                            ConfigFile = "package.json"
+                        }
+                    }
+                }
+                catch {
+                    Write-Warning "Failed to parse package.json at $packageJsonPath"
+                }
             }
         }
+        
+        return $null
+    }
+    
+    # Execute frontend detection
+    $frontendProject = Find-FrontendProject -RootPath $TargetRepository
+    if ($frontendProject) {
+        $detectedStack.Frontend = $frontendProject.Type
+        $relativePath = $frontendProject.RelativePath
+        
+        if ($relativePath -eq ".") {
+            Write-Success "  ✓ $($frontendProject.Type) frontend detected in root directory"
+        } else {
+            Write-Success "  ✓ $($frontendProject.Type) frontend detected in '$relativePath' directory"
+        }
+        
+        if ($frontendProject.Version) {
+            Write-Detail "    Version: $($frontendProject.Version)"
+        }
+        Write-Detail "    Config: $($frontendProject.ConfigFile)"
     }
     
     # Multi-tenancy detection
@@ -535,12 +643,28 @@ if ($setupMode) {
                 "optimize-performance",
                 "refactor-code",
                 "analyze-test-quality",
-                "generate-documentation",
+                "analyze-features",
+                "analyze-domain-use-cases",
+                "analyze-legacy-system",
                 "analyze-technical-debt",
-                "analyze-architecture",
-                "analyze-security",
-                "analyze-ux",
-                "fix-all-bugs"
+                "generate-documentation",
+                "generate-marketing-material",
+                "add-integration",
+                "add-backend-feature",
+                "add-frontend-feature",
+                "figma-implement-current-selection",
+                "fix-backend-bug",
+                "fix-backend-build-and-tests",
+                "fix-frontend-bug",
+                "fix-frontend-build-and-tests",
+                "review-backend-code",
+                "review-frontend-code",
+                "update-backend-feature",
+                "update-frontend-feature",
+                "update-comprehensive-feature",
+                "update-backend-feature-no-backward-compatibility",
+                "update-frontend-feature-no-backward-compatibility",
+                "update-comprehensive-feature-no-backward-compatibility"
             )
             $agentsToInstall = @(
                 "code-reviewer",
@@ -554,8 +678,14 @@ if ($setupMode) {
                 "business-domain-analyst",
                 "legacy-system-analyzer",
                 "visual-designer",
+                "visual-designer-marketing",
                 "security-reviewer",
-                "frontend-developer"
+                "frontend-developer",
+                "technical-documentation-expert",
+                "customer-value-translator",
+                "feature-analyzer",
+                "marketing-strategist",
+                "sales-genius"
             )
             $installGenerators = $true
             $installTools = $true
@@ -563,8 +693,8 @@ if ($setupMode) {
         }
     }
     
-    # Add backend-specific components
-    if ($detectedStack.Backend) {
+    # Add backend-specific components (for non-comprehensive setups)
+    if ($detectedStack.Backend -and $setupMode -ne "comprehensive") {
         $backendCommands = @(
             "add-backend-feature",
             "fix-backend-bug",
@@ -574,8 +704,8 @@ if ($setupMode) {
         $commandsToInstall += $backendCommands
     }
     
-    # Add frontend-specific components
-    if ($detectedStack.Frontend) {
+    # Add frontend-specific components (for non-comprehensive setups)
+    if ($detectedStack.Frontend -and $setupMode -ne "comprehensive") {
         $frontendCommands = @(
             "add-frontend-feature",
             "fix-frontend-bug",

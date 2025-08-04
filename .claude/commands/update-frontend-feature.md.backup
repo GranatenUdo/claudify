@@ -91,7 +91,7 @@ Provide design system updates with examples", subagent_type="Visual Designer")
 8. Error recovery flows
 9. Loading performance perception
 10. Mobile usability
-Provide improvement recommendations", subagent_type="Visual Designer")
+Provide improvement recommendations", subagent_type="UX Reviewer")
 
 @Task(description="Frontend code quality review", prompt="Review frontend code quality for $ARGUMENTS:
 1. Component complexity
@@ -104,7 +104,7 @@ Provide improvement recommendations", subagent_type="Visual Designer")
 8. Bundle size optimization
 9. Testing patterns
 10. Documentation coverage
-Provide refactoring priorities", subagent_type="general-purpose")
+Provide refactoring priorities", subagent_type="Code Reviewer")
 
 ## Phase 2: Component Architecture Update
 

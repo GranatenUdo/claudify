@@ -68,7 +68,7 @@ Launching all specialized agents in parallel for maximum efficiency:
 8. Plan migration strategy for existing data
 9. Define rollback procedures
 10. Calculate technical debt impact
-Provide detailed technical blueprint with risk assessment", subagent_type="general-purpose")
+Provide detailed technical blueprint with risk assessment", subagent_type="Tech Lead")
 
 @Task(description="Frontend update analysis", prompt="Analyze frontend updates needed for $ARGUMENTS:
 1. Component hierarchy changes
@@ -94,7 +94,7 @@ Provide implementation plan with Angular 19 best practices", subagent_type="Fron
 8. Token management updates
 9. Session handling changes
 10. Vulnerability assessment
-Classify all findings by severity and provide mitigation strategies", subagent_type="general-purpose")
+Classify all findings by severity and provide mitigation strategies", subagent_type="Security Reviewer")
 
 @Task(description="Code quality assessment", prompt="Review code quality for $ARGUMENTS update:
 1. Current code complexity metrics
@@ -107,7 +107,7 @@ Classify all findings by severity and provide mitigation strategies", subagent_t
 8. Configuration management
 9. Documentation requirements
 10. Naming convention compliance
-Provide prioritized improvement recommendations", subagent_type="general-purpose")
+Provide prioritized improvement recommendations", subagent_type="Code Reviewer")
 
 @Task(description="Test strategy planning", prompt="Design comprehensive test strategy for $ARGUMENTS update:
 1. Unit test coverage gaps
@@ -120,7 +120,7 @@ Provide prioritized improvement recommendations", subagent_type="general-purpose
 8. Test data management
 9. CI/CD pipeline updates
 10. Quality gate definitions
-Provide test implementation plan with 100% success criteria", subagent_type="general-purpose")
+Provide test implementation plan with 100% success criteria", subagent_type="Test Quality Analyst")
 
 ## Phase 2: Implementation Strategy
 
