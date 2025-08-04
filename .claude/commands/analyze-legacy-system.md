@@ -60,7 +60,7 @@ Provide comprehensive system overview with technology inventory", subagent_type=
 5. Identify potential SQL injection vulnerabilities
 6. Check for outdated/vulnerable dependencies
 7. Review error handling and information disclosure
-Provide security risk assessment with critical findings", subagent_type="Security Reviewer")
+Provide security risk assessment with critical findings", subagent_type="general-purpose")
 
 ### System Inventory Checklist
 - [ ] Solution structure mapped
@@ -211,7 +211,7 @@ Service: CustomerService
 6. Identify caching strategies
 7. Document error handling patterns
 8. Map security implementation layers
-Provide architectural diagrams with pattern analysis", subagent_type="Tech Lead")
+Provide architectural diagrams with pattern analysis", subagent_type="general-purpose")
 
 ### Reconstructed Architecture
 ```mermaid
@@ -262,7 +262,7 @@ graph TB
 6. Measure coupling and cohesion
 7. Assess maintainability index
 8. Find security vulnerabilities
-Provide technical debt report with remediation priorities", subagent_type="Code Reviewer")
+Provide technical debt report with remediation priorities", subagent_type="general-purpose")
 
 ### Technical Debt Summary
 | Category | Issues | Severity | Modernization Impact |
@@ -289,7 +289,7 @@ Provide technical debt report with remediation priorities", subagent_type="Code 
 6. Estimate migration effort and timeline
 7. Identify migration risks and mitigations
 8. Suggest pilot project approach
-Provide phased migration plan with success criteria", subagent_type="Tech Lead")
+Provide phased migration plan with success criteria", subagent_type="general-purpose")
 
 ### Recommended Migration Path
 ```markdown

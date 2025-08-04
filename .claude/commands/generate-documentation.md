@@ -2,7 +2,7 @@
 description: Generate comprehensive technical documentation for features, APIs, or systems
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch, Bash]
 argument-hint: documentation type and target (e.g., "api docs for field management" or "user guide for import feature")
-agent-dependencies: [Technical Documentation Expert, Code Reviewer, Tech Lead]
+agent-dependencies: [Technical Documentation Expert, Code Reviewer, Tech Lead, Feature Analyzer]
 complexity: moderate
 estimated-time: 15-25 minutes
 category: documentation
@@ -137,7 +137,7 @@ I'll have our Tech Lead provide architectural insights for accuracy.
    - Performance optimization tips
    - Security guidelines
 
-Provide technical content for accurate documentation.", subagent_type="Tech Lead")
+Provide technical content for accurate documentation.", subagent_type="general-purpose")
 
 ## Phase 4: Documentation Generation
 
@@ -418,7 +418,7 @@ I'll have our Code Reviewer ensure documentation quality.
    - Link stability
    - Example testability
 
-Provide feedback and improvements for documentation.", subagent_type="Code Reviewer")
+Provide feedback and improvements for documentation.", subagent_type="general-purpose")
 
 ## Phase 7: Documentation Packaging
 

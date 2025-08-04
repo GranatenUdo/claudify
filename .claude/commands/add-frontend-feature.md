@@ -1,14 +1,39 @@
 ---
 description: Create sophisticated UI features with Frontend Developer expertise, accessibility focus and exceptional user experience
-allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
+allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "field management dashboard with real-time updates")
-agent-dependencies: [Frontend Developer, Visual Designer, Tech Lead, Code Reviewer, Security Reviewer]
+agent-dependencies: [Frontend Developer, Visual Designer, Tech Lead, Code Reviewer, Security Reviewer, UX Reviewer]
 complexity: high
-estimated-time: 20-25 minutes
+estimated-time: 20-25 minutes (reduced from 40 with parallel execution)
 category: development
 ---
 
 # 🎨 Add UI Feature: $ARGUMENTS
+
+## Phase 0: Task Management Setup
+
+### 📋 TodoWrite Task Management
+<think step-by-step about organizing the frontend feature development>
+
+@TodoWrite(todos=[
+  {id: "1", content: "Frontend architecture planning", status: "in_progress", priority: "high"},
+  {id: "2", content: "Visual design system creation", status: "pending", priority: "high"},
+  {id: "3", content: "API readiness verification", status: "pending", priority: "high"},
+  {id: "4", content: "Component implementation", status: "pending", priority: "high"},
+  {id: "5", content: "State management setup", status: "pending", priority: "high"},
+  {id: "6", content: "Accessibility implementation", status: "pending", priority: "high"},
+  {id: "7", content: "Testing and validation", status: "pending", priority: "high"},
+  {id: "8", content: "Performance optimization", status: "pending", priority: "high"}
+])
+
+### 📊 Agent Specialization Matrix
+
+| Feature Type | Primary Agents | Secondary Agents | Parallel? |
+|-------------|---------------|------------------|----------|
+| Dashboard | Frontend Developer, Visual Designer | UX Reviewer | ✅ Yes |
+| Forms | Frontend Developer, UX Reviewer | Visual Designer | ✅ Yes |
+| Data Viz | Visual Designer, Frontend Developer | Tech Lead | ✅ Yes |
+| Mobile UI | UX Reviewer, Frontend Developer | Visual Designer | ✅ Yes |
 
 ## 🧠 OPUS 4 DEEP ACTIVATION
 <think harder about creating an exceptional user experience that balances beauty, functionality, accessibility, and performance while maintaining strict multi-tenant security>
@@ -26,12 +51,24 @@ Internalize CLAUDE.md critical rules:
 - 🎨 Angular 19 with traditional directives ONLY (*ngIf, *ngFor, NO @if/@for)
 - 🚀 Performance budget: FCP < 1.5s, TTI < 3s
 
-## Phase 0: Frontend Developer-Led Feature Planning
+## Phase 1: Frontend Developer-Led Feature Planning
 
 <think harder about technical implementation, user experience, and architectural decisions>
+<think step-by-step about modern Angular patterns and signals>
+
+### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
+```typescript
+// ✅ OPTIMAL: All discovery operations run in parallel
+@Glob(pattern="**/*.component.ts")
+@Glob(pattern="**/*.service.ts")
+@Grep(pattern="signal|computed|effect", output_mode="files_with_matches")
+@Read(file_path="angular.json")
+@Read(file_path="package.json")
+@Bash(command="ng version", description="Check Angular version")
+```
 
 ### Frontend Technical Leadership & Implementation Strategy
-I'll have the Frontend Developer lead the feature planning with their deep technical expertise.
+I'll have multiple agents analyze in parallel for comprehensive coverage.
 
 @Task(description="Frontend feature architecture and implementation planning", prompt="As an elite Frontend Developer, design the complete technical approach for implementing $ARGUMENTS:
 
@@ -89,8 +126,18 @@ UX TECHNICAL REQUIREMENTS:
 7. Progressive enhancement strategy
 
 Provide comprehensive technical blueprint with specific implementation details, code patterns, and architectural decisions.", subagent_type="Frontend Developer")
+@Task(description="UX analysis", prompt="Analyze user experience requirements for $ARGUMENTS:
+1. User journey mapping
+2. Task flow optimization
+3. Error recovery patterns
+4. Loading state strategies
+5. Mobile-first considerations
+6. Accessibility requirements
+7. Internationalization needs
+8. Performance perception
+Provide UX implementation guidelines", subagent_type="Visual Designer")
 
-### Visual Design System Creation
+### Visual Design System Creation (Parallel)
 Following the Frontend Developer's architecture, I'll have the Visual Designer create the design system.
 
 @Task(description="Design system and visual language", prompt="As a Visual Designer, create a cohesive design system for $ARGUMENTS that complements the technical architecture:
@@ -119,12 +166,54 @@ UX PATTERNS & REQUIREMENTS:
 
 Return integrated design system with UX specifications, including design tokens, interaction patterns, and implementation guidelines.", subagent_type="Visual Designer")
 
-## Phase 1: API & Architecture Analysis (OPTIMIZED)
+### 🎨 Modern Frontend Patterns
+```typescript
+// Signal-based state management (Angular 19)
+export class FeatureComponent {
+  // Pure signals - no observables
+  items = signal<Item[]>([]);
+  loading = signal(false);
+  error = signal<Error | null>(null);
+  
+  // Computed values update automatically
+  itemCount = computed(() => this.items().length);
+  hasItems = computed(() => this.itemCount() > 0);
+  
+  // Effects for side effects
+  constructor() {
+    effect(() => {
+      if (this.loading()) {
+        // Show loading indicator
+      }
+    });
+  }
+}
+
+// Modern CSS with layers and container queries
+@layer components {
+  .feature-card {
+    container: card / inline-size;
+  }
+  
+  @container card (width > 400px) {
+    .feature-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+}
+```
+
+## Phase 2: API & Architecture Analysis (OPTIMIZED)
 
 <think step-by-step about backend readiness and architectural patterns>
+<think harder about API contracts and real-time requirements>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 1 to completed, task 2-3 to in_progress */])
 
 ### Combined API & Code Pattern Analysis
-I'll have the Tech Lead perform comprehensive technical analysis.
+Running parallel technical analyses for comprehensive coverage.
 
 @Task(description="API and architecture analysis", prompt="As Tech Lead, analyze the technical foundation for $ARGUMENTS:
 
@@ -148,7 +237,7 @@ CODE PATTERNS & ARCHITECTURE:
 7. Suggest component composition strategies
 8. Recommend performance optimizations
 
-Provide comprehensive technical assessment with specific recommendations for implementation.", subagent_type="Tech Lead")
+Provide comprehensive technical assessment with specific recommendations for implementation.", subagent_type="general-purpose")
 
 ### Manual Research Tasks (Execute Simultaneously)
 - Search similar UI patterns: @src/PTA.VineyardManagement.Web/src/app/features
@@ -640,7 +729,7 @@ CODE QUALITY:
 7. Security best practices
 8. Maintainability and documentation
 
-Provide integrated quality assessment with specific improvements and overall excellence score.", subagent_type="Code Reviewer")
+Provide integrated quality assessment with specific improvements and overall excellence score.", subagent_type="general-purpose")
 
 ### Enhanced Design Tokens Implementation
 ```typescript
@@ -724,7 +813,7 @@ SECURITY ASSESSMENT:
 7. CORS and CSP compliance
 8. OWASP Top 10 verification
 
-Provide unified testing report with security certification and performance metrics.", subagent_type="Security Reviewer")
+Provide unified testing report with security certification and performance metrics.", subagent_type="general-purpose")
 
 ## Phase 9: Documentation & Knowledge Capture
 
@@ -777,7 +866,7 @@ I'll have the Code Simplifier identify final improvements.
 5. State management optimization
 6. Performance improvements
 7. Code clarity enhancements
-Provide prioritized optimization checklist.", subagent_type="Code Simplifier")
+Provide prioritized optimization checklist.", subagent_type="Technical Debt Analyst")
 
 ## Phase 10: Beauty & Excellence Metrics (NEW)
 

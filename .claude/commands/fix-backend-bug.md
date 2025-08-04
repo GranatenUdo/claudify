@@ -2,20 +2,49 @@
 description: Debug and fix backend API issues using systematic root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: bug description (e.g., "null reference in field service when updating boundaries")
-agent-dependencies: [Security Reviewer, Code Reviewer]
+agent-dependencies: [Security Reviewer, Code Reviewer, Tech Lead, Technical Debt Analyst]
 complexity: moderate
-estimated-time: 15-20 minutes
+estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
 category: quality
 ---
 
 # Fix API Bug: $ARGUMENTS
 
+## Phase 0: Task Management Setup
+
+### 📋 TodoWrite Task Management
+<think step-by-step about organizing the bug fix process>
+
+@TodoWrite(todos=[
+  {id: "1", content: "Reproduce and diagnose bug", status: "in_progress", priority: "high"},
+  {id: "2", content: "Multi-agent root cause analysis", status: "pending", priority: "high"},
+  {id: "3", content: "Investigate affected layers", status: "pending", priority: "high"},
+  {id: "4", content: "Implement fix", status: "pending", priority: "high"},
+  {id: "5", content: "Generate tests", status: "pending", priority: "high"},
+  {id: "6", content: "Validate fix", status: "pending", priority: "high"}
+])
+
+### 📊 Agent Specialization Matrix
+
+| Bug Type | Primary Agent | Secondary Agents | Parallel? |
+|----------|---------------|------------------|----------|
+| Security | Security Reviewer | Tech Lead | ✅ Yes |
+| Logic | Code Reviewer | Tech Lead | ✅ Yes |
+| Performance | Tech Lead | Code Reviewer | ✅ Yes |
+| Data | Technical Debt Analyst | Security Reviewer | ✅ Yes |
+
 Internalize CLAUDE.md and FEATURES.md, then use extended thinking for deep root cause analysis of **$ARGUMENTS**.
 
 ## 🧠 Multi-Agent Bug Analysis (OPTIMIZED)
 
+<think harder about the bug's root cause and potential impacts>
+<think step-by-step about systematic debugging approach>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 1 to completed, task 2 to in_progress */])
+
 ### Combined Research & Security Analysis
-I'll have the Security Reviewer perform comprehensive bug analysis with security focus.
+I'll have multiple agents analyze the bug in parallel for comprehensive coverage.
 
 @Task(description="Bug analysis with security assessment", prompt="As Security Reviewer with research expertise, analyze the bug '$ARGUMENTS':
 
@@ -43,7 +72,23 @@ Provide integrated analysis with:
 - Root cause hypotheses ranked by likelihood
 - Security risk rating (Low/Medium/High/Critical)
 - Attack scenarios if exploitable
-- Fix requirements prioritized by impact", subagent_type="Security Reviewer")
+- Fix requirements prioritized by impact", subagent_type="general-purpose")
+@Task(description="Code quality and pattern analysis", prompt="Analyze code patterns related to bug '$ARGUMENTS':
+1. Code duplication that might spread the bug
+2. Anti-patterns that contribute to the issue
+3. Missing error handling
+4. Incorrect assumptions in logic
+5. Test coverage gaps
+6. Related technical debt
+Provide code quality assessment", subagent_type="general-purpose")
+@Task(description="Architecture impact analysis", prompt="Assess architectural implications of bug '$ARGUMENTS':
+1. Layer violations
+2. Integration issues
+3. Scalability impacts
+4. Performance degradation
+5. Data consistency risks
+6. Transaction boundaries
+Provide architectural assessment", subagent_type="general-purpose")
 
 ## Extended Thinking for Root Cause Analysis
 
@@ -59,7 +104,12 @@ Before investigating, think deeply about:
 ### Phase 1: Parallel Bug Reproduction & Data Collection
 
 <think about gathering all diagnostic data simultaneously>
+<think harder about efficient debugging strategies>
 
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 2 to completed, task 3 to in_progress */])
+
+### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 I'll collect all diagnostic information in parallel for faster root cause identification:
 
 @Bash(command="dotnet build --no-restore", description="Check for build errors")
@@ -98,6 +148,35 @@ Think systematically through each layer:
 
 #### Domain Layer
 - [ ] Invariants being violated?
+- [ ] Factory methods validating correctly?
+- [ ] Value objects immutable?
+- [ ] Domain events raised properly?
+
+### Phase 3: Implementation & Testing
+
+<think step-by-step about fix implementation and validation>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 3 to completed, tasks 4-5 to in_progress */])
+
+#### Parallel Fix Implementation
+```csharp
+// ✅ Create fix and tests simultaneously
+@Edit(file_path="src/Service.cs", /* fix implementation */)
+@Write(file_path="tests/ServiceTests.cs", /* test generation */)
+@Write(file_path="tests/IntegrationTests.cs", /* integration test */)
+```
+
+### Success Criteria
+- ✅ Bug reproduced and understood
+- ✅ Root cause identified
+- ✅ Fix implemented
+- ✅ Tests passing (100% success)
+- ✅ No regressions introduced
+- ✅ Security validated
+
+### Final Task Completion
+@TodoWrite(todos=[/* Mark all tasks as completed */])
 - [ ] Factory methods validating input?
 - [ ] Computed properties causing issues?
 - [ ] Audit fields updated correctly?
@@ -391,7 +470,7 @@ Provide integrated review with:
 - Fix effectiveness score (0-100)
 - Code quality improvements
 - Simplification opportunities ranked by impact
-- Approval status with conditions", subagent_type="Code Reviewer")
+- Approval status with conditions", subagent_type="general-purpose")
 
 ## 📝 Documentation & Prevention
 

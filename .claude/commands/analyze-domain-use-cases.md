@@ -2,7 +2,7 @@
 description: Extract business logic and use cases from a domain, presenting them from customer and user perspectives
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]
 argument-hint: domain or directory to analyze (e.g., "field management" or "src/Features/FieldManagement")
-agent-dependencies: [Business Domain Analyst]
+agent-dependencies: [Business Domain Analyst, Feature Analyzer]
 complexity: high
 estimated-time: 15-30 minutes
 category: analysis

@@ -1,8 +1,8 @@
 {
-  "claudifyVersion": "1.0.0",
-  "version": "1.0.0",
+  "claudifyVersion": "1.4.0",
+  "version": "1.4.0",
   "releaseDate": "2025-07-27",
-  "lastUpdated": "2025-07-27",
+  "lastUpdated": "2025-08-04",
   "minimumClaudeCodeVersion": "1.0.0",
   "components": {
     "agents": [
@@ -114,6 +114,18 @@
           "file": "fix-backend-build-and-tests.md",
           "description": "Fix backend build and test failures",
           "tags": ["backend", "ci-cd", "testing"]
+        },
+        {
+          "name": "update-backend-feature",
+          "file": "update-backend-feature.md",
+          "description": "Update backend feature with comprehensive testing and backward compatibility",
+          "tags": ["backend", "development", "update"]
+        },
+        {
+          "name": "update-backend-feature-no-backward-compatibility",
+          "file": "update-backend-feature-no-backward-compatibility.md",
+          "description": "Replace backend feature entirely with modern patterns, removing all legacy code",
+          "tags": ["backend", "development", "breaking-change"]
         }
       ],
       "frontend": [
@@ -146,6 +158,18 @@
           "file": "figma-implement-current-selection.md",
           "description": "Transform Figma to production code",
           "tags": ["frontend", "design", "figma"]
+        },
+        {
+          "name": "update-frontend-feature",
+          "file": "update-frontend-feature.md",
+          "description": "Update frontend feature with modern UI patterns, accessibility, and comprehensive testing",
+          "tags": ["frontend", "development", "update"]
+        },
+        {
+          "name": "update-frontend-feature-no-backward-compatibility",
+          "file": "update-frontend-feature-no-backward-compatibility.md",
+          "description": "Replace frontend feature entirely with modern UI framework patterns, removing all legacy code",
+          "tags": ["frontend", "development", "breaking-change"]
         }
       ],
       "quality": [
@@ -206,6 +230,18 @@
           "file": "add-integration.md",
           "description": "Add third-party integrations",
           "tags": ["integration", "api", "development"]
+        },
+        {
+          "name": "update-comprehensive-feature",
+          "file": "update-comprehensive-feature.md",
+          "description": "Update existing feature across entire stack with comprehensive analysis, testing, and validation",
+          "tags": ["development", "update", "comprehensive"]
+        },
+        {
+          "name": "update-comprehensive-feature-no-backward-compatibility",
+          "file": "update-comprehensive-feature-no-backward-compatibility.md",
+          "description": "Replace existing feature entirely with no backward compatibility, removing legacy code and implementing modern patterns",
+          "tags": ["development", "breaking-change", "comprehensive"]
         }
       ]
     },

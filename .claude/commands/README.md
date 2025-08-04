@@ -5,8 +5,8 @@ This directory contains project-specific slash commands for Claude Code. These c
 ## Command Categories
 
 ### Feature Development
-- **Backend**: `/add-backend-feature`, `/add-api-feature`
-- **Frontend**: `/add-frontend-feature`, `/add-ui-feature`
+- **Backend**: `/add-backend-feature`
+- **Frontend**: `/add-frontend-feature`
 - **Integration**: `/add-integration`
 
 ### Code Quality & Maintenance
@@ -32,30 +32,6 @@ This directory contains project-specific slash commands for Claude Code. These c
 - **Changelog**: `/update-changelog`
 
 ## Available Commands
-
-### `/add-ui-feature`
-
-Implements a new UI feature with beautiful interface design following the API-first workflow.
-
-**Usage:**
-```
-/add-ui-feature harvest schedule management with calendar view
-```
-
-**What it does:**
-- Enforces API-first development (backend must exist first)
-- Applies Material Design 3 principles with Angular Material
-- Uses Angular 19 signals for state management
-- Includes comprehensive UI states (loading, error, empty)
-- Follows project-specific patterns from CLAUDE.md
-- Leverages interleaved thinking for better results
-
-**Example invocations:**
-- `/add-ui-feature field import progress indicator`
-- `/add-ui-feature vineyard map with plot selection`
-- `/add-ui-feature harvest data visualization dashboard`
-
-The command will guide Claude through a structured process of researching existing patterns, verifying API endpoints, and creating beautiful, consistent UI components that match your design system.
 
 ### `/add-api-feature`
 

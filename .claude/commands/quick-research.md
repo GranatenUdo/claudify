@@ -29,7 +29,7 @@ Get rapid, focused insights on specific technical questions without the overhead
 3. Note any warnings or pitfalls
 4. Provide 3-5 key takeaways
 5. Suggest practical next steps
-Keep response concise and actionable", subagent_type="Researcher")
+Keep response concise and actionable", subagent_type="general-purpose")
 
 ### Quick Web Search
 If needed for current information:

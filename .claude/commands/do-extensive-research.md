@@ -1,4 +1,37 @@
+---
+description: Conduct deep technical research with multi-agent analysis and extended thinking
+allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
+argument-hint: research topic or technical question
+agent-dependencies: [Researcher, Tech Lead, Security Reviewer, Code Reviewer, Feature Analyzer, general-purpose]
+complexity: moderate
+estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
+category: analysis
+---
+
 # 🧠 Deep Research Analysis: $ARGUMENTS
+
+## Phase 0: Task Management Setup
+
+### 📋 TodoWrite Task Management
+<think step-by-step about organizing the research process>
+
+@TodoWrite(todos=[
+  {id: "1", content: "Define research scope and questions", status: "in_progress", priority: "high"},
+  {id: "2", content: "Parallel information gathering", status: "pending", priority: "high"},
+  {id: "3", content: "Multi-agent analysis", status: "pending", priority: "high"},
+  {id: "4", content: "Pattern recognition", status: "pending", priority: "high"},
+  {id: "5", content: "Synthesize findings", status: "pending", priority: "high"},
+  {id: "6", content: "Generate recommendations", status: "pending", priority: "high"}
+])
+
+### 📊 Agent Specialization Matrix
+
+| Research Type | Primary Agent | Secondary Agents | Parallel? |
+|--------------|---------------|------------------|----------|
+| Technical | Tech Lead | Code Reviewer | ✅ Yes |
+| Security | Security Reviewer | Tech Lead | ✅ Yes |
+| Best Practices | Researcher | Tech Lead | ✅ Yes |
+| Industry | Researcher | - | ❌ No |
 
 ## OPUS 4 ACTIVATION - EXTENDED THINKING MODE
 <think harder about the research topic from multiple perspectives - technical, business, operational, and strategic implications>
@@ -27,22 +60,57 @@ Execute parallel research streams:
 
 ## Phase 2: Information Gathering (Parallel Analysis)
 
+<think harder about efficient information gathering strategies>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 1 to completed, task 2 to in_progress */])
+
+### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
+```bash
+# ✅ OPTIMAL: All research operations run in parallel
+@Grep(pattern="$ARGUMENTS", output_mode="files_with_matches")
+@Glob(pattern="**/*$ARGUMENTS*.*")
+@WebSearch(query="$ARGUMENTS best practices 2025")
+@WebSearch(query="$ARGUMENTS security considerations")
+@Read(file_path="README.md")
+@Read(file_path="ARCHITECTURE.md")
+@Bash(command="git log --grep='$ARGUMENTS' --oneline -20")
+```
+
 ### Codebase Analysis
 ```
 Parallel searches to understand existing patterns:
 - Domain models and business logic
-- Service implementations
+- Service implementations  
 - Infrastructure patterns
 - Configuration and setup
 ```
 
-### External Research
+### Parallel Multi-Agent Research
 <think about credible sources and latest developments>
-- Industry standards and specifications
-- Academic research and whitepapers
-- Open source implementations
-- Vendor documentation and case studies
-- Community best practices and discussions
+
+@Task(description="Technical research", prompt="Research technical aspects of $ARGUMENTS:
+1. Current implementation patterns
+2. Performance benchmarks
+3. Scalability considerations
+4. Integration approaches
+5. Common pitfalls
+6. Success stories
+Provide evidence-based findings", subagent_type="general-purpose")
+@Task(description="Security research", prompt="Analyze security implications of $ARGUMENTS:
+1. Known vulnerabilities
+2. Attack vectors
+3. Mitigation strategies
+4. Compliance requirements
+5. Best practices
+Provide security assessment", subagent_type="general-purpose")
+@Task(description="Architecture analysis", prompt="Evaluate architectural patterns for $ARGUMENTS:
+1. Design patterns
+2. Anti-patterns
+3. Trade-offs
+4. Alternative approaches
+5. Future-proofing
+Provide architectural recommendations", subagent_type="general-purpose")
 
 ### Pattern Recognition
 <use extended thinking to identify patterns across the research>
@@ -52,6 +120,11 @@ Parallel searches to understand existing patterns:
 - Failure modes and mitigation strategies
 
 ## Phase 3: Deep Analysis (Opus 4 Extended Reasoning)
+
+<think step-by-step about multi-dimensional implications>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update task 2 to completed, task 3-4 to in_progress */])
 
 ### Multi-Dimensional Analysis Framework
 
@@ -81,6 +154,11 @@ Parallel searches to understand existing patterns:
 
 ## Phase 4: Synthesis & Recommendations
 
+<think harder about actionable insights and practical applications>
+
+### Task Progress Update
+@TodoWrite(todos=[/* Update tasks 3-4 to completed, task 5-6 to in_progress */])
+
 ### Key Findings Summary
 <synthesize research into actionable insights>
 
@@ -98,6 +176,29 @@ Parallel searches to understand existing patterns:
 - **Foundation Building**: Prerequisites for larger changes
 
 #### Short-term Initiatives (1-3 months)
+- **Feature Implementation**: Core functionality development
+- **Integration Work**: API and service connections
+- **Testing Framework**: Comprehensive test coverage
+
+#### Long-term Strategy (3-6 months)
+- **Architecture Evolution**: Scalability improvements
+- **Performance Optimization**: Cloud-native patterns
+- **Team Development**: Skills and knowledge transfer
+
+### Implementation Confidence
+- **Technical Feasibility**: [Score/10]
+- **Resource Availability**: [Score/10]
+- **Risk Level**: [Low/Medium/High]
+- **Success Probability**: [Percentage]
+
+### Final Task Completion
+@TodoWrite(todos=[/* Mark all tasks as completed */])
+
+## Research Complete
+✅ All research tasks completed
+✅ Multi-agent analysis synthesized
+✅ Actionable recommendations provided
+✅ Confidence score calculated
 - **Core Implementation**: Primary solution components
 - **Team Enablement**: Training and process updates
 - **Measurement Setup**: KPIs and success metrics

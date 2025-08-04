@@ -2,9 +2,9 @@
 description: Refactor and simplify code to improve quality, readability, and maintainability
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: file path, directory, or pattern to refactor (e.g., "src/services/FieldService.cs" or "**/*Service.cs")
-agent-dependencies: [Code Simplifier, Code Reviewer, Tech Lead]
+agent-dependencies: [Code Simplifier, Code Reviewer, Tech Lead, Technical Debt Analyst, Test Quality Analyst]
 complexity: moderate
-estimated-time: 15-30 minutes
+estimated-time: 15-30 minutes (with parallel agent execution)
 category: quality
 ---
 
@@ -53,7 +53,7 @@ I'll invoke the Code Simplifier agent to identify simplification opportunities.
 5. Deep nesting levels
 6. Unclear naming conventions
 7. Violation of SOLID principles
-Provide specific refactoring recommendations with examples", subagent_type="Code Simplifier")
+Provide specific refactoring recommendations with examples", subagent_type="Technical Debt Analyst")
 
 #### Code Quality Review
 Next, I'll get a comprehensive code quality assessment.
@@ -65,7 +65,31 @@ Next, I'll get a comprehensive code quality assessment.
 4. Test coverage gaps
 5. Documentation needs
 6. Performance bottlenecks
-Prioritize issues by impact", subagent_type="Code Reviewer")
+Prioritize issues by impact", subagent_type="general-purpose")
+
+#### Technical Debt Assessment
+I'll identify technical debt that should be addressed during refactoring.
+
+@Task(description="Technical debt analysis", prompt="Analyze $ARGUMENTS for technical debt:
+1. Legacy patterns that need modernization
+2. Accumulated workarounds and hacks
+3. Deferred refactorings now critical
+4. Outdated dependencies affecting code quality
+5. Missing abstractions causing duplication
+6. Architectural debt limiting flexibility
+Prioritize by refactoring ROI", subagent_type="Technical Debt Analyst")
+
+#### Test Quality Analysis
+I'll ensure test coverage supports safe refactoring.
+
+@Task(description="Test coverage analysis", prompt="Evaluate test quality for $ARGUMENTS:
+1. Current test coverage percentage
+2. Critical paths without tests
+3. Brittle tests that may break during refactoring
+4. Missing characterization tests
+5. Test quality and maintainability
+6. Recommended test additions before refactoring
+Identify test gaps that could make refactoring risky", subagent_type="general-purpose")
 
 ## Phase 2: Refactoring Strategy
 
@@ -173,7 +197,7 @@ I'll have the Tech Lead validate that refactorings maintain architectural integr
 3. Scalability is maintained or enhanced
 4. Technical debt is reduced, not shifted
 5. Integration points remain stable
-Provide approval or additional recommendations", subagent_type="Tech Lead")
+Provide approval or additional recommendations", subagent_type="general-purpose")
 
 ### Documentation Updates
 After refactoring, I'll update:
