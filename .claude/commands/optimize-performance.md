@@ -2,9 +2,9 @@
 description: Analyze and optimize code performance, focusing on database queries, caching, and resource usage
 allowed-tools: [Task, Bash, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: specific area or --full-analysis (e.g., "api/fields" or "--full-analysis --focus=database")
-agent-dependencies: [Tech Lead, Code Reviewer, Researcher]
+agent-dependencies: [Tech Lead, Code Reviewer, Researcher, Infrastructure Architect, Technical Debt Analyst]
 complexity: complex
-estimated-time: 20-45 minutes
+estimated-time: 20-45 minutes (with parallel agent execution)
 category: devops
 ---
 
@@ -99,6 +99,31 @@ I'll research latest performance optimization techniques.
 5. HTTP/2 and gRPC optimization techniques
 6. Container and cloud-native performance patterns
 Provide actionable recommendations", subagent_type="Researcher")
+
+### Infrastructure Performance Assessment
+I'll analyze system-level performance considerations.
+
+@Task(description="Infrastructure performance analysis", prompt="Analyze $ARGUMENTS for infrastructure-level performance:
+1. Database connection pooling and configuration
+2. Container resource limits and scaling
+3. Network latency and API gateway optimization
+4. Load balancing strategies
+5. CDN and static asset delivery
+6. Service mesh performance impact
+7. Observability overhead assessment
+Provide infrastructure optimization recommendations with expected impact", subagent_type="Infrastructure Architect")
+
+### Technical Debt Performance Impact
+I'll identify technical debt affecting performance.
+
+@Task(description="Performance debt analysis", prompt="Identify technical debt impacting performance in $ARGUMENTS:
+1. Legacy patterns causing performance bottlenecks
+2. Outdated libraries affecting efficiency
+3. Architectural decisions limiting scalability
+4. Missing abstractions causing repeated inefficiencies
+5. Accumulated workarounds degrading performance
+6. Deferred optimizations now critical
+Prioritize by performance impact and refactoring effort", subagent_type="Technical Debt Analyst")
 
 ## Phase 3: Optimization Implementation
 

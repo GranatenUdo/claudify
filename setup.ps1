@@ -38,9 +38,75 @@ Write-Host "    $ whoami" -ForegroundColor Yellow
 Write-Host "    > GranatenUdo | Tobias Ens" -ForegroundColor Yellow
 Write-Host "    > Claudify - Smart Claude Code Setup" -ForegroundColor Yellow
 Write-Host "`n"
-Write-Host "    ⚠️  Version Disclaimer:" -ForegroundColor DarkYellow
-Write-Host "    This is Claudify v$version - Check for updates regularly" -ForegroundColor DarkGray
-Write-Host "    https://github.com/yourorg/claudify/releases" -ForegroundColor DarkGray
+
+# Check for existing installation
+$existingVersionPath = Join-Path $TargetRepository ".claude" "VERSION"
+$existingVersion = $null
+if (Test-Path $existingVersionPath) {
+    $existingVersion = Get-Content $existingVersionPath -Raw -ErrorAction SilentlyContinue | ForEach-Object { $_.Trim() }
+    Write-Host "    📦 " -NoNewline -ForegroundColor Cyan
+    Write-Host "Existing Installation Detected: " -NoNewline -ForegroundColor White
+    Write-Host "v$existingVersion" -ForegroundColor Yellow
+    
+    if ($existingVersion -ne $version) {
+        Write-Host "    🔄 " -NoNewline -ForegroundColor Green
+        Write-Host "Update Available: " -NoNewline -ForegroundColor White
+        Write-Host "v$existingVersion → v$version" -ForegroundColor Yellow
+        Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
+    } else {
+        Write-Host "    ✓ " -NoNewline -ForegroundColor Green
+        Write-Host "Already on latest version" -ForegroundColor White
+        Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
+    }
+    Write-Host "`n"
+}
+
+# Check for version 1.4.0 and recommend clean install
+$recommendClean = $false
+if ($version -eq "1.4.0" -and ($existingVersion -eq $null -or $existingVersion -lt "1.4.0")) {
+    Write-Host "    🆕 " -NoNewline -ForegroundColor Cyan
+    Write-Host "Version 1.4.0 Major Update!" -ForegroundColor Yellow
+    Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
+    Write-Host "    This major update includes:" -ForegroundColor White
+    Write-Host "    • Opus 4 optimized agents with parallel analysis" -ForegroundColor Green
+    Write-Host "    • Extended thinking capabilities (65536 tokens)" -ForegroundColor Green
+    Write-Host "    • AI-powered generation with confidence scoring" -ForegroundColor Green
+    Write-Host "    • Enhanced collaboration protocols" -ForegroundColor Green
+    Write-Host "    • Improved command agent dependencies" -ForegroundColor Green
+    Write-Host "`n"
+    $recommendClean = $true
+}
+
+if ($recommendClean) {
+    Write-Host "⚠️  " -NoNewline -ForegroundColor Yellow
+    Write-Host "Clean installation is " -NoNewline -ForegroundColor White
+    Write-Host "STRONGLY RECOMMENDED" -NoNewline -ForegroundColor Yellow
+    Write-Host " for version 1.4.0" -ForegroundColor White
+    Write-Host "   This ensures all new Opus 4 optimizations are properly installed." -ForegroundColor DarkGray
+    Write-Host "`n"
+}
+
+Write-Host "Would you like to perform a clean installation? (Y/N)" -ForegroundColor Yellow
+Write-Host "This will remove all existing Claudify components before installing." -ForegroundColor DarkGray
+if ($recommendClean) {
+    Write-Host "[Recommended: Y]" -NoNewline -ForegroundColor Green
+    Write-Host ": " -NoNewline
+} else {
+    Write-Host "[Default: N]: " -NoNewline
+}
+
+$cleanResponse = Read-Host
+$CleanInstall = ($cleanResponse -eq 'Y' -or $cleanResponse -eq 'y')
+
+if ($CleanInstall) {
+    Write-Host "✓ Clean installation selected" -ForegroundColor Green
+} else {
+    if ($recommendClean) {
+        Write-Host "⚠️  Proceeding with normal installation (not recommended for v1.4.0)" -ForegroundColor Yellow
+    } else {
+        Write-Host "✓ Normal installation selected" -ForegroundColor Green
+    }
+}
 Write-Host "`n"
 
 # Sanitize the target repository path
@@ -84,6 +150,54 @@ if (-not (Test-Path $TargetRepository)) {
 Write-Host "Target Repository: " -NoNewline -ForegroundColor White
 Write-Host $TargetRepository -ForegroundColor Green
 
+# Clean install logic
+if ($CleanInstall) {
+    Write-Host "`n🧹  Clean Install Mode" -ForegroundColor Cyan
+    Write-Host "Preparing to remove existing Claudify components..." -ForegroundColor White
+    Write-Host "Affected items:" -ForegroundColor DarkGray
+    Write-Host "  - .claude/commands/* (all commands)" -ForegroundColor DarkGray
+    Write-Host "  - .claude/agents/* (all agents)" -ForegroundColor DarkGray
+    Write-Host "  - .claude/agent-tools/* (all agent tools)" -ForegroundColor DarkGray
+    Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
+    Write-Host "  - .claude/hooks/* (all hooks)" -ForegroundColor DarkGray
+    Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
+    Write-Host "  - CLAUDE.md (if exists)" -ForegroundColor DarkGray
+    Write-Host "  - FEATURES.md (if exists)" -ForegroundColor DarkGray
+    
+    Write-Host "`nPerforming clean removal..." -ForegroundColor Cyan
+        
+        # Remove .claude directory contents
+        $claudePath = Join-Path $TargetRepository ".claude"
+        if (Test-Path $claudePath) {
+            Write-Host "  - Removing .claude directory..." -ForegroundColor DarkGray
+            Remove-Item -Path $claudePath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+        
+        # Remove .claudify directory
+        $claudifyPath = Join-Path $TargetRepository ".claudify"
+        if (Test-Path $claudifyPath) {
+            Write-Host "  - Removing .claudify directory..." -ForegroundColor DarkGray
+            Remove-Item -Path $claudifyPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+        
+        # Remove CLAUDE.md if exists
+        $claudeMdPath = Join-Path $TargetRepository "CLAUDE.md"
+        if (Test-Path $claudeMdPath) {
+            Write-Host "  - Removing CLAUDE.md..." -ForegroundColor DarkGray
+            Remove-Item -Path $claudeMdPath -Force -ErrorAction SilentlyContinue
+        }
+        
+        # Remove FEATURES.md if exists
+        $featuresMdPath = Join-Path $TargetRepository "FEATURES.md"
+        if (Test-Path $featuresMdPath) {
+            Write-Host "  - Removing FEATURES.md..." -ForegroundColor DarkGray
+            Remove-Item -Path $featuresMdPath -Force -ErrorAction SilentlyContinue
+        }
+        
+    Write-Host "✓ Clean removal complete!" -ForegroundColor Green
+    Write-Host "`nProceeding with fresh installation..." -ForegroundColor Cyan
+}
+
 # Create .claude/commands directory structure (cross-platform)
 $commandsPath = Join-Path $TargetRepository ".claude" "commands"
 Write-Host "`nCreating Claude Code directory structure..." -ForegroundColor Cyan
@@ -101,6 +215,21 @@ if (-not (Test-Path $initCommand)) {
 
 Write-Host "Copying initialization command..." -ForegroundColor Cyan
 Copy-Item $initCommand -Destination $destPath -Force
+
+# Create VERSION file in .claude directory for update tracking
+$targetVersionPath = Join-Path $TargetRepository ".claude" "VERSION"
+Write-Host "Creating version tracking file..." -ForegroundColor Cyan
+Set-Content -Path $targetVersionPath -Value $version -NoNewline
+
+# Create installation metadata
+$installMetadata = @{
+    version = $version
+    installDate = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    installType = if ($CleanInstall) { "clean" } else { "normal" }
+    sourcePath = $scriptDir
+}
+$metadataPath = Join-Path $TargetRepository ".claude" "install-metadata.json"
+$installMetadata | ConvertTo-Json | Set-Content -Path $metadataPath -NoNewline
 
 # Handle .gitignore
 $gitignorePath = Join-Path $TargetRepository ".gitignore"
@@ -169,9 +298,39 @@ if (Test-Path $sourceTemplates) {
     Copy-Item -Path $sourceTemplates -Destination $destTemplates -Recurse -Force
 }
 
+# Copy scripts directory
+$sourceScripts = Join-Path $scriptDir "scripts"
+$destScripts = Join-Path $tempClaudifyPath "scripts"
+if (Test-Path $sourceScripts) {
+    Write-Host "  - Copying scripts directory..." -ForegroundColor DarkGray
+    Copy-Item -Path $sourceScripts -Destination $destScripts -Recurse -Force
+}
+
+# Copy important documentation files
+$docFiles = @(
+    "README.md",
+    "SETUP-GUIDE.md",
+    "CHANGELOG.md",
+    "AGENT-COLLABORATION-GUIDE.md",
+    "AGENT-COLLABORATION-EXAMPLES.md"
+)
+
+Write-Host "  - Copying documentation files..." -ForegroundColor DarkGray
+foreach ($docFile in $docFiles) {
+    $sourceDoc = Join-Path $scriptDir $docFile
+    $destDoc = Join-Path $tempClaudifyPath $docFile
+    if (Test-Path $sourceDoc) {
+        Copy-Item -Path $sourceDoc -Destination $destDoc -Force
+    }
+}
+
 Write-Host "Claudify resources copied to .claudify successfully!" -ForegroundColor Green
 Write-Host "Note: .claudify is excluded from git via .gitignore" -ForegroundColor DarkGray
 Write-Host "      This directory will persist to allow re-running /init-claudify" -ForegroundColor DarkGray
+if ($version -eq "1.4.0") {
+    Write-Host "      " -NoNewline -ForegroundColor DarkGray
+    Write-Host "✨ Version $version includes Opus 4 optimized agents" -ForegroundColor Cyan
+}
 
 # Display success message and instructions
 Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
@@ -190,6 +349,14 @@ Write-Host "claude code" -ForegroundColor Yellow
 Write-Host "  3. " -NoNewline -ForegroundColor DarkGray
 Write-Host "In Claude Code, execute: " -NoNewline -ForegroundColor White
 Write-Host "/init-claudify 'your project description'" -ForegroundColor Yellow
+
+if ($CleanInstall) {
+    Write-Host "`n  🆕 " -NoNewline -ForegroundColor Cyan
+    Write-Host "Clean Install Complete: " -NoNewline -ForegroundColor White
+    Write-Host "Fresh Claudify $version installation" -ForegroundColor Green
+    Write-Host "     All previous components have been removed." -ForegroundColor DarkGray
+    Write-Host "     Ready for Opus 4 optimized configuration." -ForegroundColor DarkGray
+}
 
 Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
 Write-Host "This will intelligently set up your complete Claude Code environment" -ForegroundColor White

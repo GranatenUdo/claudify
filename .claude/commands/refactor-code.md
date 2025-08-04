@@ -2,9 +2,9 @@
 description: Refactor and simplify code to improve quality, readability, and maintainability
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: file path, directory, or pattern to refactor (e.g., "src/services/FieldService.cs" or "**/*Service.cs")
-agent-dependencies: [Code Simplifier, Code Reviewer, Tech Lead]
+agent-dependencies: [Code Simplifier, Code Reviewer, Tech Lead, Technical Debt Analyst, Test Quality Analyst]
 complexity: moderate
-estimated-time: 15-30 minutes
+estimated-time: 15-30 minutes (with parallel agent execution)
 category: quality
 ---
 
@@ -66,6 +66,30 @@ Next, I'll get a comprehensive code quality assessment.
 5. Documentation needs
 6. Performance bottlenecks
 Prioritize issues by impact", subagent_type="Code Reviewer")
+
+#### Technical Debt Assessment
+I'll identify technical debt that should be addressed during refactoring.
+
+@Task(description="Technical debt analysis", prompt="Analyze $ARGUMENTS for technical debt:
+1. Legacy patterns that need modernization
+2. Accumulated workarounds and hacks
+3. Deferred refactorings now critical
+4. Outdated dependencies affecting code quality
+5. Missing abstractions causing duplication
+6. Architectural debt limiting flexibility
+Prioritize by refactoring ROI", subagent_type="Technical Debt Analyst")
+
+#### Test Quality Analysis
+I'll ensure test coverage supports safe refactoring.
+
+@Task(description="Test coverage analysis", prompt="Evaluate test quality for $ARGUMENTS:
+1. Current test coverage percentage
+2. Critical paths without tests
+3. Brittle tests that may break during refactoring
+4. Missing characterization tests
+5. Test quality and maintainability
+6. Recommended test additions before refactoring
+Identify test gaps that could make refactoring risky", subagent_type="Test Quality Analyst")
 
 ## Phase 2: Refactoring Strategy
 

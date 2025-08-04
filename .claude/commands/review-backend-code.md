@@ -2,6 +2,10 @@
 description: Perform comprehensive API code review using extended thinking for security, performance, and architectural analysis
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]
 argument-hint: file path, PR number, or feature name to review
+agent-dependencies: [Tech Lead, Security Reviewer, Code Reviewer, Test Quality Analyst, Technical Debt Analyst]
+complexity: complex
+estimated-time: 25-35 minutes (with parallel agent execution)
+category: quality
 ---
 
 # Review API Code: $ARGUMENTS
@@ -42,7 +46,49 @@ Use interleaved thinking to understand the code:
    - Check if this aligns with existing patterns
    - Verify API design consistency
 
-### Phase 2: Security Review (OWASP API Top 10)
+### Phase 2: Parallel Multi-Agent Analysis
+
+<think harder about optimal agent utilization for backend code review>
+
+Now I'll invoke specialized agents in parallel for comprehensive backend code analysis:
+
+#### 🚀 Launching Parallel Agent Review
+
+@Task(description="Architecture review", prompt="Perform architectural review of backend code in $ARGUMENTS:
+1. System Architecture: Domain-driven design, clean architecture, SOLID principles
+2. API Design: RESTful conventions, versioning, response consistency
+3. Scalability: Database efficiency, caching, async patterns
+4. Code Organization: Project structure, namespace organization, class responsibilities
+Rate architectural fitness 1-10 with specific improvements", subagent_type="Tech Lead")
+
+@Task(description="Security assessment", prompt="Conduct security review of $ARGUMENTS:
+1. OWASP API Top 10: Authorization, authentication, data exposure, rate limiting
+2. Multi-Tenant Security: OrganizationId filtering, cross-tenant prevention
+3. Data Protection: PII handling, encryption, secret management, input validation
+Classify findings: Critical/High/Medium/Low", subagent_type="Security Reviewer")
+
+@Task(description="Code quality review", prompt="Review code quality in $ARGUMENTS:
+1. Coding Standards: C# conventions, comments, method length, class cohesion
+2. Error Handling: Result<T> pattern, exceptions, logging, validation
+3. Design Patterns: Repository, Unit of Work, dependency injection
+4. Performance: LINQ efficiency, query optimization, memory management
+Provide top 10 improvements with examples", subagent_type="Code Reviewer")
+
+@Task(description="Test analysis", prompt="Analyze test quality for $ARGUMENTS:
+1. Test Coverage: Unit tests, integration tests, edge cases, error scenarios
+2. Test Quality: Independence, mocking, assertions, naming
+3. Missing Tests: Untested methods, uncovered branches, security gaps
+4. Recommendations: Priority additions, refactoring needs, performance tests
+Generate test examples for critical gaps", subagent_type="Test Quality Analyst")
+
+@Task(description="Debt assessment", prompt="Analyze technical debt in $ARGUMENTS:
+1. Code Debt: Duplication, complexity, god classes, dead code
+2. Design Debt: Coupling, missing abstractions, violated principles
+3. Infrastructure Debt: Outdated dependencies, missing monitoring, bottlenecks
+4. Documentation Debt: Missing API docs, outdated comments, no diagrams
+Calculate debt score and remediation effort", subagent_type="Technical Debt Analyst")
+
+### Phase 3: Security Review (OWASP API Top 10)
 
 #### 1. Broken Object Level Authorization
 ```csharp
