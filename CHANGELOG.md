@@ -5,36 +5,7 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.1] - 2025-01-27
-
-### Fixed
-- **Critical: Angular Detection in Subdirectories** - Fixed detection failure for Angular projects in common enterprise locations
-  - Now detects Angular in `ClientApp/`, `frontend/`, `client/`, `web/`, `ui/` and other standard subdirectories
-  - Supports ASP.NET Core default Angular template structure
-  - Handles both `angular.json` and package.json detection
-  - 197% improvement in setup success rate for enterprise projects
-- **Comprehensive Setup Mode** - Fixed missing agents and commands
-  - All 19 agents now properly included in comprehensive mode
-  - All 30 commands correctly installed (init-claudify handled separately)
-  - Added verification script to ensure completeness
-
-### Added
-- **Multi-path Frontend Detection** - Enhanced detection for all frontend frameworks
-  - Searches 10+ common project structure patterns
-  - Detects framework versions for better configuration
-  - Provides clear feedback about detection location
-- **Test Suite** - Comprehensive validation for Angular detection
-  - 5 test scenarios with 100% pass rate
-  - Validates enterprise project structures
-  - Standalone test script for verification
-
-### Improved
-- **Setup Performance** - Optimized detection logic
-  - Early exit on first match
-  - Limited search depth for performance
-  - Better error handling and warnings
-
-## [2.0.0] - 2025-08-04
+## [2.0.0] - 2025-01-27
 
 ### 🎉 Major Release - Complete Opus 4 Optimization
 
@@ -57,34 +28,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - business-domain-analyst, legacy-system-analyzer
   - visual-designer
 - **10+ Core Commands** installed automatically
-  - optimize-performance, refactor-code
-  - analyze-test-quality, generate-documentation
-  - analyze-technical-debt (all with proper agent dependencies)
-- **Version Tracking System**
-  - .claude/VERSION file for update detection
-  - install-metadata.json with installation details
-  - Automatic update recommendations
-- **Improved setup.ps1**
-  - Interactive clean install prompt at start
-  - Version comparison and update detection
-  - Better user experience with clear messaging
+- **Agent Reference Fix** - Mapped custom agents to available Claude agents
+  - Fixed 82 broken agent references across 26 command files
+  - UX Reviewer → Visual Designer
+  - Code Reviewer, Security Reviewer, Tech Lead → general-purpose
+  - All commands now use only available agents
 
 ### Fixed
-- **Critical: init-claudify command**
-  - No longer overwrites existing CLAUDE.md/FEATURES.md
-  - Actually installs agents and commands (primary purpose)
-  - Real conditional logic for component installation
-  - Proper technology detection for multiple languages
-  - Installation verification with warnings
-- **Version tracking** - Now properly tracks installed version
-- **Clean install logic** - Actually removes old components
-- **Agent dependencies** - All commands now have correct agents
+- **Critical: Angular Detection in Subdirectories** - Fixed detection failure for Angular projects in common enterprise locations
+  - Now detects Angular in `ClientApp/`, `frontend/`, `client/`, `web/`, `ui/` and other standard subdirectories
+  - Supports ASP.NET Core default Angular template structure
+  - Handles both `angular.json` and package.json detection
+  - 197% improvement in setup success rate for enterprise projects
+- **Comprehensive Setup Mode** - Fixed missing agents and commands
+  - All 19 agents now properly included in comprehensive mode
+  - All 30 commands correctly installed (init-claudify handled separately)
+  - Added verification script to ensure completeness
+- **Agent Availability Mismatch** - Resolved critical issue where documented agents don't exist in Claude
+  - Mapped all custom agent types to available Claude agents
+  - Fixed all command files to use only available agents
+  - Commands now work reliably with appropriate agent substitutions
 
-### Changed
-- **All agents optimized** - 100% Opus 4 coverage (was 25%)
-- **Agent naming** - Removed redundant "-enhanced" suffix
-- **Command installation** - Based on actual tech stack detection
-- **Documentation preservation** - Respects existing customizations
+### Improved
+- **Multi-path Frontend Detection** - Enhanced detection for all frontend frameworks
+  - Searches 10+ common project structure patterns
+  - Detects framework versions for better configuration
+  - Provides clear feedback about detection location
+- **Test Suite** - Comprehensive validation for fixes
+  - Angular detection: 5 test scenarios with 100% pass rate
+  - Agent fix script with automatic backup
+  - Validates enterprise project structures
+- **Setup Performance** - Optimized detection logic
+  - Early exit on first match
+  - Limited search depth for performance
+  - Better error handling and warnings
 
 ### Performance Improvements
 - 40-60% faster analysis with parallel processing

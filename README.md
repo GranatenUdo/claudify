@@ -1,12 +1,12 @@
 # Claudify - Claude Code Intelligent Setup
 
-![Version](https://img.shields.io/badge/version-2.0.1-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Released](https://img.shields.io/badge/released-2025--01--27-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
 **Minimal Setup, Maximum Intelligence - Now with Opus 4 Optimized Agents**
 
-Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.0 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
 
 ## 🚀 Quick Start
 
