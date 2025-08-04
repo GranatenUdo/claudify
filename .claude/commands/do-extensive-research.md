@@ -2,7 +2,7 @@
 description: Conduct deep technical research with multi-agent analysis and extended thinking
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
 argument-hint: research topic or technical question
-agent-dependencies: [Researcher, Tech Lead, Security Reviewer, Code Reviewer, general-purpose]
+agent-dependencies: [Researcher, Tech Lead, Security Reviewer, Code Reviewer, Feature Analyzer, general-purpose]
 complexity: moderate
 estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
 category: analysis

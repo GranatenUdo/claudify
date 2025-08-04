@@ -24,20 +24,11 @@ $version = if (Test-Path $versionFile) { Get-Content $versionFile -Raw -ErrorAct
 
 # Display Claudify banner
 Write-Host "`n"
-Write-Host "     ██████╗██╗      █████╗ ██╗   ██╗██████╗ ██╗███████╗██╗   ██╗" -ForegroundColor Cyan
-Write-Host "    ██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██║██╔════╝╚██╗ ██╔╝" -ForegroundColor Cyan
-Write-Host "    ██║     ██║     ███████║██║   ██║██║  ██║██║█████╗   ╚████╔╝ " -ForegroundColor Cyan
-Write-Host "    ██║     ██║     ██╔══██║██║   ██║██║  ██║██║██╔══╝    ╚██╔╝  " -ForegroundColor Cyan
-Write-Host "    ╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝██║██║        ██║   " -ForegroundColor Cyan
-Write-Host "     ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚═╝        ╚═╝   " -ForegroundColor Cyan
-Write-Host "`n    Intelligent Claude Code Setup for Your Repository" -ForegroundColor White
-Write-Host "    Version $version" -ForegroundColor DarkGray
-Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
-Write-Host "`n"
+Write-Host "    ╔═══ CLAUDIFY ═══╗ Smart Claude Code Setup v$version" -ForegroundColor Cyan
+Write-Host "    ║▶ Initialize ◀ ║ Opus 4 Optimized • AI-Powered" -ForegroundColor White
+Write-Host "    ╚════════════════╝ github.com/claudify" -ForegroundColor DarkGray
 Write-Host "    $ whoami" -ForegroundColor Yellow
-Write-Host "    > GranatenUdo | Tobias Ens" -ForegroundColor Yellow
-Write-Host "    > Claudify - Smart Claude Code Setup" -ForegroundColor Yellow
-Write-Host "`n"
+Write-Host "    > GranatenUdo | Tobi" -ForegroundColor Yellow
 
 # Check for existing installation
 $existingVersionPath = Join-Path $TargetRepository ".claude" "VERSION"
@@ -58,45 +49,51 @@ if (Test-Path $existingVersionPath) {
         Write-Host "Already on latest version" -ForegroundColor White
         Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
     }
-    Write-Host "`n"
 }
 
-# Check for version 1.4.0 and recommend clean install
+# Check for version 2.0.0 and recommend clean install
 $recommendClean = $false
-if ($version -eq "1.4.0" -and ($existingVersion -eq $null -or $existingVersion -lt "1.4.0")) {
-    Write-Host "    🆕 " -NoNewline -ForegroundColor Cyan
-    Write-Host "Version 1.4.0 Major Update!" -ForegroundColor Yellow
+if ($version -eq "2.0.0" -and ($existingVersion -eq $null -or $existingVersion -lt "2.0.0")) {
+    Write-Host "    🎉 " -NoNewline -ForegroundColor Cyan
+    Write-Host "Version 2.0.0 MAJOR UPDATE!" -ForegroundColor Yellow
     Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
-    Write-Host "    This major update includes:" -ForegroundColor White
-    Write-Host "    • Opus 4 optimized agents with parallel analysis" -ForegroundColor Green
-    Write-Host "    • Extended thinking capabilities (65536 tokens)" -ForegroundColor Green
-    Write-Host "    • AI-powered generation with confidence scoring" -ForegroundColor Green
-    Write-Host "    • Enhanced collaboration protocols" -ForegroundColor Green
-    Write-Host "    • Improved command agent dependencies" -ForegroundColor Green
-    Write-Host "`n"
+    Write-Host "    This major release includes:" -ForegroundColor White
+    Write-Host "    • ✨ Opus 4 optimized agents with parallel analysis" -ForegroundColor Green
+    Write-Host "    • 🧠 Extended thinking capabilities (65536 tokens)" -ForegroundColor Green
+    Write-Host "    • 🤖 AI-powered generation with confidence scoring" -ForegroundColor Green
+    Write-Host "    ⚠️  BREAKING CHANGES - Clean install required" -ForegroundColor Yellow
+    Write-Host "    " + ("─" * 50) -ForegroundColor DarkGray
     $recommendClean = $true
 }
 
 if ($recommendClean) {
     Write-Host "⚠️  " -NoNewline -ForegroundColor Yellow
     Write-Host "Clean installation is " -NoNewline -ForegroundColor White
-    Write-Host "STRONGLY RECOMMENDED" -NoNewline -ForegroundColor Yellow
-    Write-Host " for version 1.4.0" -ForegroundColor White
-    Write-Host "   This ensures all new Opus 4 optimizations are properly installed." -ForegroundColor DarkGray
-    Write-Host "`n"
+    Write-Host "REQUIRED" -NoNewline -ForegroundColor Red
+    Write-Host " for version 2.0.0" -ForegroundColor White
+    Write-Host "   Major architectural changes require a fresh installation." -ForegroundColor DarkGray
 }
 
 Write-Host "Would you like to perform a clean installation? (Y/N)" -ForegroundColor Yellow
 Write-Host "This will remove all existing Claudify components before installing." -ForegroundColor DarkGray
-if ($recommendClean) {
-    Write-Host "[Recommended: Y]" -NoNewline -ForegroundColor Green
-    Write-Host ": " -NoNewline
+if ($recommendClean -or $version -eq "2.0.0") {
+    Write-Host "[Default: Y]: " -NoNewline -ForegroundColor Green
 } else {
     Write-Host "[Default: N]: " -NoNewline
 }
 
 $cleanResponse = Read-Host
-$CleanInstall = ($cleanResponse -eq 'Y' -or $cleanResponse -eq 'y')
+
+# Default to Yes for v2.0.0, No for others
+if ([string]::IsNullOrWhiteSpace($cleanResponse)) {
+    if ($recommendClean -or $version -eq "2.0.0") {
+        $CleanInstall = $true
+    } else {
+        $CleanInstall = $false
+    }
+} else {
+    $CleanInstall = ($cleanResponse -eq 'Y' -or $cleanResponse -eq 'y')
+}
 
 if ($CleanInstall) {
     Write-Host "✓ Clean installation selected" -ForegroundColor Green
@@ -222,10 +219,11 @@ Write-Host "Creating version tracking file..." -ForegroundColor Cyan
 Set-Content -Path $targetVersionPath -Value $version -NoNewline
 
 # Create installation metadata
+$installTypeValue = if ($CleanInstall) { "clean" } else { "normal" }
 $installMetadata = @{
     version = $version
     installDate = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-    installType = if ($CleanInstall) { "clean" } else { "normal" }
+    installType = $installTypeValue
     sourcePath = $scriptDir
 }
 $metadataPath = Join-Path $TargetRepository ".claude" "install-metadata.json"
@@ -327,9 +325,689 @@ foreach ($docFile in $docFiles) {
 Write-Host "Claudify resources copied to .claudify successfully!" -ForegroundColor Green
 Write-Host "Note: .claudify is excluded from git via .gitignore" -ForegroundColor DarkGray
 Write-Host "      This directory will persist to allow re-running /init-claudify" -ForegroundColor DarkGray
-if ($version -eq "1.4.0") {
+if ($version -eq "2.0.0") {
     Write-Host "      " -NoNewline -ForegroundColor DarkGray
-    Write-Host "✨ Version $version includes Opus 4 optimized agents" -ForegroundColor Cyan
+    Write-Host "🚀 Version $version - Major release with Opus 4 optimizations" -ForegroundColor Cyan
+    Write-Host "      " -NoNewline -ForegroundColor DarkGray
+    Write-Host "📝 Fixed init-claudify command for proper component installation" -ForegroundColor Green
+}
+
+# Offer intelligent automatic setup
+Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
+Write-Host " 🤖 Intelligent Component Installation" -ForegroundColor Cyan
+Write-Host ("─" * 60) -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "Claudify can automatically install Claude Code components now" -ForegroundColor White
+Write-Host "based on your detected technology stack." -ForegroundColor White
+Write-Host ""
+Write-Host "Choose installation mode:" -ForegroundColor Yellow
+Write-Host "  [M] Minimal    - Essential components only (~5-10 files)" -ForegroundColor White
+Write-Host "  [S] Standard   - Core components for your stack (~15-25 files)" -ForegroundColor White
+Write-Host "  [C] Comprehensive - Everything available (~40+ files) " -NoNewline -ForegroundColor White
+Write-Host "[RECOMMENDED]" -ForegroundColor Green
+Write-Host "  [N] None       - Skip automatic installation" -ForegroundColor White
+Write-Host ""
+Write-Host "Select mode (M/S/C/N) [C]: " -NoNewline -ForegroundColor Yellow
+$setupResponse = Read-Host
+
+# Default to comprehensive if no input
+if ([string]::IsNullOrWhiteSpace($setupResponse)) {
+    $setupResponse = 'C'
+}
+
+$setupMode = $null
+switch ($setupResponse.ToUpper()) {
+    'M' { $setupMode = "minimal" }
+    'S' { $setupMode = "standard" }
+    'C' { $setupMode = "comprehensive" }
+    'N' { $setupMode = $null }
+    default { $setupMode = "comprehensive" }
+}
+
+if ($setupMode) {
+    Write-Host ""
+    Write-Host "Starting intelligent setup ($setupMode mode)..." -ForegroundColor Cyan
+    Write-Host ""
+    
+    # Intelligent Setup Logic (merged from intelligent-setup.ps1)
+    # Color functions for cross-platform compatibility
+    function Write-Success { param($msg) Write-Host $msg -ForegroundColor Green }
+    function Write-Info { param($msg) Write-Host $msg -ForegroundColor Cyan }
+    function Write-Warning { param($msg) Write-Host $msg -ForegroundColor Yellow }
+    function Write-Error { param($msg) Write-Host $msg -ForegroundColor Red }
+    function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGray }
+    
+    Write-Info "🎯 Intelligent Claude Code Setup"
+    Write-Host "=================================" -ForegroundColor DarkGray
+    Write-Info "Setup Mode: $($setupMode.ToUpper())"
+    Write-Host ""
+    
+    # Verify .claudify directory exists
+    $claudifyPath = Join-Path $TargetRepository ".claudify"
+    if (-not (Test-Path $claudifyPath)) {
+        Write-Error "❌ ERROR: .claudify directory not found!"
+        Write-Host "This should have been created earlier in the setup." -ForegroundColor Yellow
+        exit 1
+    }
+    
+    # Create .claude directory structure if not already created
+    $claudePath = Join-Path $TargetRepository ".claude"
+    $paths = @(
+        (Join-Path $claudePath "commands"),
+        (Join-Path $claudePath "agents"),
+        (Join-Path $claudePath "agent-tools"),
+        (Join-Path $claudePath "hooks"),
+        (Join-Path $claudePath "generators"),
+        (Join-Path $claudePath "validation"),
+        (Join-Path $claudePath "templates" "documentation")
+    )
+    
+    Write-Info "📁 Creating directory structure..."
+    foreach ($path in $paths) {
+        New-Item -ItemType Directory -Path $path -Force | Out-Null
+    }
+    Write-Success "  ✓ Directories created"
+    
+    # Technology Stack Detection
+    Write-Info "`n🔍 Detecting technology stack..."
+    
+    $detectedStack = @{
+        Backend = $null
+        Frontend = $null
+        MultiTenant = $false
+        Database = $null
+        Infrastructure = $null
+    }
+    
+    # Backend detection
+    if (Get-ChildItem -Path $TargetRepository -Filter "*.csproj" -Recurse -ErrorAction SilentlyContinue) {
+        $detectedStack.Backend = ".NET/C#"
+        Write-Success "  ✓ .NET/C# backend detected"
+    } elseif (Test-Path (Join-Path $TargetRepository "go.mod")) {
+        $detectedStack.Backend = "Go"
+        Write-Success "  ✓ Go backend detected"
+    } elseif (Test-Path (Join-Path $TargetRepository "pom.xml")) {
+        $detectedStack.Backend = "Java"
+        Write-Success "  ✓ Java backend detected"
+    } elseif (Test-Path (Join-Path $TargetRepository "requirements.txt")) {
+        $detectedStack.Backend = "Python"
+        Write-Success "  ✓ Python backend detected"
+    } elseif (Test-Path (Join-Path $TargetRepository "package.json")) {
+        $packageJson = Get-Content (Join-Path $TargetRepository "package.json") -Raw | ConvertFrom-Json
+        if ($packageJson.dependencies -and ($packageJson.dependencies.PSObject.Properties.Name -match "express|fastify|nestjs")) {
+            $detectedStack.Backend = "Node.js"
+            Write-Success "  ✓ Node.js backend detected"
+        }
+    }
+    
+    # Frontend detection
+    if (Test-Path (Join-Path $TargetRepository "package.json")) {
+        $packageJson = Get-Content (Join-Path $TargetRepository "package.json") -Raw | ConvertFrom-Json
+        if ($packageJson.dependencies) {
+            if ($packageJson.dependencies.PSObject.Properties.Name -contains "react" -or 
+                $packageJson.dependencies.PSObject.Properties.Name -contains "next") {
+                $detectedStack.Frontend = "React"
+                Write-Success "  ✓ React frontend detected"
+            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "angular" -or
+                      $packageJson.dependencies.PSObject.Properties.Name -contains "@angular/core") {
+                $detectedStack.Frontend = "Angular"
+                Write-Success "  ✓ Angular frontend detected"
+            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "vue") {
+                $detectedStack.Frontend = "Vue"
+                Write-Success "  ✓ Vue frontend detected"
+            } elseif ($packageJson.dependencies.PSObject.Properties.Name -contains "svelte") {
+                $detectedStack.Frontend = "Svelte"
+                Write-Success "  ✓ Svelte frontend detected"
+            }
+        }
+    }
+    
+    # Multi-tenancy detection
+    $multiTenantPatterns = @("OrganizationId", "TenantId", "CompanyId", "multi-tenant", "IMultiTenant")
+    $searchExtensions = @("*.cs", "*.ts", "*.js", "*.py", "*.go", "*.java")
+    foreach ($ext in $searchExtensions) {
+        $files = Get-ChildItem -Path $TargetRepository -Filter $ext -Recurse -ErrorAction SilentlyContinue | Select-Object -First 10
+        foreach ($file in $files) {
+            $content = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
+            foreach ($pattern in $multiTenantPatterns) {
+                if ($content -match $pattern) {
+                    $detectedStack.MultiTenant = $true
+                    Write-Success "  ✓ Multi-tenant patterns detected"
+                    break
+                }
+            }
+            if ($detectedStack.MultiTenant) { break }
+        }
+        if ($detectedStack.MultiTenant) { break }
+    }
+    
+    Write-Host ""
+    Write-Info "📦 Installing components for $setupMode setup..."
+    
+    # Define component lists based on mode
+    $commandsToInstall = @()
+    $agentsToInstall = @()
+    $installGenerators = $false
+    $installTools = $false
+    $installHooks = $false
+    
+    switch ($setupMode) {
+        "minimal" {
+            $commandsToInstall = @(
+                "comprehensive-review",
+                "quick-research",
+                "create-command-and-or-agent"
+            )
+            $agentsToInstall = @(
+                "code-reviewer",
+                "tech-lead",
+                "researcher"
+            )
+        }
+        "standard" {
+            $commandsToInstall = @(
+                "comprehensive-review",
+                "do-extensive-research",
+                "quick-research",
+                "create-command-and-or-agent",
+                "update-changelog",
+                "optimize-performance",
+                "refactor-code"
+            )
+            $agentsToInstall = @(
+                "code-reviewer",
+                "tech-lead",
+                "researcher",
+                "code-simplifier",
+                "technical-debt-analyst",
+                "test-quality-analyst"
+            )
+            $installGenerators = $true
+            $installHooks = $true
+        }
+        "comprehensive" {
+            $commandsToInstall = @(
+                "comprehensive-review",
+                "do-extensive-research",
+                "quick-research",
+                "create-command-and-or-agent",
+                "update-changelog",
+                "optimize-performance",
+                "refactor-code",
+                "analyze-test-quality",
+                "generate-documentation",
+                "analyze-technical-debt",
+                "analyze-architecture",
+                "analyze-security",
+                "analyze-ux",
+                "fix-all-bugs"
+            )
+            $agentsToInstall = @(
+                "code-reviewer",
+                "tech-lead",
+                "researcher",
+                "code-simplifier",
+                "technical-debt-analyst",
+                "test-quality-analyst",
+                "infrastructure-architect",
+                "ux-reviewer",
+                "business-domain-analyst",
+                "legacy-system-analyzer",
+                "visual-designer",
+                "security-reviewer",
+                "frontend-developer"
+            )
+            $installGenerators = $true
+            $installTools = $true
+            $installHooks = $true
+        }
+    }
+    
+    # Add backend-specific components
+    if ($detectedStack.Backend) {
+        $backendCommands = @(
+            "add-backend-feature",
+            "fix-backend-bug",
+            "review-backend-code",
+            "fix-backend-build-and-tests"
+        )
+        $commandsToInstall += $backendCommands
+    }
+    
+    # Add frontend-specific components
+    if ($detectedStack.Frontend) {
+        $frontendCommands = @(
+            "add-frontend-feature",
+            "fix-frontend-bug",
+            "review-frontend-code",
+            "fix-frontend-build-and-tests"
+        )
+        $commandsToInstall += $frontendCommands
+        if ($setupMode -ne "minimal") {
+            $agentsToInstall += "frontend-developer"
+        }
+    }
+    
+    # Add security components for multi-tenant
+    if ($detectedStack.MultiTenant -and $setupMode -ne "minimal") {
+        $agentsToInstall += "security-reviewer"
+    }
+    
+    # Remove duplicates
+    $commandsToInstall = $commandsToInstall | Select-Object -Unique
+    $agentsToInstall = $agentsToInstall | Select-Object -Unique
+    
+    # Install commands
+    Write-Info "Installing commands..."
+    $installedCommands = 0
+    $failedCommands = 0
+    foreach ($command in $commandsToInstall) {
+        $sourcePath = Join-Path $claudifyPath ".claude" "commands" "$command.md"
+        $destPath = Join-Path $claudePath "commands" "$command.md"
+        
+        if (Test-Path $sourcePath) {
+            Copy-Item -Path $sourcePath -Destination $destPath -Force
+            Write-Detail "✓ $command"
+            $installedCommands++
+        } else {
+            Write-Detail "✗ $command (not found)"
+            $failedCommands++
+        }
+    }
+    Write-Success "  Commands: $installedCommands installed$(if ($failedCommands -gt 0) { ", $failedCommands failed" })"
+    
+    # Install agents
+    Write-Info "Installing agents..."
+    $installedAgents = 0
+    $failedAgents = 0
+    foreach ($agent in $agentsToInstall) {
+        $sourcePath = Join-Path $claudifyPath ".claude" "agents" "$agent.md"
+        $destPath = Join-Path $claudePath "agents" "$agent.md"
+        
+        if (Test-Path $sourcePath) {
+            Copy-Item -Path $sourcePath -Destination $destPath -Force
+            Write-Detail "✓ $agent"
+            $installedAgents++
+        } else {
+            Write-Detail "✗ $agent (not found)"
+            $failedAgents++
+        }
+    }
+    Write-Success "  Agents: $installedAgents installed$(if ($failedAgents -gt 0) { ", $failedAgents failed" })"
+    
+    # Install generators (if applicable)
+    if ($installGenerators) {
+        Write-Info "Installing generators..."
+        $generatorFiles = @(
+            "command-generator.ps1",
+            "agent-generator.ps1",
+            "hook-generator.ps1"
+        )
+        $installedGenerators = 0
+        foreach ($generator in $generatorFiles) {
+            $sourcePath = Join-Path $claudifyPath "templates" "generators" $generator
+            $destPath = Join-Path $claudePath "generators" $generator
+            
+            if (Test-Path $sourcePath) {
+                Copy-Item -Path $sourcePath -Destination $destPath -Force
+                Write-Detail "✓ $generator"
+                $installedGenerators++
+            }
+        }
+        
+        # Copy generator README
+        $sourceReadme = Join-Path $claudifyPath "templates" "META-GENERATOR-README.md"
+        $destReadme = Join-Path $claudePath "generators" "README.md"
+        if (Test-Path $sourceReadme) {
+            Copy-Item -Path $sourceReadme -Destination $destReadme -Force
+        }
+        
+        Write-Success "  Generators: $installedGenerators installed"
+    }
+    
+    # Install hooks (if applicable)
+    if ($installHooks) {
+        Write-Info "Installing hooks..."
+        $hookFiles = @(
+            "add-context.ps1",
+            "pre-commit-quality-check.ps1",
+            "check-changelog-updates.ps1"
+        )
+        
+        if ($detectedStack.MultiTenant) {
+            $hookFiles += "check-tenant-scoping.ps1"
+        }
+        
+        $installedHooks = 0
+        foreach ($hook in $hookFiles) {
+            $sourcePath = Join-Path $claudifyPath ".claude" "hooks" $hook
+            $destPath = Join-Path $claudePath "hooks" $hook
+            
+            if (Test-Path $sourcePath) {
+                Copy-Item -Path $sourcePath -Destination $destPath -Force
+                Write-Detail "✓ $hook"
+                $installedHooks++
+            }
+        }
+        Write-Success "  Hooks: $installedHooks installed"
+    }
+    
+    # Install agent tools (comprehensive only)
+    if ($installTools) {
+        Write-Info "Installing agent tools..."
+        $toolDirs = @(
+            "security-reviewer",
+            "technical-debt-analyst",
+            "infrastructure-architect"
+        )
+        
+        $installedTools = 0
+        foreach ($toolDir in $toolDirs) {
+            $sourcePath = Join-Path $claudifyPath ".claude" "agent-tools" $toolDir
+            $destPath = Join-Path $claudePath "agent-tools" $toolDir
+            
+            if (Test-Path $sourcePath) {
+                Copy-Item -Path $sourcePath -Destination $destPath -Recurse -Force
+                Write-Detail "✓ $toolDir tools"
+                $installedTools++
+            }
+        }
+        
+        # Copy agent-tools config
+        $sourceConfig = Join-Path $claudifyPath ".claude" "agent-tools" "agent-tools-config.json"
+        $destConfig = Join-Path $claudePath "agent-tools" "agent-tools-config.json"
+        if (Test-Path $sourceConfig) {
+            Copy-Item -Path $sourceConfig -Destination $destConfig -Force
+        }
+        
+        Write-Success "  Agent tools: $installedTools tool sets installed"
+    }
+    
+    # Copy validation tools
+    Write-Info "Installing validation tools..."
+    $validationFiles = @(
+        "architecture-validator.ps1",
+        "code-quality-validator.ps1",
+        "test-coverage-analyzer.ps1"
+    )
+    $installedValidation = 0
+    foreach ($validation in $validationFiles) {
+        $sourcePath = Join-Path $claudifyPath ".claude" "validation" $validation
+        $destPath = Join-Path $claudePath "validation" $validation
+        
+        if (Test-Path $sourcePath) {
+            Copy-Item -Path $sourcePath -Destination $destPath -Force
+            $installedValidation++
+        }
+    }
+    Write-Success "  Validation tools: $installedValidation installed"
+    
+    # Copy documentation templates
+    $sourceTemplates = Join-Path $claudifyPath ".claude" "templates" "documentation" "*.template"
+    if (Test-Path $sourceTemplates) {
+        Copy-Item -Path $sourceTemplates -Destination (Join-Path $claudePath "templates" "documentation") -Force
+    }
+    
+    # Copy design guidelines
+    $sourceGuidelines = Join-Path $claudifyPath ".claude" "COMMAND-AGENT-DESIGN-GUIDELINES.md"
+    $destGuidelines = Join-Path $claudePath "COMMAND-AGENT-DESIGN-GUIDELINES.md"
+    if (Test-Path $sourceGuidelines) {
+        Copy-Item -Path $sourceGuidelines -Destination $destGuidelines -Force
+    }
+    
+    # Generate CLAUDE.md if it doesn't exist
+    $claudeMdPath = Join-Path $TargetRepository "CLAUDE.md"
+    if (-not (Test-Path $claudeMdPath)) {
+        Write-Info "`n📝 Generating intelligent CLAUDE.md..."
+        
+        $claudeMdContent = @"
+# CLAUDE.md - Project Configuration
+
+## 🧠 CONTEXT
+**System**: $(if ($detectedStack.Backend) { $detectedStack.Backend } else { "Not detected - please specify" })
+**Frontend**: $(if ($detectedStack.Frontend) { $detectedStack.Frontend } else { "Not detected - please specify" })
+**Database**: $(if ($detectedStack.Database) { $detectedStack.Database } else { "Not detected - please specify" })
+**Infrastructure**: $(if ($detectedStack.Infrastructure) { $detectedStack.Infrastructure } else { "Not detected - please specify" })
+**Multi-tenant**: $(if ($detectedStack.MultiTenant) { "Yes - ensure tenant isolation" } else { "No" })
+**Domain**: [Please specify your business domain]
+
+## ⚡ CRITICAL RULES
+
+### Architecture
+$(if ($detectedStack.Backend -eq ".NET/C#") { "- Follow Domain-Driven Design (DDD) principles`n- Use Result pattern for operation outcomes`n- Implement repository pattern with Entity Framework Core" })
+$(if ($detectedStack.Frontend -eq "React") { "- Use functional components with hooks`n- Implement proper state management (Redux/Context)`n- Follow React best practices and patterns" })
+$(if ($detectedStack.Frontend -eq "Angular") { "- Use standalone components (Angular 19+)`n- Implement reactive forms`n- Follow Angular style guide" })
+$(if ($detectedStack.MultiTenant) { "- ALWAYS scope data by tenant`n- Validate tenant context in all operations`n- Never allow cross-tenant data access" })
+- Write clean, maintainable, testable code
+- Follow SOLID principles
+- Implement comprehensive error handling
+
+### Development Workflow
+1. Backend first: Model → Repository → Service → API
+2. Update FEATURES.md immediately after implementing features
+3. Frontend last: Only create UI for existing APIs
+4. Write tests for business logic (80% coverage target)
+5. Document all public APIs and complex logic
+
+## 💻 CODE PATTERNS
+
+### Backend Patterns
+$(if ($detectedStack.Backend -eq ".NET/C#") { @"
+- Async/await for all I/O operations
+- Dependency injection for all services
+- DTOs for API contracts
+- Entity models for database
+- Value objects for domain concepts
+"@ })
+$(if ($detectedStack.Backend -eq "Node.js") { @"
+- Express middleware for cross-cutting concerns
+- Async/await for all async operations
+- Validation middleware for request validation
+- Error handling middleware
+"@ })
+$(if ($detectedStack.Backend -eq "Python") { @"
+- Type hints for all functions
+- Pydantic for data validation
+- Async/await for async operations
+- Proper exception handling
+"@ })
+
+### Frontend Patterns
+$(if ($detectedStack.Frontend) { @"
+- Component-based architecture
+- Proper state management
+- Responsive design (mobile-first)
+- Accessibility (WCAG 2.1 AA compliance)
+- Performance optimization (lazy loading, code splitting)
+"@ })
+
+## 🔒 SECURITY CHECKLIST
+- [ ] Input validation on all endpoints
+- [ ] Authentication and authorization implemented
+- [ ] SQL injection prevention (parameterized queries)
+- [ ] XSS prevention (output encoding)
+- [ ] CSRF protection
+$(if ($detectedStack.MultiTenant) { "- [ ] Tenant isolation verified`n- [ ] Cross-tenant access prevented" })
+- [ ] Sensitive data encryption
+- [ ] Security headers configured
+- [ ] Rate limiting implemented
+
+## 🔍 QUICK REFERENCE
+
+### Key Commands
+**Backend Development:**
+- `/add-backend-feature` - Create new backend features with DDD
+- `/fix-backend-bug` - Debug and fix backend issues
+- `/review-backend-code` - Comprehensive backend code review
+- `/fix-backend-build-and-tests` - Fix build and test failures
+
+**Frontend Development:**
+- `/add-frontend-feature` - Create UI features with excellence
+- `/fix-frontend-bug` - Debug UI issues systematically
+- `/review-frontend-code` - Frontend code review with UX focus
+- `/fix-frontend-build-and-tests` - Fix frontend build issues
+
+**Quality & Analysis:**
+- `/comprehensive-review` - Multi-agent comprehensive review
+- `/analyze-technical-debt` - Identify and prioritize tech debt
+- `/optimize-performance` - Performance optimization
+- `/refactor-code` - Improve code quality
+
+### Available Agents
+$(foreach ($agent in $agentsToInstall) { "- **$agent** - Specialized expert agent`n" })
+
+---
+**Setup**: Claudify v2.0.0 | Mode: $setupMode | Generated: $(Get-Date -Format "yyyy-MM-dd")
+**Remember**: Always prioritize code quality, security, and maintainability.
+"@
+        
+        Set-Content -Path $claudeMdPath -Value $claudeMdContent -NoNewline
+        Write-Success "  ✓ CLAUDE.md generated with intelligent defaults"
+    }
+    
+    # Generate FEATURES.md if it doesn't exist
+    $featuresMdPath = Join-Path $TargetRepository "FEATURES.md"
+    if (-not (Test-Path $featuresMdPath)) {
+        Write-Info "📝 Generating FEATURES.md template..."
+        
+        $featuresMdContent = @"
+# Features Documentation
+
+## Overview
+[Please provide a brief description of your project]
+
+## System Architecture
+
+### Technology Stack
+- **Backend**: $(if ($detectedStack.Backend) { $detectedStack.Backend } else { "Not detected" })
+- **Frontend**: $(if ($detectedStack.Frontend) { $detectedStack.Frontend } else { "Not detected" })
+- **Database**: $(if ($detectedStack.Database) { $detectedStack.Database } else { "Not detected" })
+- **Infrastructure**: $(if ($detectedStack.Infrastructure) { $detectedStack.Infrastructure } else { "Not detected" })
+
+### Architectural Patterns
+$(if ($detectedStack.Backend -eq ".NET/C#") { "- Domain-Driven Design (DDD)`n- Repository Pattern`n- CQRS (if applicable)" })
+$(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isolation strategy" })
+- [Add your architectural patterns]
+
+### Key Components
+- [List your main system components]
+- [e.g., API Gateway, Auth Service, etc.]
+
+---
+
+## Core Features
+
+### Feature 1: [Feature Name]
+- **Description**: [What it does]
+- **API Endpoints**: 
+  - `GET /api/[endpoint]` - [Description]
+  - `POST /api/[endpoint]` - [Description]
+- **Business Rules**: 
+  - [Key rule 1]
+  - [Key rule 2]
+- **Status**: ✅ Implemented / 🚧 In Progress / 📋 Planned
+
+### Feature 2: [Feature Name]
+- **Description**: [What it does]
+- **API Endpoints**: [List endpoints]
+- **Business Rules**: [Key rules]
+- **Status**: [Status]
+
+---
+
+## Planned Features
+
+### Q1 2025
+1. **[Feature Name]** - [Brief description]
+   - Priority: High/Medium/Low
+   - Estimated effort: [X days/weeks]
+
+2. **[Feature Name]** - [Brief description]
+   - Priority: High/Medium/Low
+   - Estimated effort: [X days/weeks]
+
+### Q2 2025
+1. **[Feature Name]** - [Brief description]
+2. **[Feature Name]** - [Brief description]
+
+---
+
+## API Documentation
+
+### Authentication
+- **Method**: [JWT/OAuth2/etc.]
+- **Endpoints**: [Auth endpoints]
+
+### Main API Endpoints
+[Document your main API endpoints here or link to API documentation]
+
+---
+
+## Development Guidelines
+
+### Coding Standards
+- [Language-specific standards]
+- [Framework conventions]
+- [Testing requirements]
+
+### Git Workflow
+- [Branch naming conventions]
+- [Commit message format]
+- [PR process]
+
+---
+
+## Deployment
+
+### Environments
+- **Development**: [URL/details]
+- **Staging**: [URL/details]
+- **Production**: [URL/details]
+
+### CI/CD Pipeline
+- [Build process]
+- [Test automation]
+- [Deployment steps]
+
+---
+
+*Last updated: $(Get-Date -Format "yyyy-MM-dd")*
+*Generated by Claudify v2.0.0 Intelligent Setup*
+"@
+        
+        Set-Content -Path $featuresMdPath -Value $featuresMdContent -NoNewline
+        Write-Success "  ✓ FEATURES.md template generated"
+    }
+    
+    # Installation summary
+    Write-Host ""
+    Write-Info "📊 Installation Summary"
+    Write-Host "========================" -ForegroundColor DarkGray
+    Write-Success "✓ Commands installed: $installedCommands"
+    Write-Success "✓ Agents installed: $installedAgents"
+    if ($installGenerators) { Write-Success "✓ Generators installed: 3" }
+    if ($installHooks) { Write-Success "✓ Hooks installed: $(if ($detectedStack.MultiTenant) { 4 } else { 3 })" }
+    if ($installTools) { Write-Success "✓ Agent tools installed: 3 sets" }
+    Write-Success "✓ Validation tools: $installedValidation"
+    
+    # Final success message
+    Write-Host ""
+    Write-Success "✅ Claude Code setup completed successfully!"
+    Write-Host ""
+    Write-Info "Next Steps:"
+    Write-Host "  1. Review and customize CLAUDE.md with your specific requirements" -ForegroundColor White
+    Write-Host "  2. Update FEATURES.md with your actual features" -ForegroundColor White
+    Write-Host "  3. Open terminal and run: " -NoNewline -ForegroundColor White
+    Write-Host "claude code" -ForegroundColor Yellow
+    Write-Host "  4. Try a command like: " -NoNewline -ForegroundColor White
+    Write-Host "/comprehensive-review" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Info "💡 TIP: You can still run /init-claudify in Claude Code for advanced customization"
+    Write-Host ""
+} else {
+    Write-Host ""
+    Write-Host "Skipping automatic installation." -ForegroundColor Yellow
+    Write-Host "You can run /init-claudify in Claude Code for manual setup." -ForegroundColor White
 }
 
 # Display success message and instructions
@@ -337,18 +1015,35 @@ Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
 Write-Host " ✓ Setup Complete!" -ForegroundColor Green
 Write-Host ("─" * 60) -ForegroundColor DarkGray
 
-Write-Host "`nNext steps:" -ForegroundColor Cyan
-Write-Host "  1. " -NoNewline -ForegroundColor DarkGray
-Write-Host "Open a terminal in: " -NoNewline -ForegroundColor White
-Write-Host $TargetRepository -ForegroundColor Yellow
+if (-not $setupMode) {
+    Write-Host "`nNext steps:" -ForegroundColor Cyan
+    Write-Host "  1. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "Open a terminal in: " -NoNewline -ForegroundColor White
+    Write-Host $TargetRepository -ForegroundColor Yellow
 
-Write-Host "  2. " -NoNewline -ForegroundColor DarkGray
-Write-Host "Run: " -NoNewline -ForegroundColor White
-Write-Host "claude code" -ForegroundColor Yellow
+    Write-Host "  2. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "Run: " -NoNewline -ForegroundColor White
+    Write-Host "claude code" -ForegroundColor Yellow
 
-Write-Host "  3. " -NoNewline -ForegroundColor DarkGray
-Write-Host "In Claude Code, execute: " -NoNewline -ForegroundColor White
-Write-Host "/init-claudify 'your project description'" -ForegroundColor Yellow
+    Write-Host "  3. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "In Claude Code, execute: " -NoNewline -ForegroundColor White
+    Write-Host "/init-claudify" -ForegroundColor Yellow
+} else {
+    Write-Host "`nClaude Code is ready to use!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Quick start:" -ForegroundColor Cyan
+    Write-Host "  1. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "Open a terminal in: " -NoNewline -ForegroundColor White
+    Write-Host $TargetRepository -ForegroundColor Yellow
+    
+    Write-Host "  2. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "Run: " -NoNewline -ForegroundColor White
+    Write-Host "claude code" -ForegroundColor Yellow
+    
+    Write-Host "  3. " -NoNewline -ForegroundColor DarkGray
+    Write-Host "Try a command like: " -NoNewline -ForegroundColor White
+    Write-Host "/comprehensive-review" -ForegroundColor Yellow
+}
 
 if ($CleanInstall) {
     Write-Host "`n  🆕 " -NoNewline -ForegroundColor Cyan
@@ -357,9 +1052,3 @@ if ($CleanInstall) {
     Write-Host "     All previous components have been removed." -ForegroundColor DarkGray
     Write-Host "     Ready for Opus 4 optimized configuration." -ForegroundColor DarkGray
 }
-
-Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
-Write-Host "This will intelligently set up your complete Claude Code environment" -ForegroundColor White
-Write-Host "based on your project's technology stack and architecture patterns." -ForegroundColor White
-Write-Host ("─" * 60) -ForegroundColor DarkGray
-Write-Host "`n"

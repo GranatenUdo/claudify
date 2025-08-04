@@ -2,7 +2,7 @@
 description: Generate comprehensive technical documentation for features, APIs, or systems
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch, Bash]
 argument-hint: documentation type and target (e.g., "api docs for field management" or "user guide for import feature")
-agent-dependencies: [Technical Documentation Expert, Code Reviewer, Tech Lead]
+agent-dependencies: [Technical Documentation Expert, Code Reviewer, Tech Lead, Feature Analyzer]
 complexity: moderate
 estimated-time: 15-25 minutes
 category: documentation

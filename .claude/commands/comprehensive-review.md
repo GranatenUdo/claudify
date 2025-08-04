@@ -2,7 +2,7 @@
 description: Perform holistic analysis using all specialized agents for maximum insight and quality
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
 argument-hint: feature name, PR number, or directory to review comprehensively
-agent-dependencies: [UX Reviewer, Tech Lead, Security Reviewer, Researcher, Code Simplifier, Code Reviewer, Frontend Developer, Visual Designer, general-purpose]
+agent-dependencies: [UX Reviewer, Tech Lead, Security Reviewer, Researcher, Code Simplifier, Code Reviewer, Frontend Developer, Visual Designer, Feature Analyzer, general-purpose]
 complexity: complex
 estimated-time: 30-60 minutes (reduced from 60-90 with parallel execution)
 category: quality

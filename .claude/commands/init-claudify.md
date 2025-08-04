@@ -1,7 +1,7 @@
 ---
 description: Initialize complete Claude Code setup for your repository with intelligent component selection
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Write, MultiEdit, TodoWrite]
-argument-hint: business domain description (e.g., "multi-tenant SaaS for vineyard management")
+argument-hint: --minimal | --standard | --comprehensive (default)
 complexity: high
 estimated-time: 5-10 minutes
 category: setup
@@ -11,11 +11,22 @@ category: setup
 
 <think harder about how to intelligently set up Claude Code based on the repository analysis>
 
-I'll analyze your repository and set up a complete Claude Code environment tailored to your project: **$ARGUMENTS**
+I'll analyze your repository and set up a complete Claude Code environment tailored to your project.
+
+## 🎯 Primary Purpose
+This command will:
+1. **Install agents** - All Opus 4 optimized agents for parallel analysis
+2. **Install commands** - Domain-specific commands based on your tech stack
+3. **Install agent-tools** - Supporting tools for agent operations
+4. **Install hooks** - Quality and security validation hooks
+5. **Install generators** - Tools to create custom components
+6. **Create/preserve documentation** - CLAUDE.md and FEATURES.md (won't overwrite existing)
 
 ## 📌 Claudify Version Check
 
-@Bash(command="test -f .claudify/VERSION && echo \"Claudify Version: $(cat .claudify/VERSION)\" || echo \"Claudify Version: Unknown\"", description="Check Claudify version")
+@Bash(command="echo '🔍 Checking Claudify installation...'; if [ -f .claudify/VERSION ]; then ver=$(cat .claudify/VERSION); echo \"  ✓ Claudify resources v$ver found\"; if [ \"$ver\" != \"2.0.0\" ]; then echo \"  ⚠️ WARNING: You have v$ver but v2.0.0 is recommended\"; echo \"     Please update Claudify for best results\"; fi; elif [ -f .claude/VERSION ]; then ver=$(cat .claude/VERSION); echo \"  ℹ Installed version: v$ver\"; echo \"  ❌ Missing .claudify directory - cannot install components\"; echo \"\"; echo \"  To fix: Download Claudify v2.0.0 and run setup.ps1\"; exit 1; else echo \"  ❌ Claudify not found - please run setup.ps1 first\"; exit 1; fi", description="Check Claudify version and resources")
+
+@Bash(command="echo && echo '📦 Checking existing installation...' && test -d .claude && echo '  ✓ .claude directory exists' || echo '  ✗ .claude directory not found'; claude_exists=false; features_exists=false; test -f CLAUDE.md && { echo '  ✓ CLAUDE.md exists'; claude_exists=true; } || echo '  ✗ CLAUDE.md not found (will create)'; test -f FEATURES.md && { echo '  ✓ FEATURES.md exists'; features_exists=true; } || echo '  ✗ FEATURES.md not found (will create)'; echo; export CLAUDE_EXISTS=$claude_exists; export FEATURES_EXISTS=$features_exists", description="Check existing Claude Code setup and set flags")
 
 @Read(file_path=".claudify/components-manifest.json", limit=6)
 
@@ -67,7 +78,7 @@ Based on my analysis:
 
 <think about which components are most appropriate for this tech stack>
 
-Based on your project structure and the business domain "$ARGUMENTS", I'll determine the best components for your project.
+Based on your detected project structure, I'll determine the best components for your project.
 
 <think step-by-step about component selection based on the analysis>
 
@@ -94,19 +105,48 @@ Based on your project structure and the business domain "$ARGUMENTS", I'll deter
 - Validation: Architecture validator, code quality validator, test coverage analyzer
 - Documentation: Templates for API, architecture, development, and troubleshooting guides
 
-Would you like me to proceed with this setup? You can also choose:
-- **[S]tandard** (Recommended) - Components based on your tech stack (~15-25 files)
-- **[M]inimal** - Essential components only (~5-10 files)  
-- **[C]omprehensive** - Everything available (~40+ files)
-- **[Cu]stomize** - I'll show you all options to select from
+## 📦 Setup Type Selection
 
-Please enter your choice (S/M/C/Cu) or press Enter for Standard:
+@Bash(command="echo ''
+echo '╔══════════════════════════════════════════════════════╗'
+echo '║           CLAUDIFY SETUP TYPE SELECTION              ║'
+echo '╚══════════════════════════════════════════════════════╝'
+echo ''
+echo 'Choose your installation type:'
+echo ''
+echo '  🔹 MINIMAL (~5-10 files)'
+echo '     Essential commands and agents only'
+echo '     Perfect for: Quick start, testing'
+echo ''
+echo '  🔸 STANDARD (~15-25 files)'
+echo '     Core commands, agents, and tools for your tech stack'
+echo '     Perfect for: Most projects'
+echo ''
+echo '  🔺 COMPREHENSIVE (~40+ files) [RECOMMENDED]'
+echo '     Everything available - all agents, commands, tools'
+echo '     Perfect for: Most projects, ensures full capabilities'
+echo ''
+echo '────────────────────────────────────────────────────────'
+echo ''
+echo 'To select, run init-claudify with one of these options:'
+echo '  /init-claudify --minimal'
+echo '  /init-claudify --standard'
+echo '  /init-claudify --comprehensive  (or just /init-claudify)'
+echo ''", description="Show setup options")
 
-<wait for user input - default to 'S' if empty>
+### Determining Setup Type
 
-### Processing Selection
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; elif echo '$ARGUMENTS' | grep -q '\-\-comprehensive\|\-\-full\|\-\-all'; then setup_type='comprehensive'; fi; echo \"📋 Setup Type Selected: $(echo $setup_type | tr '[:lower:]' '[:upper:]')\"; echo '────────────────────────────────────────────────────────'", description="Determine setup type from arguments")
 
-<think about the user's choice and determine components to install>
+### Detecting Your Technology Stack
+
+Let me determine which components to install:
+
+@Bash(command="echo '🔍 Detecting backend technology...' && if ls *.csproj 1>/dev/null 2>&1 || ls **/*.csproj 1>/dev/null 2>&1; then echo '  ✓ .NET/C# detected'; elif [ -f go.mod ]; then echo '  ✓ Go detected'; elif [ -f pom.xml ] || [ -f build.gradle ]; then echo '  ✓ Java detected'; elif [ -f requirements.txt ] || ls *.py 1>/dev/null 2>&1; then echo '  ✓ Python detected'; elif [ -f package.json ] && grep -q 'express\\|fastify\\|nestjs' package.json 2>/dev/null; then echo '  ✓ Node.js backend detected'; else echo '  ℹ No specific backend detected'; fi", description="Detect backend technology")
+
+@Bash(command="echo '🔍 Detecting frontend technology...' && if [ -f package.json ]; then if grep -q 'react' package.json 2>/dev/null; then echo '  ✓ React detected'; elif grep -q 'angular' package.json 2>/dev/null; then echo '  ✓ Angular detected'; elif grep -q 'vue' package.json 2>/dev/null; then echo '  ✓ Vue detected'; elif grep -q 'svelte' package.json 2>/dev/null; then echo '  ✓ Svelte detected'; else echo '  ℹ No specific frontend framework detected'; fi; elif [ -f angular.json ]; then echo '  ✓ Angular detected'; else echo '  ℹ No frontend detected'; fi", description="Detect frontend framework")
+
+@Bash(command="echo '🔍 Checking for multi-tenancy...' && if grep -r 'OrganizationId\\|TenantId\\|multi.tenant\\|IMultiTenant' --include='*.cs' --include='*.ts' --include='*.js' --include='*.py' --include='*.go' --include='*.java' . 2>/dev/null | head -1 > /dev/null; then echo '  ✓ Multi-tenant patterns detected'; else echo '  ℹ No multi-tenancy detected'; fi", description="Check for multi-tenancy")
 
 @TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "in_progress", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "pending", "priority": "high", "id": "setup-5"}])
 
@@ -124,11 +164,11 @@ Now I'll set up your Claude Code environment:
 
 I'll use the claudify resources that were copied during setup:
 
-@Bash(command="test -d .claudify && echo '✅ Claudify resources found' || echo '❌ Missing claudify resources - please run setup.ps1 first'", description="Check for claudify resources")
+@Bash(command="if [ -d .claudify ]; then echo '✅ Claudify resources found'; else echo '❌ CRITICAL: Missing .claudify directory!'; echo ''; echo 'The .claudify directory with source files is missing.'; echo 'This happens when:'; echo '  1. You installed with an older version of setup.ps1'; echo '  2. The .claudify directory was deleted'; echo '  3. You are in a different repository'; echo ''; echo 'To fix this:'; echo '  1. Download the latest Claudify from GitHub'; echo '  2. Run setup.ps1 with clean install option'; echo '  3. Then run /init-claudify again'; echo ''; echo 'Aborting installation...'; exit 1; fi", description="Check for claudify resources with detailed error")
 
 Let me verify the temporary resources are complete:
 
-@Bash(command="test -f .claudify/components-manifest.json && echo '✅ Components manifest found' || echo '❌ Missing components manifest'", description="Verify manifest exists")
+@Bash(command="if [ ! -f .claudify/components-manifest.json ]; then echo '❌ Missing components manifest - setup.ps1 may need to be re-run'; exit 1; else echo '✅ Components manifest found'; fi", description="Verify manifest exists with error handling")
 
 Now reading the components manifest:
 
@@ -140,56 +180,34 @@ Based on your selection, I'll now copy the components:
 
 <think about which specific components to install based on the selection and detected tech stack>
 
-#### Installing Core Commands
-These essential commands will be installed for all projects:
+#### Installing Commands Based on Setup Type
 
-@Bash(command="cp '.claudify/.claude/commands/comprehensive-review.md' .claude/commands/", description="Copy comprehensive review command")
-@Bash(command="cp '.claudify/.claude/commands/do-extensive-research.md' .claude/commands/", description="Copy extensive research command")  
-@Bash(command="cp '.claudify/.claude/commands/quick-research.md' .claude/commands/", description="Copy quick research command")
-@Bash(command="cp '.claudify/.claude/commands/create-command-and-or-agent.md' .claude/commands/", description="Copy meta-generator command")
-@Bash(command="cp '.claudify/.claude/commands/update-changelog.md' .claude/commands/", description="Copy changelog update command")
+@Bash(command="echo 'Installing commands...'; mkdir -p .claude/commands; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; echo \"  Setup: $setup_type\"; if [ \"$setup_type\" = 'minimal' ]; then cmds='comprehensive-review quick-research create-command-and-or-agent'; elif [ \"$setup_type\" = 'comprehensive' ]; then cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code analyze-test-quality generate-documentation analyze-technical-debt analyze-architecture analyze-security analyze-ux fix-all-bugs'; else cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code'; fi; for cmd in $cmds; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed commands could not be installed\"; else echo '✅ Commands installed successfully'; fi", description="Install commands based on setup type")
 
-#### Installing Backend Components (if backend detected)
-@Bash(command="cp '.claudify/.claude/commands/add-backend-feature.md' .claude/commands/", description="Copy add backend feature command")
-@Bash(command="cp '.claudify/.claude/commands/fix-backend-bug.md' .claude/commands/", description="Copy fix backend bug command")
-@Bash(command="cp '.claudify/.claude/commands/review-backend-code.md' .claude/commands/", description="Copy review backend code command")
-@Bash(command="cp '.claudify/.claude/commands/fix-backend-build-and-tests.md' .claude/commands/", description="Copy fix backend build command")
+#### Installing Backend Components
+@Bash(command="if ls *.csproj 1>/dev/null 2>&1 || ls **/*.csproj 1>/dev/null 2>&1 || [ -f go.mod ] || [ -f pom.xml ] || [ -f build.gradle ] || [ -f requirements.txt ] || ls *.py 1>/dev/null 2>&1 || ([ -f package.json ] && grep -q 'express\\|fastify\\|nestjs' package.json 2>/dev/null); then echo 'Installing backend components...'; failed=0; for cmd in 'add-backend-feature' 'fix-backend-bug' 'review-backend-code' 'fix-backend-build-and-tests'; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -eq 0 ]; then echo '  ✓ All backend commands installed'; else echo \"  ⚠️ $failed backend commands missing\"; fi; else echo '  ℹ No backend detected - skipping backend components'; fi", description="Install backend components with error checking")
 
-#### Installing Frontend Components (if frontend detected)
-@Bash(command="cp '.claudify/.claude/commands/add-frontend-feature.md' .claude/commands/", description="Copy add frontend feature command")
-@Bash(command="cp '.claudify/.claude/commands/fix-frontend-bug.md' .claude/commands/", description="Copy fix frontend bug command")
-@Bash(command="cp '.claudify/.claude/commands/review-frontend-code.md' .claude/commands/", description="Copy review frontend code command")
-@Bash(command="cp '.claudify/.claude/commands/fix-frontend-build-and-tests.md' .claude/commands/", description="Copy fix frontend build command")
-@Bash(command="cp '.claudify/.claude/agents/frontend-developer.md' .claude/agents/", description="Copy frontend developer agent")
+#### Installing Frontend Components
+@Bash(command="if [ -f package.json ] && grep -q 'react\|angular\|vue\|next\|nuxt\|svelte' package.json || [ -f angular.json ]; then echo 'Installing frontend components...'; failed=0; for cmd in 'add-frontend-feature' 'fix-frontend-bug' 'review-frontend-code' 'fix-frontend-build-and-tests'; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ -f '.claudify/.claude/agents/frontend-developer.md' ]; then cp '.claudify/.claude/agents/frontend-developer.md' .claude/agents/ && echo '  ✓ frontend-developer agent'; else echo '  ✗ frontend-developer agent (not found)'; failed=$((failed+1)); fi; if [ $failed -eq 0 ]; then echo '  ✓ All frontend components installed'; else echo \"  ⚠️ $failed frontend components missing\"; fi; else echo '  ℹ No frontend framework detected - skipping frontend components'; fi", description="Install frontend components with error checking")
 
-#### Installing Essential Agents
-@Bash(command="cp '.claudify/.claude/agents/code-reviewer.md' .claude/agents/", description="Copy code reviewer agent")
+#### Installing Agents Based on Setup Type
 
-#### Installing Security Components (if multi-tenant detected)
-@Bash(command="cp '.claudify/.claude/agents/security-reviewer.md' .claude/agents/", description="Copy security reviewer agent")
-@Bash(command="cp '.claudify/.claude/hooks/check-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant scoping validation hook")
+@Bash(command="echo 'Installing agents...'; mkdir -p .claude/agents; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'minimal' ]; then agents='code-reviewer tech-lead researcher'; elif [ \"$setup_type\" = 'comprehensive' ]; then agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst infrastructure-architect ux-reviewer business-domain-analyst legacy-system-analyzer visual-designer security-reviewer frontend-developer'; else agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst'; fi; for agent in $agents; do if [ -f \".claudify/.claude/agents/${agent}.md\" ]; then cp \".claudify/.claude/agents/${agent}.md\" .claude/agents/ && echo \"  ✓ ${agent}\"; else echo \"  ✗ ${agent} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed agents could not be installed\"; else echo '✅ Agents installed successfully'; fi", description="Install agents based on setup type")
 
-#### Installing Generators
-@Bash(command="mkdir -p .claude/generators", description="Create generators directory")
-@Bash(command="cp '.claudify/templates/generators/command-generator.ps1' .claude/generators/", description="Copy command generator")
-@Bash(command="cp '.claudify/templates/generators/agent-generator.ps1' .claude/generators/", description="Copy agent generator")
-@Bash(command="cp '.claudify/templates/generators/hook-generator.ps1' .claude/generators/", description="Copy hook generator")
-@Bash(command="cp '.claudify/templates/META-GENERATOR-README.md' .claude/generators/README.md", description="Copy generator documentation")
+#### Installing Security Components
+@Bash(command="if grep -r 'OrganizationId\|TenantId\|multi.tenant\|IMultiTenant' --include='*.cs' --include='*.ts' --include='*.js' . 2>/dev/null | head -1 > /dev/null; then echo 'Multi-tenancy detected - installing security components...'; cp '.claudify/.claude/agents/security-reviewer.md' .claude/agents/ 2>/dev/null; cp '.claudify/.claude/hooks/check-tenant-scoping.ps1' .claude/hooks/ 2>/dev/null; echo 'Security components installed'; else echo 'No multi-tenancy detected - skipping security components'; fi", description="Conditionally install security components")
+
+#### Installing Generators and Tools
+
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" != 'minimal' ]; then echo 'Installing generators...'; mkdir -p .claude/generators; cp '.claudify/templates/generators/command-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ command-generator'; cp '.claudify/templates/generators/agent-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ agent-generator'; cp '.claudify/templates/generators/hook-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ hook-generator'; cp '.claudify/templates/META-GENERATOR-README.md' .claude/generators/README.md 2>/dev/null && echo '  ✓ documentation'; else echo 'Skipping generators (minimal setup)'; fi", description="Conditionally install generators")
 
 #### Installing Agent Tools
-@Bash(command="mkdir -p .claude/agent-tools", description="Create agent tools directory")
-@Bash(command="cp -r '.claudify/.claude/agent-tools/security-reviewer' .claude/agent-tools/", description="Copy security analysis tools")
-@Bash(command="cp -r '.claudify/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/", description="Copy technical debt tools")
-@Bash(command="cp -r '.claudify/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/", description="Copy infrastructure tools")
-@Bash(command="cp '.claudify/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/", description="Copy agent tools config")
 
-#### Installing Enhanced Hooks
-@Bash(command="cp '.claudify/.claude/hooks/add-context.ps1' .claude/hooks/", description="Copy context enhancement hook")
-@Bash(command="cp '.claudify/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/", description="Copy pre-commit quality hook")
-@Bash(command="cp '.claudify/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/", description="Copy tenant validation hook")
-@Bash(command="cp '.claudify/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/", description="Copy changelog reminder hook")
-@Bash(command="cp '.claudify/.claude/hooks/hooks-config.json' .claude/hooks/", description="Copy hooks configuration")
-@Bash(command="cp '.claudify/.claude/hooks/install-hooks.ps1' .claude/hooks/", description="Copy hooks installer")
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'comprehensive' ]; then echo 'Installing agent tools...'; mkdir -p .claude/agent-tools; cp -r '.claudify/.claude/agent-tools/security-reviewer' .claude/agent-tools/ 2>/dev/null && echo '  ✓ security-reviewer tools'; cp -r '.claudify/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/ 2>/dev/null && echo '  ✓ technical-debt tools'; cp -r '.claudify/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/ 2>/dev/null && echo '  ✓ infrastructure tools'; cp '.claudify/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/ 2>/dev/null && echo '  ✓ config'; else echo 'Skipping agent tools (not comprehensive setup)'; fi", description="Conditionally install agent tools")
+
+#### Installing Hooks
+
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" != 'minimal' ]; then echo 'Installing hooks...'; mkdir -p .claude/hooks; cp '.claudify/.claude/hooks/add-context.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ add-context'; cp '.claudify/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ pre-commit-quality'; cp '.claudify/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ changelog-updates'; if [ \"$setup_type\" = 'comprehensive' ]; then cp '.claudify/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ tenant-validation'; cp '.claudify/.claude/hooks/hooks-config.json' .claude/hooks/ 2>/dev/null && echo '  ✓ config'; cp '.claudify/.claude/hooks/install-hooks.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ installer'; fi; else echo 'Skipping hooks (minimal setup)'; fi", description="Conditionally install hooks")
 
 #### Installing Validation Tools
 @Bash(command="mkdir -p .claude/validation", description="Create validation directory")
@@ -208,18 +226,21 @@ These essential commands will be installed for all projects:
 
 ### Verifying Installation
 
-@Bash(command="echo 'Components installed:' && echo '- Commands: '$(ls .claude/commands/*.md 2>/dev/null | wc -l) && echo '- Agents: '$(ls .claude/agents/*.md 2>/dev/null | wc -l) && echo '- Generators: '$(ls .claude/generators/*.ps1 2>/dev/null | wc -l) && echo '- Agent Tools: '$(find .claude/agent-tools -name '*.ps1' 2>/dev/null | wc -l) && echo '- Hooks: '$(ls .claude/hooks/*.ps1 2>/dev/null | wc -l) && echo '- Validation Tools: '$(ls .claude/validation/*.ps1 2>/dev/null | wc -l) && echo '- Doc Templates: '$(ls .claude/templates/documentation/*.template 2>/dev/null | wc -l)", description="Count all installed components")
+@Bash(command="echo && echo '📊 Installation Summary:' && echo '========================' && cmd_count=$(ls .claude/commands/*.md 2>/dev/null | wc -l); echo \"✓ Commands installed: $cmd_count\"; agent_count=$(ls .claude/agents/*.md 2>/dev/null | wc -l); echo \"✓ Agents installed: $agent_count\"; gen_count=$(ls .claude/generators/*.ps1 2>/dev/null | wc -l); echo \"✓ Generators installed: $gen_count\"; tool_count=$(find .claude/agent-tools -type f 2>/dev/null | wc -l); echo \"✓ Agent tools installed: $tool_count\"; hook_count=$(ls .claude/hooks/*.ps1 2>/dev/null | wc -l); echo \"✓ Hooks installed: $hook_count\"; val_count=$(ls .claude/validation/*.ps1 2>/dev/null | wc -l); echo \"✓ Validation tools: $val_count\"; echo; success=true; if [ $cmd_count -eq 0 ]; then echo '❌ CRITICAL: No commands were installed!'; echo '   The .claudify directory may be missing or incomplete.'; echo '   Please re-run setup.ps1 with the latest version.'; success=false; fi; if [ $agent_count -eq 0 ]; then echo '❌ CRITICAL: No agents were installed!'; echo '   This will severely limit Claude Code functionality.'; success=false; fi; if [ \"$success\" = false ]; then echo ''; echo '🔧 To fix this issue:'; echo '1. Download latest Claudify from GitHub'; echo '2. Run: .\\setup.ps1 -TargetRepository \"$(pwd)\"'; echo '3. Choose clean install when prompted'; echo '4. Run /init-claudify again'; fi", description="Verify installation with detailed troubleshooting")
 
-### Generating CLAUDE.md
+### Managing CLAUDE.md
 
-Based on my analysis, I'll create a customized CLAUDE.md for your project:
+Let me check if CLAUDE.md already exists:
 
-@Write(file_path="CLAUDE.md", content=`# CLAUDE.md - $ARGUMENTS
+@Bash(command="echo ''; if [ -f CLAUDE.md ]; then echo '📄 CLAUDE.md already exists'; echo '   Size: $(wc -l CLAUDE.md | awk \'{print $1}\') lines'; echo '   Modified: $(stat -c %y CLAUDE.md 2>/dev/null || stat -f %Sm CLAUDE.md 2>/dev/null || echo \"unknown\")'; echo ''; echo 'Choose action for CLAUDE.md:'; echo '  [K] Keep existing file (default)'; echo '  [U] Update with new template'; echo '  [V] View current file'; echo ''; echo -n 'Your choice [K/U/V]: '; if [ -t 0 ] && [ \"${CI:-false}\" != \"true\" ] && [ \"${GITHUB_ACTIONS:-false}\" != \"true\" ] && [ \"${JENKINS_HOME:-}\" = \"\" ]; then read -r claude_choice; else echo '(Auto-keeping in non-interactive mode)'; claude_choice='k'; fi; claude_choice=$(echo \"${claude_choice:-k}\" | tr '[:upper:]' '[:lower:]'); case \"$claude_choice\" in u) echo 'Will update CLAUDE.md with new template'; UPDATE_CLAUDE=true;; v) echo ''; echo '=== Current CLAUDE.md (first 20 lines) ==='; head -20 CLAUDE.md; echo '=== End preview ==='; echo ''; exec bash -c \"$0\";; *) echo 'Keeping existing CLAUDE.md'; UPDATE_CLAUDE=false;; esac; else echo 'CLAUDE.md not found - will create new one'; UPDATE_CLAUDE=true; fi; export UPDATE_CLAUDE", description="Interactive prompt for existing CLAUDE.md")
+
+@Bash(command="if [ \"$UPDATE_CLAUDE\" = \"true\" ]; then if [ -f CLAUDE.md ]; then echo 'Backing up existing CLAUDE.md...'; cp CLAUDE.md \"CLAUDE.md.backup.$(date +%Y%m%d_%H%M%S)\"; fi; echo 'Creating new CLAUDE.md...'; cat > CLAUDE.md << 'EOF'
+# CLAUDE.md - Project Configuration
 
 ## 🧠 CONTEXT
 **System**: [Your detected project type]
 **Stack**: [Your detected tech stack]
-**Domain**: $ARGUMENTS
+**Domain**: [Your business domain]
 
 ## ⚡ CRITICAL RULES
 
@@ -253,15 +274,21 @@ Based on my analysis, I'll create a customized CLAUDE.md for your project:
 
 ---
 **Remember**: [Your key principle based on domain]
-`)
+EOF
+else echo 'Preserved existing CLAUDE.md'; fi", description="Create CLAUDE.md only if it doesn't exist")
 
-### Generating FEATURES.md Template
+### Managing FEATURES.md
 
-@Write(file_path="FEATURES.md", content=`# $ARGUMENTS - Features Documentation
+Let me check if FEATURES.md already exists:
+
+@Bash(command="echo ''; if [ -f FEATURES.md ]; then echo '📄 FEATURES.md already exists'; echo '   Size: $(wc -l FEATURES.md | awk \'{print $1}\') lines'; echo '   Modified: $(stat -c %y FEATURES.md 2>/dev/null || stat -f %Sm FEATURES.md 2>/dev/null || echo \"unknown\")'; echo ''; echo 'Choose action for FEATURES.md:'; echo '  [K] Keep existing file (default)'; echo '  [U] Update with new template'; echo '  [V] View current file'; echo ''; echo -n 'Your choice [K/U/V]: '; if [ -t 0 ] && [ \"${CI:-false}\" != \"true\" ] && [ \"${GITHUB_ACTIONS:-false}\" != \"true\" ] && [ \"${JENKINS_HOME:-}\" = \"\" ]; then read -r features_choice; else echo '(Auto-keeping in non-interactive mode)'; features_choice='k'; fi; features_choice=$(echo \"${features_choice:-k}\" | tr '[:upper:]' '[:lower:]'); case \"$features_choice\" in u) echo 'Will update FEATURES.md with new template'; UPDATE_FEATURES=true;; v) echo ''; echo '=== Current FEATURES.md (first 20 lines) ==='; head -20 FEATURES.md; echo '=== End preview ==='; echo ''; exec bash -c \"$0\";; *) echo 'Keeping existing FEATURES.md'; UPDATE_FEATURES=false;; esac; else echo 'FEATURES.md not found - will create new one'; UPDATE_FEATURES=true; fi; export UPDATE_FEATURES", description="Interactive prompt for existing FEATURES.md")
+
+@Bash(command="if [ \"$UPDATE_FEATURES\" = \"true\" ]; then if [ -f FEATURES.md ]; then echo 'Backing up existing FEATURES.md...'; cp FEATURES.md \"FEATURES.md.backup.$(date +%Y%m%d_%H%M%S)\"; fi; echo 'Creating new FEATURES.md...'; cat > FEATURES.md << 'EOF'
+# Features Documentation
 
 ## Overview
 
-[Your project description based on domain: $ARGUMENTS]
+[Your project description]
 
 ## System Architecture
 
@@ -293,7 +320,8 @@ Based on my analysis, I'll create a customized CLAUDE.md for your project:
 ---
 
 *Last updated: [Today's date]*
-`)
+EOF
+else echo 'Preserved existing FEATURES.md'; fi", description="Create FEATURES.md only if it doesn't exist")
 
 @TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "completed", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "completed", "priority": "high", "id": "setup-5"}])
 
@@ -308,7 +336,7 @@ The `.claudify` directory will remain in your repository (excluded from git via 
 
 ## ✅ Setup Complete!
 
-Your Claude Code environment is now configured for: **$ARGUMENTS**
+Your Claude Code environment is now configured for your project
 
 ### What I've Set Up:
 1. **Custom CLAUDE.md** - Tailored instructions for your project
