@@ -14,10 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - fix-angular-detection.ps1 (documentation snippets)
   - test-angular-detection.ps1 (temporary test)
   - test-angular-detection-standalone.ps1 (temporary test)
+- Removed temporary documentation:
+  - ANGULAR-DETECTION-FIX.md (implementation details)
+  - agent-fix-report.txt (temporary report)
 
 ### Changed
 - Updated version to 2.0.1
 - Cleaned up project structure
+- Moved AGENT-COLLABORATION-EXAMPLES.md and AGENT-COLLABORATION-GUIDE.md to docs/ folder
+- Updated all references to point to new documentation locations
+
+### Documentation
+- Updated README.md to reflect new integrated intelligent setup flow
+- Added installation modes section to clarify Minimal/Standard/Comprehensive options
+- Enhanced Quick Start section with detailed setup process
+- Updated Common Questions to reflect new features
 
 ## [2.0.0] - 2025-08-04
 
