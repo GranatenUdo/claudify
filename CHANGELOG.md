@@ -15,11 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Streamlined user experience with single command invocation
   - Removed complex automation attempts in favor of simple, reliable approach
 
-### Removed
-- **Temporary Test Files**: Cleaned up 14 development/test files
-  - PowerShell test scripts: test-syntax.ps1, test-end-section.ps1, test-minimal.ps1, test-repro.ps1, temp_section.ps1, part1.ps1, part2.ps1
-  - Alternative setup scripts: setup-clean.ps1, setup-nobom.ps1, simple-init.ps1, validate-syntax.ps1
-  - Python utility scripts: check_quotes.py, check_quotes_better.py, convert_encoding.py
+### Changed
+- **Documentation Update Instructions**: Added to all commands and agents
+  - 19 command files now include documentation update sections
+  - 19 agent files now include documentation reminder sections
+  - Follows Opus 4 best practices with parallel checks and confidence scoring
+  - Automated with PowerShell script for consistent implementation
+  - References `/update-changelog` command for easy updates
+
 
 ## [2.0.1] - 2025-08-04
 

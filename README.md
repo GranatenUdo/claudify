@@ -190,7 +190,8 @@ The `sync-to-templates` command helps maintain this template repository:
 
 - **[AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md)** - How to use Opus 4 agents effectively
 - **[AGENT-COLLABORATION-EXAMPLES.md](docs/AGENT-COLLABORATION-EXAMPLES.md)** - Real-world usage examples
-- **[COMMAND-AGENT-DESIGN-GUIDELINES.md](.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md)** - Best practices for Opus 4
+- **[DOCUMENTATION-BEST-PRACTICES.md](docs/DOCUMENTATION-BEST-PRACTICES.md)** - Documentation standards and guidelines
+- **[DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md](docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)** - Implementation case study
 - **[SETUP-GUIDE.md](SETUP-GUIDE.md)** - Complete setup documentation
 - **[META-GENERATOR-README.md](templates/META-GENERATOR-README.md)** - Create new generators
 
