@@ -19,6 +19,7 @@ Claudify provides an intelligent, streamlined setup process for initializing Cla
 - **🛡️ File Preservation** - CLAUDE.md and FEATURES.md are now preserved during clean install
 - **🔧 Path Fix** - Fixed documentation copying error for nested directories
 - **📉 Simplified Setup** - Removed minimal mode, now only Standard and Comprehensive
+- **🤖 Claude CLI Integration** - Automatic initialization with optional domain context
 
 ## 🚀 Quick Start
 
@@ -55,6 +56,12 @@ The intelligent setup script will:
    - Configures hooks and tools
    - Generates intelligent CLAUDE.md and FEATURES.md
    - Creates `.claudify` directory for re-running setup
+
+5. **Claude CLI Integration** (NEW) - Simplified automatic initialization:
+   - Prompts for optional domain description
+   - Automatically runs `/init-claudify` with Opus model
+   - Uses `--dangerously-skip-permissions` for streamlined setup
+   - Requires approval for individual tool permissions
 
 ### After Installation
 
@@ -235,6 +242,38 @@ Claudify includes automatic changelog management:
 
 ### All Platforms
 - Write permissions to target directory
+
+## 🔧 Troubleshooting
+
+### Claude CLI Integration
+
+**Q: How does the automatic Claude initialization work?**  
+A: After installing components, the setup script:
+1. Prompts you to optionally describe your project domain
+2. Changes to your project directory
+3. Runs `claude --model opus --dangerously-skip-permissions "/init-claudify [your description]"`
+4. Claude will ask for permission to use various tools - approve them to complete setup
+
+**Q: Why does Claude still ask for permissions?**  
+A: Claude has two security levels:
+- Initial command permission (bypassed with `--dangerously-skip-permissions`)
+- Individual tool permissions (cannot be bypassed for security reasons)
+
+**Q: What permissions will Claude ask for?**  
+A: When running `/init-claudify`, Claude will request permission to:
+- Use Bash to check project structure and versions
+- Read files to detect your technology stack
+- Write configuration files (CLAUDE.md, FEATURES.md)
+- Copy components to your .claude directory
+
+**Q: How long does the init-claudify process take?**  
+A: Typically 5-10 minutes, depending on your project size and selected mode (standard vs comprehensive).
+
+**Q: Claude CLI is not found**  
+A: Ensure Claude CLI is installed and in your PATH:
+- Windows: Check if `claude` works in Command Prompt
+- Mac/Linux: Check if `claude` works in Terminal
+- Installation guide: https://claude.ai/code
 
 ## 🚀 What's New in Version 1.4.0
 

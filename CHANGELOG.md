@@ -5,6 +5,22 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Simplified Claude CLI Integration**: Direct automatic initialization after setup
+  - Prompts for optional project domain description
+  - Automatically executes `claude --model opus --dangerously-skip-permissions "/init-claudify"`
+  - Changes to correct working directory before execution
+  - Streamlined user experience with single command invocation
+  - Removed complex automation attempts in favor of simple, reliable approach
+
+### Removed
+- **Temporary Test Files**: Cleaned up 14 development/test files
+  - PowerShell test scripts: test-syntax.ps1, test-end-section.ps1, test-minimal.ps1, test-repro.ps1, temp_section.ps1, part1.ps1, part2.ps1
+  - Alternative setup scripts: setup-clean.ps1, setup-nobom.ps1, simple-init.ps1, validate-syntax.ps1
+  - Python utility scripts: check_quotes.py, check_quotes_better.py, convert_encoding.py
+
 ## [2.0.1] - 2025-08-04
 
 ### Fixed
