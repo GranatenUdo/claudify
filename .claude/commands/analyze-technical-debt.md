@@ -357,7 +357,51 @@ Provide prioritized remediation roadmap", subagent_type="Technical Debt Analyst"
 
 ## Phase 8: Deliverables Generation
 
-### Final Reports
+#
+## Documentation Updates
+
+<think about what documentation needs updating based on the changes made>
+
+### Update Checklist
+Based on the changes made, update these files:
+
+1. **CHANGELOG.md** (Confidence: 95%)
+   - Add entry under `[Unreleased]` section
+   - Use appropriate section: Added/Changed/Fixed/Removed
+   - Include technical details and user impact
+
+2. **FEATURES.md** (If capabilities changed)
+   - Document new or modified features
+   - Update technical implementation details
+   - Include usage examples
+
+3. **CLAUDE.md** (If patterns/conventions introduced)
+   - Document new code patterns
+   - Update architectural decisions
+   - Add domain-specific rules
+
+### Quick Update Commands
+```bash
+# Automated changelog update
+/update-changelog "$ARGUMENTS"
+
+# Manual update template
+### [Section]
+- Description of change
+  - Technical implementation details
+  - User-facing impact
+  - Breaking changes (if any)
+```
+
+### Parallel Documentation Check
+Check all documentation files simultaneously for existing references:
+```bash
+@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
+@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
+@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+```
+
+## Final Reports
 
 #### Executive Summary
 ```markdown

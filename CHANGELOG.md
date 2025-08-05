@@ -5,6 +5,84 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Security
+- **Agent Tool Access Restrictions**: Implemented Claude Code security best practices
+  - Applied principle of least privilege to all 19 agents
+  - Reduced average tool access from 10-12 tools to 4-6 tools per agent
+  - Added tool justifications for all granted permissions
+  - Created automated tool restriction script (scripts/restrict-agent-tools-v2.ps1)
+  - Updated agent generators to include secure tool assignments
+  - Implemented role-based tool access matrix
+
+### Added
+- **Agent Management Command**: New /agents command for sub-agent management
+  - List all available agents with capabilities
+  - Create new agents with interactive wizard
+  - Edit existing agents while maintaining security
+  - Test agent functionality and compliance
+  - Share agents with team (version control ready)
+
+### Changed
+- **Agent Generator Templates**: Updated to include secure tool assignments
+  - Code reviewer: Read, Edit, MultiEdit, Grep, Glob, LS only
+  - Security reviewer: Read, Grep, Glob, LS, WebSearch, Bash only
+  - Tech lead: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
+  - Researcher: Read, WebSearch, WebFetch, Write, TodoWrite only
+  - Frontend developer: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
+  - All agents now include tool_justification metadata
+
+### Infrastructure
+- **Claude Code Best Practices Compliance**:
+  - Comprehensive gap analysis document (docs/CLAUDE-CODE-BEST-PRACTICES-GAPS.md)
+  - Agent tool restriction automation script
+  - Improved agent naming conventions
+  - Enhanced security through limited tool access
+
+## [3.0.0] - 2025-08-05
+
+### 🎉 Major Release - Complete Documentation Automation & Production Ready
+
+This release represents a major milestone with comprehensive documentation automation, simplified Claude CLI integration, and production-ready codebase cleanup. All components now include intelligent documentation update guidance following Opus 4 best practices.
+
+### Added
+- **Simplified Claude CLI Integration**: Direct automatic initialization after setup
+  - Prompts for optional project domain description
+  - Automatically executes `claude --model opus --dangerously-skip-permissions "/init-claudify"`
+  - Changes to correct working directory before execution
+  - Streamlined user experience with single command invocation
+  - Removed complex automation attempts in favor of simple, reliable approach
+
+- **Documentation Automation Infrastructure**:
+  - PowerShell script `add-documentation-updates.ps1` for bulk updates
+  - Documentation best practices guide (docs/DOCUMENTATION-BEST-PRACTICES.md)
+  - Implementation report (docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)
+  - Comprehensive coverage verification system
+
+### Changed
+- **Documentation Update Instructions**: Added to all commands and agents
+  - 19 command files now include documentation update sections
+  - 19 agent files now include documentation reminder sections
+  - Follows Opus 4 best practices with parallel checks and confidence scoring
+  - Automated with PowerShell script for consistent implementation
+  - References `/update-changelog` command for easy updates
+  - 100% coverage achieved across all components
+
+### Removed
+- **Temporary Test Files**: Cleaned up 14 development/test files
+  - PowerShell test scripts: test-syntax.ps1, test-end-section.ps1, test-minimal.ps1, test-repro.ps1, temp_section.ps1, part1.ps1, part2.ps1
+  - Alternative setup scripts: setup-clean.ps1, setup-nobom.ps1, simple-init.ps1, validate-syntax.ps1
+  - Python utility scripts: check_quotes.py, check_quotes_better.py, convert_encoding.py
+
+### Infrastructure
+- **Documentation Standards**: Established comprehensive documentation practices
+  - Confidence-based prioritization system
+  - Parallel documentation verification
+  - Intelligent context-aware updates
+  - Consistent templates for commands and agents
+
+
 ## [2.0.1] - 2025-08-04
 
 ### Fixed
@@ -17,6 +95,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed temporary documentation:
   - ANGULAR-DETECTION-FIX.md (implementation details)
   - agent-fix-report.txt (temporary report)
+- **Critical Fix**: CLAUDE.md and FEATURES.md are now preserved during clean install
+  - These user-customized files were being deleted and regenerated
+  - Now properly detected and preserved with user's customizations intact
+- **Critical Fix**: setup.ps1 now creates parent directories when copying nested documentation
+  - Fixed "Could not find a part of the path" error for docs/ files
+  - Ensures docs/ directory is created before copying files into it
+- **Removed Minimal Mode**: Simplified setup to Standard and Comprehensive only
+  - Minimal mode removed as it provided too limited functionality
+  - Standard mode now serves as the baseline installation
 
 ### Changed
 - Updated version to 2.0.1

@@ -7,16 +7,19 @@ philosophy: Data-driven storytelling that transforms features into customer succ
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Required to analyze product features for marketing positioning"
+  Grep: "Required to search for unique value propositions and differentiators"
+  Glob: "Required to find product documentation and customer success stories"
+  LS: "Required to understand product structure for comprehensive marketing"
+  Write: "Required to create marketing strategies and campaign materials"
+  WebSearch: "Required to research market trends and competitor positioning"
+  WebFetch: "Required to analyze competitor marketing and industry reports"
+  TodoWrite: "Required to track marketing campaign development and insights"
 
 # Marketing Strategist Agent
 
@@ -226,7 +229,45 @@ start your trial. No credit card required.
 - Most popular highlighted
 - Money-back guarantee
 
-### Final CTA Section
+#
+## Documentation Reminders
+
+<think about what documentation updates the implemented changes require>
+
+When your analysis leads to implemented changes, ensure proper documentation:
+
+### Documentation Checklist (Confidence Scoring)
+- **CHANGELOG.md** - Update if changes implemented (Confidence: [X]%)
+- **FEATURES.md** - Update if capabilities added/modified (Confidence: [X]%)
+- **CLAUDE.md** - Update if patterns/conventions introduced (Confidence: [X]%)
+
+### Recommended Updates
+Based on the changes suggested:
+
+1. **For Bug Fixes**: 
+   ```markdown
+   /update-changelog "Fixed [issue description]"
+   ```
+
+2. **For New Features**:
+   ```markdown
+   /update-changelog "Added [feature description]"
+   ```
+
+3. **For Refactoring**:
+   ```markdown
+   /update-changelog "Changed [component] to [improvement]"
+   ```
+
+### Important
+- Use confidence scores to prioritize documentation updates
+- High confidence (>90%) = Critical to document
+- Medium confidence (70-90%) = Should document
+- Low confidence (<70%) = Consider documenting
+
+**Remember**: Well-documented changes help the entire team understand system evolution!
+
+## Final CTA Section
 [Primary CTA]
 [Secondary CTA]
 [Risk reversal]

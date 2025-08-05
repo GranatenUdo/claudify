@@ -1,21 +1,39 @@
 # Claudify - Claude Code Intelligent Setup
 
-![Version](https://img.shields.io/badge/version-2.0.1-blue)
-![Released](https://img.shields.io/badge/released-2025--08--04-green)
+![Version](https://img.shields.io/badge/version-3.0.0-blue)
+![Released](https://img.shields.io/badge/released-2025--08--05-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
-**Minimal Setup, Maximum Intelligence - Now with Opus 4 Optimized Agents**
+**Intelligent Setup, Maximum Capability - Now with Opus 4 Optimized Agents**
 
-Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify provides an intelligent, streamlined setup process for initializing Claude Code in any repository. Version 3.0.0 introduces comprehensive documentation automation, simplified Claude CLI integration, and complete Opus 4 optimization across all components for **75% faster analysis** through parallel processing and AI-powered solution generation.
 
-## ✨ What's New in 2.0.1
+## ✨ What's New in 3.0.0
 
-- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Minimal/Standard/Comprehensive)
+### 🔒 Security & Best Practices
+- **Agent Tool Restrictions** - Implemented Claude Code security best practices with principle of least privilege
+- **Role-Based Access** - Each agent only has tools necessary for its function (reduced from 10-12 to 4-6 tools)
+- **Tool Justifications** - Every granted permission documented with its purpose
+- **Automated Compliance** - PowerShell script enforces security policies across all agents
+
+### 🤖 Agent Management
+- **New /agents Command** - Comprehensive agent management (list, create, edit, test, share)
+- **Interactive Creation** - Wizard-based agent creation with security-first design
+- **Best Practices Gap Analysis** - Identified and fixed 15 critical gaps in Claude Code implementation
+
+### 📝 Documentation & Setup
+- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Standard/Comprehensive)
 - **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
 - **🧹 Clean Install Option** - Recommended for major version upgrades
-- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack
+- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack (preserves existing)
 - **🎯 Fixed Agent Mappings** - All commands now use available Claude agents
 - **📁 Better Organization** - Documentation moved to docs/ folder
+- **🛡️ File Preservation** - CLAUDE.md and FEATURES.md are now preserved during clean install
+- **🔧 Path Fix** - Fixed documentation copying error for nested directories
+- **📉 Simplified Setup** - Removed minimal mode, now only Standard and Comprehensive
+- **🤖 Claude CLI Integration** - Simplified automatic initialization with optional domain context
+- **📝 Documentation Automation** - All commands and agents include documentation update instructions
+- **🧹 Clean Codebase** - Removed 14+ temporary test files for production readiness
 
 ## 🚀 Quick Start
 
@@ -43,7 +61,6 @@ The intelligent setup script will:
    - Database and infrastructure
 
 3. **Installation Mode Selection** - Choose your setup:
-   - **[M] Minimal** - Essential components only (~5-10 files)
    - **[S] Standard** - Core components for your stack (~15-25 files)
    - **[C] Comprehensive** - Everything available (~40+ files) **[RECOMMENDED]**
    - **[N] None** - Manual setup only
@@ -53,6 +70,12 @@ The intelligent setup script will:
    - Configures hooks and tools
    - Generates intelligent CLAUDE.md and FEATURES.md
    - Creates `.claudify` directory for re-running setup
+
+5. **Claude CLI Integration** (NEW) - Simplified automatic initialization:
+   - Prompts for optional domain description
+   - Automatically runs `/init-claudify` with Opus model
+   - Uses `--dangerously-skip-permissions` for streamlined setup
+   - Requires approval for individual tool permissions
 
 ### After Installation
 
@@ -111,7 +134,7 @@ The setup script provides a complete installation experience:
    - Identifies multi-tenant patterns
 
 3. **Intelligent Component Installation**
-   - Choose from Minimal, Standard, or Comprehensive modes
+   - Choose from Standard or Comprehensive modes
    - Installs appropriate commands and agents for your stack
    - Generates customized CLAUDE.md and FEATURES.md
    - Sets up hooks, generators, and validation tools
@@ -127,16 +150,10 @@ For domain-specific configuration, run `/init-claudify` in Claude Code to:
 
 ## 📦 Installation Modes
 
-### Minimal Mode (~5-10 files)
-Perfect for trying out Claudify or small projects:
-- **Commands**: `comprehensive-review`, `quick-research`, `create-command-and-or-agent`
-- **Agents**: `code-reviewer`, `tech-lead`, `researcher`
-- Basic setup without hooks or generators
-
 ### Standard Mode (~15-25 files)
 Recommended for most projects:
-- **Commands**: All minimal + backend/frontend development commands
-- **Agents**: All minimal + `code-simplifier`, `technical-debt-analyst`, `test-quality-analyst`, `frontend-developer`
+- **Commands**: Core commands + backend/frontend development commands
+- **Agents**: `code-reviewer`, `tech-lead`, `researcher`, `code-simplifier`, `technical-debt-analyst`, `test-quality-analyst`, `frontend-developer`
 - **Extras**: Generators for custom components, quality hooks
 
 ### Comprehensive Mode (~40+ files) **[RECOMMENDED]**
@@ -187,14 +204,15 @@ The `sync-to-templates` command helps maintain this template repository:
 
 - **[AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md)** - How to use Opus 4 agents effectively
 - **[AGENT-COLLABORATION-EXAMPLES.md](docs/AGENT-COLLABORATION-EXAMPLES.md)** - Real-world usage examples
-- **[COMMAND-AGENT-DESIGN-GUIDELINES.md](.claude/COMMAND-AGENT-DESIGN-GUIDELINES.md)** - Best practices for Opus 4
+- **[DOCUMENTATION-BEST-PRACTICES.md](docs/DOCUMENTATION-BEST-PRACTICES.md)** - Documentation standards and guidelines
+- **[DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md](docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)** - Implementation case study
 - **[SETUP-GUIDE.md](SETUP-GUIDE.md)** - Complete setup documentation
 - **[META-GENERATOR-README.md](templates/META-GENERATOR-README.md)** - Create new generators
 
 ## ❓ Common Questions
 
-**Q: Why minimal initial footprint?**  
-A: Claudify copies only essential files initially, then intelligently installs components based on your actual tech stack and needs.
+**Q: Why streamlined setup?**  
+A: Claudify provides a focused setup process, then intelligently installs components based on your actual tech stack and needs.
 
 **Q: What if I already have a Claude setup?**  
 A: Version 2.0.1 detects existing installations and offers clean install for major updates or normal update for minor versions.
@@ -206,13 +224,13 @@ A: Yes! Run setup.ps1 again or use `/init-claudify` in Claude Code for advanced 
 A: Create components in your project and use `/sync-to-templates` to share them back.
 
 **Q: What's the difference between setup modes?**  
-A: Minimal = essentials only, Standard = core features for your stack, Comprehensive = everything available (recommended).
+A: Standard = core features for your stack, Comprehensive = everything available (recommended).
 
 ## 🔄 Re-running Setup
 
 The `.claudify` directory persists in your repository (git-ignored) to allow:
 - **Re-initialization**: Run `/init-claudify` again with different options
-- **Mode Changes**: Switch between minimal/standard/comprehensive setups
+- **Mode Changes**: Switch between standard/comprehensive setups
 - **Updates**: Get newer versions of components when available
 - **Experimentation**: Try different configurations without re-running setup.ps1
 
@@ -240,6 +258,38 @@ Claudify includes automatic changelog management:
 ### All Platforms
 - Write permissions to target directory
 
+## 🔧 Troubleshooting
+
+### Claude CLI Integration
+
+**Q: How does the automatic Claude initialization work?**  
+A: After installing components, the setup script:
+1. Prompts you to optionally describe your project domain
+2. Changes to your project directory
+3. Runs `claude --model opus --dangerously-skip-permissions "/init-claudify [your description]"`
+4. Claude will ask for permission to use various tools - approve them to complete setup
+
+**Q: Why does Claude still ask for permissions?**  
+A: Claude has two security levels:
+- Initial command permission (bypassed with `--dangerously-skip-permissions`)
+- Individual tool permissions (cannot be bypassed for security reasons)
+
+**Q: What permissions will Claude ask for?**  
+A: When running `/init-claudify`, Claude will request permission to:
+- Use Bash to check project structure and versions
+- Read files to detect your technology stack
+- Write configuration files (CLAUDE.md, FEATURES.md)
+- Copy components to your .claude directory
+
+**Q: How long does the init-claudify process take?**  
+A: Typically 5-10 minutes, depending on your project size and selected mode (standard vs comprehensive).
+
+**Q: Claude CLI is not found**  
+A: Ensure Claude CLI is installed and in your PATH:
+- Windows: Check if `claude` works in Command Prompt
+- Mac/Linux: Check if `claude` works in Terminal
+- Installation guide: https://claude.ai/code
+
 ## 🚀 What's New in Version 1.4.0
 
 ### Opus 4 Agent Capabilities
@@ -264,4 +314,4 @@ Claudify includes automatic changelog management:
 
 ---
 
-**Remember**: Minimal setup, maximum intelligence. Let Claude Code do what it does best!
+**Remember**: Intelligent setup, maximum capability. Let Claude Code do what it does best!

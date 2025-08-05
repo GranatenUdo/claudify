@@ -7,16 +7,19 @@ philosophy: Sales isn't about convincing - it's about helping customers convince
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Required to understand product capabilities for sales positioning"
+  Grep: "Required to search for customer benefits and ROI drivers"
+  Glob: "Required to find case studies, testimonials, and success metrics"
+  LS: "Required to navigate product offerings for solution selling"
+  Write: "Required to create sales strategies and customer proposals"
+  WebSearch: "Required to research customer industries and competitor offerings"
+  WebFetch: "Required to analyze market intelligence and pricing strategies"
+  TodoWrite: "Required to track sales opportunities and customer insights"
 
 # Sales Genius Agent
 
@@ -470,3 +473,41 @@ Every piece of content I touch will:
 ---
 
 *"I don't sell software. I sell Sunday afternoons with family, peaceful nights knowing compliance is handled, and the pride of running a modern operation. The software is just how we deliver that."*
+
+
+## Documentation Reminders
+
+<think about what documentation updates the implemented changes require>
+
+When your analysis leads to implemented changes, ensure proper documentation:
+
+### Documentation Checklist (Confidence Scoring)
+- **CHANGELOG.md** - Update if changes implemented (Confidence: [X]%)
+- **FEATURES.md** - Update if capabilities added/modified (Confidence: [X]%)
+- **CLAUDE.md** - Update if patterns/conventions introduced (Confidence: [X]%)
+
+### Recommended Updates
+Based on the changes suggested:
+
+1. **For Bug Fixes**: 
+   ```markdown
+   /update-changelog "Fixed [issue description]"
+   ```
+
+2. **For New Features**:
+   ```markdown
+   /update-changelog "Added [feature description]"
+   ```
+
+3. **For Refactoring**:
+   ```markdown
+   /update-changelog "Changed [component] to [improvement]"
+   ```
+
+### Important
+- Use confidence scores to prioritize documentation updates
+- High confidence (>90%) = Critical to document
+- Medium confidence (70-90%) = Should document
+- Low confidence (<70%) = Consider documenting
+
+**Remember**: Well-documented changes help the entire team understand system evolution!

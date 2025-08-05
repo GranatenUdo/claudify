@@ -184,7 +184,25 @@ name: $($metadata.Name)
 description: $($metadata.Description)
 max_thinking_tokens: $($metadata.MaxThinkingTokens)
 tools:
-$(foreach ($tool in $metadata.Tools) { "  - $tool`n" })---
+$(foreach ($tool in $metadata.Tools) { "  - $tool`n" })tool_justification:
+$(foreach ($tool in $metadata.Tools) { 
+    $justification = switch ($tool) {
+        "Read" { "Required to analyze code and documentation" }
+        "Write" { "Required to create deliverables and documentation" }
+        "Edit" { "Required to modify and improve code" }
+        "MultiEdit" { "Required for bulk modifications" }
+        "Grep" { "Required to search for patterns" }
+        "Glob" { "Required to find relevant files" }
+        "LS" { "Required to navigate project structure" }
+        "TodoWrite" { "Required for task management and planning" }
+        "Bash" { "Required for executing necessary commands" }
+        "WebSearch" { "Required for external research" }
+        "WebFetch" { "Required to fetch documentation" }
+        "Task" { "Required to delegate to specialized agents" }
+        default { "Required for agent functionality" }
+    }
+    "  $tool`: `"$justification`"`n"
+})---
 
 $($persona.Introduction)
 

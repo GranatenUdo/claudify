@@ -27,6 +27,26 @@ function Generate-CodeReviewer {
     if ($Analysis.Patterns.MultiTenancy.Found) { $patterns += "$($Analysis.Patterns.MultiTenancy.Model) isolation" }
     
     $content = @"
+---
+name: Code Reviewer
+description: Expert code reviewer specializing in $($Analysis.TechStack.Backend.Framework) applications
+max_thinking_tokens: 49152
+tools:
+  - Read
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - LS
+tool_justification:
+  Read: "Required to read code files"
+  Edit: "Required to suggest improvements"
+  MultiEdit: "Required for bulk corrections"
+  Grep: "Required to search patterns"
+  Glob: "Required to find related files"
+  LS: "Required to navigate structure"
+---
+
 # Code Reviewer Agent
 
 You are an elite code reviewer specializing in $($Analysis.TechStack.Backend.Framework) applications with deep expertise in production-ready, multi-tenant SaaS systems.
@@ -140,6 +160,26 @@ function Generate-SecurityReviewer {
     param($Analysis)
     
     $content = @"
+---
+name: Security Reviewer
+description: Elite security expert specializing in multi-tenant SaaS applications
+max_thinking_tokens: 49152
+tools:
+  - Read
+  - Grep
+  - Glob
+  - LS
+  - WebSearch
+  - Bash
+tool_justification:
+  Read: "Required to analyze code and configs"
+  Grep: "Required to search for vulnerabilities"
+  Glob: "Required to find security-relevant files"
+  LS: "Required to navigate structure"
+  WebSearch: "Required for CVE and threat research"
+  Bash: "Required for security scanning tools"
+---
+
 # Security Reviewer Agent
 
 You are an elite security expert specializing in multi-tenant SaaS applications with focus on $($Analysis.Patterns.MultiTenancy.Model) isolation and data protection.
@@ -258,6 +298,28 @@ function Generate-TechLead {
     param($Analysis)
     
     $content = @"
+---
+name: Tech Lead
+description: Strategic technical architect with expertise in scalable SaaS platforms
+max_thinking_tokens: 65536
+tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - LS
+  - TodoWrite
+tool_justification:
+  Read: "Required to review architecture"
+  Write: "Required to create documentation"
+  Edit: "Required to update configurations"
+  Grep: "Required to find patterns"
+  Glob: "Required to analyze structure"
+  LS: "Required to navigate"
+  TodoWrite: "Required for planning"
+---
+
 # Tech Lead Agent
 
 You are a strategic technical architect with expertise in scalable $($Analysis.TechStack.Backend.Framework) SaaS platforms, team leadership, and system design.
@@ -413,6 +475,28 @@ function Generate-UXReviewer {
     }
     
     $content = @"
+---
+name: UX Reviewer
+description: Expert UX designer and accessibility specialist
+max_thinking_tokens: 32768
+tools:
+  - Read
+  - Write
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - LS
+tool_justification:
+  Read: "Required to read components"
+  Write: "Required to create components"
+  Edit: "Required to modify UI code"
+  MultiEdit: "Required for refactoring"
+  Grep: "Required to find UI patterns"
+  Glob: "Required to find components"
+  LS: "Required to navigate"
+---
+
 # UX Reviewer Agent
 
 You are an expert UX designer and accessibility specialist focused on creating intuitive, efficient interfaces using $($Analysis.TechStack.Frontend.Framework).
@@ -543,6 +627,24 @@ function Generate-Researcher {
     param($Analysis)
     
     $content = @"
+---
+name: Researcher
+description: Elite research analyst specializing in complex systems and scenarios
+max_thinking_tokens: 49152
+tools:
+  - Read
+  - WebSearch
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Required to read existing docs"
+  WebSearch: "Required for external research"
+  WebFetch: "Required to fetch documentation"
+  Write: "Required to document findings"
+  TodoWrite: "Required to track research"
+---
+
 # Researcher Agent
 
 You are an elite research analyst specializing in understanding complex systems and scenarios with deep analytical thinking in both technical and business logic domains.

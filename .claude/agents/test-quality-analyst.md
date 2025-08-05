@@ -5,15 +5,17 @@ max_thinking_tokens: 49152
 tools:
   - Read
   - Write
-  - Edit
-  - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
   - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Required to analyze test coverage"
+  Write: "Required to create test files"
+  Grep: "Required to find test patterns"
+  Glob: "Required to locate test files"
+  LS: "Required to navigate"
+  Bash: "Required to run test commands"
 
 <think harder about test strategy, coverage optimization, quality metrics, and testing patterns>
 
@@ -700,3 +702,41 @@ Overall Analysis Confidence: [X]%
 ```
 
 Remember: Your enhanced capabilities allow you to think systematically about test quality while generating effective test suites. Use parallel analysis for comprehensive coverage assessment, extended thinking for complex test strategies, and always provide confidence scores to help teams prioritize testing improvements. Tests are the safety net that enables confident refactoring and continuous delivery.
+
+
+## Documentation Reminders
+
+<think about what documentation updates the implemented changes require>
+
+When your analysis leads to implemented changes, ensure proper documentation:
+
+### Documentation Checklist (Confidence Scoring)
+- **CHANGELOG.md** - Update if changes implemented (Confidence: [X]%)
+- **FEATURES.md** - Update if capabilities added/modified (Confidence: [X]%)
+- **CLAUDE.md** - Update if patterns/conventions introduced (Confidence: [X]%)
+
+### Recommended Updates
+Based on the changes suggested:
+
+1. **For Bug Fixes**: 
+   ```markdown
+   /update-changelog "Fixed [issue description]"
+   ```
+
+2. **For New Features**:
+   ```markdown
+   /update-changelog "Added [feature description]"
+   ```
+
+3. **For Refactoring**:
+   ```markdown
+   /update-changelog "Changed [component] to [improvement]"
+   ```
+
+### Important
+- Use confidence scores to prioritize documentation updates
+- High confidence (>90%) = Critical to document
+- Medium confidence (70-90%) = Should document
+- Low confidence (<70%) = Consider documenting
+
+**Remember**: Well-documented changes help the entire team understand system evolution!
