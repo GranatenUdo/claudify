@@ -1,14 +1,14 @@
 # Claudify - Claude Code Intelligent Setup
 
-![Version](https://img.shields.io/badge/version-2.0.1-blue)
-![Released](https://img.shields.io/badge/released-2025--08--04-green)
+![Version](https://img.shields.io/badge/version-3.0.0-blue)
+![Released](https://img.shields.io/badge/released-2025--08--05-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
 **Intelligent Setup, Maximum Capability - Now with Opus 4 Optimized Agents**
 
-Claudify provides an intelligent, streamlined setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify provides an intelligent, streamlined setup process for initializing Claude Code in any repository. Version 3.0.0 introduces comprehensive documentation automation, simplified Claude CLI integration, and complete Opus 4 optimization across all components for **75% faster analysis** through parallel processing and AI-powered solution generation.
 
-## ✨ What's New in 2.0.1
+## ✨ What's New in 3.0.0
 
 - **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Standard/Comprehensive)
 - **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
@@ -19,7 +19,9 @@ Claudify provides an intelligent, streamlined setup process for initializing Cla
 - **🛡️ File Preservation** - CLAUDE.md and FEATURES.md are now preserved during clean install
 - **🔧 Path Fix** - Fixed documentation copying error for nested directories
 - **📉 Simplified Setup** - Removed minimal mode, now only Standard and Comprehensive
-- **🤖 Claude CLI Integration** - Automatic initialization with optional domain context
+- **🤖 Claude CLI Integration** - Simplified automatic initialization with optional domain context
+- **📝 Documentation Automation** - All commands and agents include documentation update instructions
+- **🧹 Clean Codebase** - Removed 14+ temporary test files for production readiness
 
 ## 🚀 Quick Start
 
