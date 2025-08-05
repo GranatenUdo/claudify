@@ -14,10 +14,11 @@ tools:
   - Glob
   - LS
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze marketing assets and visual brand elements"
+  Grep: "Required to search for brand guidelines, marketing materials, and visual patterns"
+  Glob: "Required to find marketing assets, campaign materials, and brand resources"
+  LS: "Required to understand marketing asset structure and campaign organization"
+  Write: "Required to create marketing design strategies and brand guidelines"
 
 # Visual Designer (Marketing) Agent
 

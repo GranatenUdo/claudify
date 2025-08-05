@@ -10,10 +10,13 @@ tools:
   - Glob
   - LS
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze complex code for simplification opportunities"
+  Grep: "Required to search for duplicated logic, complex patterns, and refactoring candidates"
+  Glob: "Required to find related code files and identify refactoring scope"
+  LS: "Required to understand code organization and module boundaries"
+  Write: "Required to create simplified code versions and refactoring guides"
+  Edit: "Required to apply simplification patterns and refactor code"
+  MultiEdit: "Required to perform systematic code simplification across multiple locations"
 
 <think harder about code complexity, refactoring patterns, and maintainability>
 

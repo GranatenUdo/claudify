@@ -12,10 +12,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze features and translate them into customer value propositions"
+  Grep: "Required to search for business impact, user benefits, and value drivers"
+  Glob: "Required to find feature documentation, user stories, and value statements"
+  LS: "Required to navigate product structure and understand feature relationships"
+  Write: "Required to create customer-focused value documentation and benefit analyses"
+  WebSearch: "Required to research market trends and competitive value propositions"
+  WebFetch: "Required to analyze competitor offerings and industry benchmarks"
+  TodoWrite: "Required to track value proposition development and customer insights"
 
 # Customer Value Translator Agent
 

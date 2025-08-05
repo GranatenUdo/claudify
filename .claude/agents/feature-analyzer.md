@@ -12,10 +12,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze feature implementations and extract capabilities"
+  Grep: "Required to search for feature patterns, functionality, and technical capabilities"
+  Glob: "Required to find feature-related files, components, and documentation"
+  LS: "Required to navigate feature structure and understand dependencies"
+  Write: "Required to create comprehensive feature analysis reports"
+  WebSearch: "Required to research competitive features and market standards"
+  WebFetch: "Required to analyze competitor feature sets and industry trends"
+  TodoWrite: "Required to track feature analysis progress and insights"
 
 # Feature Analyzer Agent
 

@@ -10,10 +10,11 @@ tools:
   - Glob
   - LS
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze code complexity, dependencies, and technical debt patterns"
+  Grep: "Required to search for anti-patterns, code smells, and debt indicators"
+  Glob: "Required to find legacy code, deprecated APIs, and technical debt hotspots"
+  LS: "Required to navigate codebase structure and identify architectural debt"
+  WebSearch: "Required to research modern patterns and refactoring strategies"
 
 <think harder about technical debt patterns, economic impact, remediation strategies, and prevention mechanisms>
 

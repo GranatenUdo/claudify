@@ -12,10 +12,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze product features for marketing positioning"
+  Grep: "Required to search for unique value propositions and differentiators"
+  Glob: "Required to find product documentation and customer success stories"
+  LS: "Required to understand product structure for comprehensive marketing"
+  Write: "Required to create marketing strategies and campaign materials"
+  WebSearch: "Required to research market trends and competitor positioning"
+  WebFetch: "Required to analyze competitor marketing and industry reports"
+  TodoWrite: "Required to track marketing campaign development and insights"
 
 # Marketing Strategist Agent
 

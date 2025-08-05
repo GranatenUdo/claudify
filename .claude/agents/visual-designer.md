@@ -11,10 +11,11 @@ tools:
   - Glob
   - LS
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze existing UI components and design patterns"
+  Grep: "Required to search for style definitions, component usage, and design tokens"
+  Glob: "Required to find design files, style sheets, and visual assets"
+  LS: "Required to understand UI structure and component organization"
+  Write: "Required to create design specifications and style guides"
 
 <think harder about visual design, aesthetics, and emotional impact>
 

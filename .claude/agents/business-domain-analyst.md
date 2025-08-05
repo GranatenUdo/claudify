@@ -9,10 +9,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze domain models, entities, and business logic implementations"
+  Grep: "Required to search for domain patterns, business rules, and use case implementations"
+  Glob: "Required to find domain-related files, aggregates, and bounded context definitions"
+  LS: "Required to navigate domain structure and understand context boundaries"
+  Write: "Required to create domain analysis reports and business value documentation"
+  WebSearch: "Required to research industry best practices and domain patterns"
+  WebFetch: "Required to analyze external API documentation and integration points"
+  TodoWrite: "Required to track domain analysis tasks and insights"
 
 # Business Domain Analyst
 

@@ -12,10 +12,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to understand product capabilities for sales positioning"
+  Grep: "Required to search for customer benefits and ROI drivers"
+  Glob: "Required to find case studies, testimonials, and success metrics"
+  LS: "Required to navigate product offerings for solution selling"
+  Write: "Required to create sales strategies and customer proposals"
+  WebSearch: "Required to research customer industries and competitor offerings"
+  WebFetch: "Required to analyze market intelligence and pricing strategies"
+  TodoWrite: "Required to track sales opportunities and customer insights"
 
 # Sales Genius Agent
 

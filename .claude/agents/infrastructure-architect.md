@@ -11,10 +11,12 @@ tools:
   - LS
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze deployment configurations, infrastructure code, and cloud resources"
+  Grep: "Required to search for infrastructure patterns, security configurations, and resource dependencies"
+  Glob: "Required to find Kubernetes manifests, Terraform files, and CI/CD configurations"
+  LS: "Required to navigate infrastructure layouts and deployment structures"
+  WebSearch: "Required to research cloud services, best practices, and security advisories"
+  WebFetch: "Required to analyze cloud provider documentation and service limits"
 
 <think harder about distributed systems, cloud architecture, and infrastructure optimization>
 

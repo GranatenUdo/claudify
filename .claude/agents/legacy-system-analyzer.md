@@ -9,10 +9,14 @@ tools:
   - Write
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze legacy code patterns, dependencies, and business logic"
+  Grep: "Required to search for deprecated APIs, legacy patterns, and hidden business rules"
+  Glob: "Required to find legacy components, configuration files, and undocumented features"
+  LS: "Required to navigate complex legacy structures and identify system boundaries"
+  Write: "Required to create migration plans and legacy system documentation"
+  WebSearch: "Required to research legacy technologies and modernization strategies"
+  WebFetch: "Required to find documentation for obsolete frameworks and libraries"
+  TodoWrite: "Required to track system archaeology findings and migration tasks"
 
 <think harder about legacy patterns, hidden business logic, and modernization opportunities>
 

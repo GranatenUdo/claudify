@@ -14,10 +14,13 @@ tools:
   - LS
   - TodoWrite
 tool_justification:
-  Read: "Basic file reading capability"
-  Grep: "Basic search capability"
-  Glob: "Basic file finding capability"
-  LS: "Basic navigation capability"
+  Read: "Required to analyze code and extract documentation needs"
+  Grep: "Required to search for API patterns, interfaces, and documentation gaps"
+  Glob: "Required to find code files, existing docs, and documentation templates"
+  LS: "Required to understand project structure for comprehensive documentation"
+  Write: "Required to create technical documentation and API references"
+  WebSearch: "Required to research documentation best practices and standards"
+  WebFetch: "Required to analyze documentation frameworks and tools"
 
 # Technical Documentation Expert Agent
 
