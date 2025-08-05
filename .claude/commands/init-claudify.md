@@ -1,7 +1,7 @@
 ---
 description: Initialize complete Claude Code setup for your repository with intelligent component selection
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Write, MultiEdit, TodoWrite]
-argument-hint: --minimal | --standard | --comprehensive (default)
+argument-hint: --standard | --comprehensive (default)
 complexity: high
 estimated-time: 5-10 minutes
 category: setup
@@ -114,10 +114,6 @@ echo '╚═══════════════════════�
 echo ''
 echo 'Choose your installation type:'
 echo ''
-echo '  🔹 MINIMAL (~5-10 files)'
-echo '     Essential commands and agents only'
-echo '     Perfect for: Quick start, testing'
-echo ''
 echo '  🔸 STANDARD (~15-25 files)'
 echo '     Core commands, agents, and tools for your tech stack'
 echo '     Perfect for: Most projects'
@@ -129,14 +125,13 @@ echo ''
 echo '────────────────────────────────────────────────────────'
 echo ''
 echo 'To select, run init-claudify with one of these options:'
-echo '  /init-claudify --minimal'
 echo '  /init-claudify --standard'
 echo '  /init-claudify --comprehensive  (or just /init-claudify)'
 echo ''", description="Show setup options")
 
 ### Determining Setup Type
 
-@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; elif echo '$ARGUMENTS' | grep -q '\-\-comprehensive\|\-\-full\|\-\-all'; then setup_type='comprehensive'; fi; echo \"📋 Setup Type Selected: $(echo $setup_type | tr '[:lower:]' '[:upper:]')\"; echo '────────────────────────────────────────────────────────'", description="Determine setup type from arguments")
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; elif echo '$ARGUMENTS' | grep -q '\-\-comprehensive\|\-\-full\|\-\-all'; then setup_type='comprehensive'; fi; echo \"📋 Setup Type Selected: $(echo $setup_type | tr '[:lower:]' '[:upper:]')\"; echo '────────────────────────────────────────────────────────'", description="Determine setup type from arguments")
 
 ### Detecting Your Technology Stack
 
@@ -182,7 +177,7 @@ Based on your selection, I'll now copy the components:
 
 #### Installing Commands Based on Setup Type
 
-@Bash(command="echo 'Installing commands...'; mkdir -p .claude/commands; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; echo \"  Setup: $setup_type\"; if [ \"$setup_type\" = 'minimal' ]; then cmds='comprehensive-review quick-research create-command-and-or-agent'; elif [ \"$setup_type\" = 'comprehensive' ]; then cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code analyze-test-quality generate-documentation analyze-technical-debt analyze-architecture analyze-security analyze-ux fix-all-bugs'; else cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code'; fi; for cmd in $cmds; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed commands could not be installed\"; else echo '✅ Commands installed successfully'; fi", description="Install commands based on setup type")
+@Bash(command="echo 'Installing commands...'; mkdir -p .claude/commands; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; echo \"  Setup: $setup_type\"; if [ \"$setup_type\" = 'comprehensive' ]; then cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code analyze-test-quality generate-documentation analyze-technical-debt analyze-architecture analyze-security analyze-ux fix-all-bugs'; else cmds='comprehensive-review do-extensive-research quick-research create-command-and-or-agent update-changelog optimize-performance refactor-code'; fi; for cmd in $cmds; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed commands could not be installed\"; else echo '✅ Commands installed successfully'; fi", description="Install commands based on setup type")
 
 #### Installing Backend Components
 @Bash(command="if ls *.csproj 1>/dev/null 2>&1 || ls **/*.csproj 1>/dev/null 2>&1 || [ -f go.mod ] || [ -f pom.xml ] || [ -f build.gradle ] || [ -f requirements.txt ] || ls *.py 1>/dev/null 2>&1 || ([ -f package.json ] && grep -q 'express\\|fastify\\|nestjs' package.json 2>/dev/null); then echo 'Installing backend components...'; failed=0; for cmd in 'add-backend-feature' 'fix-backend-bug' 'review-backend-code' 'fix-backend-build-and-tests'; do if [ -f \".claudify/.claude/commands/${cmd}.md\" ]; then cp \".claudify/.claude/commands/${cmd}.md\" .claude/commands/ && echo \"  ✓ ${cmd}\"; else echo \"  ✗ ${cmd} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -eq 0 ]; then echo '  ✓ All backend commands installed'; else echo \"  ⚠️ $failed backend commands missing\"; fi; else echo '  ℹ No backend detected - skipping backend components'; fi", description="Install backend components with error checking")
@@ -192,22 +187,22 @@ Based on your selection, I'll now copy the components:
 
 #### Installing Agents Based on Setup Type
 
-@Bash(command="echo 'Installing agents...'; mkdir -p .claude/agents; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'minimal' ]; then agents='code-reviewer tech-lead researcher'; elif [ \"$setup_type\" = 'comprehensive' ]; then agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst infrastructure-architect ux-reviewer business-domain-analyst legacy-system-analyzer visual-designer security-reviewer frontend-developer'; else agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst'; fi; for agent in $agents; do if [ -f \".claudify/.claude/agents/${agent}.md\" ]; then cp \".claudify/.claude/agents/${agent}.md\" .claude/agents/ && echo \"  ✓ ${agent}\"; else echo \"  ✗ ${agent} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed agents could not be installed\"; else echo '✅ Agents installed successfully'; fi", description="Install agents based on setup type")
+@Bash(command="echo 'Installing agents...'; mkdir -p .claude/agents; failed=0; setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'comprehensive' ]; then agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst infrastructure-architect ux-reviewer business-domain-analyst legacy-system-analyzer visual-designer security-reviewer frontend-developer'; else agents='code-reviewer tech-lead researcher code-simplifier technical-debt-analyst test-quality-analyst'; fi; for agent in $agents; do if [ -f \".claudify/.claude/agents/${agent}.md\" ]; then cp \".claudify/.claude/agents/${agent}.md\" .claude/agents/ && echo \"  ✓ ${agent}\"; else echo \"  ✗ ${agent} (not found)\"; failed=$((failed+1)); fi; done; if [ $failed -gt 0 ]; then echo \"⚠️ WARNING: $failed agents could not be installed\"; else echo '✅ Agents installed successfully'; fi", description="Install agents based on setup type")
 
 #### Installing Security Components
 @Bash(command="if grep -r 'OrganizationId\|TenantId\|multi.tenant\|IMultiTenant' --include='*.cs' --include='*.ts' --include='*.js' . 2>/dev/null | head -1 > /dev/null; then echo 'Multi-tenancy detected - installing security components...'; cp '.claudify/.claude/agents/security-reviewer.md' .claude/agents/ 2>/dev/null; cp '.claudify/.claude/hooks/check-tenant-scoping.ps1' .claude/hooks/ 2>/dev/null; echo 'Security components installed'; else echo 'No multi-tenancy detected - skipping security components'; fi", description="Conditionally install security components")
 
 #### Installing Generators and Tools
 
-@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" != 'minimal' ]; then echo 'Installing generators...'; mkdir -p .claude/generators; cp '.claudify/templates/generators/command-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ command-generator'; cp '.claudify/templates/generators/agent-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ agent-generator'; cp '.claudify/templates/generators/hook-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ hook-generator'; cp '.claudify/templates/META-GENERATOR-README.md' .claude/generators/README.md 2>/dev/null && echo '  ✓ documentation'; else echo 'Skipping generators (minimal setup)'; fi", description="Conditionally install generators")
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'standard' -o \"$setup_type\" = 'comprehensive' ]; then echo 'Installing generators...'; mkdir -p .claude/generators; cp '.claudify/templates/generators/command-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ command-generator'; cp '.claudify/templates/generators/agent-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ agent-generator'; cp '.claudify/templates/generators/hook-generator.ps1' .claude/generators/ 2>/dev/null && echo '  ✓ hook-generator'; cp '.claudify/templates/META-GENERATOR-README.md' .claude/generators/README.md 2>/dev/null && echo '  ✓ documentation'; fi", description="Conditionally install generators")
 
 #### Installing Agent Tools
 
-@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'comprehensive' ]; then echo 'Installing agent tools...'; mkdir -p .claude/agent-tools; cp -r '.claudify/.claude/agent-tools/security-reviewer' .claude/agent-tools/ 2>/dev/null && echo '  ✓ security-reviewer tools'; cp -r '.claudify/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/ 2>/dev/null && echo '  ✓ technical-debt tools'; cp -r '.claudify/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/ 2>/dev/null && echo '  ✓ infrastructure tools'; cp '.claudify/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/ 2>/dev/null && echo '  ✓ config'; else echo 'Skipping agent tools (not comprehensive setup)'; fi", description="Conditionally install agent tools")
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'comprehensive' ]; then echo 'Installing agent tools...'; mkdir -p .claude/agent-tools; cp -r '.claudify/.claude/agent-tools/security-reviewer' .claude/agent-tools/ 2>/dev/null && echo '  ✓ security-reviewer tools'; cp -r '.claudify/.claude/agent-tools/technical-debt-analyst' .claude/agent-tools/ 2>/dev/null && echo '  ✓ technical-debt tools'; cp -r '.claudify/.claude/agent-tools/infrastructure-architect' .claude/agent-tools/ 2>/dev/null && echo '  ✓ infrastructure tools'; cp '.claudify/.claude/agent-tools/agent-tools-config.json' .claude/agent-tools/ 2>/dev/null && echo '  ✓ config'; else echo 'Skipping agent tools (not comprehensive setup)'; fi", description="Conditionally install agent tools")
 
 #### Installing Hooks
 
-@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-minimal'; then setup_type='minimal'; elif echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" != 'minimal' ]; then echo 'Installing hooks...'; mkdir -p .claude/hooks; cp '.claudify/.claude/hooks/add-context.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ add-context'; cp '.claudify/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ pre-commit-quality'; cp '.claudify/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ changelog-updates'; if [ \"$setup_type\" = 'comprehensive' ]; then cp '.claudify/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ tenant-validation'; cp '.claudify/.claude/hooks/hooks-config.json' .claude/hooks/ 2>/dev/null && echo '  ✓ config'; cp '.claudify/.claude/hooks/install-hooks.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ installer'; fi; else echo 'Skipping hooks (minimal setup)'; fi", description="Conditionally install hooks")
+@Bash(command="setup_type='comprehensive'; if echo '$ARGUMENTS' | grep -q '\-\-standard'; then setup_type='standard'; fi; if [ \"$setup_type\" = 'standard' -o \"$setup_type\" = 'comprehensive' ]; then echo 'Installing hooks...'; mkdir -p .claude/hooks; cp '.claudify/.claude/hooks/add-context.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ add-context'; cp '.claudify/.claude/hooks/pre-commit-quality-check.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ pre-commit-quality'; cp '.claudify/.claude/hooks/check-changelog-updates.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ changelog-updates'; if [ \"$setup_type\" = 'comprehensive' ]; then cp '.claudify/.claude/hooks/validate-tenant-scoping.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ tenant-validation'; cp '.claudify/.claude/hooks/hooks-config.json' .claude/hooks/ 2>/dev/null && echo '  ✓ config'; cp '.claudify/.claude/hooks/install-hooks.ps1' .claude/hooks/ 2>/dev/null && echo '  ✓ installer'; fi; fi", description="Conditionally install hooks")
 
 #### Installing Validation Tools
 @Bash(command="mkdir -p .claude/validation", description="Create validation directory")
@@ -330,7 +325,7 @@ else echo 'Preserved existing FEATURES.md'; fi", description="Create FEATURES.md
 The `.claudify` directory will remain in your repository (excluded from git via .gitignore) to allow for:
 - Re-running `/init-claudify` with different configurations
 - Updating components when new versions are available
-- Switching between minimal/standard/comprehensive setups
+- Switching between standard/comprehensive setups
 
 @TodoWrite(todos=[{"content": "Detect backend technology", "status": "completed", "priority": "high", "id": "setup-1"}, {"content": "Detect frontend framework", "status": "completed", "priority": "high", "id": "setup-2"}, {"content": "Analyze architecture patterns", "status": "completed", "priority": "high", "id": "setup-3"}, {"content": "Install appropriate components", "status": "completed", "priority": "high", "id": "setup-4"}, {"content": "Generate documentation", "status": "completed", "priority": "high", "id": "setup-5"}])
 
@@ -409,7 +404,7 @@ If you encounter issues:
 ### Re-running Setup
 
 You can safely re-run `/init-claudify` at any time to:
-- Change your setup mode (minimal/standard/comprehensive)
+- Change your setup mode (standard/comprehensive)
 - Update to newer versions of components
 - Add components after initial setup
 - Refresh your configuration

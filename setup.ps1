@@ -1,4 +1,4 @@
-# Claudify - Minimal Setup Script
+# Claudify - Intelligent Setup Script
 # Cross-platform setup for Windows, Linux, and macOS
 # 
 # Usage: 
@@ -158,8 +158,7 @@ if ($CleanInstall) {
     Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
     Write-Host "  - .claude/hooks/* (all hooks)" -ForegroundColor DarkGray
     Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
-    Write-Host "  - CLAUDE.md (if exists)" -ForegroundColor DarkGray
-    Write-Host "  - FEATURES.md (if exists)" -ForegroundColor DarkGray
+    Write-Host "  Note: CLAUDE.md and FEATURES.md will be preserved" -ForegroundColor Green
     
     Write-Host "`nPerforming clean removal..." -ForegroundColor Cyan
         
@@ -177,19 +176,8 @@ if ($CleanInstall) {
             Remove-Item -Path $claudifyPath -Recurse -Force -ErrorAction SilentlyContinue
         }
         
-        # Remove CLAUDE.md if exists
-        $claudeMdPath = Join-Path $TargetRepository "CLAUDE.md"
-        if (Test-Path $claudeMdPath) {
-            Write-Host "  - Removing CLAUDE.md..." -ForegroundColor DarkGray
-            Remove-Item -Path $claudeMdPath -Force -ErrorAction SilentlyContinue
-        }
-        
-        # Remove FEATURES.md if exists
-        $featuresMdPath = Join-Path $TargetRepository "FEATURES.md"
-        if (Test-Path $featuresMdPath) {
-            Write-Host "  - Removing FEATURES.md..." -ForegroundColor DarkGray
-            Remove-Item -Path $featuresMdPath -Force -ErrorAction SilentlyContinue
-        }
+        # Preserve CLAUDE.md and FEATURES.md (user-customized files)
+        Write-Host "  - Preserving CLAUDE.md and FEATURES.md (if they exist)..." -ForegroundColor Green
         
     Write-Host "✓ Clean removal complete!" -ForegroundColor Green
     Write-Host "`nProceeding with fresh installation..." -ForegroundColor Cyan
@@ -318,6 +306,11 @@ foreach ($docFile in $docFiles) {
     $sourceDoc = Join-Path $scriptDir $docFile
     $destDoc = Join-Path $tempClaudifyPath $docFile
     if (Test-Path $sourceDoc) {
+        # Ensure parent directory exists for nested files
+        $destDir = Split-Path -Parent $destDoc
+        if (-not (Test-Path $destDir)) {
+            New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+        }
         Copy-Item -Path $sourceDoc -Destination $destDoc -Force
     }
 }
@@ -325,12 +318,6 @@ foreach ($docFile in $docFiles) {
 Write-Host "Claudify resources copied to .claudify successfully!" -ForegroundColor Green
 Write-Host "Note: .claudify is excluded from git via .gitignore" -ForegroundColor DarkGray
 Write-Host "      This directory will persist to allow re-running /init-claudify" -ForegroundColor DarkGray
-if ($version -eq "2.0.0") {
-    Write-Host "      " -NoNewline -ForegroundColor DarkGray
-    Write-Host "🚀 Version $version - Major release with Opus 4 optimizations" -ForegroundColor Cyan
-    Write-Host "      " -NoNewline -ForegroundColor DarkGray
-    Write-Host "📝 Fixed init-claudify command for proper component installation" -ForegroundColor Green
-}
 
 # Offer intelligent automatic setup
 Write-Host "`n" + ("─" * 60) -ForegroundColor DarkGray
@@ -341,13 +328,12 @@ Write-Host "Claudify can automatically install Claude Code components now" -Fore
 Write-Host "based on your detected technology stack." -ForegroundColor White
 Write-Host ""
 Write-Host "Choose installation mode:" -ForegroundColor Yellow
-Write-Host "  [M] Minimal    - Essential components only (~5-10 files)" -ForegroundColor White
 Write-Host "  [S] Standard   - Core components for your stack (~15-25 files)" -ForegroundColor White
 Write-Host "  [C] Comprehensive - Everything available (~40+ files) " -NoNewline -ForegroundColor White
 Write-Host "[RECOMMENDED]" -ForegroundColor Green
 Write-Host "  [N] None       - Skip automatic installation" -ForegroundColor White
 Write-Host ""
-Write-Host "Select mode (M/S/C/N) [C]: " -NoNewline -ForegroundColor Yellow
+Write-Host "Select mode (S/C/N) [C]: " -NoNewline -ForegroundColor Yellow
 $setupResponse = Read-Host
 
 # Default to comprehensive if no input
@@ -357,7 +343,6 @@ if ([string]::IsNullOrWhiteSpace($setupResponse)) {
 
 $setupMode = $null
 switch ($setupResponse.ToUpper()) {
-    'M' { $setupMode = "minimal" }
     'S' { $setupMode = "standard" }
     'C' { $setupMode = "comprehensive" }
     'N' { $setupMode = $null }
@@ -600,18 +585,6 @@ if ($setupMode) {
     $installHooks = $false
     
     switch ($setupMode) {
-        "minimal" {
-            $commandsToInstall = @(
-                "comprehensive-review",
-                "quick-research",
-                "create-command-and-or-agent"
-            )
-            $agentsToInstall = @(
-                "code-reviewer",
-                "tech-lead",
-                "researcher"
-            )
-        }
         "standard" {
             $commandsToInstall = @(
                 "comprehensive-review",
@@ -713,13 +686,11 @@ if ($setupMode) {
             "fix-frontend-build-and-tests"
         )
         $commandsToInstall += $frontendCommands
-        if ($setupMode -ne "minimal") {
-            $agentsToInstall += "frontend-developer"
-        }
+        $agentsToInstall += "frontend-developer"
     }
     
     # Add security components for multi-tenant
-    if ($detectedStack.MultiTenant -and $setupMode -ne "minimal") {
+    if ($detectedStack.MultiTenant) {
         $agentsToInstall += "security-reviewer"
     }
     
@@ -993,6 +964,8 @@ $(foreach ($agent in $agentsToInstall) { "- **$agent** - Specialized expert agen
         
         Set-Content -Path $claudeMdPath -Value $claudeMdContent -NoNewline
         Write-Success "  ✓ CLAUDE.md generated with intelligent defaults"
+    } else {
+        Write-Success "  ✓ CLAUDE.md already exists - preserved"
     }
     
     # Generate FEATURES.md if it doesn't exist
@@ -1107,6 +1080,8 @@ $(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isola
         
         Set-Content -Path $featuresMdPath -Value $featuresMdContent -NoNewline
         Write-Success "  ✓ FEATURES.md template generated"
+    } else {
+        Write-Success "  ✓ FEATURES.md already exists - preserved"
     }
     
     # Installation summary

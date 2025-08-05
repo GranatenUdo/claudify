@@ -15,6 +15,15 @@ This release focuses on cleaning up temporary files, improving documentation, an
 - Corrected release date for version 2.0.0 in documentation
 - Removed temporary test scripts (4 files)
 - Removed temporary documentation (2 files)
+- **Critical Fix**: CLAUDE.md and FEATURES.md are now preserved during clean install
+  - Previously these user-customized files were deleted and regenerated
+  - Now properly detected and preserved with all customizations intact
+- **Critical Fix**: Fixed "Could not find a part of the path" error in setup.ps1
+  - Now creates parent directories before copying nested documentation files
+  - Ensures docs/ directory exists when copying AGENT-COLLABORATION files
+- **Simplified Setup**: Removed minimal installation mode
+  - Standard and Comprehensive modes only
+  - Standard mode provides a solid baseline with ~15-25 files
 
 ### 📝 Changed
 - Updated version to 2.0.1
@@ -39,7 +48,6 @@ pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 ```
 
 Choose your installation mode when prompted:
-- **[M]** Minimal - Essential components only
 - **[S]** Standard - Core components for your stack
 - **[C]** Comprehensive - Everything available **(Recommended)**
 

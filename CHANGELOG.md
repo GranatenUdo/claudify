@@ -17,6 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed temporary documentation:
   - ANGULAR-DETECTION-FIX.md (implementation details)
   - agent-fix-report.txt (temporary report)
+- **Critical Fix**: CLAUDE.md and FEATURES.md are now preserved during clean install
+  - These user-customized files were being deleted and regenerated
+  - Now properly detected and preserved with user's customizations intact
+- **Critical Fix**: setup.ps1 now creates parent directories when copying nested documentation
+  - Fixed "Could not find a part of the path" error for docs/ files
+  - Ensures docs/ directory is created before copying files into it
+- **Removed Minimal Mode**: Simplified setup to Standard and Comprehensive only
+  - Minimal mode removed as it provided too limited functionality
+  - Standard mode now serves as the baseline installation
 
 ### Changed
 - Updated version to 2.0.1

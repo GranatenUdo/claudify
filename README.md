@@ -4,18 +4,21 @@
 ![Released](https://img.shields.io/badge/released-2025--08--04-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
-**Minimal Setup, Maximum Intelligence - Now with Opus 4 Optimized Agents**
+**Intelligent Setup, Maximum Capability - Now with Opus 4 Optimized Agents**
 
-Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify provides an intelligent, streamlined setup process for initializing Claude Code in any repository. Version 2.0.1 includes enhanced Angular detection for enterprise projects and Opus 4 optimized agents that deliver **75% faster analysis** through parallel processing and AI-powered solution generation.
 
 ## ✨ What's New in 2.0.1
 
-- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Minimal/Standard/Comprehensive)
+- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Standard/Comprehensive)
 - **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
 - **🧹 Clean Install Option** - Recommended for major version upgrades
-- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack
+- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack (preserves existing)
 - **🎯 Fixed Agent Mappings** - All commands now use available Claude agents
 - **📁 Better Organization** - Documentation moved to docs/ folder
+- **🛡️ File Preservation** - CLAUDE.md and FEATURES.md are now preserved during clean install
+- **🔧 Path Fix** - Fixed documentation copying error for nested directories
+- **📉 Simplified Setup** - Removed minimal mode, now only Standard and Comprehensive
 
 ## 🚀 Quick Start
 
@@ -43,7 +46,6 @@ The intelligent setup script will:
    - Database and infrastructure
 
 3. **Installation Mode Selection** - Choose your setup:
-   - **[M] Minimal** - Essential components only (~5-10 files)
    - **[S] Standard** - Core components for your stack (~15-25 files)
    - **[C] Comprehensive** - Everything available (~40+ files) **[RECOMMENDED]**
    - **[N] None** - Manual setup only
@@ -111,7 +113,7 @@ The setup script provides a complete installation experience:
    - Identifies multi-tenant patterns
 
 3. **Intelligent Component Installation**
-   - Choose from Minimal, Standard, or Comprehensive modes
+   - Choose from Standard or Comprehensive modes
    - Installs appropriate commands and agents for your stack
    - Generates customized CLAUDE.md and FEATURES.md
    - Sets up hooks, generators, and validation tools
@@ -127,16 +129,10 @@ For domain-specific configuration, run `/init-claudify` in Claude Code to:
 
 ## 📦 Installation Modes
 
-### Minimal Mode (~5-10 files)
-Perfect for trying out Claudify or small projects:
-- **Commands**: `comprehensive-review`, `quick-research`, `create-command-and-or-agent`
-- **Agents**: `code-reviewer`, `tech-lead`, `researcher`
-- Basic setup without hooks or generators
-
 ### Standard Mode (~15-25 files)
 Recommended for most projects:
-- **Commands**: All minimal + backend/frontend development commands
-- **Agents**: All minimal + `code-simplifier`, `technical-debt-analyst`, `test-quality-analyst`, `frontend-developer`
+- **Commands**: Core commands + backend/frontend development commands
+- **Agents**: `code-reviewer`, `tech-lead`, `researcher`, `code-simplifier`, `technical-debt-analyst`, `test-quality-analyst`, `frontend-developer`
 - **Extras**: Generators for custom components, quality hooks
 
 ### Comprehensive Mode (~40+ files) **[RECOMMENDED]**
@@ -193,8 +189,8 @@ The `sync-to-templates` command helps maintain this template repository:
 
 ## ❓ Common Questions
 
-**Q: Why minimal initial footprint?**  
-A: Claudify copies only essential files initially, then intelligently installs components based on your actual tech stack and needs.
+**Q: Why streamlined setup?**  
+A: Claudify provides a focused setup process, then intelligently installs components based on your actual tech stack and needs.
 
 **Q: What if I already have a Claude setup?**  
 A: Version 2.0.1 detects existing installations and offers clean install for major updates or normal update for minor versions.
@@ -206,13 +202,13 @@ A: Yes! Run setup.ps1 again or use `/init-claudify` in Claude Code for advanced 
 A: Create components in your project and use `/sync-to-templates` to share them back.
 
 **Q: What's the difference between setup modes?**  
-A: Minimal = essentials only, Standard = core features for your stack, Comprehensive = everything available (recommended).
+A: Standard = core features for your stack, Comprehensive = everything available (recommended).
 
 ## 🔄 Re-running Setup
 
 The `.claudify` directory persists in your repository (git-ignored) to allow:
 - **Re-initialization**: Run `/init-claudify` again with different options
-- **Mode Changes**: Switch between minimal/standard/comprehensive setups
+- **Mode Changes**: Switch between standard/comprehensive setups
 - **Updates**: Get newer versions of components when available
 - **Experimentation**: Try different configurations without re-running setup.ps1
 
@@ -264,4 +260,4 @@ Claudify includes automatic changelog management:
 
 ---
 
-**Remember**: Minimal setup, maximum intelligence. Let Claude Code do what it does best!
+**Remember**: Intelligent setup, maximum capability. Let Claude Code do what it does best!
