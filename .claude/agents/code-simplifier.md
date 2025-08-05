@@ -4,15 +4,16 @@ description: Expert refactoring specialist with Opus 4 optimizations for paralle
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
   - Edit
   - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
----
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 <think harder about code complexity, refactoring patterns, and maintainability>
 

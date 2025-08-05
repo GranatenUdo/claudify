@@ -4,16 +4,18 @@ description: Elite security expert with Opus 4 optimizations for parallel threat
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - Bash
+tool_justification:
+  Read: "Required to analyze code and configs"
+  Grep: "Required to search for vulnerabilities"
+  Glob: "Required to find security-relevant files"
+  LS: "Required to navigate structure"
+  WebSearch: "Required for CVE and threat research"
+  Bash: "Required for security scanning tools"
 
 <think harder about threat models, attack vectors, zero-day vulnerabilities, and defense-in-depth strategies>
 

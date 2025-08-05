@@ -6,14 +6,15 @@ tools:
   - Read
   - Write
   - Edit
-  - MultiEdit
   - Grep
   - Glob
   - LS
   - TodoWrite
-  - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 <think harder about distributed systems, cloud architecture, and infrastructure optimization>
 

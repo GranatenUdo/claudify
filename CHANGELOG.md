@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- **Agent Tool Access Restrictions**: Implemented Claude Code security best practices
+  - Applied principle of least privilege to all 19 agents
+  - Reduced average tool access from 10-12 tools to 4-6 tools per agent
+  - Added tool justifications for all granted permissions
+  - Created automated tool restriction script (scripts/restrict-agent-tools-v2.ps1)
+  - Updated agent generators to include secure tool assignments
+  - Implemented role-based tool access matrix
+
+### Added
+- **Agent Management Command**: New /agents command for sub-agent management
+  - List all available agents with capabilities
+  - Create new agents with interactive wizard
+  - Edit existing agents while maintaining security
+  - Test agent functionality and compliance
+  - Share agents with team (version control ready)
+
+### Changed
+- **Agent Generator Templates**: Updated to include secure tool assignments
+  - Code reviewer: Read, Edit, MultiEdit, Grep, Glob, LS only
+  - Security reviewer: Read, Grep, Glob, LS, WebSearch, Bash only
+  - Tech lead: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
+  - Researcher: Read, WebSearch, WebFetch, Write, TodoWrite only
+  - Frontend developer: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
+  - All agents now include tool_justification metadata
+
+### Infrastructure
+- **Claude Code Best Practices Compliance**:
+  - Comprehensive gap analysis document (docs/CLAUDE-CODE-BEST-PRACTICES-GAPS.md)
+  - Agent tool restriction automation script
+  - Improved agent naming conventions
+  - Enhanced security through limited tool access
+
 ## [3.0.0] - 2025-08-05
 
 ### 🎉 Major Release - Complete Documentation Automation & Production Ready

@@ -6,14 +6,18 @@ tools:
   - Read
   - Write
   - Edit
-  - MultiEdit
   - Grep
   - Glob
   - LS
   - TodoWrite
-  - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Required to review architecture"
+  Write: "Required to create documentation"
+  Edit: "Required to update configurations"
+  Grep: "Required to find patterns"
+  Glob: "Required to analyze structure"
+  LS: "Required to navigate"
+  TodoWrite: "Required for planning"
 
 <think harder about system architecture, scalability implications, technical debt, and long-term strategic decisions>
 

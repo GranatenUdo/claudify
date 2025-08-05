@@ -4,16 +4,16 @@ description: Expert researcher with Opus 4 optimizations for parallel analysis a
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Required to read existing docs"
+  WebSearch: "Required for external research"
+  WebFetch: "Required to fetch documentation"
+  Write: "Required to document findings"
+  TodoWrite: "Required to track research"
 
 <think harder about research methodology, evidence synthesis, and strategic analysis>
 

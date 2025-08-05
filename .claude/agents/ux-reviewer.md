@@ -10,10 +10,14 @@ tools:
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Required to read components"
+  Write: "Required to create components"
+  Edit: "Required to modify UI code"
+  MultiEdit: "Required for refactoring"
+  Grep: "Required to find UI patterns"
+  Glob: "Required to find components"
+  LS: "Required to navigate"
 
 <think harder about user experience, accessibility, and inclusive design patterns>
 

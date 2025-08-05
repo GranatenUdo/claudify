@@ -4,15 +4,18 @@ description: Expert code reviewer with Opus 4 optimizations for parallel analysi
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
   - Edit
   - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
----
+tool_justification:
+  Read: "Required to read code files"
+  Edit: "Required to suggest improvements"
+  MultiEdit: "Required for bulk corrections"
+  Grep: "Required to search patterns"
+  Glob: "Required to find related files"
+  LS: "Required to navigate structure"
 
 <think harder about code quality, security implications, architectural patterns, and long-term maintainability impacts>
 

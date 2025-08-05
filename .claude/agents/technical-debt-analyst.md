@@ -4,16 +4,16 @@ description: Elite debt analyst with Opus 4 optimizations for parallel debt anal
 max_thinking_tokens: 65536
 tools:
   - Read
-  - Write
   - Edit
   - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 <think harder about technical debt patterns, economic impact, remediation strategies, and prevention mechanisms>
 

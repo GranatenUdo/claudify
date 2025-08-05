@@ -13,10 +13,11 @@ tools:
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 # Visual Designer (Marketing) Agent
 

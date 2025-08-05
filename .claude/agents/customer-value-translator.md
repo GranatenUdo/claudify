@@ -7,16 +7,15 @@ philosophy: Features are meaningless without customer context - value is everyth
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 # Customer Value Translator Agent
 

@@ -4,18 +4,15 @@ description: Expert business analyst with Opus 4 optimizations for parallel doma
 max_thinking_tokens: 65536
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
   - WebFetch
-  - Task
----
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 # Business Domain Analyst
 

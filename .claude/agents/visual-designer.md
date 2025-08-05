@@ -10,11 +10,11 @@ tools:
   - Grep
   - Glob
   - LS
-  - TodoWrite
-  - Bash
-  - WebSearch
-  - WebFetch
----
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 <think harder about visual design, aesthetics, and emotional impact>
 

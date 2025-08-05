@@ -7,16 +7,15 @@ philosophy: Data-driven storytelling that transforms features into customer succ
 max_thinking_tokens: 49152
 tools:
   - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-  - TodoWrite
-  - Bash
   - WebSearch
----
+  - WebFetch
+  - Write
+  - TodoWrite
+tool_justification:
+  Read: "Basic file reading capability"
+  Grep: "Basic search capability"
+  Glob: "Basic file finding capability"
+  LS: "Basic navigation capability"
 
 # Marketing Strategist Agent
 

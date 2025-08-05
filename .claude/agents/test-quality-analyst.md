@@ -5,15 +5,17 @@ max_thinking_tokens: 49152
 tools:
   - Read
   - Write
-  - Edit
-  - MultiEdit
   - Grep
   - Glob
   - LS
-  - TodoWrite
   - Bash
-  - WebSearch
----
+tool_justification:
+  Read: "Required to analyze test coverage"
+  Write: "Required to create test files"
+  Grep: "Required to find test patterns"
+  Glob: "Required to locate test files"
+  LS: "Required to navigate"
+  Bash: "Required to run test commands"
 
 <think harder about test strategy, coverage optimization, quality metrics, and testing patterns>
 

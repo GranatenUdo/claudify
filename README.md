@@ -10,6 +10,18 @@ Claudify provides an intelligent, streamlined setup process for initializing Cla
 
 ## ✨ What's New in 3.0.0
 
+### 🔒 Security & Best Practices
+- **Agent Tool Restrictions** - Implemented Claude Code security best practices with principle of least privilege
+- **Role-Based Access** - Each agent only has tools necessary for its function (reduced from 10-12 to 4-6 tools)
+- **Tool Justifications** - Every granted permission documented with its purpose
+- **Automated Compliance** - PowerShell script enforces security policies across all agents
+
+### 🤖 Agent Management
+- **New /agents Command** - Comprehensive agent management (list, create, edit, test, share)
+- **Interactive Creation** - Wizard-based agent creation with security-first design
+- **Best Practices Gap Analysis** - Identified and fixed 15 critical gaps in Claude Code implementation
+
+### 📝 Documentation & Setup
 - **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Standard/Comprehensive)
 - **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
 - **🧹 Clean Install Option** - Recommended for major version upgrades
