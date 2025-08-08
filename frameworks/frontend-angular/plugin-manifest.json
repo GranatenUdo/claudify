@@ -1,0 +1,184 @@
+{
+  "pluginInfo": {
+    "name": "frontend-angular",
+    "displayName": "Angular Frontend Framework",
+    "version": "1.0.0",
+    "description": "Complete Angular development toolkit with TypeScript, RxJS, Signals, and Material Design support",
+    "author": "Claudify Team",
+    "homepage": "https://github.com/claudify/plugins/frontend-angular",
+    "repository": "https://github.com/claudify/plugins/frontend-angular.git",
+    "tags": ["frontend", "angular", "typescript", "spa", "rxjs", "signals", "material"]
+  },
+  "compatibility": {
+    "claudifyMinVersion": "4.0.0",
+    "claudifyMaxVersion": "5.0.0",
+    "frameworkVersions": {
+      "angular": ">=16.0.0",
+      "typescript": ">=4.9.0",
+      "rxjs": ">=7.0.0"
+    }
+  },
+  "dependencies": {
+    "required": ["core"],
+    "optional": ["testing-jasmine", "ui-material", "testing-cypress"],
+    "conflicts": ["frontend-react", "frontend-vue"]
+  },
+  "detection": {
+    "patterns": {
+      "files": ["angular.json", "package.json", ".angular.json"],
+      "content": ["@angular/core", "ng serve", "angular.json", "@angular/cli"],
+      "directories": ["src/app", "src/environments", "src/assets"]
+    },
+    "priority": 90,
+    "autoSelect": true
+  },
+  "components": {
+    "agents": [
+      {
+        "name": "angular-developer",
+        "file": "agents/angular-developer.md",
+        "description": "Angular expert with RxJS, NgRx, and Signals knowledge",
+        "tags": ["angular", "rxjs", "ngrx", "frontend", "signals"],
+        "tools": ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "LS", "Bash"],
+        "extends": "frontend-developer"
+      },
+      {
+        "name": "angular-ux-reviewer",
+        "file": "agents/angular-ux-reviewer.md",
+        "description": "UX specialist for Angular applications",
+        "tags": ["angular", "ux", "accessibility", "material"],
+        "tools": ["Read", "Edit", "Grep", "Glob", "LS"],
+        "extends": "ux-reviewer"
+      },
+      {
+        "name": "angular-visual-designer",
+        "file": "agents/angular-visual-designer.md",
+        "description": "Visual designer for Angular Material and custom components",
+        "tags": ["angular", "material", "design", "ui"],
+        "tools": ["Read", "Write", "Edit", "MultiEdit"],
+        "extends": "visual-designer"
+      }
+    ],
+    "commands": [
+      {
+        "name": "add-angular-feature",
+        "file": "commands/add-angular-feature.md",
+        "description": "Create Angular features with best practices",
+        "tags": ["angular", "feature", "development"],
+        "category": "frontend"
+      },
+      {
+        "name": "fix-angular-bug",
+        "file": "commands/fix-angular-bug.md",
+        "description": "Debug and fix Angular-specific issues",
+        "tags": ["angular", "debugging", "fixes"],
+        "category": "frontend"
+      },
+      {
+        "name": "review-angular-code",
+        "file": "commands/review-angular-code.md",
+        "description": "Angular-specific code review",
+        "tags": ["angular", "review", "quality"],
+        "category": "frontend"
+      },
+      {
+        "name": "fix-angular-build-and-tests",
+        "file": "commands/fix-angular-build-and-tests.md",
+        "description": "Fix Angular build and test issues",
+        "tags": ["angular", "build", "testing"],
+        "category": "frontend"
+      },
+      {
+        "name": "figma-to-angular",
+        "file": "commands/figma-to-angular.md",
+        "description": "Convert Figma designs to Angular components",
+        "tags": ["angular", "figma", "design"],
+        "category": "frontend"
+      },
+      {
+        "name": "update-angular-feature",
+        "file": "commands/update-angular-feature.md",
+        "description": "Update Angular features with backward compatibility",
+        "tags": ["angular", "update", "feature"],
+        "category": "frontend"
+      },
+      {
+        "name": "update-angular-feature-breaking",
+        "file": "commands/update-angular-feature-breaking.md",
+        "description": "Replace Angular feature without backward compatibility",
+        "tags": ["angular", "update", "breaking-change"],
+        "category": "frontend"
+      },
+      {
+        "name": "migrate-angular-version",
+        "file": "commands/migrate-angular-version.md",
+        "description": "Migrate Angular to newer version",
+        "tags": ["angular", "migration", "upgrade"],
+        "category": "specialized"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "angular-lint-check",
+        "file": "hooks/angular-lint-check.ps1",
+        "description": "Run Angular linting before commits",
+        "tags": ["angular", "quality", "linting"],
+        "triggers": ["pre-commit"]
+      },
+      {
+        "name": "angular-test-check",
+        "file": "hooks/angular-test-check.ps1",
+        "description": "Run Angular tests before commits",
+        "tags": ["angular", "testing", "quality"],
+        "triggers": ["pre-commit"]
+      }
+    ],
+    "generators": [
+      {
+        "name": "angular-component-generator",
+        "file": "generators/angular-component-generator.ps1",
+        "description": "Generate Angular components with best practices",
+        "tags": ["angular", "component", "generation"]
+      },
+      {
+        "name": "angular-service-generator",
+        "file": "generators/angular-service-generator.ps1",
+        "description": "Generate Angular services with dependency injection",
+        "tags": ["angular", "service", "dependency-injection"]
+      }
+    ],
+    "templates": [
+      {
+        "name": "standalone-component",
+        "file": "templates/components/standalone-component.template",
+        "description": "Angular standalone component template",
+        "tags": ["angular", "component", "standalone"]
+      },
+      {
+        "name": "signal-service",
+        "file": "templates/services/signal-service.template",
+        "description": "Angular service with signals",
+        "tags": ["angular", "service", "signals"]
+      },
+      {
+        "name": "reactive-form",
+        "file": "templates/patterns/reactive-form.template",
+        "description": "Angular reactive form with validation",
+        "tags": ["angular", "forms", "validation"]
+      }
+    ]
+  },
+  "installation": {
+    "copyFiles": [
+      "agents/**/*.md",
+      "commands/**/*.md",
+      "hooks/**/*.ps1",
+      "generators/**/*.ps1",
+      "templates/**/*"
+    ],
+    "scripts": {
+      "postInstall": "scripts/angular-post-install.ps1",
+      "preUninstall": "scripts/angular-pre-uninstall.ps1"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "pluginInfo": {
+    "name": "business-operations",
+    "displayName": "Business Operations Toolkit",
+    "version": "1.0.0",
+    "description": "Marketing, sales, and business analysis tools for technical products",
+    "author": "Claudify Team",
+    "homepage": "https://github.com/claudify/plugins/business-operations",
+    "repository": "https://github.com/claudify/plugins/business-operations.git",
+    "tags": ["business", "marketing", "sales", "analysis", "strategy"]
+  },
+  "compatibility": {
+    "claudifyMinVersion": "4.0.0",
+    "claudifyMaxVersion": "5.0.0",
+    "frameworkVersions": {}
+  },
+  "dependencies": {
+    "required": ["core"],
+    "optional": [],
+    "conflicts": []
+  },
+  "detection": {
+    "patterns": {
+      "files": [],
+      "content": [],
+      "directories": []
+    },
+    "priority": 50,
+    "autoSelect": false
+  },
+  "components": {
+    "agents": [
+      {
+        "name": "marketing-strategist",
+        "file": "agents/marketing-strategist.md",
+        "description": "B2B SaaS marketing strategist with technical expertise",
+        "tags": ["marketing", "strategy", "b2b", "saas"],
+        "tools": ["Read", "Write", "WebSearch", "WebFetch", "TodoWrite"],
+        "extends": null
+      },
+      {
+        "name": "sales-genius",
+        "file": "agents/sales-genius.md",
+        "description": "Enterprise sales expert for technical products",
+        "tags": ["sales", "enterprise", "b2b"],
+        "tools": ["Read", "Write", "WebSearch", "TodoWrite"],
+        "extends": null
+      }
+    ],
+    "commands": [
+      {
+        "name": "generate-marketing-material",
+        "file": "commands/generate-marketing-material.md",
+        "description": "Create marketing content for technical products",
+        "tags": ["marketing", "content", "generation"],
+        "category": "business"
+      },
+      {
+        "name": "analyze-features",
+        "file": "commands/analyze-features.md",
+        "description": "Analyze product features for business value",
+        "tags": ["analysis", "features", "business-value"],
+        "category": "business"
+      },
+      {
+        "name": "create-sales-pitch",
+        "file": "commands/create-sales-pitch.md",
+        "description": "Generate sales pitches for technical products",
+        "tags": ["sales", "pitch", "enterprise"],
+        "category": "business"
+      },
+      {
+        "name": "competitive-analysis",
+        "file": "commands/competitive-analysis.md",
+        "description": "Analyze competitive landscape",
+        "tags": ["analysis", "competitive", "market"],
+        "category": "business"
+      }
+    ],
+    "hooks": [],
+    "templates": [
+      {
+        "name": "product-brief",
+        "file": "templates/product-brief.template",
+        "description": "Product brief template",
+        "tags": ["product", "documentation", "marketing"]
+      },
+      {
+        "name": "case-study",
+        "file": "templates/case-study.template",
+        "description": "Customer case study template",
+        "tags": ["case-study", "customer", "marketing"]
+      },
+      {
+        "name": "sales-deck",
+        "file": "templates/sales-deck.template",
+        "description": "Sales presentation deck template",
+        "tags": ["sales", "presentation", "deck"]
+      }
+    ]
+  },
+  "installation": {
+    "copyFiles": [
+      "agents/**/*.md",
+      "commands/**/*.md",
+      "templates/**/*"
+    ],
+    "scripts": {
+      "postInstall": "scripts/business-post-install.ps1",
+      "preUninstall": "scripts/business-pre-uninstall.ps1"
+    }
+  }
+}

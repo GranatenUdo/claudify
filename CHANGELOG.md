@@ -5,6 +5,86 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2025-08-06
+
+### 🎉 Major Release: Multi-Framework Plugin Architecture
+
+This release transforms Claudify from a single-framework toolkit into a flexible, extensible multi-framework platform supporting any technology stack through a plugin-based architecture.
+
+### Added
+- **Plugin-Based Architecture**: Complete reorganization into framework plugins
+  - Core technology-agnostic components in `core/` directory
+  - Framework-specific plugins in `frameworks/` directory
+  - Community/custom plugins support in `plugins/` directory
+- **Multi-Framework Support**: Extensible system for unlimited frameworks
+  - Angular plugin (frontend-angular)
+  - .NET/MSSQL plugin (backend-dotnet-mssql)
+  - Business Operations plugin (marketing/sales tools)
+  - Ready for React, Vue, Node.js, Python, and more
+- **Enhanced Framework Detection**: 
+  - Multi-framework detection in single projects
+  - Monorepo support (Lerna, Nx, Rush, Yarn/Pnpm workspaces)
+  - Confidence scoring for detection accuracy
+  - Subdirectory scanning for nested frameworks
+- **Plugin Management System**:
+  - Plugin manifests with version compatibility
+  - Dependency resolution between plugins
+  - Framework loader script (`src/modules/plugin-management/framework-loader.ps1`)
+  - Multi-framework detector (`scripts/analysis/multi-framework-detector.ps1`)
+- **New Commands**:
+  - `/framework-management` - Manage framework plugins
+  - Auto-detection and installation of frameworks
+  - Plugin listing, installation, and updates
+- **Backward Compatibility**:
+  - Complete compatibility mapping for v3 installations
+  - Command aliases for renamed components
+  - Smooth migration path with automated script
+
+### Changed
+- **Directory Structure**: Reorganized from flat to hierarchical
+  - 31 components moved to `core/` (technology-agnostic)
+  - 11 Angular components to `frameworks/frontend-angular/`
+  - 8 .NET components to `frameworks/backend-dotnet-mssql/`
+  - 4 Business components to `frameworks/business-operations/`
+- **Component Naming**: Framework-specific clarity
+  - `frontend-developer` → `angular-developer`
+  - `add-frontend-feature` → `add-angular-feature`
+  - `add-backend-feature` → `add-dotnet-feature`
+- **Components Manifest**: Updated to v4.0.0 with plugin support
+  - New architecture field: "multi-framework"
+  - Plugin configuration section
+  - Framework mappings
+  - Enhanced tech stack detection
+
+### Migration
+- **Automated Migration**: `.\scripts\migration\migrate-to-multi-framework.ps1`
+- **Documentation**: 
+  - `MIGRATION-TO-MULTI-FRAMEWORK.md` - Complete migration plan
+  - `MULTI-FRAMEWORK-IMPLEMENTATION-GUIDE.md` - Implementation guide
+  - `MIGRATION-SUMMARY-REPORT.md` - Migration results
+- **Backup**: Original v3 structure backed up automatically
+
+### Framework Plugins
+1. **frontend-angular** (11 components)
+   - Angular-specific agents and commands
+   - Support for Angular 16+ with Signals
+   - TypeScript and RxJS patterns
+2. **backend-dotnet-mssql** (8 components)
+   - .NET 6+ and Entity Framework support
+   - DDD and CQRS patterns
+   - Multi-tenant validation hooks
+3. **business-operations** (4 components)
+   - Marketing and sales tools
+   - Business analysis commands
+
+### Benefits
+- **Unlimited Framework Support**: Add any framework via plugins
+- **Clean Architecture**: Clear separation of concerns
+- **Better Performance**: Load only needed frameworks
+- **Enterprise Ready**: Support multiple projects with different stacks
+- **Future-Proof**: Add new frameworks without core changes
+- **Community Extensible**: Third-party plugin support
+
 ## [Unreleased]
 
 ### Security

@@ -1,0 +1,190 @@
+{
+  "version": "1.0.0",
+  "description": "Backward compatibility mapping for Claudify v3 to v4 migration",
+  "created": "2025-08-06",
+  "mappings": {
+    "agents": {
+      "frontend-developer": {
+        "newPath": "frameworks/frontend-angular/agents/angular-developer.md",
+        "deprecated": false,
+        "message": "Renamed to angular-developer for framework clarity"
+      },
+      "ux-reviewer": {
+        "newPath": "frameworks/frontend-angular/agents/angular-ux-reviewer.md",
+        "deprecated": false,
+        "message": "Renamed to angular-ux-reviewer for framework clarity"
+      },
+      "visual-designer": {
+        "newPath": "frameworks/frontend-angular/agents/angular-visual-designer.md",
+        "deprecated": false,
+        "message": "Renamed to angular-visual-designer for framework clarity"
+      },
+      "visual-designer-marketing": {
+        "newPath": "frameworks/frontend-angular/agents/angular-visual-designer-marketing.md",
+        "deprecated": false,
+        "message": "Renamed to angular-visual-designer-marketing for framework clarity"
+      },
+      "code-reviewer": {
+        "newPath": "core/agents/code-reviewer.md",
+        "deprecated": false,
+        "message": "Moved to core as technology-agnostic component"
+      },
+      "security-reviewer": {
+        "newPath": "core/agents/security-reviewer.md",
+        "deprecated": false,
+        "message": "Moved to core as technology-agnostic component"
+      },
+      "tech-lead": {
+        "newPath": "core/agents/tech-lead.md",
+        "deprecated": false,
+        "message": "Moved to core as technology-agnostic component"
+      },
+      "marketing-strategist": {
+        "newPath": "frameworks/business-operations/agents/marketing-strategist.md",
+        "deprecated": false,
+        "message": "Moved to business-operations plugin"
+      },
+      "sales-genius": {
+        "newPath": "frameworks/business-operations/agents/sales-genius.md",
+        "deprecated": false,
+        "message": "Moved to business-operations plugin"
+      }
+    },
+    "commands": {
+      "add-frontend-feature": {
+        "newPath": "frameworks/frontend-angular/commands/add-angular-feature.md",
+        "deprecated": false,
+        "message": "Renamed to add-angular-feature for framework clarity"
+      },
+      "fix-frontend-bug": {
+        "newPath": "frameworks/frontend-angular/commands/fix-angular-bug.md",
+        "deprecated": false,
+        "message": "Renamed to fix-angular-bug for framework clarity"
+      },
+      "review-frontend-code": {
+        "newPath": "frameworks/frontend-angular/commands/review-angular-code.md",
+        "deprecated": false,
+        "message": "Renamed to review-angular-code for framework clarity"
+      },
+      "fix-frontend-build-and-tests": {
+        "newPath": "frameworks/frontend-angular/commands/fix-angular-build-and-tests.md",
+        "deprecated": false,
+        "message": "Renamed to fix-angular-build-and-tests for framework clarity"
+      },
+      "figma-implement-current-selection": {
+        "newPath": "frameworks/frontend-angular/commands/figma-to-angular.md",
+        "deprecated": false,
+        "message": "Renamed to figma-to-angular for clarity"
+      },
+      "update-frontend-feature": {
+        "newPath": "frameworks/frontend-angular/commands/update-angular-feature.md",
+        "deprecated": false,
+        "message": "Renamed to update-angular-feature for framework clarity"
+      },
+      "update-frontend-feature-no-backward-compatibility": {
+        "newPath": "frameworks/frontend-angular/commands/update-angular-feature-breaking.md",
+        "deprecated": false,
+        "message": "Renamed to update-angular-feature-breaking for clarity"
+      },
+      "add-backend-feature": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/add-dotnet-feature.md",
+        "deprecated": false,
+        "message": "Renamed to add-dotnet-feature for framework clarity"
+      },
+      "fix-backend-bug": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/fix-dotnet-bug.md",
+        "deprecated": false,
+        "message": "Renamed to fix-dotnet-bug for framework clarity"
+      },
+      "review-backend-code": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/review-dotnet-code.md",
+        "deprecated": false,
+        "message": "Renamed to review-dotnet-code for framework clarity"
+      },
+      "fix-backend-build-and-tests": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/fix-dotnet-build-and-tests.md",
+        "deprecated": false,
+        "message": "Renamed to fix-dotnet-build-and-tests for framework clarity"
+      },
+      "update-backend-feature": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/update-dotnet-feature.md",
+        "deprecated": false,
+        "message": "Renamed to update-dotnet-feature for framework clarity"
+      },
+      "update-backend-feature-no-backward-compatibility": {
+        "newPath": "frameworks/backend-dotnet-mssql/commands/update-dotnet-feature-breaking.md",
+        "deprecated": false,
+        "message": "Renamed to update-dotnet-feature-breaking for clarity"
+      },
+      "comprehensive-review": {
+        "newPath": "core/commands/essential/comprehensive-review.md",
+        "deprecated": false,
+        "message": "Moved to core/commands/essential as technology-agnostic component"
+      },
+      "do-extensive-research": {
+        "newPath": "core/commands/essential/do-extensive-research.md",
+        "deprecated": false,
+        "message": "Moved to core/commands/essential as technology-agnostic component"
+      },
+      "quick-research": {
+        "newPath": "core/commands/essential/quick-research.md",
+        "deprecated": false,
+        "message": "Moved to core/commands/essential as technology-agnostic component"
+      },
+      "generate-marketing-material": {
+        "newPath": "frameworks/business-operations/commands/generate-marketing-material.md",
+        "deprecated": false,
+        "message": "Moved to business-operations plugin"
+      },
+      "analyze-features": {
+        "newPath": "frameworks/business-operations/commands/analyze-features.md",
+        "deprecated": false,
+        "message": "Moved to business-operations plugin"
+      }
+    },
+    "hooks": {
+      "check-tenant-scoping": {
+        "newPath": "frameworks/backend-dotnet-mssql/hooks/check-tenant-scoping.ps1",
+        "deprecated": false,
+        "message": "Moved to .NET plugin as framework-specific hook"
+      },
+      "validate-tenant-scoping": {
+        "newPath": "frameworks/backend-dotnet-mssql/hooks/validate-tenant-scoping.ps1",
+        "deprecated": false,
+        "message": "Moved to .NET plugin as framework-specific hook"
+      },
+      "add-context": {
+        "newPath": "core/hooks/add-context.ps1",
+        "deprecated": false,
+        "message": "Moved to core as technology-agnostic hook"
+      },
+      "pre-commit-quality-check": {
+        "newPath": "core/hooks/pre-commit-quality-check.ps1",
+        "deprecated": false,
+        "message": "Moved to core as technology-agnostic hook"
+      }
+    }
+  },
+  "aliasCommands": [
+    {
+      "old": "/add-frontend-feature",
+      "new": "/add-angular-feature",
+      "autoRedirect": true
+    },
+    {
+      "old": "/fix-frontend-bug",
+      "new": "/fix-angular-bug",
+      "autoRedirect": true
+    },
+    {
+      "old": "/add-backend-feature",
+      "new": "/add-dotnet-feature",
+      "autoRedirect": true
+    },
+    {
+      "old": "/fix-backend-bug",
+      "new": "/fix-dotnet-bug",
+      "autoRedirect": true
+    }
+  ]
+}

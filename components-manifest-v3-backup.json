@@ -1,0 +1,504 @@
+{
+  "claudifyVersion": "3.0.0",
+  "version": "3.0.0",
+  "releaseDate": "2025-08-05",
+  "lastUpdated": "2025-08-05",
+  "minimumClaudeCodeVersion": "1.0.0",
+  "components": {
+    "agents": [
+      {
+        "name": "code-reviewer",
+        "file": "code-reviewer.md",
+        "description": "Expert code reviewer for quality and standards",
+        "tags": ["essential", "quality", "all-projects"],
+        "requiredFor": ["all"]
+      },
+      {
+        "name": "security-reviewer",
+        "file": "security-reviewer.md",
+        "description": "Security expert for vulnerability detection",
+        "tags": ["security", "multi-tenant", "production"],
+        "requiredFor": ["multi-tenant", "production"]
+      },
+      {
+        "name": "tech-lead",
+        "file": "tech-lead.md",
+        "description": "Strategic technical architect",
+        "tags": ["architecture", "scalability", "leadership"],
+        "requiredFor": ["complex-architecture", "ddd"]
+      },
+      {
+        "name": "frontend-developer",
+        "file": "frontend-developer.md",
+        "description": "Frontend expert with 15+ years experience",
+        "tags": ["frontend", "ui", "angular", "react"],
+        "requiredFor": ["frontend"]
+      },
+      {
+        "name": "ux-reviewer",
+        "file": "ux-reviewer.md",
+        "description": "UX designer and accessibility specialist",
+        "tags": ["frontend", "accessibility", "design"],
+        "requiredFor": ["frontend", "user-facing"]
+      },
+      {
+        "name": "test-quality-analyst",
+        "file": "test-quality-analyst.md",
+        "description": "Testing strategy and quality expert",
+        "tags": ["testing", "quality", "coverage"],
+        "requiredFor": ["test-heavy"]
+      },
+      {
+        "name": "technical-debt-analyst",
+        "file": "technical-debt-analyst.md",
+        "description": "Technical debt identification specialist",
+        "tags": ["maintenance", "refactoring", "debt"],
+        "requiredFor": ["legacy", "refactoring"]
+      },
+      {
+        "name": "infrastructure-architect",
+        "file": "infrastructure-architect.md",
+        "description": "Cloud and DevOps expert",
+        "tags": ["cloud", "kubernetes", "azure", "infrastructure"],
+        "requiredFor": ["cloud", "microservices"]
+      }
+    ],
+    "commands": {
+      "essential": [
+        {
+          "name": "comprehensive-review",
+          "file": "comprehensive-review.md",
+          "description": "Multi-agent comprehensive code review",
+          "tags": ["quality", "review", "essential"]
+        },
+        {
+          "name": "do-extensive-research",
+          "file": "do-extensive-research.md",
+          "description": "Deep technical research and analysis",
+          "tags": ["research", "analysis", "essential"]
+        },
+        {
+          "name": "quick-research",
+          "file": "quick-research.md",
+          "description": "Quick focused research",
+          "tags": ["research", "quick", "essential"]
+        },
+        {
+          "name": "create-command-and-or-agent",
+          "file": "create-command-and-or-agent.md",
+          "description": "Create custom commands or agents",
+          "tags": ["meta", "customization", "essential"]
+        }
+      ],
+      "backend": [
+        {
+          "name": "add-backend-feature",
+          "file": "add-backend-feature.md",
+          "description": "Create backend features with DDD",
+          "tags": ["backend", "development", "ddd"]
+        },
+        {
+          "name": "fix-backend-bug",
+          "file": "fix-backend-bug.md",
+          "description": "Debug and fix backend issues",
+          "tags": ["backend", "debugging", "fixes"]
+        },
+        {
+          "name": "review-backend-code",
+          "file": "review-backend-code.md",
+          "description": "Backend code quality review",
+          "tags": ["backend", "review", "quality"]
+        },
+        {
+          "name": "fix-backend-build-and-tests",
+          "file": "fix-backend-build-and-tests.md",
+          "description": "Fix backend build and test failures",
+          "tags": ["backend", "ci-cd", "testing"]
+        },
+        {
+          "name": "update-backend-feature",
+          "file": "update-backend-feature.md",
+          "description": "Update backend feature with comprehensive testing and backward compatibility",
+          "tags": ["backend", "development", "update"]
+        },
+        {
+          "name": "update-backend-feature-no-backward-compatibility",
+          "file": "update-backend-feature-no-backward-compatibility.md",
+          "description": "Replace backend feature entirely with modern patterns, removing all legacy code",
+          "tags": ["backend", "development", "breaking-change"]
+        }
+      ],
+      "frontend": [
+        {
+          "name": "add-frontend-feature",
+          "file": "add-frontend-feature.md",
+          "description": "Create UI features with excellence",
+          "tags": ["frontend", "ui", "development"]
+        },
+        {
+          "name": "fix-frontend-bug",
+          "file": "fix-frontend-bug.md",
+          "description": "Debug UI issues with Frontend Developer",
+          "tags": ["frontend", "debugging", "ui"]
+        },
+        {
+          "name": "review-frontend-code",
+          "file": "review-frontend-code.md",
+          "description": "Frontend code review with expertise",
+          "tags": ["frontend", "review", "quality"]
+        },
+        {
+          "name": "fix-frontend-build-and-tests",
+          "file": "fix-frontend-build-and-tests.md",
+          "description": "Fix frontend build with verification",
+          "tags": ["frontend", "ci-cd", "testing"]
+        },
+        {
+          "name": "figma-implement-current-selection",
+          "file": "figma-implement-current-selection.md",
+          "description": "Transform Figma to production code",
+          "tags": ["frontend", "design", "figma"]
+        },
+        {
+          "name": "update-frontend-feature",
+          "file": "update-frontend-feature.md",
+          "description": "Update frontend feature with modern UI patterns, accessibility, and comprehensive testing",
+          "tags": ["frontend", "development", "update"]
+        },
+        {
+          "name": "update-frontend-feature-no-backward-compatibility",
+          "file": "update-frontend-feature-no-backward-compatibility.md",
+          "description": "Replace frontend feature entirely with modern UI framework patterns, removing all legacy code",
+          "tags": ["frontend", "development", "breaking-change"]
+        }
+      ],
+      "quality": [
+        {
+          "name": "analyze-technical-debt",
+          "file": "analyze-technical-debt.md",
+          "description": "Comprehensive technical debt analysis",
+          "tags": ["quality", "debt", "maintenance"]
+        },
+        {
+          "name": "analyze-test-quality",
+          "file": "analyze-test-quality.md",
+          "description": "Test coverage and quality analysis",
+          "tags": ["testing", "quality", "coverage"]
+        },
+        {
+          "name": "refactor-code",
+          "file": "refactor-code.md",
+          "description": "Intelligent code refactoring",
+          "tags": ["refactoring", "quality", "maintenance"]
+        },
+        {
+          "name": "optimize-performance",
+          "file": "optimize-performance.md",
+          "description": "Performance optimization analysis",
+          "tags": ["performance", "optimization", "quality"]
+        }
+      ],
+      "documentation": [
+        {
+          "name": "generate-documentation",
+          "file": "generate-documentation.md",
+          "description": "Generate technical documentation",
+          "tags": ["docs", "automation", "quality"]
+        },
+        {
+          "name": "update-changelog",
+          "file": "update-changelog.md",
+          "description": "Maintain changelog with standards",
+          "tags": ["docs", "changelog", "maintenance"]
+        }
+      ],
+      "specialized": [
+        {
+          "name": "analyze-legacy-system",
+          "file": "analyze-legacy-system.md",
+          "description": "Legacy system analysis and migration",
+          "tags": ["legacy", "migration", "analysis"]
+        },
+        {
+          "name": "analyze-domain-use-cases",
+          "file": "analyze-domain-use-cases.md",
+          "description": "Domain-driven design analysis",
+          "tags": ["ddd", "domain", "architecture"]
+        },
+        {
+          "name": "add-integration",
+          "file": "add-integration.md",
+          "description": "Add third-party integrations",
+          "tags": ["integration", "api", "development"]
+        },
+        {
+          "name": "update-comprehensive-feature",
+          "file": "update-comprehensive-feature.md",
+          "description": "Update existing feature across entire stack with comprehensive analysis, testing, and validation",
+          "tags": ["development", "update", "comprehensive"]
+        },
+        {
+          "name": "update-comprehensive-feature-no-backward-compatibility",
+          "file": "update-comprehensive-feature-no-backward-compatibility.md",
+          "description": "Replace existing feature entirely with no backward compatibility, removing legacy code and implementing modern patterns",
+          "tags": ["development", "breaking-change", "comprehensive"]
+        }
+      ]
+    },
+    "agentTools": [
+      {
+        "name": "security-scanner",
+        "path": "agent-tools/security-reviewer/security-scan.ps1",
+        "agent": "security-reviewer",
+        "description": "Comprehensive security vulnerability scanner",
+        "tags": ["security", "scanning", "validation"]
+      },
+      {
+        "name": "dependency-analyzer",
+        "path": "agent-tools/security-reviewer/dependency-analyzer.ps1",
+        "agent": "security-reviewer",
+        "description": "Analyze dependencies for vulnerabilities",
+        "tags": ["security", "dependencies", "supply-chain"]
+      },
+      {
+        "name": "complexity-analyzer",
+        "path": "agent-tools/technical-debt-analyst/complexity-analyzer.ps1",
+        "agent": "technical-debt-analyst",
+        "description": "Analyze code complexity and technical debt",
+        "tags": ["quality", "complexity", "debt"]
+      },
+      {
+        "name": "debt-tracker",
+        "path": "agent-tools/technical-debt-analyst/debt-tracker.ps1",
+        "agent": "technical-debt-analyst",
+        "description": "Track and manage technical debt",
+        "tags": ["debt", "tracking", "management"]
+      },
+      {
+        "name": "deployment-analyzer",
+        "path": "agent-tools/infrastructure-architect/deployment-analyzer.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Analyze deployment configurations",
+        "tags": ["infrastructure", "deployment", "kubernetes"]
+      },
+      {
+        "name": "cloud-cost-optimizer",
+        "path": "agent-tools/infrastructure-architect/cloud-cost-optimizer.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Optimize cloud resource costs",
+        "tags": ["cloud", "cost", "optimization"]
+      },
+      {
+        "name": "performance-baseline",
+        "path": "agent-tools/infrastructure-architect/performance-baseline.ps1",
+        "agent": "infrastructure-architect",
+        "description": "Generate performance baselines",
+        "tags": ["performance", "monitoring", "baseline"]
+      }
+    ],
+    "generators": [
+      {
+        "name": "command-generator",
+        "file": "command-generator.ps1",
+        "description": "Generate new custom commands",
+        "tags": ["meta", "automation"]
+      },
+      {
+        "name": "agent-generator",
+        "file": "agent-generator.ps1",
+        "description": "Generate new specialized agents",
+        "tags": ["meta", "automation"]
+      },
+      {
+        "name": "hook-generator",
+        "file": "hook-generator.ps1",
+        "description": "Generate validation hooks",
+        "tags": ["automation", "validation"]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check-tenant-scoping",
+        "file": "check-tenant-scoping.ps1",
+        "description": "Validate multi-tenant isolation",
+        "tags": ["multi-tenant", "security", "validation"],
+        "requiredFor": ["multi-tenant"]
+      },
+      {
+        "name": "after-component-creation",
+        "file": "after-component-creation.ps1",
+        "description": "Post-creation automation",
+        "tags": ["automation", "workflow"]
+      },
+      {
+        "name": "validate-tenant-scoping",
+        "file": "validate-tenant-scoping.ps1",
+        "description": "Enhanced multi-tenant validation with auto-detection",
+        "tags": ["multi-tenant", "security", "validation", "parameterized"],
+        "requiredFor": ["multi-tenant"]
+      },
+      {
+        "name": "add-context",
+        "file": "add-context.ps1",
+        "description": "Enrich prompts with project context",
+        "tags": ["context", "enhancement", "automation"],
+        "requiredFor": ["all"]
+      },
+      {
+        "name": "pre-commit-quality-check",
+        "file": "pre-commit-quality-check.ps1",
+        "description": "Quality checks before commits",
+        "tags": ["quality", "validation", "git"],
+        "requiredFor": ["all"]
+      },
+      {
+        "name": "install-hooks",
+        "file": "install-hooks.ps1",
+        "description": "Hook installation wizard",
+        "tags": ["setup", "automation"]
+      },
+      {
+        "name": "check-changelog-updates",
+        "file": "check-changelog-updates.ps1",
+        "description": "Remind users to update changelog after significant changes",
+        "tags": ["changelog", "reminder", "automation"],
+        "requiredFor": ["all"]
+      }
+    ],
+    "validation": [
+      {
+        "name": "architecture-validator",
+        "file": "validation/architecture-validator.ps1",
+        "description": "Validate architectural compliance",
+        "tags": ["architecture", "validation", "compliance"]
+      },
+      {
+        "name": "code-quality-validator",
+        "file": "validation/code-quality-validator.ps1",
+        "description": "Comprehensive code quality checks",
+        "tags": ["quality", "validation", "metrics"]
+      },
+      {
+        "name": "test-coverage-analyzer",
+        "file": "validation/test-coverage-analyzer.ps1",
+        "description": "Analyze test coverage and quality",
+        "tags": ["testing", "coverage", "quality"]
+      }
+    ],
+    "templates": {
+      "documentation": [
+        {
+          "name": "api-documentation",
+          "file": "templates/documentation/api-documentation.md.template",
+          "description": "Comprehensive API reference template",
+          "tags": ["api", "documentation", "template"]
+        },
+        {
+          "name": "architecture-guide",
+          "file": "templates/documentation/architecture-guide.md.template",
+          "description": "System architecture documentation template",
+          "tags": ["architecture", "documentation", "template"]
+        },
+        {
+          "name": "development-guide",
+          "file": "templates/documentation/development-guide.md.template",
+          "description": "Developer onboarding and workflow template",
+          "tags": ["development", "onboarding", "template"]
+        },
+        {
+          "name": "troubleshooting-guide",
+          "file": "templates/documentation/troubleshooting-guide.md.template",
+          "description": "Common issues and solutions template",
+          "tags": ["troubleshooting", "support", "template"]
+        },
+        {
+          "name": "quick-reference",
+          "file": "templates/documentation/quick-reference.md.template",
+          "description": "Quick reference cheat sheet template",
+          "tags": ["reference", "quickstart", "template"]
+        },
+        {
+          "name": "documentation-generator",
+          "file": "templates/documentation/documentation-generator.ps1",
+          "description": "Intelligent documentation generation system",
+          "tags": ["generator", "automation", "documentation"]
+        },
+        {
+          "name": "project-analyzer",
+          "file": "scripts/analysis/project-analyzer.ps1",
+          "description": "Analyze project for documentation data",
+          "tags": ["analysis", "automation"]
+        }
+      ],
+      "infrastructure": [
+        {
+          "name": "kubernetes-deployment",
+          "file": "templates/infrastructure/kubernetes-deployment.yaml.template",
+          "description": "Parameterized Kubernetes deployment template",
+          "tags": ["kubernetes", "deployment", "infrastructure"]
+        }
+      ]
+    }
+  },
+  "selectionRules": {
+    "minimal": {
+      "description": "Core essentials only",
+      "includes": [
+        "agents:code-reviewer",
+        "commands:essential:*",
+        "commands:documentation:update-changelog",
+        "hooks:add-context",
+        "generators:command-generator"
+      ]
+    },
+    "standard": {
+      "description": "Recommended based on tech stack",
+      "includes": [
+        "minimal:*",
+        "agents:security-reviewer",
+        "agents:infrastructure-architect",
+        "agents:[frontend-developer if frontend]",
+        "commands:backend:* if backend",
+        "commands:frontend:* if frontend",
+        "commands:quality:analyze-technical-debt",
+        "commands:documentation:generate-documentation",
+        "generators:*",
+        "hooks:pre-commit-quality-check",
+        "hooks:[validate-tenant-scoping if multi-tenant]",
+        "validation:code-quality-validator",
+        "agentTools:[security-scanner if security-reviewer]",
+        "agentTools:[deployment-analyzer if infrastructure-architect]"
+      ]
+    },
+    "comprehensive": {
+      "description": "Everything available",
+      "includes": ["*"]
+    }
+  },
+  "techStackMappings": {
+    "backend": {
+      "dotnet": {
+        "patterns": ["*.csproj", "*.sln"],
+        "recommendedAgents": ["code-reviewer", "security-reviewer", "tech-lead"],
+        "recommendedCommands": ["backend:*", "quality:*"]
+      },
+      "nodejs": {
+        "patterns": ["package.json", "node_modules"],
+        "recommendedAgents": ["code-reviewer", "security-reviewer"],
+        "recommendedCommands": ["backend:*", "quality:*"]
+      }
+    },
+    "frontend": {
+      "angular": {
+        "patterns": ["angular.json", "@angular/core"],
+        "recommendedAgents": ["frontend-developer", "ux-reviewer"],
+        "recommendedCommands": ["frontend:*", "quality:*"]
+      },
+      "react": {
+        "patterns": ["react", "*.tsx", "*.jsx"],
+        "recommendedAgents": ["frontend-developer", "ux-reviewer"],
+        "recommendedCommands": ["frontend:*", "quality:*"]
+      }
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "pluginInfo": {
+    "name": "backend-dotnet-mssql",
+    "displayName": ".NET Backend with SQL Server",
+    "version": "1.0.0",
+    "description": "Enterprise .NET development toolkit with Entity Framework, DDD patterns, CQRS, and SQL Server optimization",
+    "author": "Claudify Team",
+    "homepage": "https://github.com/claudify/plugins/backend-dotnet-mssql",
+    "repository": "https://github.com/claudify/plugins/backend-dotnet-mssql.git",
+    "tags": ["backend", "dotnet", "csharp", "mssql", "entity-framework", "ddd", "cqrs", "multi-tenant"]
+  },
+  "compatibility": {
+    "claudifyMinVersion": "4.0.0",
+    "claudifyMaxVersion": "5.0.0",
+    "frameworkVersions": {
+      "dotnet": ">=6.0",
+      "entity-framework": ">=7.0",
+      "mssql": ">=2019"
+    }
+  },
+  "dependencies": {
+    "required": ["core"],
+    "optional": ["testing-xunit", "api-swagger", "auth-jwt"],
+    "conflicts": ["backend-nodejs", "backend-python", "backend-java"]
+  },
+  "detection": {
+    "patterns": {
+      "files": ["*.csproj", "*.sln", "appsettings.json", "Program.cs"],
+      "content": ["Microsoft.EntityFrameworkCore", "Microsoft.AspNetCore", "Microsoft.Data.SqlClient"],
+      "directories": ["Controllers", "Models", "Services", "Repositories", "Domain"]
+    },
+    "priority": 85,
+    "autoSelect": true
+  },
+  "components": {
+    "agents": [
+      {
+        "name": "dotnet-architect",
+        "file": "agents/dotnet-architect.md",
+        "description": ".NET architect with DDD, CQRS, and clean architecture expertise",
+        "tags": ["dotnet", "architecture", "ddd", "cqrs"],
+        "tools": ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "LS", "Bash"],
+        "extends": "tech-lead"
+      },
+      {
+        "name": "ef-core-specialist",
+        "file": "agents/ef-core-specialist.md",
+        "description": "Entity Framework Core and SQL Server optimization expert",
+        "tags": ["dotnet", "ef-core", "mssql", "performance"],
+        "tools": ["Read", "Edit", "Grep", "Bash"],
+        "extends": "database-specialist"
+      }
+    ],
+    "commands": [
+      {
+        "name": "add-dotnet-feature",
+        "file": "commands/add-dotnet-feature.md",
+        "description": "Create .NET features with DDD patterns",
+        "tags": ["dotnet", "feature", "ddd", "development"],
+        "category": "backend"
+      },
+      {
+        "name": "fix-dotnet-bug",
+        "file": "commands/fix-dotnet-bug.md",
+        "description": "Debug and fix .NET-specific issues",
+        "tags": ["dotnet", "debugging", "fixes"],
+        "category": "backend"
+      },
+      {
+        "name": "review-dotnet-code",
+        "file": "commands/review-dotnet-code.md",
+        "description": ".NET-specific code review with C# best practices",
+        "tags": ["dotnet", "review", "quality", "csharp"],
+        "category": "backend"
+      },
+      {
+        "name": "fix-dotnet-build-and-tests",
+        "file": "commands/fix-dotnet-build-and-tests.md",
+        "description": "Fix .NET build and test issues",
+        "tags": ["dotnet", "build", "testing", "ci-cd"],
+        "category": "backend"
+      },
+      {
+        "name": "update-dotnet-feature",
+        "file": "commands/update-dotnet-feature.md",
+        "description": "Update .NET features with backward compatibility",
+        "tags": ["dotnet", "update", "feature"],
+        "category": "backend"
+      },
+      {
+        "name": "update-dotnet-feature-breaking",
+        "file": "commands/update-dotnet-feature-breaking.md",
+        "description": "Replace .NET feature without backward compatibility",
+        "tags": ["dotnet", "update", "breaking-change"],
+        "category": "backend"
+      },
+      {
+        "name": "add-entity-framework-model",
+        "file": "commands/add-entity-framework-model.md",
+        "description": "Create Entity Framework models with configurations",
+        "tags": ["dotnet", "ef-core", "database", "model"],
+        "category": "backend"
+      },
+      {
+        "name": "implement-ddd-pattern",
+        "file": "commands/implement-ddd-pattern.md",
+        "description": "Implement Domain-Driven Design patterns",
+        "tags": ["dotnet", "ddd", "architecture", "patterns"],
+        "category": "specialized"
+      },
+      {
+        "name": "implement-cqrs-pattern",
+        "file": "commands/implement-cqrs-pattern.md",
+        "description": "Implement CQRS with MediatR",
+        "tags": ["dotnet", "cqrs", "mediatr", "patterns"],
+        "category": "specialized"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check-tenant-scoping",
+        "file": "hooks/check-tenant-scoping.ps1",
+        "description": "Validate multi-tenant isolation",
+        "tags": ["multi-tenant", "security", "validation"],
+        "triggers": ["pre-commit"],
+        "requiredFor": ["multi-tenant"]
+      },
+      {
+        "name": "validate-tenant-scoping",
+        "file": "hooks/validate-tenant-scoping.ps1",
+        "description": "Enhanced multi-tenant validation with auto-detection",
+        "tags": ["multi-tenant", "security", "validation", "parameterized"],
+        "triggers": ["pre-commit"],
+        "requiredFor": ["multi-tenant"]
+      },
+      {
+        "name": "dotnet-test-check",
+        "file": "hooks/dotnet-test-check.ps1",
+        "description": "Run .NET tests before commits",
+        "tags": ["dotnet", "testing", "quality"],
+        "triggers": ["pre-commit"]
+      }
+    ],
+    "agentTools": [
+      {
+        "name": "security-scanner",
+        "path": "agent-tools/security-scanner.ps1",
+        "agent": "security-reviewer",
+        "description": "Comprehensive .NET security vulnerability scanner",
+        "tags": ["security", "scanning", "validation"]
+      },
+      {
+        "name": "dependency-analyzer",
+        "path": "agent-tools/dependency-analyzer.ps1",
+        "agent": "security-reviewer",
+        "description": "Analyze NuGet dependencies for vulnerabilities",
+        "tags": ["security", "dependencies", "nuget"]
+      },
+      {
+        "name": "ef-core-analyzer",
+        "path": "agent-tools/ef-core-analyzer.ps1",
+        "agent": "ef-core-specialist",
+        "description": "Analyze Entity Framework queries and performance",
+        "tags": ["ef-core", "performance", "database"]
+      },
+      {
+        "name": "complexity-analyzer",
+        "path": "agent-tools/complexity-analyzer.ps1",
+        "agent": "technical-debt-analyst",
+        "description": "Analyze C# code complexity and technical debt",
+        "tags": ["quality", "complexity", "debt"]
+      }
+    ],
+    "templates": [
+      {
+        "name": "aggregate",
+        "file": "templates/entities/aggregate.template",
+        "description": "DDD Aggregate root template",
+        "tags": ["ddd", "aggregate", "domain"]
+      },
+      {
+        "name": "value-object",
+        "file": "templates/entities/value-object.template",
+        "description": "DDD Value object template",
+        "tags": ["ddd", "value-object", "domain"]
+      },
+      {
+        "name": "repository",
+        "file": "templates/repositories/repository.template",
+        "description": "Repository pattern implementation",
+        "tags": ["repository", "pattern", "data-access"]
+      },
+      {
+        "name": "service",
+        "file": "templates/services/service.template",
+        "description": "Domain service template",
+        "tags": ["service", "domain", "business-logic"]
+      },
+      {
+        "name": "controller",
+        "file": "templates/api/controller.template",
+        "description": "Web API controller template",
+        "tags": ["api", "controller", "rest"]
+      },
+      {
+        "name": "command-handler",
+        "file": "templates/patterns/command-handler.template",
+        "description": "CQRS command handler with MediatR",
+        "tags": ["cqrs", "command", "mediatr"]
+      },
+      {
+        "name": "query-handler",
+        "file": "templates/patterns/query-handler.template",
+        "description": "CQRS query handler with MediatR",
+        "tags": ["cqrs", "query", "mediatr"]
+      }
+    ]
+  },
+  "installation": {
+    "copyFiles": [
+      "agents/**/*.md",
+      "commands/**/*.md",
+      "hooks/**/*.ps1",
+      "agent-tools/**/*.ps1",
+      "templates/**/*"
+    ],
+    "scripts": {
+      "postInstall": "scripts/dotnet-post-install.ps1",
+      "preUninstall": "scripts/dotnet-pre-uninstall.ps1"
+    }
+  }
+}
