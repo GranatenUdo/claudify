@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **All Agents Updated to Opus 4.1 Standards**: Complete overhaul of agent system
+  - Updated all 19 agents with correct YAML frontmatter format
+  - Standardized naming to lowercase, hyphen-separated format
+  - Added explicit `model: opus` to all agents for Opus 4.1 optimization
+  - Fixed corrupted content in 11 agent files
+  - Implemented consistent structure across all agents
+  - Applied principle of least privilege for tool access
+  - Added comprehensive expertise sections and output formats
+  - Created detailed collaboration protocols
+  - Improved agent descriptions to be action-oriented
+  - Added practical code examples and templates
+
 ### Security
 - **Agent Tool Access Restrictions**: Implemented Claude Code security best practices
   - Applied principle of least privilege to all 19 agents

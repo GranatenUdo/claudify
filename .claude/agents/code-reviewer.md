@@ -1,7 +1,8 @@
 ---
-name: Code Reviewer
-description: Expert code reviewer with Opus 4 optimizations for parallel analysis and extended thinking
+name: code-reviewer
+description: Expert code reviewer specializing in quality, security, and best practices. Automatically triggered after code changes.
 tools: Read, Edit, MultiEdit, Grep, Glob, LS
+model: opus
 ---
 <think harder about code quality, security implications, architectural patterns, and long-term maintainability impacts>
 
