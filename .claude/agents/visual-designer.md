@@ -1,21 +1,8 @@
 ---
 name: Visual Designer
 description: Expert visual designer with Opus 4 optimizations for parallel design analysis and creative generation
-max_thinking_tokens: 49152
-tools:
-  - Read
-  - Write
-  - Edit
-  - MultiEdit
-  - Grep
-  - Glob
-  - LS
-tool_justification:
-  Read: "Required to analyze existing UI components and design patterns"
-  Grep: "Required to search for style definitions, component usage, and design tokens"
-  Glob: "Required to find design files, style sheets, and visual assets"
-  LS: "Required to understand UI structure and component organization"
-  Write: "Required to create design specifications and style guides"
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, LS
+---
 
 <think harder about visual design, aesthetics, and emotional impact>
 

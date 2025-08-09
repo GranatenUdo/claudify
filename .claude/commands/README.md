@@ -304,148 +304,41 @@ Key principles:
 - Tests verify domain logic correctness
 - When uncertain about architecture, seek validation
 
-## Figma MCP Integration Commands
+## Command Configuration
 
-### `/figma-generate-code`
+All commands use the official Claude Code YAML frontmatter format:
+- `description`: Brief description of the command
+- `allowed-tools`: List of tools the command can use
+- `argument-hint`: Expected arguments for the command
+- `model`: Optional model specification (opus/sonnet/haiku)
 
-Transform Figma designs into production-ready code using Opus 4's deep reasoning for framework-specific optimizations.
+Commands leverage extended thinking via `MAX_THINKING_TOKENS` configured in `.claude/settings.json` at the project level.
 
-**Usage:**
-```
-/figma-generate-code login form in Vue 3 with Vuetify
-```
+## Creating New Commands
 
-**What it does:**
-- Generates framework-specific code (React, Angular, Vue)
-- Automatic accessibility enhancements (WCAG AA/AAA)
-- Performance optimizations (code splitting, memoization)
-- Component architecture recommendations
-- Comprehensive test generation
-- Full documentation with usage examples
-
-### `/figma-extract-tokens`
-
-Extract and transform Figma design tokens into framework-specific theme systems using Opus 4's deep analysis.
-
-**Usage:**
-```
-/figma-extract-tokens CSS custom properties with dark mode
+Use the command generator to create new commands:
+```bash
+/create-command-and-or-agent
 ```
 
-**What it does:**
-- Hierarchical token organization (primitives → semantic → component)
-- Multi-platform transformation (CSS, Material, Tailwind)
-- Automatic dark mode generation
-- WCAG compliance validation
-- Token documentation generator
-- Migration strategy planning
-
-### `/figma-map-components`
-
-Map Figma components to codebase implementations using Opus 4's pattern recognition for consistent design-code alignment.
-
-**Usage:**
-```
-/figma-map-components verify Button component consistency
+Or use the generator scripts directly:
+```powershell
+.\.claude\generators\command-generator.ps1
 ```
 
-**What it does:**
-- Automated component discovery
-- Variant-to-prop mapping
-- Visual regression testing
-- Drift detection and sync recommendations
-- Code Connect configuration
-- Component catalog generation
+## How Commands Work
 
-### `/figma-capture-design`
+Commands are markdown files with YAML frontmatter that guide Claude through structured workflows. They:
+- **Provide systematic approaches** to common development tasks
+- **Include prompts and instructions** that Claude follows
+- **Suggest tool usage patterns** for efficient execution
+- **Reference documentation** (CLAUDE.md and FEATURES.md) for context
 
-Capture high-fidelity design screenshots from Figma for documentation, handoff, or visual reference using Opus 4's visual analysis.
+Commands don't automatically enforce anything - they are templates that guide Claude's behavior. The actual enforcement of patterns depends on:
+1. What you write in CLAUDE.md (your project-specific rules)
+2. The prompts within each command file
+3. Claude's interpretation and execution
 
-**Usage:**
-```
-/figma-capture-design component documentation with annotations
-```
+## Configuration
 
-**What it does:**
-- Annotated design specifications
-- Responsive breakpoint captures
-- Developer handoff packages
-- Accessibility overlays
-- Visual QA validation
-- Asset organization and cataloging
-
-### `/figma-analyze-file`
-
-Analyze Figma file structure, components, and design system using Opus 4's deep architectural reasoning.
-
-**Usage:**
-```
-/figma-analyze-file abc123xyz component architecture
-```
-
-**What it does:**
-- Design system maturity assessment
-- Component health checks
-- Consistency audit
-- Performance analysis
-- Architectural recommendations
-- Improvement roadmap generation
-
-### `/figma-list-projects`
-
-List and analyze Figma projects and files using Opus 4's organizational intelligence for design system discovery.
-
-**Usage:**
-```
-/figma-list-projects project-123 design systems
-```
-
-**What it does:**
-- Intelligent file classification
-- Team collaboration analysis
-- Asset inventory creation
-- Usage analytics
-- Reorganization strategies
-- Design system extraction
-
-### `/figma-create-tokens`
-
-Create and manage design tokens in Figma using Opus 4's system design intelligence for scalable design systems.
-
-**Usage:**
-```
-/figma-create-tokens color palette for harvest app
-```
-
-**What it does:**
-- Multi-tier token architecture
-- Automatic scale generation
-- Platform-specific tokens
-- Dark mode support
-- Accessibility validation
-- Migration planning
-
-### `/figma-create-theme`
-
-Create and configure comprehensive themes in Figma using Opus 4's multi-dimensional design intelligence.
-
-**Usage:**
-```
-/figma-create-theme harvest season dark theme
-```
-
-**What it does:**
-- Multi-dimensional theming (color, density, motion)
-- Accessibility modes (high contrast, reduced motion)
-- Brand variations
-- Platform adaptations
-- Theme validation and testing
-- Automation and CI/CD integration
-
-All commands reference CLAUDE.md and FEATURES.md to maintain consistency with the production system's patterns and requirements.
-
-## Additional Resources
-
-- **Figma Commands Deep Dive**: See [FIGMA-COMMANDS.md](./FIGMA-COMMANDS.md) for comprehensive documentation on Figma MCP integration
-- **Project Instructions**: Refer to [CLAUDE.md](../../CLAUDE.md) for project-specific patterns and requirements
-- **Feature Documentation**: Check [FEATURES.md](../../FEATURES.md) for implemented features and their details
+Extended thinking is configured via `MAX_THINKING_TOKENS` in `.claude/settings.json` at the project level, not in individual commands.

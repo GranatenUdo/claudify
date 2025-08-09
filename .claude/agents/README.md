@@ -186,16 +186,9 @@ All agents understand the specific requirements of your domain and will adapt th
 ## Configuration
 
 Each agent is configured with:
-- `max_thinking_tokens: 65536` for deep analysis
-- Specific tools relevant to their expertise
+- Only official Claude Code YAML fields (name, description, tools)
+- Extended thinking via `MAX_THINKING_TOKENS` in `.claude/settings.json` (project-level)
+- Specific tools relevant to their expertise (comma-separated list)
 - System prompts incorporating domain knowledge
-- Understanding of project documentation
+- Understanding of project documentation (CLAUDE.md, FEATURES.md)
 
-## Future Agents
-
-Potential agents to add based on your needs:
-- **Performance Analyst**: Database optimization, caching strategies
-- **DevOps Engineer**: CI/CD, deployment, monitoring
-- **Data Scientist**: Analytics, predictions, ML integration
-- **Compliance Officer**: Industry-specific regulations
-- **Mobile Developer**: Mobile app development

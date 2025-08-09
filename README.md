@@ -4,9 +4,9 @@
 ![Released](https://img.shields.io/badge/released-2025--08--05-green)
 ![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
 
-**Intelligent Setup, Maximum Capability - Now with Opus 4 Optimized Agents**
+**Template Repository for Claude Code - Commands, Agents, and Tools**
 
-Claudify provides an intelligent, streamlined setup process for initializing Claude Code in any repository. Version 3.0.0 introduces comprehensive documentation automation, simplified Claude CLI integration, and complete Opus 4 optimization across all components for **75% faster analysis** through parallel processing and AI-powered solution generation.
+Claudify is a comprehensive template repository that provides production-ready commands, agents, and tools for Claude Code. It uses intelligent tech stack detection to install only the components relevant to your project. Version 3.0.0 features Opus 4 optimized agents, proper security restrictions, and official Claude Code YAML format compliance.
 
 ## ✨ What's New in 3.0.0
 
@@ -37,45 +37,59 @@ Claudify provides an intelligent, streamlined setup process for initializing Cla
 
 ## 🚀 Quick Start
 
-### Windows
+### Step 1: Run Setup Script
+
+#### Windows
 ```powershell
-# From claudify directory:
+# From the claudify directory you downloaded/cloned:
 .\setup.ps1 -TargetRepository "C:\path\to\your\repo"
 ```
 
-### Linux/macOS  
+#### Linux/macOS  
 ```bash
-# From claudify directory:
+# From the claudify directory you downloaded/cloned:
 pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
+```
+
+### Step 2: Initialize in Claude Code
+```bash
+# In your repository:
+claude code
+
+# Then run:
+/init-claudify
+
+# Or for standard mode:
+/init-claudify --standard
 ```
 
 ### What Happens During Setup
 
-The intelligent setup script will:
+The setup process has two distinct phases:
 
-1. **Version Check** - Detects existing installations and recommends clean install for major updates
-2. **Technology Detection** - Automatically detects your tech stack:
-   - Backend: .NET/C#, Go, Java, Python, Node.js
-   - Frontend: Angular, React, Vue, Svelte (including subdirectories like `ClientApp/`)
-   - Multi-tenant patterns
-   - Database and infrastructure
+#### Phase 1: setup.ps1 (Run from Terminal)
+1. **Checks existing installation** and version
+2. **Creates minimal structure**:
+   - `.claude/commands/init-claudify.md` (the only command installed)
+   - `.claudify/` directory with ALL template resources (hidden cache)
+3. **Updates .gitignore** to exclude `.claudify`
+4. **Optionally launches Claude** to run init-claudify
 
-3. **Installation Mode Selection** - Choose your setup:
-   - **[S] Standard** - Core components for your stack (~15-25 files)
-   - **[C] Comprehensive** - Everything available (~40+ files) **[RECOMMENDED]**
-   - **[N] None** - Manual setup only
+#### Phase 2: /init-claudify (Run in Claude Code)
+1. **Analyzes your repository**:
+   - Detects backend (.NET, Go, Java, Python, Node.js)
+   - Detects frontend (Angular, React, Vue, Svelte)
+   - Searches subdirectories like `ClientApp/`, `frontend/`
+   - Identifies patterns (multi-tenancy, DDD, async)
 
-4. **Automatic Installation** - Based on your selection:
-   - Installs relevant commands and agents
-   - Configures hooks and tools
-   - Generates intelligent CLAUDE.md and FEATURES.md
-   - Creates `.claudify` directory for re-running setup
+2. **Selects components intelligently**:
+   - **Standard Mode**: ~15-25 core files
+   - **Comprehensive Mode**: ~40+ files (recommended)
+   - Copies from `.claudify/` to `.claude/` based on your stack
 
-5. **Claude CLI Integration** (NEW) - Simplified automatic initialization:
-   - Prompts for optional domain description
-   - Automatically runs `/init-claudify` with Opus model
-   - Uses `--dangerously-skip-permissions` for streamlined setup
-   - Requires approval for individual tool permissions
+3. **Creates documentation**:
+   - CLAUDE.md - Your project rules (preserved if exists)
+   - FEATURES.md - Feature tracking (preserved if exists)
 
 ### After Installation
 
@@ -119,34 +133,50 @@ claudify/
 
 ## 🎯 How It Works
 
-### Step 1: Intelligent Setup (setup.ps1)
-The setup script provides a complete installation experience:
+Claudify is a template repository that provides commands, agents, and tools for Claude Code. It works in two phases:
 
-1. **Version Management**
+### Phase 1: Setup Script (setup.ps1)
+The PowerShell setup script prepares your repository:
+
+1. **Minimal Installation**
+   - Creates `.claude/commands/` directory
+   - Copies only the `init-claudify` command
+   - Creates `.claudify/` directory with ALL template resources (for later use)
+   - Adds `.claudify` to `.gitignore` (these are temporary resources)
+
+2. **Version Tracking**
    - Detects existing installations
-   - Compares versions and recommends clean install for major updates
-   - Tracks installation metadata
+   - Recommends clean install for major updates
+   - Creates metadata files for tracking
 
-2. **Tech Stack Detection** 
-   - Automatically analyzes your repository
-   - Detects backend (C#, Go, Java, Python, Node.js)
-   - Finds frontend frameworks in any directory (including `ClientApp/`, `frontend/`, etc.)
-   - Identifies multi-tenant patterns
+### Phase 2: Component Installation (/init-claudify)
+The init-claudify command (run inside Claude Code) performs intelligent setup:
 
-3. **Intelligent Component Installation**
-   - Choose from Standard or Comprehensive modes
-   - Installs appropriate commands and agents for your stack
-   - Generates customized CLAUDE.md and FEATURES.md
-   - Sets up hooks, generators, and validation tools
+1. **Repository Analysis**
+   - Detects your tech stack (backend, frontend, database)
+   - Identifies patterns (DDD, multi-tenancy, repository pattern)
+   - Analyzes architecture and project structure
 
-### Step 2: Advanced Customization (Optional)
-For domain-specific configuration, run `/init-claudify` in Claude Code to:
+2. **Intelligent Component Selection**
+   - Based on detected stack, selects appropriate commands
+   - Installs relevant agents for your technologies
+   - Adds hooks and generators as needed
+   - All components are copied from `.claudify/` to `.claude/`
 
-- Fine-tune the tech stack detection
-- Add domain-specific business rules
-- Configure multi-tenant isolation
-- Customize agent selection
-- Set up specialized workflows
+3. **Documentation Generation**
+   - Creates or preserves CLAUDE.md (project rules)
+   - Creates or preserves FEATURES.md (feature tracking)
+   - These files are where YOU define your project-specific requirements
+
+### How Components Guide Claude
+
+Commands and agents are **templates with instructions** that:
+- Provide structured approaches to tasks
+- Include prompts that guide Claude's analysis
+- Suggest tool usage patterns
+- Reference YOUR documentation (CLAUDE.md) for context
+
+They don't automatically enforce patterns - they guide Claude to follow the patterns YOU define in CLAUDE.md.
 
 ## 📦 Installation Modes
 
@@ -166,20 +196,125 @@ Complete Claudify experience with all features:
 ## 📋 Available Components
 
 ### Commands
-- **Development**: `add-backend-feature`, `add-frontend-feature`, `fix-*-bug`
-- **Analysis**: `analyze-technical-debt`, `analyze-test-quality`
-- **Review**: `review-backend-code`, `comprehensive-review`
-- **Research**: `do-extensive-research`, `quick-research`
-- **Meta**: `create-command-and-or-agent`, `sync-to-templates`
+
+Project-specific slash commands that provide structured approaches to common development tasks.
+
+#### Command Categories
+
+**Feature Development**
+- `/add-backend-feature` - DDD-based API features with multi-tenant security
+- `/add-frontend-feature` - UI features with accessibility and performance focus
+- `/add-integration` - Third-party service integrations
+
+**Code Quality & Maintenance**  
+- `/fix-backend-bug`, `/fix-frontend-bug` - Systematic debugging with root cause analysis
+- `/fix-backend-build-and-tests`, `/fix-frontend-build-and-tests` - Iterative build/test fixes
+- `/review-backend-code`, `/review-frontend-code` - Security, performance, architecture review
+- `/comprehensive-review` - Multi-agent holistic analysis
+- `/refactor-code` - Intelligent code simplification
+- `/optimize-performance` - Performance bottleneck analysis
+
+**Analysis & Research**
+- `/analyze-technical-debt` - Debt impact modeling and prioritization
+- `/analyze-legacy-system` - Migration strategy planning
+- `/analyze-domain-use-cases` - Business domain extraction
+- `/do-extensive-research` - Deep multi-dimensional research with Opus 4
+- `/quick-research` - Focused technical research
+
+**Documentation & Updates**
+- `/generate-documentation` - Technical documentation generation
+- `/update-changelog` - Structured changelog management
+- `/generate-marketing-material` - Value proposition creation
+
+**Meta & Utilities**
+- `/create-command-and-or-agent` - Generate new components
+- `/sync-to-templates` - Share improvements back to Claudify
+- `/init-claudify` - Advanced domain-specific configuration
+
+#### Key Command Features
+- **Extended Thinking**: Deep analysis using Opus 4 reasoning
+- **Parallel Operations**: Multiple analyses run simultaneously
+- **Domain Awareness**: Commands understand your project context
+- **Security First**: Multi-tenant isolation enforced automatically
+- **Test Intelligence**: Focus on requirements, not just passing tests
+
+#### Example Command Usage
+```bash
+# Add a new feature with DDD and multi-tenant security
+/add-backend-feature user permission management
+
+# Fix a bug with systematic root cause analysis
+/fix-backend-bug API returns 500 on user update
+
+# Comprehensive code review with multiple perspectives
+/comprehensive-review PR #42
+
+# Deep research with evidence-based recommendations
+/do-extensive-research microservices migration strategy
+```
 
 ### Agents (Opus 4 Optimized)
-- **Code Reviewer**: Parallel code analysis with AI suggestions
-- **Security Reviewer**: AI-powered vulnerability detection
-- **Tech Lead**: Parallel architecture assessment
-- **Frontend Developer**: AI component generation
-- **Test Quality Analyst**: AI test suite generation
-- **Technical Debt Analyst**: Economic impact modeling
-- **Plus 9+ more specialized agents**
+
+All agents use the official Claude Code format with proper tool restrictions for security.
+
+#### Agent Categories
+
+**Technical Excellence**
+- **Code Reviewer**: Multi-tenant SaaS security, DDD, production systems, 80% test coverage target
+- **Code Simplifier**: Refactoring complex code, reducing cyclomatic complexity, applying DRY
+- **Tech Lead**: Scalable architecture, technology trade-offs, 1K→100K+ org scaling
+
+**Security & Compliance**
+- **Security Reviewer**: OWASP Top 10, multi-tenant isolation, JWT/Auth0, GDPR compliance
+- **Technical Debt Analyst**: Debt impact modeling, refactoring priorities, economic analysis
+- **Legacy System Analyzer**: Migration strategies, modernization roadmaps
+
+**Frontend & UX**
+- **Frontend Developer**: AI component generation, modern framework patterns
+- **UX Reviewer**: WCAG 2.1 AA compliance, mobile-first, offline-capable interfaces
+- **Visual Designer**: Award-winning digital experiences, design systems
+
+**Business & Strategy**
+- **Business Domain Analyst**: Domain modeling, business rules extraction
+- **Customer Value Translator**: Feature→benefit→value translation, ROI quantification
+- **Marketing Strategist**: B2B SaaS positioning, competitive differentiation
+- **Feature Analyzer**: Competitive intelligence, market positioning
+
+**Research & Quality**
+- **Researcher**: Multi-dimensional analysis, evidence-based recommendations
+- **Test Quality Analyst**: Coverage intelligence, test pyramid optimization, flakiness detection
+- **Technical Documentation Expert**: API docs, architecture guides, developer onboarding
+
+#### How Agents Work
+1. **Independent Context**: Each agent maintains its own context window
+2. **Parallel Execution**: Up to 10 agents can work simultaneously  
+3. **Tool Restrictions**: Each agent only has tools necessary for their role (security best practice)
+4. **Extended Thinking**: Configure MAX_THINKING_TOKENS in .claude/settings.json (see docs/EXTENDED-THINKING-SETUP.md)
+
+#### Agent Usage Examples
+```
+# Claude automatically delegates to appropriate agents:
+
+"Review the security of this new API endpoint"
+→ Security Reviewer agent activated
+
+"This component is too complex, help me simplify it"  
+→ Code Simplifier agent activated
+
+"What's the best architecture for handling 50K concurrent users?"
+→ Tech Lead agent activated
+
+"Review this PR for production readiness"
+→ Code Reviewer agent activated
+
+# Agents collaborate on complex tasks:
+"Review this new feature end-to-end"
+→ Tech Lead: Architecture review
+→ Security Reviewer: Security audit  
+→ Code Reviewer: Code quality check
+→ UX Reviewer: Interface assessment
+→ Combined report with all perspectives
+```
 
 ### Generators
 Create new components easily:
@@ -202,11 +337,12 @@ The `sync-to-templates` command helps maintain this template repository:
 
 ## 📖 Documentation
 
+- **[SETUP-GUIDE.md](SETUP-GUIDE.md)** - Complete setup documentation
+- **[EXTENDED-THINKING-SETUP.md](docs/EXTENDED-THINKING-SETUP.md)** - Configure extended thinking for agents (replaces max_thinking_tokens)
 - **[AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md)** - How to use Opus 4 agents effectively
 - **[AGENT-COLLABORATION-EXAMPLES.md](docs/AGENT-COLLABORATION-EXAMPLES.md)** - Real-world usage examples
 - **[DOCUMENTATION-BEST-PRACTICES.md](docs/DOCUMENTATION-BEST-PRACTICES.md)** - Documentation standards and guidelines
 - **[DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md](docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)** - Implementation case study
-- **[SETUP-GUIDE.md](SETUP-GUIDE.md)** - Complete setup documentation
 - **[META-GENERATOR-README.md](templates/META-GENERATOR-README.md)** - Create new generators
 
 ## ❓ Common Questions

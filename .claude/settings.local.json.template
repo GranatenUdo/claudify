@@ -1,0 +1,29 @@
+{
+  "env": {
+    "MAX_THINKING_TOKENS": "100000",
+    "ANTHROPIC_CUSTOM_HEADERS": "anthropic-beta: interleaved-thinking-2025-05-14",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "64000"
+  },
+  "model": "opus",
+  "description": "Personal settings for maximum extended thinking (copy to settings.local.json)",
+  "_notes": {
+    "MAX_THINKING_TOKENS": {
+      "minimum": "1024",
+      "recommended": "49152 (default in settings.json)",
+      "high_performance": "100000 (this template)",
+      "maximum_practical": "100000",
+      "theoretical_max": "200000 (full context window)",
+      "warning": "Values above 32K may require batch processing for stability"
+    },
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": {
+      "opus": "8192 (default)",
+      "sonnet": "64000 (maximum)",
+      "extended_output": "128000 (with special beta flag)"
+    },
+    "models": {
+      "available": ["opus", "sonnet", "haiku"],
+      "recommended": "opus (for complex reasoning)",
+      "note": "Opus 4.1 has best extended thinking capabilities"
+    }
+  }
+}

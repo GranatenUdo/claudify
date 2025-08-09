@@ -1,0 +1,39 @@
+{
+  "env": {
+    "MAX_THINKING_TOKENS": "49152",
+    "ANTHROPIC_CUSTOM_HEADERS": "anthropic-beta: interleaved-thinking-2025-05-14"
+  },
+  "model": "opus",
+  "description": "Claudify project settings - optimized for Opus 4.1 with extended thinking",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh",
+            "args": [
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              ".claude/hooks/add-context.ps1",
+              "-UserPrompt",
+              "${user_prompt}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "deny": [
+      "Write(**/bin/**)",
+      "Write(**/obj/**)",
+      "Write(**/node_modules/**)",
+      "Write(**/dist/**)",
+      "Write(**/*.dll)",
+      "Write(**/*.exe)"
+    ],
+    "additionalDirectories": [".claude", ".claudify", "scripts", "docs"]
+  }
+}
