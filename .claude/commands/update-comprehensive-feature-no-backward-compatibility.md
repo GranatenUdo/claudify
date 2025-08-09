@@ -1,10 +1,21 @@
 ---
+name: update-comprehensive-feature-no-backward-compatibility
+model: opus
+think-mode: think_harder
 description: Replace existing feature entirely with no backward compatibility, removing legacy code and implementing modern patterns
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature replacement description (e.g., "replace legacy auth with modern OAuth 2.0")
 ---
 
 # 🔥 Replace Feature (No Backward Compatibility): $ARGUMENTS
+
+## Optimization Features
+- **Breaking Change Analysis**: Deep reasoning about complete system transformation
+- **Legacy Code Elimination**: Systematic removal of all deprecated patterns and code
+- **Modern Architecture**: Full migration to microservices, event sourcing, and cloud-native patterns
+- **Multi-Agent Collaboration**: Coordinated expertise from Frontend, Backend, Security, and Architecture agents
+- **Comprehensive Modernization**: Zero compromise approach to technical debt elimination
+- **Iterative Validation**: Continuous testing until 99% confidence and 100% success rate
 
 ## ⚠️ BREAKING CHANGE MODE ACTIVATED
 

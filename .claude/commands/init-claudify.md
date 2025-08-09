@@ -52,7 +52,12 @@ Finding files matching: **/next.config.js
 
 ### Architecture Pattern Recognition
 
-Let me search for common architectural patterns:
+#### 🚀 Parallel Pattern Search
+```bash
+# All pattern searches run simultaneously for maximum efficiency
+```
+
+Let me search for common architectural patterns (all searches parallel):
 
 Searching for pattern: IRepository|Repository<|RepositoryBase
 Searching for pattern: Result<.*>|Result\\.Success|Result\\.Failure
@@ -60,7 +65,7 @@ Searching for pattern: OrganizationId|TenantId|CompanyId|CustomerId
 Searching for pattern: async.*Task|await|async function|Promise
 Searching for pattern: Controller|Service|Repository|Handler|Middleware
 
-<think about the analysis results and determine the tech stack and patterns>
+<think_harder about the analysis results, confidence levels, and pattern relationships>
 
 Based on my analysis:
 - **Backend**: [DETECTED]

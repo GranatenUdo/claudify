@@ -1,10 +1,20 @@
 ---
+name: update-changelog
+model: opus
+think-mode: standard
 description: Update CHANGELOG.md with recent changes following Keep a Changelog format
 allowed-tools: [Read, Write, Edit, MultiEdit, Grep, TodoWrite]
 argument-hint: change description (e.g., "Added user authentication module" or "Fixed critical bug in payment processing")
 ---
 
 # Update Changelog
+
+## Optimization Features
+
+- **Parallel execution**: No - Sequential file reading and editing approach ensures changelog consistency and proper formatting
+- **Extended thinking**: No - Straightforward categorization and formatting task with established patterns and conventions
+- **Confidence scoring**: Yes - Change categorization confidence and formatting compliance validation included
+- **Subagent coordination**: No - Single-agent execution optimized for document consistency and formatting standards
 
 I'll update the CHANGELOG.md file with your recent changes following the [Keep a Changelog](https://keepachangelog.com/) format.
 

@@ -1,10 +1,19 @@
 ---
+name: update-frontend-feature
 description: Update frontend feature with modern UI patterns, accessibility, and comprehensive testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: frontend feature update description (e.g., "update dashboard with real-time data visualization")
+model: opus
+think-mode: think_hard
 ---
 
 # 🎨 Update Frontend Feature: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - UI component analysis in parallel
+- **Extended thinking**: Yes - UX design requires deep consideration
+- **Confidence scoring**: Yes - Design decisions include confidence levels
+- **Subagent coordination**: Yes - Frontend and UX agents collaborate
 
 ## 🧠 OPUS 4 FRONTEND EXCELLENCE MODE
 

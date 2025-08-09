@@ -1,10 +1,21 @@
 ---
+name: update-backend-feature-no-backward-compatibility
+model: opus
+think-mode: think_harder
 description: Replace backend feature entirely with modern patterns, removing all legacy code
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: backend feature replacement description (e.g., "replace monolithic service with microservices")
 ---
 
 # 🔥 Replace Backend Feature (No Compatibility): $ARGUMENTS
+
+## Optimization Features
+- **Advanced Reasoning**: Extended thinking mode for complex architectural decisions
+- **Parallel Processing**: Simultaneous analysis of legacy code removal and modern implementation
+- **Event-Driven Architecture**: Complete migration to microservices and serverless patterns
+- **Zero-Trust Security**: Modern authentication and authorization patterns
+- **Cloud-Native Design**: Kubernetes-ready with automatic scaling capabilities
+- **Continuous Validation**: Iterative testing until 99% confidence achieved
 
 ## ⚠️ AGGRESSIVE BACKEND MODERNIZATION
 

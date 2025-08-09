@@ -1,10 +1,19 @@
 ---
+name: analyze-technical-debt
 description: Analyze technical debt and best practices violations in a specified codebase section
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, TodoWrite, WebSearch]
 argument-hint: path to analyze (e.g., "src/PTA.VineyardManagement.Api" or "src/**/*.cs")
+model: opus
+think-mode: think_harder
 ---
 
 # 💰 Technical Debt Analysis: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - All agents analyze simultaneously
+- **Extended thinking**: Yes - Economic impact requires deep analysis
+- **Confidence scoring**: Yes - Debt prioritization with confidence
+- **Subagent coordination**: Yes - Technical debt analyst leads
 
 ## Phase 0: Task Management Setup
 

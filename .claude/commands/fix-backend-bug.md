@@ -1,10 +1,19 @@
 ---
+name: fix-backend-bug
 description: Debug and fix backend API issues using systematic root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: bug description (e.g., "null reference in field service when updating boundaries")
+model: opus
+think-mode: think_hard
 ---
 
 # Fix API Bug: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Multiple search operations run simultaneously
+- **Extended thinking**: Yes - Root cause analysis requires deep thinking
+- **Confidence scoring**: Yes - Fix recommendations include confidence levels
+- **Subagent coordination**: Yes - Security and code reviewers collaborate
 
 ## Phase 0: Task Management Setup
 

@@ -1,11 +1,19 @@
 ---
+name: generate-documentation
 description: Generate comprehensive technical documentation for features, APIs, or systems
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch, Bash]
 argument-hint: documentation type and target (e.g., "api docs for field management" or "user guide for import feature")
+model: opus
+think-mode: think_hard
 ---
 
 # 📚 Generate Documentation: $ARGUMENTS
 
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Multiple documentation sections generated simultaneously
+- **Extended thinking**: Yes - Documentation structure requires planning
+- **Confidence scoring**: Yes - Coverage completeness metrics
+- **Subagent coordination**: Yes - Technical documentation expert leads
 
 
 **Documentation Directive**: Create comprehensive, clear, and maintainable documentation that empowers users to succeed with our vineyard management system.

@@ -1,10 +1,20 @@
 ---
+name: add-integration
+model: opus
+think-mode: think_hard
 description: Add third-party service integration with proper authentication, error handling, and testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebSearch, TodoWrite]
 argument-hint: service name and purpose (e.g., "weather-api for irrigation planning" or "payment-gateway stripe")
 ---
 
 # 🔌 Add Integration: $ARGUMENTS
+
+## Optimization Features
+
+- **Parallel execution**: Yes - Research, security analysis, and architecture planning run simultaneously for faster integration design
+- **Extended thinking**: Yes - Complex integration patterns require deep analysis of security, resilience, and multi-tenant considerations
+- **Confidence scoring**: Yes - Each integration decision includes confidence levels and risk assessments for validation
+- **Subagent coordination**: Yes - Research, Security, and Architecture agents collaborate on comprehensive integration strategy
 
 ## Quick Context
 Use this command to integrate third-party services into the vineyard management system with proper architecture, security, and error handling.

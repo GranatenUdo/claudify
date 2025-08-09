@@ -1,4 +1,7 @@
 ---
+name: figma-implement-current-selection
+model: opus
+think-mode: think_hard
 description: Transform current Figma selection into production-ready code led by Frontend Developer expertise with multi-agent support
 allowed-tools: [Task, WebFetch, WebSearch, TodoWrite, Read, Write, Edit, MultiEdit, Bash, Grep, Glob, LS]
 argument-hint: Optional framework/requirements (e.g., "with Angular 20 and Material Design" or defaults to project's detected framework)
@@ -6,7 +9,12 @@ argument-hint: Optional framework/requirements (e.g., "with Angular 20 and Mater
 
 # 🎨 Figma to Production Implementation
 
+## Optimization Features
 
+- **Parallel execution**: Yes - Frontend Developer, Visual Designer, and Tech Lead agents analyze simultaneously for comprehensive implementation planning
+- **Extended thinking**: Yes - Complex design-to-code translation requires deep analysis of responsive behavior, accessibility patterns, and component architecture
+- **Confidence scoring**: Yes - Visual fidelity and implementation decisions include quality scores and validation metrics
+- **Subagent coordination**: Yes - Multi-agent system coordinates Frontend, Visual Design, and Technical Architecture expertise for optimal results
 
 **Implementation Directive**: Transform the current Figma selection into production-ready code that prioritizes user experience, accessibility, and maintainability while leveraging multi-agent expertise.
 

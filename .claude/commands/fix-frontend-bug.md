@@ -1,10 +1,21 @@
 ---
+name: fix-frontend-bug
+model: opus
+think-mode: think_hard
 description: Debug and fix UI issues using Frontend Developer expertise with systematic debugging approach
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]
 argument-hint: bug description or error message
 ---
 
 # Fix UI Bug: $ARGUMENTS
+
+## Optimization Features
+- **Frontend Expert Analysis**: Led by specialized Frontend Developer agent with 15+ years experience
+- **Parallel Diagnostics**: Simultaneous data collection across console, network, and state
+- **Framework-Specific Debugging**: Angular 19, TypeScript, and modern frontend pattern expertise
+- **Cross-Platform Validation**: Browser compatibility and responsive design verification
+- **Performance Integration**: Bug fixing combined with performance optimization opportunities
+- **Prevention Strategies**: Defensive coding patterns and comprehensive test coverage additions
 
 Internalize CLAUDE.md and FEATURES.md, then use extended thinking to systematically debug and fix **$ARGUMENTS**.
 

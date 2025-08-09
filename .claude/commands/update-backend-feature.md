@@ -1,10 +1,19 @@
 ---
+name: update-backend-feature
 description: Update backend feature with comprehensive testing and backward compatibility
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: backend feature update description (e.g., "update payment processing to support new gateway")
+model: opus
+think-mode: think_hard
 ---
 
 # 🔧 Update Backend Feature: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Impact analysis runs in parallel
+- **Extended thinking**: Yes - Backward compatibility requires deep analysis
+- **Confidence scoring**: Yes - Risk assessment includes confidence metrics
+- **Subagent coordination**: Yes - Multiple agents for different aspects
 
 ## 🧠 OPUS 4 BACKEND OPTIMIZATION MODE
 

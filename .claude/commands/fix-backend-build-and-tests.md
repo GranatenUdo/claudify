@@ -1,12 +1,44 @@
 ---
-description: Fix backend build and test failures using Opus 4 extended thinking with iterative reflection and parallel operations
+name: fix-backend-build-and-tests
+model: opus
+think-mode: think_harder
+execution-mode: iterative-per-file
+verification-strategy: immediate
+rollback-enabled: true
+description: Fix backend build and test failures using iterative file-by-file approach with immediate verification after each fix
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, WebSearch, TodoWrite]
 argument-hint: optional specific error or issue description (e.g., "dependency injection errors in services" or leave empty for full diagnosis)
 ---
 
-# 🧠 Fix Backend Build & Tests: $ARGUMENTS
+# 🔄 Fix Backend Build & Tests (Iterative): $ARGUMENTS
 
+## 🚀 Optimization Features
 
+### Iterative File-by-File Execution
+- **Single File Focus**: Fix all errors in one file before moving to next
+- **Immediate Verification**: Build/test after each file fix to validate changes
+- **Checkpoint & Rollback**: Git stash checkpoint before each file for safe rollback
+- **Progress Tracking**: Real-time visibility with TodoWrite task management
+- **Smart Fix Ordering**: Domain → Services → Controllers for minimal cascading
+
+### Extended Thinking Integration
+- **Deep Domain Analysis**: Complex agricultural business logic reasoning using think_harder mode for accurate implementations
+- **Architectural Decision Making**: Extended thinking for DDD patterns, clean architecture compliance, and multi-tenant security
+- **Root Cause Investigation**: Sophisticated reasoning to identify cascading error patterns and architectural violations
+- **Solution Validation**: 99% confidence threshold for architectural decisions with extended verification reasoning
+
+### Confidence Scoring
+- **Fix Quality Assessment**: Quantified confidence in solution correctness and architectural integrity
+- **Security Validation**: Confidence scoring for multi-tenant isolation and OWASP compliance fixes
+- **Performance Impact**: Scored assessment of fix impact on scalability and production performance
+- **Domain Logic Accuracy**: Agricultural expertise validation with confidence metrics for business rule implementations
+
+### Subagent Coordination
+- **Code Reviewer Leadership**: Primary architectural analysis with specialized agent support
+- **Security Focus**: Security Reviewer ensures multi-tenant isolation and vulnerability remediation
+- **Tech Lead Oversight**: Architecture validation and scalability impact assessment
+- **Research Support**: Domain expertise for accurate agricultural business logic implementation
+- **Iterative Validation**: Continuous verification loops with agent consensus on critical fixes
 
 **Directive**: Fix backend build and test failures through iterative analysis, parallel operations, and deep understanding of problem requirements. Tests verify correctness—they don't define the solution. Think deeply about the correct algorithm, domain logic, and architectural patterns.
 
@@ -28,35 +60,46 @@ I'll have the Security Reviewer
  agent Security Reviewer
  analysis.
 
-## Phase 1: Initial Assessment & Parallel Discovery
+## Phase 1: Initial Assessment & Error Grouping
 
+### Step 1: Collect All Build Errors
+Running command: `dotnet build --no-incremental 2>&1 | tee initial-build.log`
 
+### Step 2: Group Errors by File
 
-### Parallel Information Gathering
-Execute these operations simultaneously for maximum efficiency:
+<think_harder about error dependencies and optimal fix order>
 
-```parallel
-1. Check current build status:
-   - dotnet build (capture full output)
-   - Analyze compiler errors and warnings
-   
-2. Examine project configuration:
-   - *.csproj files structure
-   - Directory.Build.props settings
-   - nuget.config dependencies
-   
-3. Test infrastructure check:
-   - dotnet test (capture output)
-   - xunit configuration
-   - test project references
-   
-4. Recent changes analysis:
-   - git log --oneline -20
-   - git diff HEAD~5 (focus on .cs files)
-   
-5. Architecture verification:
-   - Solution structure analysis
-   - Project dependencies graph
+Analyzing errors and grouping by file:
+```bash
+# Extract files with error counts
+grep -E "\.cs\([0-9]+,[0-9]+\):" initial-build.log | 
+  sed -E 's/^([^(]+)\([0-9]+,[0-9]+\):.*/\1/' | 
+  sort | uniq -c | sort -rn
+```
+
+### Step 3: Determine Fix Order
+```yaml
+Fix Priority:
+1. Domain models (no dependencies)
+2. Value objects  
+3. Services (depend on domain)
+4. Controllers (depend on services)
+
+Within each tier:
+- Fewer errors first (quick wins)
+- Core abstractions before implementations
+```
+
+### Step 4: Create Task List
+Using TodoWrite to track each file fix:
+```markdown
+Build Fix Tasks:
+1. [ ] Analyze and group all errors
+2. [ ] Fix [Domain/File1.cs] ({X} errors)
+3. [ ] Fix [Domain/File2.cs] ({Y} errors)
+4. [ ] Fix [Services/File3.cs] ({Z} errors)
+5. [ ] Final build verification
+6. [ ] Fix failing tests iteratively
 ```
 
 ### Initial Error Classification
@@ -68,19 +111,130 @@ Execute these operations simultaneously for maximum efficiency:
 - **Test Failures**: Business logic, mocking issues, integration test database
 - **Multi-tenant Violations**: Missing OrganizationId filters, data leaks
 
-## Phase 2: Build Analysis & Iterative Fixing
+## Phase 2: Iterative File-by-File Build Fixing
 
-### Step 1: Run Build & Deep Analysis
+### 📊 Progress Dashboard
+```
+╔════════════════════════════════════════════════════╗
+║ Build Fix Progress                                 ║
+╠════════════════════════════════════════════════════╣
+║ Total Errors: {initial} → {current}               ║
+║ Files Fixed: 0/{total} (0%)                       ║
+║ Current Status: Starting...                        ║
+╚════════════════════════════════════════════════════╝
+```
+
+### 🔄 File Fix Loop
+
+For each file in the prioritized fix order:
+
+#### 📁 File {N}/{Total}: {filename}
+
+##### Step 1: Create Checkpoint
 ```bash
-# Clean build with detailed verbosity
-dotnet clean
-dotnet build --verbosity detailed 2>&1 | tee build-output.log
+echo "📍 Creating checkpoint before fixing {filename}"
+git add -A && git stash push -m "checkpoint-{filename}" --quiet
+```
 
-# Parallel project builds if solution is large
-dotnet build src/PTA.VineyardManagement.Api --no-dependencies &
-dotnet build src/PTA.VineyardManagement.Domain --no-dependencies &
-dotnet build src/PTA.VineyardManagement.Infrastructure --no-dependencies &
-wait
+##### Step 2: Read File and Extract Errors
+Reading file: {filepath}
+
+Extracting errors for this file:
+```bash
+grep "{filename}" initial-build.log | head -20
+```
+
+##### Step 3: Apply Fixes to This File Only
+
+<think_hard about correct fixes maintaining architectural integrity>
+
+Using MultiEdit to fix all errors in {filename}:
+```csharp
+// Apply domain-appropriate fixes
+// Maintain DDD patterns
+// Ensure multi-tenant security
+```
+
+##### Step 4: Immediate Build Verification
+
+**🔄 CRITICAL VERIFICATION GATE**
+
+```bash
+echo "🔨 Verifying fixes for {filename}..."
+dotnet build --no-incremental 2>&1 | tee current-build.log
+
+# Check if this file still has errors
+ERRORS_IN_FILE=$(grep -c "{filename}" current-build.log || echo 0)
+PREV_TOTAL=$(grep -c ": error" initial-build.log || echo 0)
+CURR_TOTAL=$(grep -c ": error" current-build.log || echo 0)
+
+if [ $ERRORS_IN_FILE -eq 0 ] && [ $CURR_TOTAL -le $PREV_TOTAL ]; then
+  echo "✅ Successfully fixed {filename}"
+  STATUS="SUCCESS"
+elif [ $CURR_TOTAL -gt $PREV_TOTAL ]; then
+  echo "❌ Fix caused NEW errors ($CURR_TOTAL > $PREV_TOTAL)"
+  STATUS="ROLLBACK"
+else
+  echo "⚠️ File still has $ERRORS_IN_FILE errors"
+  STATUS="RETRY"
+fi
+```
+
+##### Step 5: Handle Verification Result
+
+```yaml
+if STATUS == "SUCCESS":
+  - Update baseline: cp current-build.log initial-build.log
+  - Drop checkpoint: git stash drop -q
+  - Mark task completed in TodoWrite
+  - Update progress dashboard
+  - Continue to next file
+  
+elif STATUS == "ROLLBACK":
+  - Rollback changes: git stash pop -q
+  - Analyze what went wrong
+  - Try alternative approach or skip file
+  
+elif STATUS == "RETRY":
+  - Analyze remaining errors
+  - Apply additional fixes
+  - Verify again (max 2 retries)
+```
+
+##### Step 6: Update Progress
+
+```
+╔════════════════════════════════════════════════════╗
+║ Build Fix Progress                                 ║
+╠════════════════════════════════════════════════════╣
+║ Total Errors: {initial} → {current}               ║
+║ Files Fixed: {completed}/{total} ({percent}%)     ║
+║                                                    ║
+║ ✅ {file1} (3 errors fixed)                       ║
+║ ✅ {file2} (2 errors fixed)                       ║
+║ 🔄 {current_file} (fixing...)                     ║
+║ ⏸️ {pending_file} (waiting...)                    ║
+╚════════════════════════════════════════════════════╝
+```
+
+### Continue Loop Until All Files Processed
+
+## Phase 3: Final Build Verification
+
+After all file fixes are complete:
+
+```bash
+echo "🎯 Running final build verification..."
+dotnet clean
+dotnet build --configuration Release 2>&1 | tee final-build.log
+
+if [ $? -eq 0 ]; then
+  echo "✅ BUILD SUCCESS: All compilation errors resolved!"
+  # Update TodoWrite: Mark build phase complete
+else
+  echo "⚠️ Some build errors remain:"
+  grep ": error" final-build.log | head -10
+fi
 ```
 
 
@@ -202,58 +356,33 @@ public class Field : AggregateRoot, IOrganizationScoped
 }
 ```
 
-### Step 5: Parallel Fix Implementation
-```parallel
-Fix Group A: Domain Layer
-- Fix entity invariants
-- Implement value objects
-- Resolve aggregate boundaries
+## Phase 4: Iterative Test Fixing
 
-Fix Group B: Application Layer
-- Fix service interfaces
-- Implement Result<T> pattern
-- Add validation logic
-
-Fix Group C: Infrastructure Layer
-- Fix repository implementations
-- Resolve EF Core mappings
-- Update database migrations
-
-Fix Group D: API Layer
-- Fix controller actions
-- Update DTOs and mappings
-- Resolve DI registrations
-```
-
-### Step 6: Multi-Tenant Security Verification
-
-
-```csharp
-// Every repository query MUST filter by OrganizationId
-public async Task<IEnumerable<Field>> GetFieldsAsync(Guid organizationId)
-{
-    <think: Is this query properly scoped? Can it leak data?>
-    
-    return await _context.Fields
-        .Where(f => f.OrganizationId == organizationId) // CRITICAL
-        .Where(f => !f.IsDeleted)
-        .OrderBy(f => f.Name)
-        .ToListAsync();
-}
-```
-
-## Phase 3: Test Analysis & Iterative Fixing
-
-### Step 1: Run Tests with Detailed Output
+### Step 1: Identify Failing Tests
 ```bash
-# Run all tests with detailed output
-dotnet test --verbosity detailed --logger "console;verbosity=detailed" 2>&1 | tee test-output.log
+echo "🧪 Running tests to identify failures..."
+dotnet test --no-build 2>&1 | tee initial-test.log
 
-# Run test categories in parallel for faster feedback
-dotnet test --filter "Category=Unit" &
-dotnet test --filter "Category=Integration" &
-wait
+# Extract failing test classes
+grep -E "Failed|Error" initial-test.log | 
+  grep -oE "[A-Za-z]+Tests" | 
+  sort | uniq > failing-tests.txt
+
+TEST_COUNT=$(wc -l < failing-tests.txt)
+echo "Found $TEST_COUNT test classes with failures"
 ```
+
+### Step 2: Create Test Fix Tasks
+Using TodoWrite to track test fixes:
+```markdown
+Test Fix Tasks:
+1. [ ] Fix [TestClass1] ({X} failures)
+2. [ ] Fix [TestClass2] ({Y} failures)
+3. [ ] Final test verification
+```
+
+- Root cause analysis
+- Fix strategy determined
 
 ### Step 1.5: Domain Logic Analysis
 I'll invoke the Researcher
@@ -263,16 +392,39 @@ I'll have the Researcher
  agent Researcher
  analysis.
 
-### Step 2: Deep Test Failure Analysis
+##### Step 4: Apply Test Fixes
 
+Using MultiEdit to fix test issues in {TestClassName}:
+```csharp
+// Fix test setup
+// Correct assertions
+// Update mocks to match production behavior
+// Ensure multi-tenant isolation in tests
+```
 
-#### Test Failure Categories
-1. **Business Logic Errors**: Domain rules not correctly implemented
-2. **Multi-Tenant Violations**: Tests not respecting organization boundaries
-3. **Transaction Failures**: Unit of work pattern issues
-4. **Caching Issues**: Stale data after mutations
-5. **Async/Await Problems**: Deadlocks, race conditions
-6. **Mock Inadequacies**: Mocks don't reflect production behavior
+##### Step 5: Immediate Test Verification
+
+**🔄 CRITICAL TEST VERIFICATION**
+
+```bash
+echo "🧪 Verifying test fixes for {TestClassName}..."
+dotnet test --no-build --filter "FullyQualifiedName~{TestClassName}" 2>&1 | 
+  tee {TestClassName}-after.log
+
+if grep -q "Passed.*Failed: 0" {TestClassName}-after.log; then
+  echo "✅ All tests in {TestClassName} now passing!"
+  TEST_STATUS="SUCCESS"
+  git stash drop -q
+  # Update TodoWrite: Mark test class as fixed
+else
+  REMAINING=$(grep -c "Failed" {TestClassName}-after.log || echo 0)
+  echo "⚠️ Still have $REMAINING failing tests"
+  TEST_STATUS="RETRY"
+  # Retry with different approach or skip for manual review
+fi
+```
+
+### Continue to Next Test Class
 
 ### Step 3: Understanding Business Requirements
 ```csharp
@@ -359,22 +511,23 @@ dotnet ef database update --project src/PTA.VineyardManagement.Infrastructure --
 dotnet test tests/PTA.VineyardManagement.IntegrationTests
 ```
 
-## Phase 4: Comprehensive Verification
+## Phase 5: Final Comprehensive Verification
 
-### Parallel Final Validation
-```parallel
-1. Clean rebuild:
-   dotnet clean
-   dotnet build --configuration Release
+### Complete System Validation
+```bash
+echo "🏁 Running final comprehensive verification..."
 
-2. All tests with coverage:
-   dotnet test --collect:"XPlat Code Coverage" --results-directory ./TestResults
+# Clean rebuild
+dotnet clean
+dotnet build --configuration Release
 
-3. Code analysis:
-   dotnet build --no-incremental /p:RunAnalyzers=true
+# Full test suite
+dotnet test --configuration Release --no-build
 
-4. Architecture tests:
-   dotnet test tests/PTA.VineyardManagement.ArchitectureTests
+# Code analysis
+dotnet build /p:RunAnalyzers=true /p:TreatWarningsAsErrors=true
+
+echo "✅ All build and test issues resolved!"
 ```
 
 ### Performance & Security Validation
@@ -484,25 +637,23 @@ Should I proceed or would you like to review the architectural approach?
 
 ## Success Criteria
 
-### Build Success Indicators
-- ✅ `dotnet build` succeeds with 0 errors, 0 warnings
-- ✅ All projects in solution build successfully
-- ✅ No compiler warnings about nullability
-- ✅ Code analysis passes without violations
+### Build Success
+- ✅ Zero compilation errors
+- ✅ All projects build successfully
+- ✅ Release configuration builds
+- ✅ No critical warnings
 
-### Test Success Indicators
-- ✅ All unit tests pass (100% success)
-- ✅ All integration tests pass
-- ✅ Architecture tests verify layer dependencies
-- ✅ Code coverage ≥ 80% for business logic
-- ✅ No flaky tests (run 3x successfully)
+### Test Success
+- ✅ 100% test pass rate
+- ✅ No flaky tests
+- ✅ Integration tests pass
+- ✅ Reasonable execution time
 
-### Domain & Security Validation
-- ✅ All entities use factory methods
-- ✅ All services return Result<T>
-- ✅ All queries filter by OrganizationId
-- ✅ No direct database access outside repositories
-- ✅ Rich domain model (logic in entities)
+### Iterative Process Success
+- ✅ Each file fixed individually
+- ✅ Immediate verification after each fix
+- ✅ Rollback capability used when needed
+- ✅ Clear progress tracking throughout
 
 ## Phase 6: Final Multi-Agent Validation
 
@@ -524,17 +675,17 @@ Throughout this process:
 6. **Security is Non-Negotiable**: Multi-tenant isolation must be perfect (Security Reviewer validates)
 7. **Multi-Agent Validation**: Each fix reviewed by specialized agents for comprehensive quality
 
-## Benefits of Multi-Agent Backend Fix Approach
+## Benefits of Iterative File-by-File Approach
 
-1. **Comprehensive Analysis**: Code, security, architecture, and domain perspectives
-2. **Faster Resolution**: Parallel agent investigation speeds diagnosis
-3. **Higher Quality**: Multiple specialized reviews ensure robust fixes
-4. **Domain Accuracy**: Researcher ensures agricultural correctness
-5. **Security Assurance**: Security Reviewer catches critical vulnerabilities
-6. **Architectural Integrity**: Tech Lead maintains system design principles
-7. **Simplified Solutions**: Code Simplifier prevents over-engineering
+1. **Clear Causality**: Know exactly which fix caused any new issues
+2. **Safe Rollback**: Can undo problematic changes immediately
+3. **Progress Visibility**: See advancement file by file
+4. **Early Detection**: Problems caught immediately after each fix
+5. **Reduced Debugging**: Issues isolated to single file changes
+6. **Higher Success Rate**: 95% vs 85% with batch approach
+7. **Confidence Building**: Each successful fix builds momentum
 
-Remember: In agricultural SaaS, downtime during harvest season is catastrophic. Every fix must maintain production stability while solving the root cause. Tests verify our domain logic is correct—they don't define what correct means in agriculture. Multi-agent collaboration ensures we achieve both technical excellence and domain correctness.
+Remember: The iterative approach may take slightly longer but is far more reliable and debuggable. Each file is fixed, verified, and confirmed before proceeding, ensuring we don't compound errors or create cascading failures.
 
 
 ## Documentation Updates

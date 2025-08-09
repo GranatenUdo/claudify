@@ -1,10 +1,19 @@
 ---
+name: refactor-code
 description: Refactor and simplify code to improve quality, readability, and maintainability
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: file path, directory, or pattern to refactor (e.g., "src/services/FieldService.cs" or "**/*Service.cs")
+model: opus
+think-mode: think_hard
 ---
 
 # 🔧 Refactor Code: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Multiple file analysis simultaneously
+- **Extended thinking**: Yes - Refactoring patterns require deep analysis
+- **Confidence scoring**: Yes - Improvement suggestions with confidence
+- **Subagent coordination**: Yes - Code simplifier and reviewer agents
 
 ## Quick Context
 Use this command to improve existing code quality through systematic refactoring, focusing on simplification, maintainability, and adherence to best practices.

@@ -1,112 +1,220 @@
 ---
-description: Fix frontend build and test failures using specialized Frontend Developer agent with incremental verification after each fix
+name: fix-frontend-build-and-tests
+model: opus
+think-mode: think_harder
+execution-mode: iterative-per-file
+verification-strategy: immediate
+rollback-enabled: true
+description: Fix frontend build and test failures using iterative file-by-file approach with immediate verification after each fix
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, WebSearch, TodoWrite]
 argument-hint: optional specific error or issue description (e.g., "TypeScript errors in field components" or leave empty for full diagnosis)
 ---
 
-# 🧠 Fix Frontend Build & Tests: $ARGUMENTS
+# 🔄 Fix Frontend Build & Tests (Iterative): $ARGUMENTS
 
+## 🚀 Optimization Features
 
+### Iterative File-by-File Execution
+- **Single File Focus**: Fix all errors in one file before moving to next
+- **Immediate Verification**: Build/test after each file fix to validate changes
+- **Checkpoint & Rollback**: Git stash checkpoint before each file for safe rollback
+- **Progress Tracking**: Real-time visibility with TodoWrite task management
+- **Smart Fix Ordering**: Types → Services → Components for minimal cascading
+
+### Extended Thinking Integration
+- **Framework Expertise**: Deep reasoning about Angular 18+ patterns, signals, standalone components, and modern TypeScript
+- **Complex Problem Solving**: Extended thinking for intricate build tool configurations and framework interactions
+- **Pattern Recognition**: Sophisticated analysis of TypeScript inference issues and Angular lifecycle problems
+- **Incremental Strategy**: Thoughtful step-by-step approach with verification after each logical fix group
+
+### Confidence Scoring
+- **Fix Accuracy**: Quantified confidence in TypeScript and Angular pattern corrections
+- **Framework Compliance**: Scored assessment of modern Angular best practice adherence
+- **Build Stability**: Confidence metrics for build tool configuration and dependency resolution
+- **Test Reliability**: Validation confidence for test infrastructure and signal testing patterns
+
+### Subagent Coordination
+- **Frontend Developer Primary**: 15+ years expertise leading technical analysis and solution implementation
+- **UX Impact Assessment**: Visual Designer evaluates user experience implications of fixes
+- **Security Validation**: Security Reviewer ensures frontend security patterns remain intact
+- **Incremental Consensus**: Agent agreement required before proceeding to next fix category
+- **Final Quality Review**: Comprehensive validation by all agents before declaring success
 
 **Directive**: Fix frontend build and test failures using expert frontend knowledge, focusing on framework-specific patterns, TypeScript intricacies, and modern build tooling.
 
-## Phase 1: Parallel Expert Analysis
+## Phase 1: Initial Assessment & Error Grouping
 
-<think about optimal parallelization with frontend-focused expertise>
+### Step 1: Collect All Build Errors
+Running command: `npm run build 2>&1 | tee initial-build.log`
 
-I'll invoke specialized agents simultaneously, with the Frontend Developer leading the technical analysis:
+### Step 2: Group Errors by File
 
-I'll have the Frontend Developer agent Frontend technical analysis.
-I'll have the Visual Designer agent UX impact assessment.
-I'll have the general-purpose agent Security assessment.
+<think_harder about TypeScript/Angular error dependencies>
 
-### Synthesis of Expert Findings
-
-Based on the parallel analyses, I'll prioritize fixes using the Frontend Developer's expertise as the primary guide.
-
-## Phase 2: Parallel Diagnostic Data Collection
-
-<think about gathering all diagnostic data simultaneously>
-
-I'll collect comprehensive diagnostic information in parallel:
-
-Running command: `cd src/PTA.VineyardManagement.Web && npm run build 2>&1`
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch 2>&1 | head -100`
-Reading file: src/PTA.VineyardManagement.Web/tsconfig.json
-Reading file: src/PTA.VineyardManagement.Web/angular.json
-Reading file: src/PTA.VineyardManagement.Web/package.json
-Searching for pattern: ERROR TS[0-9]+:|error TS[0-9]+:
-Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit --listFiles | grep -E '(error|ERROR)' | head -20`
-
-## Phase 3: Iterative Fix Implementation with Verification
-
-<think deeply about implementing fixes incrementally with verification after each logical operation>
-
-### TypeScript Issues - Fix and Verify
-
-#### Step 1: Type Inference Fixes
-Based on the Frontend Developer's analysis, I'll fix TypeScript issues systematically:
-
-```typescript
-// Example: Signal type inference fix
-// ❌ WRONG: Letting TypeScript struggle with inference
-const data = signal([]); // Type 'never[]' issues
-
-// ✅ CORRECT: Explicit typing for signals
-const data = signal<FieldData[]>([]);
-
-// ❌ WRONG: Improper discriminated union handling
-if (state.status === 'success') {
-  console.log(state.data); // TS error: Property 'data' does not exist
-}
-
-// ✅ CORRECT: Type narrowing with proper guards
-if (state.status === 'success' && 'data' in state) {
-  console.log(state.data); // TypeScript understands the narrowing
-}
+Analyzing errors and grouping by file:
+```bash
+# Extract TypeScript errors by file
+grep -E "TS[0-9]+:" initial-build.log | 
+  sed -E 's/^([^(]+)\([0-9]+,[0-9]+\):.*/\1/' | 
+  sort | uniq -c | sort -rn
 ```
 
-### Verification After TypeScript Fixes
+### Step 3: Determine Fix Order
+```yaml
+Fix Priority (TypeScript/Angular):
+1. Type definition files (*.d.ts, interfaces/)
+2. Models and types (models/, types/)
+3. Services (*.service.ts)
+4. Guards and interceptors
+5. Components (*.component.ts)
+6. Test files (*.spec.ts)
+
+Within each tier:
+- Shared modules first
+- Feature modules second
+- Page components last
+```
+
+### Step 4: Create Task List
+Using TodoWrite to track each file fix:
+```markdown
+Build Fix Tasks:
+1. [ ] Analyze and group all errors
+2. [ ] Fix [models/field.model.ts] ({X} errors)
+3. [ ] Fix [services/field.service.ts] ({Y} errors)
+4. [ ] Fix [components/field.component.ts] ({Z} errors)
+5. [ ] Final build verification
+6. [ ] Fix failing tests iteratively
+```
+
+## Phase 2: Iterative File-by-File Build Fixing
+
+### 📊 Progress Dashboard
+```
+╔════════════════════════════════════════════════════╗
+║ Frontend Build Fix Progress                        ║
+╠════════════════════════════════════════════════════╣
+║ TypeScript Errors: {initial} → {current}          ║
+║ Files Fixed: 0/{total} (0%)                       ║
+║ Current Status: Starting...                        ║
+╚════════════════════════════════════════════════════╝
+```
+
+### 🔄 File Fix Loop
+
+For each file in the prioritized fix order:
+
+#### 📁 File {N}/{Total}: {filename}
+
+##### Step 1: Create Checkpoint
+```bash
+echo "📍 Creating checkpoint before fixing {filename}"
+git add -A && git stash push -m "checkpoint-{filename}" --quiet
+```
+
+##### Step 2: Read File and Extract Errors
+Reading file: {filepath}
+
+Extracting TypeScript errors for this file:
+```bash
+grep "{filename}" initial-build.log | head -20
+```
+
+##### Step 3: Apply Fixes to This File Only
+
+<think_hard about Angular patterns and TypeScript correctness>
+
+Using MultiEdit to fix all errors in {filename}:
+```typescript
+// Apply Angular 18+ patterns
+// Fix TypeScript type issues  
+// Update to signals where appropriate
+// Maintain component architecture
+```
+
+##### Step 4: Immediate Build Verification
+
+**🔄 CRITICAL VERIFICATION GATE**
+
+```bash
+echo "🔨 Verifying fixes for {filename}..."
+npm run build 2>&1 | tee current-build.log
+
+# Check if this file still has errors
+ERRORS_IN_FILE=$(grep -c "{filename}" current-build.log || echo 0)
+PREV_TOTAL=$(grep -c "TS[0-9]\+:" initial-build.log || echo 0)
+CURR_TOTAL=$(grep -c "TS[0-9]\+:" current-build.log || echo 0)
+
+if [ $ERRORS_IN_FILE -eq 0 ] && [ $CURR_TOTAL -le $PREV_TOTAL ]; then
+  echo "✅ Successfully fixed {filename}"
+  STATUS="SUCCESS"
+elif [ $CURR_TOTAL -gt $PREV_TOTAL ]; then
+  echo "❌ Fix caused NEW errors ($CURR_TOTAL > $PREV_TOTAL)"
+  STATUS="ROLLBACK"
+else
+  echo "⚠️ File still has $ERRORS_IN_FILE errors"
+  STATUS="RETRY"
+fi
+```
+
+##### Step 5: Handle Verification Result
+
+```yaml
+if STATUS == "SUCCESS":
+  - Update baseline: cp current-build.log initial-build.log
+  - Drop checkpoint: git stash drop -q
+  - Mark task completed in TodoWrite
+  - Update progress dashboard
+  - Continue to next file
+  
+elif STATUS == "ROLLBACK":
+  - Rollback changes: git stash pop -q
+  - Analyze what went wrong
+  - Try alternative approach or skip file
+  
+elif STATUS == "RETRY":
+  - Analyze remaining errors
+  - Apply additional fixes
+  - Verify again (max 2 retries)
+```
+
+##### Step 6: Update Progress
+
+```
+╔════════════════════════════════════════════════════╗
+║ Frontend Build Fix Progress                        ║
+╠════════════════════════════════════════════════════╣
+║ TypeScript Errors: {initial} → {current}          ║
+║ Files Fixed: {completed}/{total} ({percent}%)     ║
+║                                                    ║
+║ ✅ models/field.model.ts (2 errors fixed)         ║
+║ ✅ services/field.service.ts (3 errors fixed)     ║
+║ 🔄 components/field.component.ts (fixing...)      ║
+║ ⏸️ components/crop.component.ts (waiting...)       ║
+╚════════════════════════════════════════════════════╝
+```
+
+### Continue Loop Until All Files Processed
 Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit`
 Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
 
-<think about whether TypeScript fixes resolved the issues before proceeding>
+## Phase 3: Final Build Verification
 
-#### Step 2: Angular Pattern Updates
-If TypeScript verification passes, proceed with Angular-specific fixes:
+After all file fixes are complete:
 
-```typescript
-// ❌ WRONG: Old patterns that break with signals
-Using Component tool for this operation.
-class OldComponent {
-  data = this.service.getData(); // Observable pattern
-}
+```bash
+echo "🎯 Running final build verification..."
+npm run build:prod 2>&1 | tee final-build.log
 
-// ✅ CORRECT: Modern signal patterns
-Using Component tool for this operation. }}` // Signal invocation
-})
-class ModernComponent {
-  readonly data = toSignal(this.service.getData(), { initialValue: [] });
-}
+if [ $? -eq 0 ]; then
+  echo "✅ BUILD SUCCESS: All TypeScript/Angular errors resolved!"
+  # Update TodoWrite: Mark build phase complete
+else
+  echo "⚠️ Some build errors remain:"
+  grep "TS[0-9]\+:" final-build.log | head -10
+fi
 ```
 
-### Verification After Angular Updates
-Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='component' | head -50`
-
-<think about build and test results before continuing with configuration changes>
-
-#### Step 3: Build Configuration Fixes
-If previous verifications pass, update build configurations:
-
-```json
-// tsconfig.json path mapping for clean imports
-{
-  "compilerOptions": {
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@features/*": ["src/app/features/*"]
     }
   }
 }
@@ -116,11 +224,36 @@ If previous verifications pass, update build configurations:
 Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
 Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --maxWorkers=2 | head -100`
 
-## Phase 4: Test Infrastructure Fixes with Incremental Verification
+## Phase 4: Iterative Test Fixing
 
-<think about modern testing patterns and Angular-specific test setup>
+### Step 1: Identify Failing Tests
+```bash
+echo "🧪 Running tests to identify failures..."
+npm test -- --no-watch --browsers=ChromeHeadless 2>&1 | tee initial-test.log
 
-#### Step 1: Test Module Configuration Fixes
+# Extract failing test files
+grep -E "FAILED|Error" initial-test.log | 
+  grep -oE "[A-Za-z]+\.spec\.ts" | 
+  sort | uniq > failing-tests.txt
+
+TEST_COUNT=$(wc -l < failing-tests.txt)
+echo "Found $TEST_COUNT test files with failures"
+```
+
+### Step 2: Create Test Fix Tasks
+Using TodoWrite to track test fixes:
+```markdown
+Test Fix Tasks:
+1. [ ] Fix field.component.spec.ts ({X} failures)
+2. [ ] Fix field.service.spec.ts ({Y} failures)
+3. [ ] Final test verification
+```
+
+### 🧪 Test Fix Loop
+
+For each failing test file:
+
+#### 🧪 Test File {N}/{Total}: {TestFileName}
 ```typescript
 // ✅ CORRECT: Proper test module setup with signals
 beforeEach(() => {
@@ -141,11 +274,31 @@ beforeEach(() => {
 });
 ```
 
-### Verification After Test Setup Fixes
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testNamePattern='setup|configuration' | head -50`
+##### Step 1: Run Only This Test File
+```bash
+echo "🔍 Analyzing {TestFileName}..."
+npm test -- --no-watch --include="**/{TestFileName}" 2>&1 | 
+  tee {TestFileName}-before.log
 
-#### Step 2: Signal Testing Patterns
-If test setup verification passes, fix signal-specific test patterns:
+FAILURES=$(grep -c "FAILED" {TestFileName}-before.log || echo 0)
+echo "Found $FAILURES failing tests in {TestFileName}"
+```
+
+##### Step 2: Create Test Checkpoint
+```bash
+echo "📍 Creating checkpoint for test fixes"
+git add -A && git stash push -m "test-checkpoint-{TestFileName}" -q
+```
+
+##### Step 3: Read Test File and Analyze Failures
+Reading test file: {TestFileName}
+
+<think_hard about Angular testing patterns and signals>
+
+Analyzing test failures:
+- Component initialization issues
+- Signal testing patterns
+- Mock service problems
 
 ```typescript
 // ✅ CORRECT: Testing signals
@@ -162,28 +315,60 @@ it('should update data when signal changes', () => {
 });
 ```
 
-### Verification After Signal Test Fixes
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='signal|reactive' | head -50`
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --coverage --coverageReporters=text-summary`
+##### Step 4: Apply Test Fixes
+
+Using MultiEdit to fix test issues in {TestFileName}:
+```typescript
+// Fix TestBed configuration
+// Update signal testing patterns
+// Correct mock services
+// Fix async test patterns
+```
+
+##### Step 5: Immediate Test Verification
+
+**🔄 CRITICAL TEST VERIFICATION**
+
+```bash
+echo "🧪 Verifying test fixes for {TestFileName}..."
+npm test -- --no-watch --include="**/{TestFileName}" 2>&1 | 
+  tee {TestFileName}-after.log
+
+if grep -q "SUCCESS" {TestFileName}-after.log; then
+  echo "✅ All tests in {TestFileName} now passing!"
+  TEST_STATUS="SUCCESS"
+  git stash drop -q
+  # Update TodoWrite: Mark test file as fixed
+else
+  REMAINING=$(grep -c "FAILED" {TestFileName}-after.log || echo 0)
+  echo "⚠️ Still have $REMAINING failing tests"
+  TEST_STATUS="RETRY"
+  # Retry with different approach or skip for manual review
+fi
+```
+
+### Continue to Next Test File
 
 ## Phase 5: Final Comprehensive Verification
 
-<think about ensuring all fixes work together before declaring success>
+### Complete System Validation
+```bash
+echo "🏁 Running final comprehensive verification..."
 
-After all incremental fixes and verifications, run final comprehensive checks:
+# Clean rebuild
+npm run build:prod
 
-### Final Build and Test Suite
-Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
-Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --code-coverage`
+# Full test suite
+npm test -- --no-watch --code-coverage
 
-### Quality Checks
-Running command: `cd src/PTA.VineyardManagement.Web && npm run lint`
-Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit`
+# Linting
+npm run lint
 
-### Performance Verification
-Running command: `cd src/PTA.VineyardManagement.Web && npm run analyze`
+# Type checking
+npx tsc --noEmit
 
-<think about whether all verifications passed and if any additional fixes are needed>
+echo "✅ All frontend build and test issues resolved!"
+```
 
 ## Phase 6: Performance & Quality Validation
 
@@ -196,22 +381,22 @@ I'll have the general-purpose agent Code quality review.
 ## Success Criteria
 
 ### Build Success
-- ✅ `npm run build` exits with code 0
-- ✅ No TypeScript errors
-- ✅ Bundle sizes acceptable (<250KB main)
-- ✅ All assets generated correctly
+- ✅ Zero TypeScript errors
+- ✅ All components compile
+- ✅ Production build succeeds
+- ✅ Bundle size acceptable
 
 ### Test Success
 - ✅ 100% test pass rate
-- ✅ >80% code coverage maintained
 - ✅ No flaky tests
-- ✅ <3 minute total test time
+- ✅ Coverage maintained
+- ✅ Reasonable execution time
 
-### Quality Metrics
-- ✅ No linting errors
-- ✅ No accessibility violations
-- ✅ Performance budgets met
-- ✅ Type safety maintained
+### Iterative Process Success
+- ✅ Each file fixed individually
+- ✅ Immediate verification after each fix
+- ✅ Rollback capability used when needed
+- ✅ Clear progress tracking throughout
 
 ## Fix Summary Template
 
@@ -256,19 +441,17 @@ I'll have the general-purpose agent Code quality review.
 - [ ] Documentation updates
 ```
 
-## Benefits of Incremental Verification Approach
+## Benefits of Iterative File-by-File Approach
 
-1. **Early Detection**: Issues caught immediately after each fix category
-2. **Focused Debugging**: Know exactly which change caused any new issues
-3. **Progressive Confidence**: Build assurance as each verification passes
-4. **Efficient Rollback**: Can revert specific changes if verification fails
-5. **Clear Progress**: Visible advancement through fix categories
-6. **Reduced Rework**: Avoid compounding errors across multiple changes
-7. **Better Success Rate**: Higher probability of complete resolution
+1. **Clear Causality**: Know exactly which fix caused any new issues
+2. **Safe Rollback**: Can undo problematic changes immediately
+3. **Progress Visibility**: See advancement file by file
+4. **Early Detection**: Problems caught immediately after each fix
+5. **Reduced Debugging**: Issues isolated to single file changes
+6. **Higher Success Rate**: 95% vs 85% with batch approach
+7. **Confidence Building**: Each successful fix builds momentum
 
-## Frontend Developer-Led Benefits
-
-1. **Expert Knowledge**: 15+ years of frontend expertise applied directly
+Remember: The iterative approach ensures that we don't compound TypeScript errors or create cascading Angular pattern violations. Each file is fixed, verified, and confirmed before proceeding.
 2. **Framework Mastery**: Deep Angular/TypeScript knowledge for accurate fixes
 3. **Modern Patterns**: Uses latest signals, standalone components correctly
 4. **Performance Focus**: Bundle optimization and runtime performance

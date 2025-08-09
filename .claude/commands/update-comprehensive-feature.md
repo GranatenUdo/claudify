@@ -1,10 +1,21 @@
 ---
+name: update-comprehensive-feature
+model: opus
+think-mode: think_hard
 description: Update existing feature across entire stack with comprehensive analysis, testing, and validation
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature update description (e.g., "update authentication to support OAuth 2.0")
 ---
 
 # 🔄 Update Comprehensive Feature: $ARGUMENTS
+
+## Optimization Features
+- **Multi-Agent Orchestration**: Parallel analysis by specialized Frontend, Backend, and Security agents
+- **Backward Compatibility**: Careful preservation of existing functionality during updates
+- **Impact Analysis**: Deep assessment of all affected components and integrations
+- **Progressive Enhancement**: Incremental updates with feature flags and gradual rollout
+- **Comprehensive Testing**: 100% test coverage with unit, integration, and end-to-end validation
+- **Risk Mitigation**: Multiple validation checkpoints and rollback strategies
 
 ## 🧠 OPUS 4 ENHANCED THINKING MODE
 

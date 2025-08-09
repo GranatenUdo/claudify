@@ -1,10 +1,19 @@
 ---
+name: add-backend-feature
 description: Create backend API feature with domain-driven design and comprehensive agent analysis
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "harvest scheduling with weather integration")
+model: opus
+think-mode: think_hard
 ---
 
 # 🏗️ Add Backend Feature: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Security and architecture planning run simultaneously
+- **Extended thinking**: Yes - Domain modeling requires deep analysis
+- **Confidence scoring**: Yes - Architecture decisions include confidence levels
+- **Subagent coordination**: Yes - Specialized agents for each phase
 
 ## Quick Context
 Create a new backend feature with proper domain modeling, security validation, and test coverage following DDD principles and production standards.
@@ -41,8 +50,7 @@ real-time-updates: true|false (default: true)
 
 ## Phase 1: Security & Architecture Planning (OPTIMIZED)
 
-
-
+<think_harder about security implications and architectural patterns>
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 ```bash

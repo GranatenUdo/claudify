@@ -1,10 +1,20 @@
 ---
+name: quick-research
+model: opus
+think-mode: standard
 description: Perform focused research on specific technical topics or implementation approaches
 allowed-tools: [Task, Read, WebSearch, TodoWrite]
 argument-hint: research topic (e.g., "best practices for real-time agricultural data streaming")
 ---
 
 # 🔍 Quick Research: $ARGUMENTS
+
+## Optimization Features
+
+- **Parallel execution**: No - Focused single-track research approach for rapid insights without coordination overhead
+- **Extended thinking**: No - Streamlined analysis optimized for speed and concise findings delivery
+- **Confidence scoring**: Yes - Research confidence levels and source reliability assessments included in findings
+- **Subagent coordination**: No - Single-agent execution for minimal latency and focused research scope
 
 ## Quick Context
 Get rapid, focused insights on specific technical questions without the overhead of comprehensive analysis.

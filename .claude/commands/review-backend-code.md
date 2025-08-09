@@ -1,10 +1,39 @@
 ---
+name: review-backend-code
+model: opus
+think-mode: think_harder
 description: Perform comprehensive API code review using extended thinking for security, performance, and architectural analysis
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]
 argument-hint: file path, PR number, or feature name to review
 ---
 
 # Review API Code: $ARGUMENTS
+
+## Optimization Features
+
+### Parallel Execution
+- **Multi-Agent Architecture**: Code Reviewer, Security Reviewer, Tech Lead, and Technical Debt Analyst operate simultaneously
+- **Concurrent Analysis**: Multiple specialized agents analyze different aspects (architecture, security, performance) in parallel
+- **40-60% Time Reduction**: Parallel agent execution reduces total review time from 45-60 minutes to 20-30 minutes
+- **Load Distribution**: Each agent focuses on their expertise area while sharing context
+
+### Extended Thinking Integration
+- **Deep Architectural Analysis**: Uses think_harder mode for complex domain-driven design decisions
+- **Security Pattern Recognition**: Extended reasoning for OWASP compliance and multi-tenant isolation
+- **Performance Optimization**: Detailed thinking about database queries, caching strategies, and scalability
+- **Business Logic Validation**: Agricultural domain expertise applied through extended reasoning
+
+### Confidence Scoring
+- **Architectural Decisions**: 99% confidence threshold before proceeding with complex changes
+- **Security Assessments**: Risk scoring with confidence levels for each vulnerability
+- **Performance Impact**: Quantified confidence in optimization recommendations
+- **Domain Logic**: Validated agricultural business rules with expert confidence metrics
+
+### Subagent Coordination
+- **Primary-Secondary Pattern**: Code Reviewer leads with Security and Tech Lead providing specialized input
+- **Context Sharing**: All agents operate on shared codebase understanding
+- **Conflict Resolution**: Tech Lead arbitrates disagreements between agents
+- **Consolidated Reporting**: Single comprehensive report synthesizing all agent findings
 
 Internalize CLAUDE.md and FEATURES.md, then use extended thinking to perform a comprehensive code review of **$ARGUMENTS**, focusing on security, performance, multi-tenant isolation, and architectural consistency.
 

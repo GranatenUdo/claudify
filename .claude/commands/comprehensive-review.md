@@ -1,10 +1,19 @@
 ---
+name: comprehensive-review
 description: Perform holistic analysis using all specialized agents for maximum insight and quality
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
 argument-hint: feature name, PR number, or directory to review comprehensively
+model: opus
+think-mode: think_harder
 ---
 
 # 🔍 Comprehensive Review: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - All agents analyze simultaneously (40-60% faster)
+- **Extended thinking**: Yes - Complex synthesis requires deep analysis
+- **Confidence scoring**: Yes - Each finding includes confidence levels
+- **Subagent coordination**: Yes - Proper subagent_type for each Task invocation
 
 ## Quick Context
 Use this command for critical features, major PRs, or architectural decisions that require multi-perspective analysis from all specialized agents.
@@ -84,7 +93,7 @@ I'll update the task list to track our progress.
 
 Initiating comprehensive analysis across all domains simultaneously:
 
-Using the Visual Designer agent to: Perform deep UX analysis of $ARGUMENTS:
+Using Task with visual-designer subagent to: Perform deep UX analysis of $ARGUMENTS:
 1. **Accessibility Audit**
    - WCAG 2.1 AA compliance check
    - Keyboard navigation assessment
@@ -110,11 +119,12 @@ Using the Visual Designer agent to: Perform deep UX analysis of $ARGUMENTS:
    - Data visualization effectiveness
 
 Provide specific improvements with mockups where relevant
-I'll have the general-purpose agent Architecture and scalability analysis.
-I'll have the general-purpose agent Security and compliance audit.
-I'll have the general-purpose agent Domain research and best practices.
-I'll have the Technical Debt Analyst agent Code simplification opportunities.
-I'll have the general-purpose agent Detailed code quality review.
+
+Using Task with tech-lead subagent for: Architecture and scalability analysis.
+Using Task with security-reviewer subagent for: Security and compliance audit.
+Using Task with researcher subagent for: Domain research and best practices.
+Using Task with technical-debt-analyst subagent for: Code simplification opportunities.
+Using Task with code-reviewer subagent for: Detailed code quality review.
 
 ### 🤝 Synthesis Phase
 
@@ -125,26 +135,26 @@ I'll update the task list to track our progress.
 
 Now that all agents have completed their analyses in parallel, I'll synthesize their findings:
 
-I'll have the general-purpose agent Synthesize all specialist findings.
+Using Task with tech-lead subagent to: Synthesize all specialist findings with confidence scores.
 
 ## Phase 3: Consolidated Findings
 
-<think about presenting insights in the most actionable way>
+<think_harder about presenting insights with confidence scores and priority levels>
 
 
 ### Task Progress Update
 I'll update the task list to track our progress.
 
-### Executive Summary Matrix
+### Executive Summary Matrix with Confidence Scores
 
 ```markdown
 ## 🎯 Priority Action Matrix
 
 ### 🔴 Critical (Do Immediately)
-| Finding | Agent | Impact | Effort | Owner |
-|---------|-------|--------|--------|-------|
-| SQL Injection Risk | Security | Critical | Low | Backend Team |
-| Missing Organization Filter | Security | Critical | Low | Backend Team |
+| Finding | Agent | Impact | Effort | Confidence | Owner |
+|---------|-------|--------|--------|------------|-------|
+| SQL Injection Risk | Security | Critical | Low | 0.95 | Backend Team |
+| Missing Organization Filter | Security | Critical | Low | 0.92 | Backend Team |
 
 ### 🟡 High Priority (Do This Sprint)
 | Finding | Agent | Impact | Effort | Owner |

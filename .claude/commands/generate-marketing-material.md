@@ -1,4 +1,7 @@
 ---
+name: generate-marketing-material
+model: opus
+think-mode: think_hard
 description: Transform technical features into compelling marketing materials that wow potential customers and drive sales
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]
 argument-hint: material type and audience (e.g., "brochure for enterprise customers" or "email campaign for farmers")
@@ -6,7 +9,12 @@ argument-hint: material type and audience (e.g., "brochure for enterprise custom
 
 # 🚀 Generate Marketing Material: $ARGUMENTS
 
+## Optimization Features
 
+- **Parallel execution**: Yes - Feature Analyzer, Value Translator, Marketing Strategist, and Sales Genius agents work simultaneously for comprehensive content creation
+- **Extended thinking**: Yes - Strategic marketing requires deep analysis of customer psychology, value proposition development, and competitive positioning
+- **Confidence scoring**: Yes - Marketing effectiveness metrics including message clarity, emotional impact, and conversion potential scores
+- **Subagent coordination**: Yes - Multi-agent collaboration between feature analysis, value translation, content strategy, and sales optimization specialists
 
 **Marketing Directive**: Transform our technical excellence into irresistible customer value propositions that showcase our vineyard management solution as the industry-leading choice.
 

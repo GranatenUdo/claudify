@@ -1,4 +1,7 @@
 ---
+name: create-command-and-or-agent
+model: opus
+think-mode: think_harder
 description: Intelligently analyze requirements and generate optimized commands, agents, hooks, and tools that maximize Opus 4's capabilities through deep reasoning and multi-agent collaboration
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebSearch, WebFetch, Bash]
 argument-hint: Describe what you want to achieve (e.g., "analyze database performance bottlenecks" or "validate accessibility compliance for React components")
@@ -6,6 +9,14 @@ opus4-optimization: maximum
 ---
 
 # 🧠 Intelligent Command & Agent Generator
+
+## Optimization Features
+- **Meta-Reasoning Engine**: Advanced pattern analysis for optimal component architecture
+- **Domain Research Integration**: Comprehensive best practice discovery and synthesis
+- **Multi-Agent Design**: Orchestrated collaboration between specialized agent personas
+- **Template Intelligence**: Dynamic component generation with evolution capabilities
+- **Quality Assurance Pipeline**: Multi-phase validation and optimization review
+- **Continuous Learning**: Self-improving components with usage analytics integration
 
 ## OPUS 4 MAXIMUM ACTIVATION - META-REASONING MODE
 

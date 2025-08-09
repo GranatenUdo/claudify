@@ -1,10 +1,19 @@
 ---
+name: add-frontend-feature
 description: Create sophisticated UI features with Frontend Developer expertise, accessibility focus and exceptional user experience
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "field management dashboard with real-time updates")
+model: opus
+think-mode: think_hard
 ---
 
 # 🎨 Add UI Feature: $ARGUMENTS
+
+## 🚀 Optimization Features
+- **Parallel execution**: Yes - Multiple agents work simultaneously
+- **Extended thinking**: Yes - UI/UX design requires deep consideration
+- **Confidence scoring**: Yes - Design decisions include confidence metrics
+- **Subagent coordination**: Yes - Frontend, Visual, and UX agents collaborate
 
 ## Phase 0: Task Management Setup
 

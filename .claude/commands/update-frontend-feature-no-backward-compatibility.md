@@ -1,10 +1,21 @@
 ---
+name: update-frontend-feature-no-backward-compatibility
+model: opus
+think-mode: think_harder
 description: Replace frontend feature entirely with modern UI framework patterns, removing all legacy code
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: frontend feature replacement description (e.g., "replace jQuery UI with modern Angular components")
 ---
 
 # 🔥 Replace Frontend Feature (No Compatibility): $ARGUMENTS
+
+## Optimization Features
+- **Extended Reasoning**: Deep architectural analysis for complete modernization
+- **Signals-Only Architecture**: Pure Angular 19 signal-based state management
+- **Modern CSS Layers**: Container queries, CSS Grid, and advanced CSS features
+- **Performance Optimization**: Vite builds, service workers, and Web Workers
+- **Zero Legacy Support**: Modern browsers only with cutting-edge APIs
+- **Comprehensive Testing**: Visual regression, accessibility, and property-based tests
 
 ## ⚠️ RADICAL FRONTEND MODERNIZATION
 
