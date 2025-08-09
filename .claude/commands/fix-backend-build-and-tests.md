@@ -6,44 +6,31 @@ argument-hint: optional specific error or issue description (e.g., "dependency i
 
 # 🧠 Fix Backend Build & Tests: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - ITERATIVE THINKING MODE
-<think harder about C# compilation errors, test failures, and architectural issues. Focus on understanding domain requirements and business logic before implementing solutions>
+
 
 **Directive**: Fix backend build and test failures through iterative analysis, parallel operations, and deep understanding of problem requirements. Tests verify correctness—they don't define the solution. Think deeply about the correct algorithm, domain logic, and architectural patterns.
 
 ## Phase 0: Multi-Agent Initial Analysis
 
 ### Code Architecture Assessment
-I'll invoke the Code Reviewer agent for this analysis.
+I'll invoke the Code Reviewer
+ agent for this analysis.
 
-@Task(description="Code Reviewer analysis", prompt="Analyze backend build/test failures for "$ARGUMENTS":
-1. Review compilation error patterns
-2. Identify architectural violations
-3. Check DDD pattern compliance
-4. Analyze dependency issues
-5. Review test failure patterns
-6. Identify code quality issues
-7. Assess technical debt impact
-Provide categorized error analysis and fix priorities
-", subagent_type="Code Reviewer")
+I'll have the Code Reviewer
+ agent Code Reviewer
+ analysis.
 
 ### Security & Multi-Tenancy Check
-I'll invoke the Security Reviewer agent for this analysis.
+I'll invoke the Security Reviewer
+ agent for this analysis.
 
-@Task(description="Security Reviewer analysis", prompt="Assess security implications of build/test failures:
-1. Check for multi-tenant isolation violations
-2. Review organization filtering issues
-3. Identify authentication/authorization problems
-4. Assess data leakage risks
-5. Check for SQL injection vulnerabilities
-6. Review secret management issues
-7. Evaluate compliance impacts
-Provide security-critical fixes that must be prioritized
-", subagent_type="Security Reviewer")
+I'll have the Security Reviewer
+ agent Security Reviewer
+ analysis.
 
 ## Phase 1: Initial Assessment & Parallel Discovery
 
-<think step-by-step about what information we need to gather for .NET backend>
+
 
 ### Parallel Information Gathering
 Execute these operations simultaneously for maximum efficiency:
@@ -96,21 +83,15 @@ dotnet build src/PTA.VineyardManagement.Infrastructure --no-dependencies &
 wait
 ```
 
-<think harder about the build results and architectural implications>
+
 
 ### Step 1.5: Research Build Error Patterns
-I'll invoke the Researcher agent for this analysis.
+I'll invoke the Researcher
+ agent for this analysis.
 
-@Task(description="Researcher analysis", prompt="Research .NET build error patterns:
-1. Analyze common C# 12/.NET 9 compilation issues
-2. Research dependency conflict resolution strategies
-3. Study EF Core 9 migration problems
-4. Investigate multi-project solution issues
-5. Research async/await pitfalls
-6. Study DI container registration patterns
-7. Find proven solutions for similar errors
-Provide research-backed fix strategies
-", subagent_type="Researcher")
+I'll have the Researcher
+ agent Researcher
+ analysis.
 
 ### Step 2: Reflect on Build Results
 After receiving build output, carefully analyze:
@@ -138,18 +119,12 @@ Given the agricultural domain and multi-tenant requirements, which approach alig
 ```
 
 ### Step 3.5: Tech Lead Architecture Validation
-I'll invoke the Tech Lead agent for this analysis.
+I'll invoke the Tech Lead
+ agent for this analysis.
 
-@Task(description="Tech Lead analysis", prompt="Validate architectural approach for fixes:
-1. Review DDD boundary adherence
-2. Assess clean architecture compliance
-3. Evaluate scalability implications
-4. Check performance impact
-5. Review technical debt introduced
-6. Validate microservice boundaries
-7. Assess deployment complexity
-Provide architectural guidance and approval
-", subagent_type="Tech Lead")
+I'll have the Tech Lead
+ agent Tech Lead
+ analysis.
 
 ### Step 4: Implement Domain-Driven Fixes
 <think about correct domain modeling and business logic, not just compilation fixes>
@@ -251,7 +226,7 @@ Fix Group D: API Layer
 ```
 
 ### Step 6: Multi-Tenant Security Verification
-<think harder about organization isolation>
+
 
 ```csharp
 // Every repository query MUST filter by OrganizationId
@@ -281,21 +256,15 @@ wait
 ```
 
 ### Step 1.5: Domain Logic Analysis
-I'll invoke the Researcher agent for this analysis.
+I'll invoke the Researcher
+ agent for this analysis.
 
-@Task(description="Researcher analysis", prompt="Analyze domain logic in failing tests:
-1. Research agricultural business rules
-2. Study vineyard management best practices
-3. Understand crop lifecycle requirements
-4. Research yield calculation formulas
-5. Study irrigation science principles
-6. Analyze harvest optimization strategies
-7. Research compliance requirements
-Provide domain-correct implementations
-", subagent_type="Researcher")
+I'll have the Researcher
+ agent Researcher
+ analysis.
 
 ### Step 2: Deep Test Failure Analysis
-<think harder about why tests fail in agricultural domain context>
+
 
 #### Test Failure Categories
 1. **Business Logic Errors**: Domain rules not correctly implemented
@@ -438,18 +407,12 @@ public async Task Service_Should_Never_Return_Data_From_Other_Organizations()
 ## Phase 5: Documentation & Prevention
 
 ### Code Simplification Review
-I'll invoke the Code Simplifier agent for this analysis.
+I'll invoke the Code Simplifier
+ agent for this analysis.
 
-@Task(description="Code Simplifier analysis", prompt="Identify simplification opportunities in fixes:
-1. Over-engineered solutions
-2. Complex dependency graphs
-3. Redundant abstractions
-4. Unnecessary async complexity
-5. Over-complicated test setups
-6. Pattern misapplications
-7. Consolidation opportunities
-Provide simpler alternatives where appropriate
-", subagent_type="Code Simplifier")
+I'll have the Code Simplifier
+ agent Code Simplifier
+ analysis.
 
 ### Document Root Causes & Solutions
 ```markdown
@@ -543,18 +506,12 @@ Should I proceed or would you like to review the architectural approach?
 
 ## Phase 6: Final Multi-Agent Validation
 
-I'll invoke the general-purpose agent for this analysis.
+I'll invoke the general-purpose
+ agent for this analysis.
 
-@Task(description="general-purpose analysis", prompt="Perform final validation of all fixes:
-1. Consolidate all agent findings
-2. Verify all critical issues addressed
-3. Confirm architectural integrity
-4. Validate security compliance
-5. Check performance benchmarks
-6. Review test coverage
-7. Generate deployment readiness report
-Provide go/no-go recommendation
-", subagent_type="general-purpose")
+I'll have the general-purpose
+ agent general-purpose
+ analysis.
 
 ## Opus 4 Thinking Patterns with Multi-Agent Enhancement
 
@@ -618,7 +575,7 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```

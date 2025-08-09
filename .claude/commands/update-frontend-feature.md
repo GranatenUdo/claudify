@@ -2,16 +2,12 @@
 description: Update frontend feature with modern UI patterns, accessibility, and comprehensive testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: frontend feature update description (e.g., "update dashboard with real-time data visualization")
-agent-dependencies: [Frontend Developer, Visual Designer, UX Reviewer, Code Reviewer, Test Quality Analyst]
-complexity: moderate
-estimated-time: 20-30 minutes
-category: development
 ---
 
 # 🎨 Update Frontend Feature: $ARGUMENTS
 
 ## 🧠 OPUS 4 FRONTEND EXCELLENCE MODE
-<think harder about creating exceptional user experiences while maintaining backward compatibility and achieving 100% test success>
+
 
 ### Frontend Modernization Principles
 - **User Experience First**: Performance, accessibility, delight
@@ -22,105 +18,44 @@ category: development
 
 ## Phase 0: Frontend Discovery & Planning
 
-<think step-by-step about understanding current UI implementation>
+
 
 ### Frontend Component Discovery
 ```bash
 # Parallel frontend discovery
-@Glob(pattern="**/components/*$FEATURE*.*")
-@Glob(pattern="**/services/*$FEATURE*.*")
-@Glob(pattern="**/styles/*$FEATURE*.*")
-@Glob(pattern="**/*$FEATURE*.spec.ts")
-@Grep(pattern="@Component.*$FEATURE|class.*$FEATURE.*Component", output_mode="files_with_matches")
+Finding files matching: **/components/*$FEATURE*.*
+Finding files matching: **/services/*$FEATURE*.*
+Finding files matching: **/styles/*$FEATURE*.*
+Finding files matching: **/*$FEATURE*.spec.ts
+Searching for pattern: @Component.*$FEATURE|class.*$FEATURE.*Component
 ```
 
 ### Frontend Update Task List
-@TodoWrite(todos=[
-  {id: "1", content: "Analyze current UI implementation", status: "pending", priority: "high"},
-  {id: "2", content: "Identify component dependencies", status: "pending", priority: "high"},
-  {id: "3", content: "Update component architecture", status: "pending", priority: "high"},
-  {id: "4", content: "Enhance UI/UX design", status: "pending", priority: "high"},
-  {id: "5", content: "Update state management", status: "pending", priority: "high"},
-  {id: "6", content: "Improve accessibility", status: "pending", priority: "high"},
-  {id: "7", content: "Optimize performance", status: "pending", priority: "high"},
-  {id: "8", content: "Generate unit tests", status: "pending", priority: "high"},
-  {id: "9", content: "Generate E2E tests", status: "pending", priority: "high"},
-  {id: "10", content: "Achieve 100% test success", status: "pending", priority: "high"}
-])
+I'll update the task list to track our progress.
 
 ## Phase 1: Parallel Frontend Analysis
 
-<think harder about UI/UX excellence and technical implementation>
+
 
 ### Comprehensive Frontend Analysis
 
-@Task(description="Frontend architecture analysis", prompt="Analyze frontend architecture for updating $ARGUMENTS:
-1. Component hierarchy and composition
-2. State management patterns
-3. Data flow architecture
-4. Performance bottlenecks
-5. Bundle size analysis
-6. Code splitting opportunities
-7. Lazy loading potential
-8. Memory leak risks
-9. Render optimization needs
-10. Dependency update requirements
-Provide technical implementation plan", subagent_type="Frontend Developer")
+I'll have the Frontend Developer agent Frontend architecture analysis.
 
-@Task(description="Visual design enhancement", prompt="Design visual improvements for $ARGUMENTS:
-1. Color palette refinement
-2. Typography hierarchy
-3. Spacing and rhythm
-4. Animation and transitions
-5. Icon system updates
-6. Dark mode support
-7. Responsive breakpoints
-8. Loading states design
-9. Error states design
-10. Empty states design
-Provide design system updates with examples", subagent_type="Visual Designer")
+I'll have the Visual Designer agent Visual design enhancement.
 
-@Task(description="UX and accessibility audit", prompt="Audit UX and accessibility for $ARGUMENTS:
-1. WCAG 2.1 AA compliance
-2. Keyboard navigation
-3. Screen reader support
-4. Focus management
-5. Color contrast ratios
-6. Touch target sizes
-7. Form validation UX
-8. Error recovery flows
-9. Loading performance perception
-10. Mobile usability
-Provide improvement recommendations", subagent_type="Visual Designer")
+I'll have the Visual Designer agent UX and accessibility audit.
 
-@Task(description="Frontend code quality review", prompt="Review frontend code quality for $ARGUMENTS:
-1. Component complexity
-2. Prop drilling issues
-3. State management patterns
-4. TypeScript usage
-5. Code duplication
-6. Performance anti-patterns
-7. Memory leak risks
-8. Bundle size optimization
-9. Testing patterns
-10. Documentation coverage
-Provide refactoring priorities", subagent_type="general-purpose")
+I'll have the general-purpose agent Frontend code quality review.
 
 ## Phase 2: Component Architecture Update
 
-<think step-by-step about modernizing components while maintaining compatibility>
+
 
 ### Modern Angular Component Structure
 
 ```typescript
 // Updated component with backward compatibility
-@Component({
-    selector: 'app-feature',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, SharedModule],
-    template: `
-        <!-- Progressive enhancement -->
-        <div class="feature-container" [class.legacy-mode]="legacyMode()">
+Using Component tool for this operation.">
             <!-- Modern implementation with signals -->
             @if (!legacyMode()) {
                 <div class="modern-ui">
@@ -224,13 +159,13 @@ export class FeatureComponent implements OnInit {
 
 ## Phase 3: Enhanced State Management
 
-<think harder about state management patterns>
+
 
 ### Modern State with Signals
 
 ```typescript
 // Feature state service
-@Injectable({ providedIn: 'root' })
+Using Injectable tool for this operation.
 export class FeatureStateService {
     // State signals
     private itemsSignal = signal<Item[]>([]);
@@ -304,7 +239,7 @@ export class FeatureStateService {
 
 ## Phase 4: UI/UX Enhancements
 
-<think step-by-step about visual and interaction improvements>
+
 
 ### Enhanced Styles with CSS Variables
 
@@ -406,7 +341,7 @@ export class FeatureStateService {
 
 ## Phase 5: Accessibility Improvements
 
-<think harder about inclusive design>
+
 
 ### ARIA and Keyboard Navigation
 
@@ -499,7 +434,7 @@ handleKeyboardNavigation(event: KeyboardEvent, currentIndex: number) {
 
 ## Phase 6: Comprehensive Frontend Testing
 
-<think harder about achieving 100% test success>
+
 
 ### Unit Tests with 100% Coverage
 
@@ -631,13 +566,13 @@ describe('Feature E2E Tests', () => {
 
 ## Phase 7: Performance Optimization
 
-<think step-by-step about frontend performance>
+
 
 ### Performance Enhancements
 
 ```typescript
 // Optimized service with caching
-@Injectable({ providedIn: 'root' })
+Using Injectable tool for this operation.
 export class FeatureService {
     private cache = new Map<string, CacheEntry>();
     private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -677,13 +612,7 @@ export class FeatureService {
 }
 
 // Virtual scrolling for large lists
-@Component({
-    template: `
-        <cdk-virtual-scroll-viewport 
-            itemSize="60" 
-            class="feature-viewport"
-        >
-            <div *cdkVirtualFor="let item of items(); trackBy: trackById">
+Using Component tool for this operation.; trackBy: trackById">
                 <app-feature-item [item]="item" />
             </div>
         </cdk-virtual-scroll-viewport>
@@ -694,7 +623,7 @@ export class VirtualScrollFeature { }
 
 ## Phase 8: Validation Loop
 
-<think harder about ensuring 100% success>
+
 
 ### Continuous Frontend Validation
 
@@ -808,9 +737,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Validation

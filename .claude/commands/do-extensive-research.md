@@ -2,10 +2,6 @@
 description: Conduct deep technical research with multi-agent analysis and extended thinking
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
 argument-hint: research topic or technical question
-agent-dependencies: [Researcher, Tech Lead, Security Reviewer, Code Reviewer, Feature Analyzer, general-purpose]
-complexity: moderate
-estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
-category: analysis
 ---
 
 # 🧠 Deep Research Analysis: $ARGUMENTS
@@ -13,16 +9,9 @@ category: analysis
 ## Phase 0: Task Management Setup
 
 ### 📋 TodoWrite Task Management
-<think step-by-step about organizing the research process>
 
-@TodoWrite(todos=[
-  {id: "1", content: "Define research scope and questions", status: "in_progress", priority: "high"},
-  {id: "2", content: "Parallel information gathering", status: "pending", priority: "high"},
-  {id: "3", content: "Multi-agent analysis", status: "pending", priority: "high"},
-  {id: "4", content: "Pattern recognition", status: "pending", priority: "high"},
-  {id: "5", content: "Synthesize findings", status: "pending", priority: "high"},
-  {id: "6", content: "Generate recommendations", status: "pending", priority: "high"}
-])
+
+I'll update the task list to track our progress.
 
 ### 📊 Agent Specialization Matrix
 
@@ -33,14 +22,13 @@ category: analysis
 | Best Practices | Researcher | Tech Lead | ✅ Yes |
 | Industry | Researcher | - | ❌ No |
 
-## OPUS 4 ACTIVATION - EXTENDED THINKING MODE
-<think harder about the research topic from multiple perspectives - technical, business, operational, and strategic implications>
+
 
 **Research Directive**: Conduct comprehensive analysis of "$ARGUMENTS" using deep interleaved thinking to uncover insights, patterns, and actionable recommendations. Leverage Opus 4's advanced reasoning capabilities to explore complex interconnections and provide strategic guidance.
 
 ## Phase 1: Research Scope Definition (Deep Reasoning)
 
-<think step-by-step about the research dimensions and boundaries>
+
 
 ### Initial Analysis Framework
 Execute parallel research streams:
@@ -60,21 +48,21 @@ Execute parallel research streams:
 
 ## Phase 2: Information Gathering (Parallel Analysis)
 
-<think harder about efficient information gathering strategies>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 1 to completed, task 2 to in_progress */])
+I'll update the task list to track our progress.
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 ```bash
 # ✅ OPTIMAL: All research operations run in parallel
-@Grep(pattern="$ARGUMENTS", output_mode="files_with_matches")
-@Glob(pattern="**/*$ARGUMENTS*.*")
-@WebSearch(query="$ARGUMENTS best practices 2025")
-@WebSearch(query="$ARGUMENTS security considerations")
-@Read(file_path="README.md")
-@Read(file_path="ARCHITECTURE.md")
-@Bash(command="git log --grep='$ARGUMENTS' --oneline -20")
+Searching for pattern: $ARGUMENTS
+Finding files matching: **/*$ARGUMENTS*.*
+Searching the web for: $ARGUMENTS best practices 2025
+Searching the web for: $ARGUMENTS security considerations
+Reading file: README.md
+Reading file: ARCHITECTURE.md
+Running command: `git log --grep='$ARGUMENTS' --oneline -20`
 ```
 
 ### Codebase Analysis
@@ -89,28 +77,9 @@ Parallel searches to understand existing patterns:
 ### Parallel Multi-Agent Research
 <think about credible sources and latest developments>
 
-@Task(description="Technical research", prompt="Research technical aspects of $ARGUMENTS:
-1. Current implementation patterns
-2. Performance benchmarks
-3. Scalability considerations
-4. Integration approaches
-5. Common pitfalls
-6. Success stories
-Provide evidence-based findings", subagent_type="general-purpose")
-@Task(description="Security research", prompt="Analyze security implications of $ARGUMENTS:
-1. Known vulnerabilities
-2. Attack vectors
-3. Mitigation strategies
-4. Compliance requirements
-5. Best practices
-Provide security assessment", subagent_type="general-purpose")
-@Task(description="Architecture analysis", prompt="Evaluate architectural patterns for $ARGUMENTS:
-1. Design patterns
-2. Anti-patterns
-3. Trade-offs
-4. Alternative approaches
-5. Future-proofing
-Provide architectural recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Technical research.
+I'll have the general-purpose agent Security research.
+I'll have the general-purpose agent Architecture analysis.
 
 ### Pattern Recognition
 <use extended thinking to identify patterns across the research>
@@ -121,15 +90,15 @@ Provide architectural recommendations", subagent_type="general-purpose")
 
 ## Phase 3: Deep Analysis (Opus 4 Extended Reasoning)
 
-<think step-by-step about multi-dimensional implications>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 2 to completed, task 3-4 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Multi-Dimensional Analysis Framework
 
 #### Technical Dimension
-<think harder about technical implications and architectural decisions>
+
 - **Performance Impact**: Latency, throughput, resource utilization
 - **Scalability Patterns**: Horizontal vs. vertical, sharding strategies
 - **Security Considerations**: Authentication, authorization, data protection
@@ -154,10 +123,10 @@ Provide architectural recommendations", subagent_type="general-purpose")
 
 ## Phase 4: Synthesis & Recommendations
 
-<think harder about actionable insights and practical applications>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update tasks 3-4 to completed, task 5-6 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Key Findings Summary
 <synthesize research into actionable insights>
@@ -230,13 +199,13 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Task Completion
-@TodoWrite(todos=[/* Mark all tasks as completed */])
+I'll update the task list to track our progress.
 
 ## Research Complete
 ✅ All research tasks completed
@@ -274,7 +243,7 @@ gantt
 
 ## Phase 5: Risk Analysis & Mitigation (Deep Thinking)
 
-<think harder about what could go wrong and how to prevent it>
+
 
 ### Risk Matrix
 

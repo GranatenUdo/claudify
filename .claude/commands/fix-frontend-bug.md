@@ -2,10 +2,6 @@
 description: Debug and fix UI issues using Frontend Developer expertise with systematic debugging approach
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]
 argument-hint: bug description or error message
-agent-dependencies: [Frontend Developer, UX Reviewer, Security Reviewer, Code Reviewer]
-complexity: moderate
-estimated-time: 12-15 minutes
-category: quality
 ---
 
 # Fix UI Bug: $ARGUMENTS
@@ -18,7 +14,7 @@ Internalize CLAUDE.md and FEATURES.md, then use extended thinking to systematica
 
 I'll have the Frontend Developer lead the technical analysis while other agents provide complementary insights:
 
-@Task(description="Frontend technical analysis and debugging", prompt="As an elite Frontend Developer, diagnose and fix the UI bug '$ARGUMENTS':
+Using the Frontend Developer agent to: As an elite Frontend Developer, diagnose and fix the UI bug '$ARGUMENTS':
 1. **Framework-Specific Analysis**
    - Angular 19 directive syntax (*ngIf, *ngFor, NOT @if/@for)
    - Angular version-specific issues and gotchas
@@ -50,8 +46,8 @@ I'll have the Frontend Developer lead the technical analysis while other agents 
    - Hot reload conflicts
    - Module resolution failures
    - Tree shaking issues
-Provide expert diagnosis with specific code fixes and testing approach", subagent_type="Frontend Developer")
-@Task(description="UX and accessibility impact", prompt="Analyze the UI bug '$ARGUMENTS':
+Provide expert diagnosis with specific code fixes and testing approach
+Using the Visual Designer agent to: Analyze the UI bug '$ARGUMENTS':
 1. Identify accessibility impact (WCAG violations)
 2. Assess user experience degradation
 3. Review mobile/responsive behavior
@@ -59,16 +55,8 @@ Provide expert diagnosis with specific code fixes and testing approach", subagen
 5. Evaluate visual regression impact
 6. Analyze user workflow disruption
 7. Prioritize fix based on user impact
-Provide UX-focused bug assessment and fix requirements", subagent_type="Visual Designer")
-@Task(description="Security implications", prompt="Assess security implications of the UI bug '$ARGUMENTS':
-1. Check for XSS vulnerabilities in error states
-2. Review data exposure in browser console/DOM
-3. Verify authentication state handling
-4. Assess CORS and API security impact
-5. Check for sensitive data in error messages
-6. Review input validation failures
-7. Evaluate session management issues
-Provide security risk assessment and mitigation requirements", subagent_type="general-purpose")
+Provide UX-focused bug assessment and fix requirements
+I'll have the general-purpose agent Security implications.
 
 ### Synthesis of Expert Findings
 
@@ -93,12 +81,12 @@ Using the Frontend Developer's expert analysis as the primary guide:
 
 I'll collect all relevant information in parallel for faster diagnosis:
 
-@Grep(pattern="ERROR|WARN|Exception", path="src/PTA.VineyardManagement.Web/", output_mode="content", head_limit=30)
-@Grep(pattern="$ARGUMENTS", path="src/PTA.VineyardManagement.Web/", output_mode="files_with_matches")
-@Read(file_path="src/PTA.VineyardManagement.Web/package.json")
-@Read(file_path="src/PTA.VineyardManagement.Web/angular.json")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm ls --depth=0", description="Check npm dependencies")
-@Bash(command="git log --oneline -10 -- src/PTA.VineyardManagement.Web/", description="Recent frontend changes")
+Searching for pattern: ERROR|WARN|Exception
+Searching for pattern: $ARGUMENTS
+Reading file: src/PTA.VineyardManagement.Web/package.json
+Reading file: src/PTA.VineyardManagement.Web/angular.json
+Running command: `cd src/PTA.VineyardManagement.Web && npm ls --depth=0`
+Running command: `git log --oneline -10 -- src/PTA.VineyardManagement.Web/`
 
 Now I'll analyze the collected data to:
 1. **Reproduce the Issue**
@@ -230,42 +218,10 @@ this.items.update(current => [...current, newItem]);
 
 I'll validate the fix from multiple angles simultaneously:
 
-@Task(description="UX validation", prompt="Validate the UI fix for '$ARGUMENTS':
-1. Verify accessibility compliance restored
-2. Test user workflows end-to-end
-3. Validate responsive behavior
-4. Check visual consistency
-5. Test with assistive technologies
-6. Verify loading/error states
-7. Assess overall UX improvement
-Provide UX validation report", subagent_type="Visual Designer")
-@Task(description="Technical validation", prompt="Review technical aspects of the fix:
-1. Verify code quality standards
-2. Check test coverage adequacy
-3. Review error handling completeness
-4. Validate Angular patterns usage
-5. Assess maintainability
-6. Check for code duplication
-7. Verify documentation
-Provide final approval or improvement requirements", subagent_type="general-purpose")
-@Task(description="Architecture review", prompt="Review architectural implications of the fix:
-1. Assess long-term maintainability
-2. Evaluate performance impact
-3. Review scalability considerations
-4. Check for technical debt
-5. Validate Angular best practices
-6. Assess monitoring needs
-7. Review deployment risks
-Provide architectural guidance and improvement recommendations", subagent_type="general-purpose")
-@Task(description="Simplification check", prompt="Identify simplification opportunities in the fix:
-1. Over-complicated solutions
-2. Redundant code paths
-3. Complex conditionals
-4. Unnecessary abstractions
-5. Performance optimizations
-6. Code consolidation options
-7. Pattern extraction opportunities
-Provide simplification recommendations if applicable", subagent_type="Technical Debt Analyst")
+I'll have the Visual Designer agent UX validation.
+I'll have the general-purpose agent Technical validation.
+I'll have the general-purpose agent Architecture review.
+I'll have the Technical Debt Analyst agent Simplification check.
 
 ### Comprehensive Testing Checklist
 - [ ] Bug no longer reproduces with original steps

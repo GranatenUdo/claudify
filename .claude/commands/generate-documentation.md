@@ -2,22 +2,17 @@
 description: Generate comprehensive technical documentation for features, APIs, or systems
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch, Bash]
 argument-hint: documentation type and target (e.g., "api docs for field management" or "user guide for import feature")
-agent-dependencies: [Technical Documentation Expert, Code Reviewer, Tech Lead, Feature Analyzer]
-complexity: moderate
-estimated-time: 15-25 minutes
-category: documentation
 ---
 
 # 📚 Generate Documentation: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - TRANSFORM CODE INTO UNDERSTANDING
-<think harder about creating documentation that truly serves its users and maintains itself over time>
+
 
 **Documentation Directive**: Create comprehensive, clear, and maintainable documentation that empowers users to succeed with our vineyard management system.
 
 ## Phase 1: Documentation Needs Analysis
 
-<think step-by-step about what documentation is needed and who will use it>
+
 
 ### Parse Documentation Request
 I'll analyze your request to understand:
@@ -40,20 +35,14 @@ Analysis Framework:
 ### Template System Detection
 I'll check if we can use our intelligent documentation templates:
 
-@Task(description="Check template availability", prompt="Check if the project has Claudify documentation templates available:
-1. Look for .claude/templates/documentation/ directory
-2. Check for documentation-generator.ps1
-3. Verify project analysis cache exists
-4. List available template types
-
-If templates are available, we can generate much more comprehensive documentation automatically.")
+Using Task tool for this operation.
 
 ## Phase 1.5: Template-Based Generation (If Available)
 
 ### Automated Documentation Generation
 If Claudify templates are detected, I'll use our intelligent documentation system:
 
-@Bash(command="pwsh .claude/templates/documentation/documentation-generator.ps1 -DocumentType '$Analysis.DocumentationType' -Interactive", description="Generate documentation using templates")
+Running command: `pwsh .claude/templates/documentation/documentation-generator.ps1 -DocumentType '$Analysis.DocumentationType' -Interactive`
 
 This provides:
 - **Automatic project analysis**: Detects tech stack, patterns, and architecture
@@ -65,20 +54,14 @@ This provides:
 ### Template Customization
 If templates need adjustment for specific requirements:
 
-@Task(description="Customize templates", prompt="Based on $ARGUMENTS, identify which template sections need customization:
-1. Additional sections required beyond standard templates
-2. Project-specific patterns to highlight
-3. Custom examples or use cases needed
-4. Special formatting requirements
-
-Provide specific edits to make to the generated documentation.")
+Using Task tool for this operation.
 
 ## Phase 2: Documentation Research & Planning
 
 ### Comprehensive Analysis
 I'll have our Technical Documentation Expert analyze the codebase and requirements.
 
-@Task(description="Analyze documentation needs", prompt="Analyze documentation requirements for $ARGUMENTS:
+Using the Technical Documentation Expert agent to: Analyze documentation requirements for $ARGUMENTS:
 
 1. **Codebase Analysis**:
    - Examine relevant code files and structure
@@ -104,40 +87,14 @@ I'll have our Technical Documentation Expert analyze the codebase and requiremen
    - Error scenarios to cover
    - Performance considerations
 
-Return comprehensive documentation plan with structure and content outline.", subagent_type="Technical Documentation Expert")
+Return comprehensive documentation plan with structure and content outline.
 
 ## Phase 3: Architecture & Technical Review
 
 ### Technical Deep Dive
 I'll have our Tech Lead provide architectural insights for accuracy.
 
-@Task(description="Technical review", prompt="Review technical aspects for documentation of $ARGUMENTS:
-
-1. **Architecture Overview**:
-   - System components and their interactions
-   - Data flow and processing pipeline
-   - Integration points and dependencies
-   - Scalability and performance characteristics
-
-2. **Design Decisions**:
-   - Key architectural choices and rationale
-   - Trade-offs and alternatives considered
-   - Future extensibility considerations
-   - Security and compliance factors
-
-3. **Technical Specifications**:
-   - API contracts and interfaces
-   - Data models and schemas
-   - Configuration parameters
-   - Environment requirements
-
-4. **Best Practices**:
-   - Recommended usage patterns
-   - Common pitfalls to avoid
-   - Performance optimization tips
-   - Security guidelines
-
-Provide technical content for accurate documentation.", subagent_type="general-purpose")
+I'll have the general-purpose agent Technical review.
 
 ## Phase 4: Documentation Generation
 
@@ -303,9 +260,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Next Steps
@@ -436,33 +393,7 @@ graph TB
 ### Quality Assurance
 I'll have our Code Reviewer ensure documentation quality.
 
-@Task(description="Review documentation", prompt="Review generated documentation for $ARGUMENTS:
-
-1. **Technical Accuracy**:
-   - Verify code examples work correctly
-   - Ensure API endpoints are accurate
-   - Validate configuration options
-   - Check error scenarios
-
-2. **Completeness**:
-   - All public APIs documented
-   - Error cases covered
-   - Examples for common scenarios
-   - Edge cases explained
-
-3. **Clarity**:
-   - Language appropriate for audience
-   - Consistent terminology
-   - Logical flow and organization
-   - No ambiguous statements
-
-4. **Maintainability**:
-   - Clear versioning strategy
-   - Update procedures defined
-   - Link stability
-   - Example testability
-
-Provide feedback and improvements for documentation.", subagent_type="general-purpose")
+I'll have the general-purpose agent Review documentation.
 
 ## Phase 7: Documentation Packaging
 

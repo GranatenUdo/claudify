@@ -2,10 +2,6 @@
 description: Debug and fix backend API issues using systematic root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: bug description (e.g., "null reference in field service when updating boundaries")
-agent-dependencies: [Security Reviewer, Code Reviewer, Tech Lead, Technical Debt Analyst]
-complexity: moderate
-estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
-category: quality
 ---
 
 # Fix API Bug: $ARGUMENTS
@@ -13,16 +9,9 @@ category: quality
 ## Phase 0: Task Management Setup
 
 ### 📋 TodoWrite Task Management
-<think step-by-step about organizing the bug fix process>
 
-@TodoWrite(todos=[
-  {id: "1", content: "Reproduce and diagnose bug", status: "in_progress", priority: "high"},
-  {id: "2", content: "Multi-agent root cause analysis", status: "pending", priority: "high"},
-  {id: "3", content: "Investigate affected layers", status: "pending", priority: "high"},
-  {id: "4", content: "Implement fix", status: "pending", priority: "high"},
-  {id: "5", content: "Generate tests", status: "pending", priority: "high"},
-  {id: "6", content: "Validate fix", status: "pending", priority: "high"}
-])
+
+I'll update the task list to track our progress.
 
 ### 📊 Agent Specialization Matrix
 
@@ -37,16 +26,16 @@ Internalize CLAUDE.md and FEATURES.md, then use extended thinking for deep root 
 
 ## 🧠 Multi-Agent Bug Analysis (OPTIMIZED)
 
-<think harder about the bug's root cause and potential impacts>
-<think step-by-step about systematic debugging approach>
+
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 1 to completed, task 2 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Combined Research & Security Analysis
 I'll have multiple agents analyze the bug in parallel for comprehensive coverage.
 
-@Task(description="Bug analysis with security assessment", prompt="As Security Reviewer with research expertise, analyze the bug '$ARGUMENTS':
+Using the general-purpose agent to: As Security Reviewer with research expertise, analyze the bug '$ARGUMENTS':
 
 BUG PATTERN RESEARCH:
 1. Search for similar bugs in codebase history
@@ -72,23 +61,9 @@ Provide integrated analysis with:
 - Root cause hypotheses ranked by likelihood
 - Security risk rating (Low/Medium/High/Critical)
 - Attack scenarios if exploitable
-- Fix requirements prioritized by impact", subagent_type="general-purpose")
-@Task(description="Code quality and pattern analysis", prompt="Analyze code patterns related to bug '$ARGUMENTS':
-1. Code duplication that might spread the bug
-2. Anti-patterns that contribute to the issue
-3. Missing error handling
-4. Incorrect assumptions in logic
-5. Test coverage gaps
-6. Related technical debt
-Provide code quality assessment", subagent_type="general-purpose")
-@Task(description="Architecture impact analysis", prompt="Assess architectural implications of bug '$ARGUMENTS':
-1. Layer violations
-2. Integration issues
-3. Scalability impacts
-4. Performance degradation
-5. Data consistency risks
-6. Transaction boundaries
-Provide architectural assessment", subagent_type="general-purpose")
+- Fix requirements prioritized by impact
+I'll have the general-purpose agent Code quality and pattern analysis.
+I'll have the general-purpose agent Architecture impact analysis.
 
 ## Extended Thinking for Root Cause Analysis
 
@@ -104,19 +79,19 @@ Before investigating, think deeply about:
 ### Phase 1: Parallel Bug Reproduction & Data Collection
 
 <think about gathering all diagnostic data simultaneously>
-<think harder about efficient debugging strategies>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 2 to completed, task 3 to in_progress */])
+I'll update the task list to track our progress.
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 I'll collect all diagnostic information in parallel for faster root cause identification:
 
-@Bash(command="dotnet build --no-restore", description="Check for build errors")
-@Bash(command="git log --oneline -20 --grep='$ARGUMENTS'", description="Find related commits")
-@Grep(pattern="ERROR.*$ARGUMENTS|Exception.*$ARGUMENTS", path="logs/", output_mode="content", head_limit=50)
-@Grep(pattern="class.*Controller|interface.*Service|class.*Repository", path="src/", output_mode="files_with_matches", head_limit=20)
-@Read(file_path="src/PTA.VineyardManagement.Api/appsettings.json")
+Running command: `dotnet build --no-restore`
+Running command: `git log --oneline -20 --grep='$ARGUMENTS'`
+Searching for pattern: ERROR.*$ARGUMENTS|Exception.*$ARGUMENTS
+Searching for pattern: class.*Controller|interface.*Service|class.*Repository
+Reading file: src/PTA.VineyardManagement.Api/appsettings.json
 
 Based on the parallel diagnostics, I'll analyze:
 1. **API Request Patterns**
@@ -154,17 +129,17 @@ Think systematically through each layer:
 
 ### Phase 3: Implementation & Testing
 
-<think step-by-step about fix implementation and validation>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 3 to completed, tasks 4-5 to in_progress */])
+I'll update the task list to track our progress.
 
 #### Parallel Fix Implementation
 ```csharp
 // ✅ Create fix and tests simultaneously
-@Edit(file_path="src/Service.cs", /* fix implementation */)
-@Write(file_path="tests/ServiceTests.cs", /* test generation */)
-@Write(file_path="tests/IntegrationTests.cs", /* integration test */)
+Editing the file with the necessary changes.
+Creating/updating file: tests/ServiceTests.cs
+Creating/updating file: tests/IntegrationTests.cs
 ```
 
 ### Success Criteria
@@ -176,7 +151,7 @@ Think systematically through each layer:
 - ✅ Security validated
 
 ### Final Task Completion
-@TodoWrite(todos=[/* Mark all tasks as completed */])
+I'll update the task list to track our progress.
 - [ ] Factory methods validating input?
 - [ ] Computed properties causing issues?
 - [ ] Audit fields updated correctly?
@@ -444,7 +419,7 @@ public async Task<IEnumerable<Field>> GetByOrganizationAsync(Guid orgId)
 
 I'll have the Code Reviewer perform complete fix validation with simplification analysis.
 
-@Task(description="Fix review with optimization", prompt="As Code Reviewer with simplification expertise, comprehensively review the fix for '$ARGUMENTS':
+Using the general-purpose agent to: As Code Reviewer with simplification expertise, comprehensively review the fix for '$ARGUMENTS':
 
 FIX VALIDATION:
 1. Verify fix addresses root cause
@@ -470,7 +445,7 @@ Provide integrated review with:
 - Fix effectiveness score (0-100)
 - Code quality improvements
 - Simplification opportunities ranked by impact
-- Approval status with conditions", subagent_type="general-purpose")
+- Approval status with conditions
 
 ## 📝 Documentation & Prevention
 

@@ -2,10 +2,6 @@
 description: Analyze technical debt and best practices violations in a specified codebase section
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, TodoWrite, WebSearch]
 argument-hint: path to analyze (e.g., "src/PTA.VineyardManagement.Api" or "src/**/*.cs")
-agent-dependencies: [Technical Debt Analyst, Code Reviewer, Security Reviewer, Tech Lead, Code Simplifier]
-complexity: complex
-estimated-time: 30-45 minutes (reduced from 60 with parallel execution)
-category: quality
 ---
 
 # 💰 Technical Debt Analysis: $ARGUMENTS
@@ -13,16 +9,9 @@ category: quality
 ## Phase 0: Task Management Setup
 
 ### 📋 TodoWrite Task Management
-<think step-by-step about organizing the technical debt analysis>
 
-@TodoWrite(todos=[
-  {id: "1", content: "Codebase discovery and technology stack analysis", status: "in_progress", priority: "high"},
-  {id: "2", content: "Pattern and architecture analysis", status: "pending", priority: "high"},
-  {id: "3", content: "Dependency and security audit", status: "pending", priority: "high"},
-  {id: "4", content: "Code quality metrics calculation", status: "pending", priority: "high"},
-  {id: "5", content: "Synthesize findings and prioritize", status: "pending", priority: "high"},
-  {id: "6", content: "Generate remediation plan", status: "pending", priority: "high"}
-])
+
+I'll update the task list to track our progress.
 
 ### 📊 Agent Specialization Matrix
 
@@ -33,8 +22,7 @@ category: quality
 | Dependencies | Security Reviewer | Technical Debt Analyst | ✅ Yes |
 | Complexity | Code Simplifier | Code Reviewer | ✅ Yes |
 
-## OPUS 4 ACTIVATION - DEEP DEBT ANALYSIS MODE
-<think harder about accumulated technical debt, pattern violations, and modernization opportunities>
+
 
 **Analysis Directive**: Conduct comprehensive technical debt analysis of the codebase at "$ARGUMENTS" to identify anti-patterns, best practice violations, outdated dependencies, and provide actionable remediation recommendations with effort estimates.
 
@@ -60,23 +48,23 @@ output-format: markdown|json|html (default: markdown)
 
 ## Phase 1: Codebase Discovery & Technology Stack
 
-<think step-by-step about understanding the codebase structure and technology choices>
+
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 ```bash
 # ✅ OPTIMAL: All discovery operations run in parallel
-@Glob(pattern="$ARGUMENTS/**/*.{cs,ts,js,py,java}")
-@Grep(pattern="class|interface|service", path="$ARGUMENTS", output_mode="count")
-@Bash(command="find $ARGUMENTS -type f | wc -l", description="Count total files")
-@Bash(command="cloc $ARGUMENTS --json", description="Lines of code analysis")
-@Read(file_path="$ARGUMENTS/package.json")
-@Read(file_path="$ARGUMENTS/*.csproj")
+Finding files matching: $ARGUMENTS/**/*.{cs,ts,js,py,java}
+Searching for pattern: class|interface|service
+Running command: `find $ARGUMENTS -type f | wc -l`
+Running command: `cloc $ARGUMENTS --json`
+Reading file: $ARGUMENTS/package.json
+Reading file: $ARGUMENTS/*.csproj
 ```
 
 ### Technology Stack Analysis
 
 #### Framework and Language Detection
-@Task(description="Technology analysis", prompt="Analyze the codebase at '$ARGUMENTS':
+Using the Technical Debt Analyst agent to: Analyze the codebase at '$ARGUMENTS':
 1. Identify primary programming languages and their versions
 2. Detect frameworks (.NET, Angular, React, etc.) with specific versions
 3. Find build tool configurations (MSBuild, npm, yarn, etc.)
@@ -84,7 +72,7 @@ output-format: markdown|json|html (default: markdown)
 5. Identify testing frameworks and tools
 6. Detect CI/CD configurations if present
 7. Map project structure and architecture style
-Provide comprehensive technology inventory with version details", subagent_type="Technical Debt Analyst")
+Provide comprehensive technology inventory with version details
 
 #### Initial Code Metrics
 ```
@@ -116,17 +104,17 @@ if (usesCloudNativePatterns) {
 
 ## Phase 2-3: Parallel Pattern & Dependency Analysis
 
-<think harder about optimizing analysis through parallelization>
-<think step-by-step about identifying debt patterns>
+
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 1 to completed, tasks 2-3 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Parallel Architecture and Code Analysis
 
 I'll analyze patterns, architecture, dependencies, and complexity simultaneously for maximum efficiency:
 
-@Task(description="Pattern violation scan", prompt="Analyze code patterns in '$ARGUMENTS':
+Using the Technical Debt Analyst agent to: Analyze code patterns in '$ARGUMENTS':
 1. SOLID principle violations (SRP, OCP, LSP, ISP, DIP)
 2. Design pattern misuse or absence where needed
 3. Anti-patterns (God objects, spaghetti code, copy-paste)
@@ -135,8 +123,8 @@ I'll analyze patterns, architecture, dependencies, and complexity simultaneously
 6. Missing abstractions or over-engineering
 7. Coupling and cohesion problems
 8. Testing pattern violations (no mocks, testing internals)
-Categorize by severity and provide examples", subagent_type="Technical Debt Analyst")
-@Task(description="Architecture analysis", prompt="Evaluate architectural patterns in '$ARGUMENTS':
+Categorize by severity and provide examples
+Using the general-purpose agent to: Evaluate architectural patterns in '$ARGUMENTS':
 1. Layer violation detection (UI calling data layer directly)
 2. Circular dependencies between modules
 3. Missing or inconsistent patterns (Repository, Service, etc.)
@@ -145,18 +133,9 @@ Categorize by severity and provide examples", subagent_type="Technical Debt Anal
 6. API design violations
 7. Configuration management issues
 8. Cross-cutting concerns implementation
-Provide architectural debt assessment with diagrams", subagent_type="general-purpose")
-@Task(description="Complexity analysis", prompt="Analyze code complexity in '$ARGUMENTS':
-1. Cyclomatic complexity hotspots
-2. Cognitive complexity issues
-3. Method/class size violations
-4. Nesting depth problems
-5. Duplicate code detection
-6. Dead code identification
-7. Unused dependencies
-8. Over-engineering patterns
-Provide complexity metrics and simplification opportunities", subagent_type="Technical Debt Analyst")
-@Task(description="Dependency audit", prompt="Audit all dependencies in '$ARGUMENTS':
+Provide architectural debt assessment with diagrams
+I'll have the Technical Debt Analyst agent Complexity analysis.
+Using the Technical Debt Analyst agent to: Audit all dependencies in '$ARGUMENTS':
 1. List all direct dependencies with current versions
 2. Identify transitive dependencies
 3. Find deprecated or abandoned packages
@@ -165,17 +144,8 @@ Provide complexity metrics and simplification opportunities", subagent_type="Tec
 6. Identify unused dependencies
 7. Find duplicate functionality packages
 8. Assess license compatibility
-Create dependency risk matrix", subagent_type="Technical Debt Analyst")
-@Task(description="Version research", prompt="Research package updates for '$ARGUMENTS':
-1. For each dependency, find latest stable version
-2. Check breaking changes between current and latest
-3. Assess upgrade complexity and risks
-4. Find security patches available
-5. Identify performance improvements in newer versions
-6. Check for deprecated features in use
-7. Estimate upgrade effort
-8. Prioritize updates by risk/benefit
-Provide upgrade recommendation report", subagent_type="Technical Debt Analyst")
+Create dependency risk matrix
+I'll have the Technical Debt Analyst agent Version research.
 
 ### Common Anti-Pattern Detection
 ```markdown
@@ -215,17 +185,8 @@ Based on the parallel analyses above, I'll now process the findings:
 
 Analyzing code quality and security vulnerabilities simultaneously:
 
-@Task(description="Quality metrics", prompt="Calculate code quality metrics for '$ARGUMENTS':
-1. Cyclomatic complexity per method/class
-2. Cognitive complexity scores
-3. Code duplication percentage
-4. Test coverage metrics
-5. Documentation coverage
-6. Technical debt ratio
-7. Maintainability index
-8. Code churn analysis
-Provide detailed metrics with industry benchmarks", subagent_type="general-purpose")
-@Task(description="Security audit", prompt="Perform security analysis on '$ARGUMENTS':
+I'll have the general-purpose agent Quality metrics.
+Using the general-purpose agent to: Perform security analysis on '$ARGUMENTS':
 1. Known vulnerability scan (OWASP Top 10)
 2. Dependency vulnerability check
 3. Secret/credential detection
@@ -234,7 +195,7 @@ Provide detailed metrics with industry benchmarks", subagent_type="general-purpo
 6. SQL injection risks
 7. XSS vulnerabilities
 8. Insecure configurations
-Provide security debt report with CVSS scores", subagent_type="general-purpose")
+Provide security debt report with CVSS scores
 
 #### Testing Debt Analysis
 ```yaml
@@ -290,7 +251,7 @@ Processing the parallel quality and security findings:
 ### Debt Calculation & Prioritization
 
 #### Comprehensive Debt Assessment
-@Task(description="Debt quantification", prompt="Quantify technical debt for '$ARGUMENTS':
+Using the Technical Debt Analyst agent to: Quantify technical debt for '$ARGUMENTS':
 1. Calculate debt in developer days using SQALE method
 2. Categorize debt by type (design, code, test, documentation)
 3. Assess business impact of each debt item
@@ -299,7 +260,7 @@ Processing the parallel quality and security findings:
 6. Identify quick wins vs long-term projects
 7. Create risk/effort matrix
 8. Develop payback timeline
-Provide prioritized remediation roadmap", subagent_type="Technical Debt Analyst")
+Provide prioritized remediation roadmap
 
 ### Technical Debt Summary
 ```markdown
@@ -396,9 +357,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Reports

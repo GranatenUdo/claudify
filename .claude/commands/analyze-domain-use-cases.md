@@ -2,22 +2,17 @@
 description: Extract business logic and use cases from a domain, presenting them from customer and user perspectives
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]
 argument-hint: domain or directory to analyze (e.g., "field management" or "src/Features/FieldManagement")
-agent-dependencies: [Business Domain Analyst, Feature Analyzer]
-complexity: high
-estimated-time: 15-30 minutes
-category: analysis
 ---
 
 # 🔍 Analyze Domain Use Cases: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - EXTRACT BUSINESS VALUE FROM CODE
-<think harder about the business logic patterns, domain boundaries, and stakeholder perspectives hidden in the implementation>
+
 
 **Analysis Directive**: Transform technical implementations into comprehensive business understanding, extracting use cases that reveal how the system delivers value to customers and their users.
 
 ## Phase 1: Domain Context Understanding
 
-<think step-by-step about the domain to analyze and its scope>
+
 
 ### Parse Analysis Request
 I'll analyze your request to understand:
@@ -73,12 +68,12 @@ interface DomainAnalysis {
 
 ## Phase 3: Business Domain Extraction
 
-<think harder about extracting implicit business knowledge from code patterns>
+
 
 ### Deep Domain Analysis
 I'll engage our Business Domain Analyst to extract comprehensive insights.
 
-@Task(description="Extract domain knowledge", prompt="Analyze the domain/code for $ARGUMENTS:
+Using the Business Domain Analyst agent to: Analyze the domain/code for $ARGUMENTS:
 
 1. **Domain Model Extraction**:
    - Identify core entities and their relationships
@@ -110,7 +105,7 @@ I'll engage our Business Domain Analyst to extract comprehensive insights.
    - What efficiencies does it provide?
    - What risks does it mitigate?
 
-Return comprehensive domain analysis with visual models and use case catalog.", subagent_type="Business Domain Analyst")
+Return comprehensive domain analysis with visual models and use case catalog.
 
 ## Phase 4: Use Case Synthesis & Organization
 
@@ -436,7 +431,7 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```

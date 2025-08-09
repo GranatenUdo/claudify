@@ -2,16 +2,11 @@
 description: Comprehensive analysis of legacy .NET systems for modernization planning with deep business logic extraction
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, MultiEdit, Write, TodoWrite, WebSearch]
 argument-hint: path to legacy solution or project (e.g., "C:/LegacyApp/LegacySystem.sln" or "src/OldSystem")
-agent-dependencies: [Legacy System Analyzer, Researcher, Tech Lead, Code Reviewer, Security Reviewer]
-complexity: complex
-estimated-time: 45-60 minutes
-category: research
 ---
 
 # 🏛️ Legacy System Analysis: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - DEEP LEGACY ANALYSIS MODE
-<think harder about extracting business value from legacy code, understanding implicit patterns, and identifying modernization paths>
+
 
 **Analysis Directive**: Conduct comprehensive analysis of the legacy system at "$ARGUMENTS" to extract business logic, map dependencies, document interfaces, and create a modernization blueprint. Focus on understanding the "why" behind the code, not just the "what".
 
@@ -36,12 +31,12 @@ output-format: markdown|json|html (default: markdown)
 
 ## Phase 1: System Discovery & Initial Assessment
 
-<think step-by-step about understanding the legacy system's structure and purpose>
+
 
 ### Multi-Agent System Analysis
 
 #### Legacy Framework Assessment
-@Task(description="Legacy system analysis", prompt="Analyze the legacy .NET system at '$ARGUMENTS':
+Using the Legacy System Analyzer agent to: Analyze the legacy .NET system at '$ARGUMENTS':
 1. Identify .NET Framework version and runtime dependencies
 2. Map project structure and solution organization
 3. Identify key architectural patterns (n-tier, MVC, WebForms, etc.)
@@ -49,18 +44,10 @@ output-format: markdown|json|html (default: markdown)
 5. Identify configuration management approach
 6. Map deployment artifacts and hosting requirements
 7. Assess overall system complexity and size
-Provide comprehensive system overview with technology inventory", subagent_type="Legacy System Analyzer")
+Provide comprehensive system overview with technology inventory
 
 #### Initial Security Scan
-@Task(description="Legacy security assessment", prompt="Perform security analysis on legacy system at '$ARGUMENTS':
-1. Identify authentication and authorization patterns
-2. Find hardcoded credentials or connection strings
-3. Assess encryption and data protection methods
-4. Review session management implementation
-5. Identify potential SQL injection vulnerabilities
-6. Check for outdated/vulnerable dependencies
-7. Review error handling and information disclosure
-Provide security risk assessment with critical findings", subagent_type="general-purpose")
+I'll have the general-purpose agent Legacy security assessment.
 
 ### System Inventory Checklist
 - [ ] Solution structure mapped
@@ -73,7 +60,7 @@ Provide security risk assessment with critical findings", subagent_type="general
 
 ## Phase 2: Dependency Analysis
 
-<think harder about understanding the complex web of dependencies in legacy systems>
+
 
 ### Dependency Mapping Tasks
 
@@ -87,7 +74,7 @@ Analyzing internal project references and dependencies:
 ```
 
 #### External Dependencies
-@Task(description="External dependency analysis", prompt="Map all external dependencies for system at '$ARGUMENTS':
+Using the Legacy System Analyzer agent to: Map all external dependencies for system at '$ARGUMENTS':
 1. Analyze NuGet packages and versions
 2. Identify COM/COM+ components
 3. Map database dependencies (tables, views, stored procedures)
@@ -96,7 +83,7 @@ Analyzing internal project references and dependencies:
 6. Map network share dependencies
 7. List third-party service integrations
 8. Identify environment-specific dependencies
-Create dependency matrix with upgrade paths", subagent_type="Legacy System Analyzer")
+Create dependency matrix with upgrade paths
 
 ### Dependency Risk Matrix
 | Dependency Type | Count | Risk Level | Modernization Impact |
@@ -114,16 +101,7 @@ Create dependency matrix with upgrade paths", subagent_type="Legacy System Analy
 ### Core Business Logic Analysis
 
 #### Domain Model Discovery
-@Task(description="Business logic extraction", prompt="Extract business logic from legacy system at '$ARGUMENTS':
-1. Identify core domain entities and value objects
-2. Map business workflows and processes
-3. Extract validation rules and constraints
-4. Document business calculations and algorithms
-5. Identify state machines and status transitions
-6. Map authorization rules and access control
-7. Extract reporting and analytics logic
-8. Document batch processes and scheduled jobs
-Provide domain model with business rule catalog", subagent_type="Legacy System Analyzer")
+I'll have the Legacy System Analyzer agent Business logic extraction.
 
 #### Business Rule Documentation
 ```markdown
@@ -157,7 +135,7 @@ Provide domain model with business rule catalog", subagent_type="Legacy System A
 ### Interface Discovery Tasks
 
 #### API Surface Analysis
-@Task(description="Interface extraction", prompt="Extract all interfaces from legacy system at '$ARGUMENTS':
+Using the Legacy System Analyzer agent to: Extract all interfaces from legacy system at '$ARGUMENTS':
 1. Map public API endpoints (REST, SOAP, WCF)
 2. Document method signatures and contracts
 3. Extract request/response DTOs
@@ -166,7 +144,7 @@ Provide domain model with business rule catalog", subagent_type="Legacy System A
 6. Document error codes and responses
 7. Extract API documentation/comments
 8. Identify consumer applications
-Provide complete API specification with examples", subagent_type="Legacy System Analyzer")
+Provide complete API specification with examples
 
 #### Data Contract Extraction
 ```yaml
@@ -202,7 +180,7 @@ Service: CustomerService
 ### Architectural Analysis
 
 #### Pattern Recognition
-@Task(description="Architecture reconstruction", prompt="Reconstruct architecture for legacy system at '$ARGUMENTS':
+Using the general-purpose agent to: Reconstruct architecture for legacy system at '$ARGUMENTS':
 1. Identify architectural patterns (layered, MVC, etc.)
 2. Map component boundaries and responsibilities
 3. Identify cross-cutting concerns implementation
@@ -211,7 +189,7 @@ Service: CustomerService
 6. Identify caching strategies
 7. Document error handling patterns
 8. Map security implementation layers
-Provide architectural diagrams with pattern analysis", subagent_type="general-purpose")
+Provide architectural diagrams with pattern analysis
 
 ### Reconstructed Architecture
 ```mermaid
@@ -253,7 +231,7 @@ graph TB
 ### Quality Metrics Analysis
 
 #### Technical Debt Quantification
-@Task(description="Code quality assessment", prompt="Assess code quality for legacy system at '$ARGUMENTS':
+Using the general-purpose agent to: Assess code quality for legacy system at '$ARGUMENTS':
 1. Calculate cyclomatic complexity metrics
 2. Identify code duplication patterns
 3. Find dead code and unused components
@@ -262,7 +240,7 @@ graph TB
 6. Measure coupling and cohesion
 7. Assess maintainability index
 8. Find security vulnerabilities
-Provide technical debt report with remediation priorities", subagent_type="general-purpose")
+Provide technical debt report with remediation priorities
 
 ### Technical Debt Summary
 | Category | Issues | Severity | Modernization Impact |
@@ -280,7 +258,7 @@ Provide technical debt report with remediation priorities", subagent_type="gener
 ### Modernization Planning
 
 #### Migration Strategy Development
-@Task(description="Modernization strategy", prompt="Develop modernization strategy for legacy system at '$ARGUMENTS':
+Using the general-purpose agent to: Develop modernization strategy for legacy system at '$ARGUMENTS':
 1. Recommend target architecture (.NET 8+, microservices, etc.)
 2. Suggest migration approach (big bang, strangler fig, etc.)
 3. Prioritize components for migration
@@ -289,7 +267,7 @@ Provide technical debt report with remediation priorities", subagent_type="gener
 6. Estimate migration effort and timeline
 7. Identify migration risks and mitigations
 8. Suggest pilot project approach
-Provide phased migration plan with success criteria", subagent_type="general-purpose")
+Provide phased migration plan with success criteria
 
 ### Recommended Migration Path
 ```markdown
@@ -357,9 +335,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Deliverables

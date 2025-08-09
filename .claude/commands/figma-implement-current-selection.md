@@ -2,16 +2,11 @@
 description: Transform current Figma selection into production-ready code led by Frontend Developer expertise with multi-agent support
 allowed-tools: [Task, WebFetch, WebSearch, TodoWrite, Read, Write, Edit, MultiEdit, Bash, Grep, Glob, LS]
 argument-hint: Optional framework/requirements (e.g., "with Angular 20 and Material Design" or defaults to project's detected framework)
-agent-dependencies: [Frontend Developer, Visual Designer, Tech Lead, Code Reviewer]
-complexity: high
-estimated-time: 15-20 minutes
-category: development
 ---
 
 # 🎨 Figma to Production Implementation
 
-## OPUS 4 ACTIVATION - COMPREHENSIVE DESIGN IMPLEMENTATION
-<think harder about design intent, user experience, accessibility, performance, and code quality>
+
 
 **Implementation Directive**: Transform the current Figma selection into production-ready code that prioritizes user experience, accessibility, and maintainability while leveraging multi-agent expertise.
 
@@ -53,13 +48,13 @@ Capture high-fidelity visual reference for validation:
 
 ## Phase 2: Frontend Developer-Led Implementation Analysis
 
-<think step-by-step about leveraging Frontend Developer expertise to guide implementation>
+
 
 ### Frontend Technical Analysis & Implementation Planning
 I'll have the Frontend Developer lead the technical implementation planning based on the Figma design.
 
 ```
-@Task(description="Frontend implementation architecture from Figma", prompt="As an elite Frontend Developer with deep expertise in responsive design and Figma-to-code workflows, analyze the Figma design and create comprehensive implementation plan for $ARGUMENTS:
+Using the Frontend Developer agent to: As an elite Frontend Developer with deep expertise in responsive design and Figma-to-code workflows, analyze the Figma design and create comprehensive implementation plan for $ARGUMENTS:
 
 TECHNICAL ANALYSIS:
 1. **Component Architecture**
@@ -118,14 +113,14 @@ FIGMA TO CODE MAPPING:
 
 Provide detailed implementation blueprint with code structure, patterns, and specific Angular implementation details.
 
-[Design context from Phase 1]", subagent_type="Frontend Developer")
+[Design context from Phase 1]
 ```
 
 ### Visual Design System Enhancement
 Following the Frontend Developer's technical analysis, enhance the visual design.
 
 ```
-@Task(description="Design system enhancement for implementation", prompt="As Visual Designer, enhance the Figma design for optimal implementation:
+Using the Visual Designer agent to: As Visual Designer, enhance the Figma design for optimal implementation:
 
 VISUAL DESIGN ENHANCEMENT:
 1. Generate cohesive color palette with semantic meanings
@@ -157,14 +152,14 @@ ALIGNMENT & GRID SYSTEM:
 
 Provide integrated design system with UX specifications, including all design tokens, patterns, and implementation guidelines.
 
-[Design context from Phase 1]", subagent_type="Visual Designer")
+[Design context from Phase 1]
 ```
 
 ### Technical Architecture & Implementation Planning (OPTIMIZED)
 I'll have the Tech Lead provide comprehensive technical guidance.
 
 ```
-@Task(description="Technical architecture and implementation planning", prompt="As Tech Lead with full-stack expertise, design the complete technical approach for implementing this Figma component:
+Using the general-purpose agent to: As Tech Lead with full-stack expertise, design the complete technical approach for implementing this Figma component:
 
 ARCHITECTURE PLANNING:
 1. Component hierarchy and composition strategy
@@ -205,7 +200,7 @@ FIGMA TO CODE MAPPING:
 Provide unified technical blueprint covering architecture, research insights, and implementation details.
 
 [Design context from Phase 1]
-[Enhanced design from previous task]", subagent_type="general-purpose")
+[Enhanced design from previous task]
 ```
 
 ## Phase 3: Frontend Developer-Driven Implementation
@@ -605,7 +600,7 @@ export const VisualShowcase = () => (
 I'll have the Frontend Developer perform complete quality validation.
 
 ```
-@Task(description="Implementation and quality validation", prompt="As Frontend Developer with design sensibility, validate the complete implementation:
+Using the Frontend Developer agent to: As Frontend Developer with design sensibility, validate the complete implementation:
 
 CODE IMPLEMENTATION REVIEW:
 1. Component architecture and patterns
@@ -651,7 +646,7 @@ Provide integrated quality assessment with:
 - Performance metrics
 - Accessibility compliance
 - Specific improvements needed
-- Overall implementation excellence rating", subagent_type="Frontend Developer")
+- Overall implementation excellence rating
 ```
 
 ### Automated Validation

@@ -2,10 +2,6 @@
 description: Perform focused research on specific technical topics or implementation approaches
 allowed-tools: [Task, Read, WebSearch, TodoWrite]
 argument-hint: research topic (e.g., "best practices for real-time agricultural data streaming")
-agent-dependencies: [Researcher]
-complexity: simple
-estimated-time: 5-15 minutes
-category: research
 ---
 
 # 🔍 Quick Research: $ARGUMENTS
@@ -20,21 +16,15 @@ Get rapid, focused insights on specific technical questions without the overhead
 
 ## Research Approach
 
-<think step-by-step about the most efficient research strategy>
+
 
 ### Targeted Investigation
-@Task(description="Quick research", prompt="Conduct focused research on $ARGUMENTS:
-1. Find the most relevant and recent information
-2. Identify best practices and common patterns
-3. Note any warnings or pitfalls
-4. Provide 3-5 key takeaways
-5. Suggest practical next steps
-Keep response concise and actionable", subagent_type="general-purpose")
+I'll have the general-purpose agent Quick research.
 
 ### Quick Web Search
 If needed for current information:
 ```
-@WebSearch(query="$ARGUMENTS site:stackoverflow.com OR site:github.com OR site:docs.microsoft.com")
+Searching the web for: $ARGUMENTS site:stackoverflow.com OR site:github.com OR site:docs.microsoft.com
 ```
 
 ## Output Format
@@ -92,9 +82,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Next Steps

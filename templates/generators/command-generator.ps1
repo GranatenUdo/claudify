@@ -25,10 +25,6 @@ function Generate-AddBackendFeature {
 description: Create new backend feature following domain-driven design principles
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: feature description (e.g., "user authentication with role-based access")
-agent-dependencies: [Researcher, Code Reviewer, Security Reviewer, Tech Lead]
-complexity: moderate
-estimated-time: 20-30 minutes
-category: development
 ---
 
 # 🏗️ Add Backend Feature: `$ARGUMENTS
@@ -42,16 +38,14 @@ Create a new backend feature with proper domain modeling, security validation, a
 3. **Implementation** - Build layers systematically
 4. **Quality Assurance** - Testing, review, and documentation
 
-<think harder about security implications and architectural fit>
-
 Based on your codebase:
 - **Framework**: $($Analysis.TechStack.Backend.Framework) $($Analysis.TechStack.Backend.Version)
 - **Patterns**: $(if ($Analysis.Patterns.RepositoryPattern.Found) { "Repository Pattern" }) $(if ($Analysis.Patterns.ResultPattern.Found) { "Result<T> Pattern" }) $(if ($Analysis.Patterns.DomainDrivenDesign.Found) { "Domain-Driven Design" })
 $(if ($Analysis.Patterns.MultiTenancy.Found) { "- **Multi-tenancy**: $($Analysis.Patterns.MultiTenancy.Model) isolation via $($Analysis.Patterns.MultiTenancy.Field)" })
 
-@Task(description="Security analysis", prompt="Analyze security requirements for `$ARGUMENTS", subagent_type="Security Reviewer")
+I'll have the Security Reviewer analyze security requirements for this feature.
 
-@Task(description="Architecture review", prompt="Evaluate architectural approach for `$ARGUMENTS", subagent_type="Tech Lead")
+I'll have the Tech Lead evaluate the architectural approach.
 
 `$ARGUMENTS
 "@
@@ -70,10 +64,6 @@ function Generate-AddFrontendFeature {
 description: Create sophisticated UI features with accessibility focus
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: feature description (e.g., "dashboard with real-time updates")
-agent-dependencies: [UX Reviewer, Code Reviewer, Tech Lead]
-complexity: moderate
-estimated-time: 20-30 minutes
-category: development
 ---
 
 # 🎨 Add Frontend Feature: `$ARGUMENTS
@@ -87,14 +77,12 @@ Create new frontend features following backend-first workflow with accessibility
 3. **Implementation** - Component-based development
 4. **Quality Checks** - Testing and review
 
-<think step-by-step about user experience and accessibility>
-
 Based on your codebase:
 - **Framework**: $framework
 $(if ($Analysis.TechStack.Frontend.StateManagement) { "- **State Management**: $($Analysis.TechStack.Frontend.StateManagement)" })
 $(if ($Analysis.TechStack.Frontend.UILibrary) { "- **UI Library**: $($Analysis.TechStack.Frontend.UILibrary)" })
 
-@Task(description="UX analysis", prompt="Analyze UX requirements for `$ARGUMENTS", subagent_type="UX Reviewer")
+I'll have the UX Reviewer analyze the user experience requirements for this feature.
 
 `$ARGUMENTS
 "@

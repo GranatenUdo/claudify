@@ -2,16 +2,12 @@
 description: Update existing feature across entire stack with comprehensive analysis, testing, and validation
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature update description (e.g., "update authentication to support OAuth 2.0")
-agent-dependencies: [Tech Lead, Frontend Developer, Security Reviewer, Code Reviewer, Test Quality Analyst]
-complexity: high
-estimated-time: 30-45 minutes
-category: development
 ---
 
 # 🔄 Update Comprehensive Feature: $ARGUMENTS
 
 ## 🧠 OPUS 4 ENHANCED THINKING MODE
-<think harder about the complete impact of updating this feature across all layers while maintaining system stability and ensuring 100% test success>
+
 
 ### Cognitive Enhancement Triggers
 - **Impact Analysis**: Deep understanding of all affected components
@@ -21,110 +17,44 @@ category: development
 
 ## Phase 0: Comprehensive Discovery & Planning
 
-<think step-by-step about identifying all components that need updating>
+
 
 ### Initial Impact Analysis
 I'll perform a comprehensive analysis to understand the full scope of changes needed.
 
 ```bash
 # Parallel discovery operations
-@Grep(pattern="$FEATURE_PATTERN", output_mode="files_with_matches")
-@Glob(pattern="**/*$FEATURE*.*")
-@Glob(pattern="**/*.test.*")
-@Glob(pattern="**/*.spec.*")
+Searching for pattern: $FEATURE_PATTERN
+Finding files matching: **/*$FEATURE*.*
+Finding files matching: **/*.test.*
+Finding files matching: **/*.spec.*
 ```
 
 ### TodoWrite Planning
 Creating comprehensive task list for systematic updates:
 
-@TodoWrite(todos=[
-  {id: "1", content: "Analyze current feature implementation", status: "pending", priority: "high"},
-  {id: "2", content: "Identify all affected components", status: "pending", priority: "high"},
-  {id: "3", content: "Design backward-compatible updates", status: "pending", priority: "high"},
-  {id: "4", content: "Update backend components", status: "pending", priority: "high"},
-  {id: "5", content: "Update frontend components", status: "pending", priority: "high"},
-  {id: "6", content: "Update shared/common components", status: "pending", priority: "high"},
-  {id: "7", content: "Generate comprehensive unit tests", status: "pending", priority: "high"},
-  {id: "8", content: "Generate integration tests", status: "pending", priority: "high"},
-  {id: "9", content: "Run all tests until 100% pass", status: "pending", priority: "high"},
-  {id: "10", content: "Validate backward compatibility", status: "pending", priority: "high"}
-])
+I'll update the task list to track our progress.
 
 ## Phase 1: Parallel Multi-Agent Analysis
 
-<think harder about orchestrating multiple agents for comprehensive analysis>
+
 
 ### Comprehensive Feature Analysis
 Launching all specialized agents in parallel for maximum efficiency:
 
-@Task(description="Architecture impact analysis", prompt="Analyze the architectural impact of updating $ARGUMENTS:
-1. Identify all system boundaries affected
-2. Map data flow changes required
-3. Assess scalability implications
-4. Define transaction boundary updates
-5. Evaluate caching strategy changes
-6. Identify integration point modifications
-7. Assess database schema impacts
-8. Plan migration strategy for existing data
-9. Define rollback procedures
-10. Calculate technical debt impact
-Provide detailed technical blueprint with risk assessment", subagent_type="general-purpose")
+I'll have the general-purpose agent Architecture impact analysis.
 
-@Task(description="Frontend update analysis", prompt="Analyze frontend updates needed for $ARGUMENTS:
-1. Component hierarchy changes
-2. State management updates
-3. Route modifications required
-4. UI/UX improvements needed
-5. Accessibility enhancements
-6. Form validation updates
-7. API integration changes
-8. Error handling improvements
-9. Loading state optimizations
-10. Responsive design updates
-Provide implementation plan with Angular 19 best practices", subagent_type="Frontend Developer")
+I'll have the Frontend Developer agent Frontend update analysis.
 
-@Task(description="Security validation", prompt="Perform security analysis for updating $ARGUMENTS:
-1. Authentication/authorization changes
-2. Data validation updates required
-3. Input sanitization improvements
-4. OWASP compliance verification
-5. Multi-tenant isolation validation
-6. Audit trail requirements
-7. Encryption needs assessment
-8. Token management updates
-9. Session handling changes
-10. Vulnerability assessment
-Classify all findings by severity and provide mitigation strategies", subagent_type="general-purpose")
+I'll have the general-purpose agent Security validation.
 
-@Task(description="Code quality assessment", prompt="Review code quality for $ARGUMENTS update:
-1. Current code complexity metrics
-2. Refactoring opportunities
-3. Design pattern improvements
-4. SOLID principle adherence
-5. Dependency management
-6. Error handling patterns
-7. Logging strategy updates
-8. Configuration management
-9. Documentation requirements
-10. Naming convention compliance
-Provide prioritized improvement recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Code quality assessment.
 
-@Task(description="Test strategy planning", prompt="Design comprehensive test strategy for $ARGUMENTS update:
-1. Unit test coverage gaps
-2. Integration test scenarios
-3. E2E test requirements
-4. Performance test needs
-5. Security test scenarios
-6. Regression test suite
-7. Mock/stub requirements
-8. Test data management
-9. CI/CD pipeline updates
-10. Quality gate definitions
-Provide test implementation plan with 100% success criteria", subagent_type="general-purpose")
+I'll have the general-purpose agent Test strategy planning.
 
 ## Phase 2: Implementation Strategy
 
-<think step-by-step about implementation order to minimize risk>
+
 
 ### Implementation Sequence
 Based on agent analyses, I'll implement updates in this order:
@@ -154,17 +84,17 @@ Based on agent analyses, I'll implement updates in this order:
 
 ## Phase 3: Backward Compatibility Enforcement
 
-<think harder about maintaining backward compatibility while adding new features>
+
 
 ### Compatibility Strategies
 
 #### API Versioning
 ```typescript
 // Maintain both versions temporarily
-@Controller('api/v1/feature') // Existing
+Using Controller tool for this operation. // Existing
 class FeatureV1Controller { }
 
-@Controller('api/v2/feature') // Updated
+Using Controller tool for this operation. // Updated
 class FeatureV2Controller { }
 ```
 
@@ -191,7 +121,7 @@ if (featureFlags.useNewImplementation) {
 
 ## Phase 4: Comprehensive Test Generation
 
-<think step-by-step about achieving 100% test success>
+
 
 ### Test Implementation Strategy
 
@@ -259,33 +189,30 @@ For each component identified in Phase 1:
 
 1. **Read Current Implementation**
    ```bash
-   @Read(file_path="[component_path]")
+   Reading file: [component_path]
    ```
 
 2. **Create Backup Branch**
    ```bash
-   @Bash(command="git checkout -b update-$ARGUMENTS-backup")
+   Running command: `git checkout -b update-$ARGUMENTS-backup`
    ```
 
 3. **Apply Updates with MultiEdit**
    ```typescript
-   @MultiEdit(file_path="[component_path]", edits=[
-       {old_string: "existing code", new_string: "updated code"},
-       // Multiple edits in single operation
-   ])
+   Making multiple edits to the file.
    ```
 
 4. **Generate Tests**
    ```bash
-   @Write(file_path="[test_path]", content="[generated_tests]")
+   Creating/updating file: [test_path]
    ```
 
 5. **Run Tests Until Success**
    ```bash
    while (testResult.success < 100%) {
-       @Bash(command="npm test [test_file]")
+       Running command: `npm test [test_file]`
        // Fix any failures
-       @Edit(file_path="[component_path]", ...)
+       Editing the file with the necessary changes.
    }
    ```
 
@@ -347,9 +274,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Confidence Score: [X]%
@@ -366,7 +293,7 @@ Factors:
 
 ## Phase 7: Continuous Validation Loop
 
-<think harder about ensuring sustained 100% success>
+
 
 ### Iterative Refinement
 ```bash

@@ -2,10 +2,6 @@
 description: Create backend API feature with domain-driven design and comprehensive agent analysis
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "harvest scheduling with weather integration")
-agent-dependencies: [Tech Lead, Researcher, Security Reviewer, Code Reviewer]
-complexity: moderate
-estimated-time: 15-20 minutes (reduced from 30 with parallel execution)
-category: development
 ---
 
 # 🏗️ Add Backend Feature: $ARGUMENTS
@@ -22,18 +18,9 @@ Create a new backend feature with proper domain modeling, security validation, a
 ## Phase 0: Task Management Setup
 
 ### 📋 TodoWrite Task Management
-<think step-by-step about organizing the backend feature development>
 
-@TodoWrite(todos=[
-  {id: "1", content: "Security and architecture planning", status: "in_progress", priority: "high"},
-  {id: "2", content: "Domain research and modeling", status: "pending", priority: "high"},
-  {id: "3", content: "Implement entity layer", status: "pending", priority: "high"},
-  {id: "4", content: "Implement repository layer", status: "pending", priority: "high"},
-  {id: "5", content: "Implement service layer", status: "pending", priority: "high"},
-  {id: "6", content: "Implement API endpoints", status: "pending", priority: "high"},
-  {id: "7", content: "Generate comprehensive tests", status: "pending", priority: "high"},
-  {id: "8", content: "Quality assurance and review", status: "pending", priority: "high"}
-])
+
+I'll update the task list to track our progress.
 
 ### 📊 Agent Specialization Matrix
 
@@ -54,23 +41,23 @@ real-time-updates: true|false (default: true)
 
 ## Phase 1: Security & Architecture Planning (OPTIMIZED)
 
-<think harder about security implications and architectural fit>
-<think step-by-step about parallel analysis opportunities>
+
+
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 ```bash
 # ✅ OPTIMAL: All discovery operations run in parallel
-@Grep(pattern="Repository|Service|Controller", path="src/", output_mode="files_with_matches")
-@Glob(pattern="**/Models/*.cs")
-@Glob(pattern="**/DTOs/*.cs")
-@Read(file_path="appsettings.json")
-@Bash(command="dotnet list package", description="Check current dependencies")
+Searching for pattern: Repository|Service|Controller
+Finding files matching: **/Models/*.cs
+Finding files matching: **/DTOs/*.cs
+Reading file: appsettings.json
+Running command: `dotnet list package`
 ```
 
 ### Combined Security & Architecture Analysis
 I'll have multiple agents analyze in parallel for comprehensive coverage.
 
-@Task(description="Security and architecture planning", prompt="As Tech Lead with security expertise, analyze requirements for $ARGUMENTS:
+Using the general-purpose agent to: As Tech Lead with security expertise, analyze requirements for $ARGUMENTS:
 
 SECURITY REQUIREMENTS:
 1. Identify sensitive data requiring protection
@@ -92,17 +79,8 @@ ARCHITECTURE PLANNING:
 7. Assess performance implications
 8. Consider future extensibility
 
-Provide integrated security and architecture blueprint with risk assessment and mitigation strategies.", subagent_type="general-purpose")
-@Task(description="Security-specific analysis", prompt="Perform deep security analysis for $ARGUMENTS:
-1. OWASP API Security Top 10 assessment
-2. Multi-tenant isolation verification
-3. Authentication/authorization requirements
-4. Data encryption needs
-5. Audit logging requirements
-6. Input validation strategy
-7. Rate limiting requirements
-8. Security headers configuration
-Provide security implementation checklist", subagent_type="general-purpose")
+Provide integrated security and architecture blueprint with risk assessment and mitigation strategies.
+I'll have the general-purpose agent Security-specific analysis.
 
 ### Interactive Checkpoint
 ```markdown
@@ -122,21 +100,21 @@ Proceed with implementation? (yes/no/modify)
 
 ## Phase 2: Domain Research & Modeling
 
-<think step-by-step about the agricultural domain and business invariants>
-<think harder about domain complexity and edge cases>
+
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 1 to completed, task 2 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Parallel Domain Research
-@Task(description="Domain analysis", prompt="Research domain requirements for $ARGUMENTS:
+Using the general-purpose agent to: Research domain requirements for $ARGUMENTS:
 1. Analyze similar features in codebase
 2. Identify domain patterns and business rules
 3. Study temporal patterns (seasonality, historical tracking)
 4. Research agricultural best practices
 5. Identify regulatory requirements
 6. Analyze performance patterns in similar features
-Provide domain model with relationships and invariants", subagent_type="general-purpose")
+Provide domain model with relationships and invariants
 
 ### Domain Model Design
 Based on agent analysis, I'll design the domain model with:
@@ -148,21 +126,21 @@ Based on agent analysis, I'll design the domain model with:
 ## Phase 3: Implementation
 
 <think about building layers systematically with quality gates>
-<think harder about implementation patterns and best practices>
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 2 to completed, tasks 3-6 to track implementation */])
+I'll update the task list to track our progress.
 
 ### Implementation Strategy
 
 #### Parallel File Operations
 ```csharp
 // ✅ Create all layer files in parallel
-@Write(file_path="src/Domain/Entities/$FEATURE.cs", content="...")
-@Write(file_path="src/Infrastructure/Repositories/$FEATURE_Repository.cs", content="...")
-@Write(file_path="src/Application/Services/$FEATURE_Service.cs", content="...")
-@Write(file_path="src/API/Controllers/$FEATURE_Controller.cs", content="...")
-@Write(file_path="tests/UnitTests/$FEATURE_Tests.cs", content="...")
+Creating/updating file: src/Domain/Entities/$FEATURE.cs
+Creating/updating file: src/Infrastructure/Repositories/$FEATURE_Repository.cs
+Creating/updating file: src/Application/Services/$FEATURE_Service.cs
+Creating/updating file: src/API/Controllers/$FEATURE_Controller.cs
+Creating/updating file: tests/UnitTests/$FEATURE_Tests.cs
 ```
 
 ### Implementation Checklist
@@ -218,17 +196,17 @@ public async Task<Result<T>> OperationAsync(/* parameters */)
 
 ## Phase 4: Quality Assurance
 
-<think harder about comprehensive testing and validation>
+
 
 ### Task Progress Update  
-@TodoWrite(todos=[/* Update implementation tasks to completed, QA to in_progress */])
+I'll update the task list to track our progress.
 
 ### Parallel Quality Checks
 ```bash
 # Run all quality checks simultaneously
-@Bash(command="dotnet test", description="Run all tests")
-@Bash(command="dotnet build --no-restore", description="Verify build")
-@Task(description="Code review", prompt="Review the implementation for best practices", subagent_type="general-purpose")
+Running command: `dotnet test`
+Running command: `dotnet build --no-restore`
+I'll have the general-purpose agent Code review.
 ```
 
 ### Success Criteria
@@ -238,7 +216,7 @@ public async Task<Result<T>> OperationAsync(/* parameters */)
 - ✅ Documentation complete
 
 ### Final Task Completion
-@TodoWrite(todos=[/* Mark all tasks as completed */])
+I'll update the task list to track our progress.
 
 ## Phase 4: Quality Assurance
 
@@ -265,7 +243,7 @@ public async Task<Result<T>> OperationAsync(/* parameters */)
 ### Comprehensive Code & Security Review (OPTIMIZED)
 I'll have the Security Reviewer perform integrated code quality and security review.
 
-@Task(description="Code quality and security review", prompt="As Security Reviewer with code quality expertise, comprehensively review $ARGUMENTS implementation:
+Using the general-purpose agent to: As Security Reviewer with code quality expertise, comprehensively review $ARGUMENTS implementation:
 
 CODE QUALITY ASSESSMENT:
 1. DDD principles adherence
@@ -291,7 +269,7 @@ Provide integrated assessment with:
 - Code quality score (0-100)
 - Security risk rating (Low/Medium/High/Critical)
 - Actionable improvements prioritized by impact
-- Security certification status", subagent_type="general-purpose")
+- Security certification status
 
 ## Success Criteria
 

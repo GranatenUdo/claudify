@@ -2,10 +2,6 @@
 description: Performs comprehensive test quality analysis across the entire codebase, identifying gaps, redundancies, and improvement opportunities
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, Bash, WebSearch]
 argument-hint: scope (backend/frontend/all) and focus area (coverage/quality/performance)
-agent-dependencies: [Test Quality Analyst, Code Reviewer, Technical Debt Analyst, Security Reviewer, Tech Lead]
-complexity: complex
-estimated-time: 25-35 minutes (with parallel agent execution)
-category: quality
 ---
 
 # /analyze-test-quality
@@ -34,40 +30,15 @@ Performs comprehensive test quality analysis across the entire codebase, identif
 
 ### Phase 1: Parallel Multi-Agent Test Analysis
 
-<think harder about comprehensive test quality assessment>
+
 
 I'll invoke specialized agents in parallel for complete test quality analysis:
 
 #### 🚀 Launching Parallel Test Analysis
 
-@Task(description="Lead test quality analysis", prompt="Perform comprehensive test quality analysis of $ARGUMENTS:
-1. **Coverage Analysis**
-   - Line coverage metrics and trends
-   - Branch coverage assessment
-   - Critical path coverage gaps
-   - Coverage by feature/module
-   
-2. **Test Quality Assessment**
-   - Test naming and organization
-   - Assertion quality and specificity
-   - Mock usage appropriateness
-   - Test isolation and independence
-   
-3. **Test Distribution**
-   - Unit/Integration/E2E pyramid analysis
-   - Execution time distribution
-   - Resource consumption patterns
-   - Parallelization opportunities
-   
-4. **Gap Identification**
-   - Untested business logic
-   - Missing edge cases
-   - Insufficient error scenarios
-   - Security and performance test gaps
+I'll have the general-purpose agent Lead test quality analysis.
 
-Generate specific test examples for critical gaps with confidence scores", subagent_type="general-purpose")
-
-@Task(description="Review test code quality", prompt="Analyze test code quality in $ARGUMENTS:
+Using the general-purpose agent to: Analyze test code quality in $ARGUMENTS:
 1. **Test Code Standards**
    - AAA pattern adherence (Arrange-Act-Assert)
    - DRY principle in test code
@@ -92,88 +63,13 @@ Generate specific test examples for critical gaps with confidence scores", subag
    - Proper setup/teardown
    - Meaningful test data
 
-Provide top 10 test code improvements with examples", subagent_type="general-purpose")
+Provide top 10 test code improvements with examples
 
-@Task(description="Assess test-related technical debt", prompt="Analyze test technical debt in $ARGUMENTS:
-1. **Test Debt Accumulation**
-   - Outdated test frameworks
-   - Deprecated assertion libraries
-   - Legacy test patterns
-   - Unmaintained test utilities
-   
-2. **Test Infrastructure Debt**
-   - CI/CD test configuration issues
-   - Test environment problems
-   - Database seeding complexity
-   - External dependency mocking
-   
-3. **Test Performance Debt**
-   - Slow test identification
-   - Resource-intensive tests
-   - Sequential execution bottlenecks
-   - Unnecessary test repetition
-   
-4. **Economic Impact**
-   - Developer time wasted on flaky tests
-   - Build time costs
-   - Bug escape rate due to poor tests
-   - Maintenance overhead
+I'll have the Technical Debt Analyst agent Assess test-related technical debt.
 
-Calculate test debt score and ROI of improvements", subagent_type="Technical Debt Analyst")
+I'll have the general-purpose agent Security test analysis.
 
-@Task(description="Security test analysis", prompt="Review security testing in $ARGUMENTS:
-1. **Security Test Coverage**
-   - Authentication test scenarios
-   - Authorization boundary testing
-   - Input validation testing
-   - Injection vulnerability tests
-   
-2. **OWASP Coverage**
-   - Coverage of OWASP Top 10
-   - API security test scenarios
-   - Multi-tenant isolation tests
-   - Data protection verification
-   
-3. **Security Test Quality**
-   - Penetration test scenarios
-   - Negative test cases
-   - Security regression tests
-   - Compliance test coverage
-   
-4. **Critical Gaps**
-   - Missing security scenarios
-   - Untested attack vectors
-   - Insufficient boundary testing
-   - Compliance test gaps
-
-Prioritize security test additions by risk level", subagent_type="general-purpose")
-
-@Task(description="Architectural test assessment", prompt="Review architectural testing in $ARGUMENTS:
-1. **Architecture Test Coverage**
-   - Layer boundary tests
-   - Integration point testing
-   - Contract testing presence
-   - Architecture fitness functions
-   
-2. **System Quality Tests**
-   - Performance test coverage
-   - Load testing scenarios
-   - Resilience testing
-   - Scalability verification
-   
-3. **Design Pattern Tests**
-   - Pattern implementation tests
-   - Dependency rule verification
-   - Interface contract tests
-   - Component isolation tests
-   
-4. **Strategic Recommendations**
-   - Test strategy alignment
-   - Testing pyramid optimization
-   - Test automation priorities
-   - Quality gate definitions
-
-Rate test architecture maturity 1-10", subagent_type="general-purpose")
+I'll have the general-purpose agent Architectural test assessment.
 
 ### 2. Coverage Analysis
 - Line coverage metrics
@@ -256,9 +152,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Summary Format

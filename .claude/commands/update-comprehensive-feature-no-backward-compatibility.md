@@ -2,16 +2,12 @@
 description: Replace existing feature entirely with no backward compatibility, removing legacy code and implementing modern patterns
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature replacement description (e.g., "replace legacy auth with modern OAuth 2.0")
-agent-dependencies: [Tech Lead, Frontend Developer, Security Reviewer, Code Reviewer, Test Quality Analyst, Technical Debt Analyst]
-complexity: high
-estimated-time: 25-35 minutes
-category: development
 ---
 
 # 🔥 Replace Feature (No Backward Compatibility): $ARGUMENTS
 
 ## ⚠️ BREAKING CHANGE MODE ACTIVATED
-<think harder about completely replacing this feature with modern implementation, removing all legacy code and technical debt>
+
 
 ### Aggressive Modernization Principles
 - **Complete Replacement**: Remove ALL legacy code, no compatibility layer
@@ -22,39 +18,28 @@ category: development
 
 ## Phase 0: Legacy Code Identification & Removal Planning
 
-<think step-by-step about finding and eliminating all legacy code>
+
 
 ### Legacy Discovery Operations
 ```bash
 # Find all legacy code to be removed
-@Grep(pattern="$FEATURE_PATTERN|deprecated|legacy|old", output_mode="files_with_matches")
-@Grep(pattern="TODO.*remove|FIXME.*legacy|HACK", output_mode="content")
-@Glob(pattern="**/*$FEATURE*.*")
-@Glob(pattern="**/*deprecated*.*")
-@Glob(pattern="**/*legacy*.*")
+Searching for pattern: $FEATURE_PATTERN|deprecated|legacy|old
+Searching for pattern: TODO.*remove|FIXME.*legacy|HACK
+Finding files matching: **/*$FEATURE*.*
+Finding files matching: **/*deprecated*.*
+Finding files matching: **/*legacy*.*
 ```
 
 ### Aggressive Cleanup Task List
-@TodoWrite(todos=[
-  {id: "1", content: "Identify ALL legacy code for removal", status: "pending", priority: "high"},
-  {id: "2", content: "Document breaking changes", status: "pending", priority: "high"},
-  {id: "3", content: "Remove legacy backend code", status: "pending", priority: "high"},
-  {id: "4", content: "Remove legacy frontend code", status: "pending", priority: "high"},
-  {id: "5", content: "Remove legacy database schemas", status: "pending", priority: "high"},
-  {id: "6", content: "Implement modern replacement", status: "pending", priority: "high"},
-  {id: "7", content: "Remove all legacy tests", status: "pending", priority: "high"},
-  {id: "8", content: "Create new comprehensive test suite", status: "pending", priority: "high"},
-  {id: "9", content: "Validate 100% test success", status: "pending", priority: "high"},
-  {id: "10", content: "Clean up all references", status: "pending", priority: "high"}
-])
+I'll update the task list to track our progress.
 
 ## Phase 1: Parallel Breaking Change Analysis
 
-<think harder about the freedom to completely redesign without constraints>
+
 
 ### Unrestricted Modernization Analysis
 
-@Task(description="Complete architecture redesign", prompt="Design a completely new architecture for $ARGUMENTS with NO backward compatibility constraints:
+Using the general-purpose agent to: Design a completely new architecture for $ARGUMENTS with NO backward compatibility constraints:
 1. Propose modern microservices/serverless architecture
 2. Design event-driven communication patterns
 3. Implement CQRS where beneficial
@@ -65,9 +50,9 @@ category: development
 8. Design GraphQL/gRPC APIs (no REST if not optimal)
 9. Implement modern authentication (OAuth2/OIDC only)
 10. Design for cloud-native deployment only
-Provide aggressive modernization blueprint with zero legacy constraints", subagent_type="general-purpose")
+Provide aggressive modernization blueprint with zero legacy constraints
 
-@Task(description="Modern frontend redesign", prompt="Completely redesign frontend for $ARGUMENTS using latest patterns:
+Using the Frontend Developer agent to: Completely redesign frontend for $ARGUMENTS using latest patterns:
 1. Use latest Angular 19 features aggressively
 2. Implement signals everywhere (no observables)
 3. Use standalone components only
@@ -78,9 +63,9 @@ Provide aggressive modernization blueprint with zero legacy constraints", subage
 8. Implement modern state management (Signals/Stores)
 9. Use latest TypeScript features
 10. Implement edge rendering/SSR
-Design with zero legacy browser support", subagent_type="Frontend Developer")
+Design with zero legacy browser support
 
-@Task(description="Zero-trust security design", prompt="Implement modern zero-trust security for $ARGUMENTS:
+Using the general-purpose agent to: Implement modern zero-trust security for $ARGUMENTS:
 1. Remove all legacy authentication
 2. Implement passwordless by default
 3. Use hardware keys/biometrics
@@ -91,9 +76,9 @@ Design with zero legacy browser support", subagent_type="Frontend Developer")
 8. Implement threat detection
 9. Use security headers aggressively
 10. Implement CSP strictly
-Design assuming no legacy security constraints", subagent_type="general-purpose")
+Design assuming no legacy security constraints
 
-@Task(description="Technical debt elimination", prompt="Identify and eliminate ALL technical debt for $ARGUMENTS:
+Using the Technical Debt Analyst agent to: Identify and eliminate ALL technical debt for $ARGUMENTS:
 1. Find all workarounds to remove
 2. Identify all deprecated dependencies
 3. Find all commented-out code
@@ -104,59 +89,44 @@ Design assuming no legacy security constraints", subagent_type="general-purpose"
 8. Identify all magic numbers/strings
 9. Find all missing error handling
 10. Identify all performance bottlenecks
-Provide complete elimination plan", subagent_type="Technical Debt Analyst")
+Provide complete elimination plan
 
-@Task(description="Modern testing strategy", prompt="Design modern test strategy for $ARGUMENTS with no legacy:
-1. Use latest testing frameworks only
-2. Implement property-based testing
-3. Use contract testing
-4. Implement mutation testing
-5. Use visual regression testing
-6. Implement performance testing
-7. Use chaos engineering principles
-8. Implement security testing
-9. Use AI-powered test generation
-10. Implement continuous testing
-Design for 100% coverage with modern tools only", subagent_type="general-purpose")
+I'll have the general-purpose agent Modern testing strategy.
 
 ## Phase 2: Aggressive Legacy Removal
 
-<think step-by-step about safely removing all legacy code>
+
 
 ### Removal Strategy
 
 #### Step 1: Create Feature Branch
 ```bash
-@Bash(command="git checkout -b breaking-change-$ARGUMENTS")
+Running command: `git checkout -b breaking-change-$ARGUMENTS`
 ```
 
 #### Step 2: Remove Legacy Backend
 ```bash
 # Delete entire legacy modules
-@Bash(command="rm -rf src/legacy/")
-@Bash(command="rm -rf src/deprecated/")
+Running command: `rm -rf src/legacy/`
+Running command: `rm -rf src/deprecated/`
 
 # Remove legacy API endpoints
-@MultiEdit(file_path="src/controllers/", edits=[
-    {old_string: "entire legacy controller", new_string: ""},
-])
+Making multiple edits to the file.
 
 # Clean up legacy services
-@MultiEdit(file_path="src/services/", edits=[
-    {old_string: "legacy service code", new_string: ""},
-])
+Making multiple edits to the file.
 ```
 
 #### Step 3: Remove Legacy Frontend
 ```bash
 # Delete legacy components
-@Bash(command="rm -rf src/app/legacy-components/")
+Running command: `rm -rf src/app/legacy-components/`
 
 # Remove legacy services
-@Bash(command="rm -rf src/app/legacy-services/")
+Running command: `rm -rf src/app/legacy-services/`
 
 # Clean up legacy styles
-@Bash(command="rm -rf src/styles/legacy/")
+Running command: `rm -rf src/styles/legacy/`
 ```
 
 #### Step 4: Database Cleanup
@@ -180,14 +150,14 @@ DROP PROCEDURE IF EXISTS sp_legacy_process;
 
 ## Phase 3: Modern Implementation
 
-<think harder about implementing with the latest patterns and zero legacy>
+
 
 ### Modern Architecture Implementation
 
 #### Backend: Event-Driven Microservices
 ```typescript
 // Modern domain model with event sourcing
-@Injectable()
+Using Injectable tool for this operation.
 export class FeatureAggregate {
     constructor(
         private eventStore: EventStore,
@@ -202,7 +172,7 @@ export class FeatureAggregate {
 }
 
 // CQRS command handler
-@CommandHandler(CreateFeatureCommand)
+Using CommandHandler tool for this operation.
 export class CreateFeatureHandler {
     async execute(command: CreateFeatureCommand): Promise<void> {
         // Modern implementation only
@@ -210,11 +180,11 @@ export class CreateFeatureHandler {
 }
 
 // GraphQL resolver (no REST)
-@Resolver()
+Using Resolver tool for this operation.
 export class FeatureResolver {
-    @Query(() => Feature)
-    @UseGuards(ModernAuthGuard)
-    async feature(@Args() args: FeatureArgs): Promise<Feature> {
+    Using Query tool for this operation. => Feature)
+    Using UseGuards tool for this operation.
+    async feature(Using Args tool for this operation. args: FeatureArgs): Promise<Feature> {
         // Modern query implementation
     }
 }
@@ -223,13 +193,7 @@ export class FeatureResolver {
 #### Frontend: Signals & Standalone Components
 ```typescript
 // Modern Angular 19 with signals only
-@Component({
-    selector: 'app-feature',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
-    template: `
-        <!-- No *ngIf, using modern @if -->
-        @if (feature()) {
+Using Component tool for this operation.) {
             <div class="modern-feature">
                 {{ feature().name }}
             </div>
@@ -260,7 +224,7 @@ export class FeatureComponent {
 
 ## Phase 4: Modern Test Implementation
 
-<think step-by-step about implementing comprehensive modern tests>
+
 
 ### Test Strategy: 100% Coverage, Zero Legacy
 
@@ -335,7 +299,7 @@ describe('Modern Integration Tests', () => {
 
 ## Phase 5: Cloud-Native Optimization
 
-<think harder about cloud-native patterns without monitoring overhead>
+
 
 ### Cloud-Ready Implementation
 
@@ -371,7 +335,7 @@ CMD ["index.js"]
 
 ## Phase 6: Validation Loop Until 100% Success
 
-<think step-by-step about ensuring complete success>
+
 
 ### Continuous Validation
 ```typescript
@@ -413,15 +377,15 @@ async function validateUntilSuccess() {
 ### Remove All Legacy References
 ```bash
 # Find and remove all legacy imports
-@Grep(pattern="import.*legacy|deprecated", output_mode="files_with_matches")
-@MultiEdit(/* remove all legacy imports */)
+Searching for pattern: import.*legacy|deprecated
+Making multiple edits to the file.
 
 # Update all documentation
-@Grep(pattern="legacy|deprecated|backward.?compat", path="docs/", output_mode="files_with_matches")
-@MultiEdit(/* update documentation */)
+Searching for pattern: legacy|deprecated|backward.?compat
+Making multiple edits to the file.
 
 # Clean up configuration
-@Edit(file_path="config/app.config.ts", /* remove legacy config */)
+Editing the file with the necessary changes.
 ```
 
 ### Breaking Change Documentation
@@ -498,9 +462,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Confidence Score

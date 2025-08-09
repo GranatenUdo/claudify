@@ -2,9 +2,6 @@
 description: Update CHANGELOG.md with recent changes following Keep a Changelog format
 allowed-tools: [Read, Write, Edit, MultiEdit, Grep, TodoWrite]
 argument-hint: change description (e.g., "Added user authentication module" or "Fixed critical bug in payment processing")
-complexity: low
-estimated-time: 2-5 minutes
-category: documentation
 ---
 
 # Update Changelog
@@ -23,7 +20,7 @@ Based on your description, I'll categorize this change and update the appropriat
 
 First, let me read the current CHANGELOG.md to understand its structure:
 
-@Read(file_path="CHANGELOG.md", limit=100)
+Reading file: CHANGELOG.md
 
 ## Determining Change Category
 
@@ -41,8 +38,7 @@ Your change appears to be:
 
 I'll add your change to the appropriate section under [Unreleased]:
 
-@Edit(file_path="CHANGELOG.md", old_string="[SECTION_MARKER]", new_string="[SECTION_MARKER]
-- $FORMATTED_CHANGE_DESCRIPTION")
+Editing the file with the necessary changes.
 
 ### Formatting Guidelines
 
@@ -68,7 +64,7 @@ For complex changes, I'll use sub-items:
 
 Let me verify the update was successful:
 
-@Read(file_path="CHANGELOG.md", offset=[UPDATED_LINE], limit=10)
+Reading file: CHANGELOG.md
 
 ## Best Practices Applied
 

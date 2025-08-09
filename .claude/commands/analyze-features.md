@@ -2,15 +2,11 @@
 description: Extract, categorize, and analyze feature sets to reveal competitive advantages and market positioning
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash, WebSearch]
 argument-hint: target for analysis (e.g., "current project", "competitor analysis", "feature comparison")
-agent-dependencies: [Feature Analyzer, Tech Lead, Business Domain Analyst, Customer Value Translator]
-complexity: moderate
-estimated-time: 15-25 minutes
-category: analysis
 ---
 
 # 🔍 Feature Analysis: $ARGUMENTS
 
-<think harder about feature extraction, categorization, and competitive positioning>
+
 
 ## Quick Context
 Use this command to comprehensively analyze feature sets, identify competitive advantages, and understand market positioning through systematic feature extraction and categorization.
@@ -27,35 +23,35 @@ Use this command to comprehensively analyze feature sets, identify competitive a
 
 I'll begin by extracting all features from your codebase and documentation.
 
-@TodoWrite(todos=[{"content": "Extract features from codebase", "status": "in_progress", "priority": "high", "id": "feat-1"}, {"content": "Categorize features by type", "status": "pending", "priority": "high", "id": "feat-2"}, {"content": "Analyze competitive positioning", "status": "pending", "priority": "high", "id": "feat-3"}, {"content": "Generate feature matrix", "status": "pending", "priority": "high", "id": "feat-4"}])
+I'll update the task list to track our progress.
 
 #### Codebase Feature Extraction
 
 ```bash
 # Search for feature-related patterns
-@Grep(pattern="Feature|feature|FEATURE", path=".", output_mode="files_with_matches", head_limit=20)
+Searching for pattern: Feature|feature|FEATURE
 
 # Look for API endpoints (features exposed)
-@Grep(pattern="@(Get|Post|Put|Delete|Patch)Mapping|@Route|app\.(get|post|put|delete)", path=".", output_mode="files_with_matches", head_limit=20)
+Searching for pattern: @(Get|Post|Put|Delete|Patch)Mapping|@Route|app\.(get|post|put|delete)
 
 # Find service methods (business features)
-@Grep(pattern="public.*async.*Task|def.*async|func.*\(|export.*function", path=".", output_mode="files_with_matches", head_limit=20)
+Searching for pattern: public.*async.*Task|def.*async|func.*\(|export.*function
 ```
 
 #### Documentation Analysis
 
 ```bash
 # Check for feature documentation
-@Glob(pattern="**/FEATURES.md", path=".")
-@Glob(pattern="**/README.md", path=".")
-@Glob(pattern="**/*feature*.md", path=".")
+Finding files matching: **/FEATURES.md
+Finding files matching: **/README.md
+Finding files matching: **/*feature*.md
 ```
 
 ## Phase 2: Deep Feature Analysis
 
 ### Expert Feature Extraction
 
-@Task(description="Extract and categorize all features", prompt="Analyze $ARGUMENTS for comprehensive feature extraction:
+Using the Feature Analyzer agent to: Analyze $ARGUMENTS for comprehensive feature extraction:
 
 1. **Feature Discovery**
    - Core functionality features
@@ -84,95 +80,21 @@ I'll begin by extracting all features from your codebase and documentation.
    - Missing table-stakes features
    - Innovation opportunities
 
-Return structured feature inventory with categorization and competitive analysis.", subagent_type="Feature Analyzer")
+Return structured feature inventory with categorization and competitive analysis.
 
 ### Technical Architecture Assessment
 
-@Task(description="Analyze technical feature capabilities", prompt="Evaluate the technical architecture supporting features in $ARGUMENTS:
-
-1. **Architectural Capabilities**
-   - Scalability features
-   - Performance features
-   - Security features
-   - Reliability features
-   - Extensibility features
-
-2. **Platform Features**
-   - Multi-tenancy support
-   - API capabilities
-   - Integration points
-   - Deployment options
-   - Monitoring/observability
-
-3. **Technical Differentiators**
-   - Unique architectural advantages
-   - Performance benchmarks
-   - Scale capabilities
-   - Technology stack benefits
-
-Rate technical feature maturity 1-10 with justification.", subagent_type="general-purpose")
+I'll have the general-purpose agent Analyze technical feature capabilities.
 
 ### Business Domain Analysis
 
-@Task(description="Analyze business value of features", prompt="Evaluate business domain aspects of features in $ARGUMENTS:
-
-1. **Business Capability Mapping**
-   - Core business processes supported
-   - Value chain coverage
-   - Workflow automation features
-   - Decision support features
-
-2. **Domain-Specific Features**
-   - Industry-specific functionality
-   - Regulatory compliance features
-   - Best practice implementations
-   - Domain expertise embedded
-
-3. **Business Value Assessment**
-   - Revenue-generating features
-   - Cost-saving features
-   - Risk-reduction features
-   - Efficiency features
-
-4. **Market Fit Analysis**
-   - Target market alignment
-   - Persona coverage
-   - Use case completeness
-   - Industry requirements met
-
-Provide business value score for each feature category.", subagent_type="Business Domain Analyst")
+I'll have the Business Domain Analyst agent Analyze business value of features.
 
 ### Customer Value Translation
 
-@Task(description="Translate features to customer value", prompt="Convert technical features in $ARGUMENTS to customer value propositions:
+I'll have the Customer Value Translator agent Translate features to customer value.
 
-1. **Value Proposition Mapping**
-   - Feature → Benefit translation
-   - Pain point → Solution mapping
-   - ROI calculations
-   - Time-to-value estimates
-
-2. **Customer Impact Analysis**
-   - Productivity improvements
-   - Cost reductions
-   - Risk mitigation
-   - Quality improvements
-
-3. **Competitive Advantages**
-   - Unique value propositions
-   - Superior implementations
-   - Better together features
-   - Network effects
-
-4. **Success Metrics**
-   - KPIs improved
-   - Measurable outcomes
-   - Success stories potential
-   - Reference-ability
-
-Provide customer-centric feature value assessment.", subagent_type="Customer Value Translator")
-
-@TodoWrite(todos=[{"content": "Extract features from codebase", "status": "completed", "priority": "high", "id": "feat-1"}, {"content": "Categorize features by type", "status": "in_progress", "priority": "high", "id": "feat-2"}, {"content": "Analyze competitive positioning", "status": "pending", "priority": "high", "id": "feat-3"}, {"content": "Generate feature matrix", "status": "pending", "priority": "high", "id": "feat-4"}])
+I'll update the task list to track our progress.
 
 ## Phase 3: Feature Categorization Matrix
 
@@ -206,7 +128,7 @@ Provide customer-centric feature value assessment.", subagent_type="Customer Val
 
 ## Phase 4: Competitive Analysis
 
-@TodoWrite(todos=[{"content": "Extract features from codebase", "status": "completed", "priority": "high", "id": "feat-1"}, {"content": "Categorize features by type", "status": "completed", "priority": "high", "id": "feat-2"}, {"content": "Analyze competitive positioning", "status": "in_progress", "priority": "high", "id": "feat-3"}, {"content": "Generate feature matrix", "status": "pending", "priority": "high", "id": "feat-4"}])
+I'll update the task list to track our progress.
 
 ### Market Positioning Assessment
 
@@ -260,7 +182,7 @@ Based on the comprehensive analysis:
    - Effort: [S/M/L]
    - First-mover advantage: [Description]
 
-@TodoWrite(todos=[{"content": "Extract features from codebase", "status": "completed", "priority": "high", "id": "feat-1"}, {"content": "Categorize features by type", "status": "completed", "priority": "high", "id": "feat-2"}, {"content": "Analyze competitive positioning", "status": "completed", "priority": "high", "id": "feat-3"}, {"content": "Generate feature matrix", "status": "completed", "priority": "high", "id": "feat-4"}])
+I'll update the task list to track our progress.
 
 ## Final Deliverables
 

@@ -2,10 +2,6 @@
 description: Add third-party service integration with proper authentication, error handling, and testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebSearch, TodoWrite]
 argument-hint: service name and purpose (e.g., "weather-api for irrigation planning" or "payment-gateway stripe")
-agent-dependencies: [Tech Lead, Security Reviewer, Researcher]
-complexity: complex
-estimated-time: 30-45 minutes
-category: development
 ---
 
 # 🔌 Add Integration: $ARGUMENTS
@@ -28,24 +24,15 @@ mock-service: true|false (create mock for testing)
 
 ## Phase 1: Integration Research & Planning
 
-<think harder about integration requirements and architectural fit>
+
 
 ### Service Analysis
 First, I'll research the service we're integrating and its requirements.
 
-@Task(description="Research integration requirements", prompt="Research $ARGUMENTS integration:
-1. API documentation and capabilities
-2. Authentication methods and best practices
-3. Rate limits and quotas
-4. Pricing tiers and cost implications
-5. Common integration patterns
-6. Known issues or limitations
-7. Alternative services comparison
-8. Data formats and protocols
-Provide comprehensive integration guide", subagent_type="general-purpose")
+I'll have the general-purpose agent Research integration requirements.
 
 ### Architectural Planning
-@Task(description="Design integration architecture", prompt="Design architecture for $ARGUMENTS integration:
+Using the general-purpose agent to: Design architecture for $ARGUMENTS integration:
 1. Where in clean architecture should this live
 2. Abstraction strategy (interfaces, adapters)
 3. Configuration management approach
@@ -54,14 +41,14 @@ Provide comprehensive integration guide", subagent_type="general-purpose")
 6. Multi-tenant considerations
 7. Performance impact assessment
 8. Monitoring and observability needs
-Provide architectural blueprint with diagrams", subagent_type="general-purpose")
+Provide architectural blueprint with diagrams
 
 ## Phase 2: Security & Compliance Design
 
 <think about security implications and multi-tenant isolation>
 
 ### Security Assessment
-@Task(description="Security analysis for integration", prompt="Analyze security for $ARGUMENTS integration:
+Using the general-purpose agent to: Analyze security for $ARGUMENTS integration:
 1. Authentication security (key storage, rotation)
 2. Data transmission security (TLS, encryption)
 3. Input validation requirements
@@ -70,7 +57,7 @@ Provide architectural blueprint with diagrams", subagent_type="general-purpose")
 6. Audit logging requirements
 7. Compliance implications (GDPR, etc.)
 8. Secret management strategy
-Provide security implementation checklist", subagent_type="general-purpose")
+Provide security implementation checklist
 
 ### Integration Planning
 Based on the analysis, I'll create the integration structure:
@@ -95,7 +82,7 @@ src/
 
 ## Phase 3: Implementation
 
-<think step-by-step about building a robust integration>
+
 
 ### 1. Define Service Interface
 ```csharp
@@ -566,9 +553,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Checklist

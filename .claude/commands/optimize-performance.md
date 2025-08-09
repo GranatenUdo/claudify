@@ -2,10 +2,6 @@
 description: Analyze and optimize code performance, focusing on database queries, caching, and resource usage
 allowed-tools: [Task, Bash, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: specific area or --full-analysis (e.g., "api/fields" or "--full-analysis --focus=database")
-agent-dependencies: [Tech Lead, Code Reviewer, Researcher, Infrastructure Architect, Technical Debt Analyst]
-complexity: complex
-estimated-time: 20-45 minutes (with parallel agent execution)
-category: devops
 ---
 
 # ⚡ Optimize Performance: $ARGUMENTS
@@ -29,17 +25,17 @@ benchmark: run before/after benchmarks
 
 ## Phase 1: Performance Baseline
 
-<think harder about performance measurement and bottleneck identification>
+
 
 ### Initial Metrics Collection
 I'll establish baseline performance metrics for comparison.
 
 ```bash
 # Check current resource usage
-@Bash(command="dotnet build --configuration Release", description="Build in release mode")
+Running command: `dotnet build --configuration Release`
 
 # Run performance tests if available
-@Bash(command="dotnet test --filter Category=Performance --configuration Release", description="Run performance tests")
+Running command: `dotnet test --filter Category=Performance --configuration Release`
 ```
 
 ### Database Performance Analysis
@@ -65,7 +61,7 @@ ORDER BY avg_elapsed_time DESC
 ### Technical Architecture Assessment
 I'll invoke the Tech Lead agent for high-level performance architecture review.
 
-@Task(description="Performance architecture analysis", prompt="Analyze $ARGUMENTS for performance issues:
+Using the general-purpose agent to: Analyze $ARGUMENTS for performance issues:
 1. Database query patterns (N+1, missing indexes, unnecessary joins)
 2. Caching strategy effectiveness
 3. Async/await usage and potential deadlocks
@@ -73,12 +69,12 @@ I'll invoke the Tech Lead agent for high-level performance architecture review.
 5. API response time bottlenecks
 6. Dependency injection lifecycle issues
 7. Third-party service call optimization
-Provide specific optimization recommendations with expected impact", subagent_type="general-purpose")
+Provide specific optimization recommendations with expected impact
 
 ### Code-Level Performance Review
 Next, I'll get detailed code-level performance insights.
 
-@Task(description="Code performance analysis", prompt="Review $ARGUMENTS for performance anti-patterns:
+Using the general-purpose agent to: Review $ARGUMENTS for performance anti-patterns:
 1. Inefficient LINQ queries (multiple enumerations, etc.)
 2. Unnecessary object allocations in hot paths
 3. String concatenation in loops
@@ -86,48 +82,26 @@ Next, I'll get detailed code-level performance insights.
 5. Missing disposal of resources
 6. Inefficient collection usage
 7. Reflection or dynamic usage in critical paths
-Prioritize by performance impact", subagent_type="general-purpose")
+Prioritize by performance impact
 
 ### Research Performance Best Practices
 I'll research latest performance optimization techniques.
 
-@Task(description="Performance research", prompt="Research performance optimizations for:
-1. Latest EF Core performance features and patterns
-2. High-performance caching strategies for multi-tenant systems
-3. Database indexing strategies for the queries found
-4. Memory pooling and span usage in .NET
-5. HTTP/2 and gRPC optimization techniques
-6. Container and cloud-native performance patterns
-Provide actionable recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Performance research.
 
 ### Infrastructure Performance Assessment
 I'll analyze system-level performance considerations.
 
-@Task(description="Infrastructure performance analysis", prompt="Analyze $ARGUMENTS for infrastructure-level performance:
-1. Database connection pooling and configuration
-2. Container resource limits and scaling
-3. Network latency and API gateway optimization
-4. Load balancing strategies
-5. CDN and static asset delivery
-6. Service mesh performance impact
-7. Observability overhead assessment
-Provide infrastructure optimization recommendations with expected impact", subagent_type="general-purpose")
+I'll have the general-purpose agent Infrastructure performance analysis.
 
 ### Technical Debt Performance Impact
 I'll identify technical debt affecting performance.
 
-@Task(description="Performance debt analysis", prompt="Identify technical debt impacting performance in $ARGUMENTS:
-1. Legacy patterns causing performance bottlenecks
-2. Outdated libraries affecting efficiency
-3. Architectural decisions limiting scalability
-4. Missing abstractions causing repeated inefficiencies
-5. Accumulated workarounds degrading performance
-6. Deferred optimizations now critical
-Prioritize by performance impact and refactoring effort", subagent_type="Technical Debt Analyst")
+I'll have the Technical Debt Analyst agent Performance debt analysis.
 
 ## Phase 3: Optimization Implementation
 
-<think step-by-step about applying optimizations safely>
+
 
 ### Database Optimizations
 
@@ -269,7 +243,7 @@ public class BulkFieldProcessor
 ### Benchmark Comparison
 ```bash
 # Run performance benchmarks
-@Bash(command="dotnet run -c Release --project benchmarks/PTA.VineyardManagement.Benchmarks", description="Run performance benchmarks")
+Running command: `dotnet run -c Release --project benchmarks/PTA.VineyardManagement.Benchmarks`
 ```
 
 ### Load Testing
@@ -339,9 +313,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Summary

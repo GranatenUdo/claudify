@@ -2,23 +2,19 @@
 description: Intelligently analyze requirements and generate optimized commands, agents, hooks, and tools that maximize Opus 4's capabilities through deep reasoning and multi-agent collaboration
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebSearch, WebFetch, Bash]
 argument-hint: Describe what you want to achieve (e.g., "analyze database performance bottlenecks" or "validate accessibility compliance for React components")
-agent-dependencies: [Researcher, Tech Lead, Code Reviewer, Security Reviewer]
-complexity: complex
-estimated-time: 30-45 minutes
-category: meta-automation
 opus4-optimization: maximum
 ---
 
 # 🧠 Intelligent Command & Agent Generator
 
 ## OPUS 4 MAXIMUM ACTIVATION - META-REASONING MODE
-<think harder about the fundamental nature of the request, its implications, and the optimal combination of components to achieve the goal>
+
 
 **Meta Directive**: Analyze the user's intent deeply, research best practices exhaustively, and generate the optimal combination of commands, agents, hooks, and tools that fully leverage Opus 4's extended reasoning capabilities to solve complex problems elegantly.
 
 ## Phase 1: Deep Intent Analysis & Research
 
-<think step-by-step about what the user really needs versus what they asked for>
+
 
 ### Intent Classification Engine
 I'll analyze your request across multiple dimensions to understand the true need.
@@ -44,24 +40,17 @@ Analysis Framework:
 ```
 
 ### Existing Pattern Research
-@Task(description="Research patterns", prompt="Analyze existing commands and agents in .claude directory for:
+Using the general-purpose agent to: Analyze existing commands and agents in .claude directory for:
 1. Successful patterns and conventions
 2. Multi-agent collaboration examples
 3. Opus 4 optimization techniques (extended thinking, interleaved reasoning)
 4. Hook integration patterns
 5. Agent tool usage patterns
 6. Common pitfalls to avoid
-Synthesize best practices for: $ARGUMENTS", subagent_type="general-purpose")
+Synthesize best practices for: $ARGUMENTS
 
 ### Domain Best Practices Investigation
-@Task(description="Domain research", prompt="Research industry best practices for: $ARGUMENTS
-1. Similar tools or solutions in the ecosystem
-2. Common implementation patterns
-3. Performance considerations
-4. Security implications
-5. User experience patterns
-6. Future extensibility needs
-Provide comprehensive recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Domain research.
 
 ## Phase 2: Component Architecture Design
 
@@ -70,24 +59,10 @@ Provide comprehensive recommendations", subagent_type="general-purpose")
 ### Multi-Agent Component Analysis
 
 #### Tech Lead Architectural Review
-@Task(description="Architecture design", prompt="Design component architecture for: $ARGUMENTS
-1. Determine if this needs: command only, command + agents, or full suite
-2. Define component boundaries and interactions
-3. Specify data flow and state management
-4. Identify integration points with existing tools
-5. Plan for extensibility and maintenance
-6. Consider performance and scalability
-Provide detailed technical blueprint", subagent_type="general-purpose")
+I'll have the general-purpose agent Architecture design.
 
 #### Security Component Requirements
-@Task(description="Security design", prompt="Analyze security requirements for: $ARGUMENTS
-1. Identify sensitive operations or data
-2. Define authorization requirements
-3. Specify audit trail needs
-4. Design input validation strategies
-5. Plan output sanitization
-6. Consider multi-tenant implications
-Provide security implementation guide", subagent_type="general-purpose")
+I'll have the general-purpose agent Security design.
 
 ### Component Decision Matrix
 
@@ -132,8 +107,8 @@ interface CommandMetadata {
   estimatedTime: string;        // Realistic estimate
   category: Category;           // Proper classification
   opus4Features?: {
-    extendedThinking: boolean;  // <think harder> blocks
-    interleavedReasoning: boolean; // <think step-by-step>
+    extendedThinking: boolean;  //  blocks
+    interleavedReasoning: boolean; // 
     multiAgentSynthesis: boolean;  // Agent result integration
     recursiveAnalysis: boolean;    // Self-improvement loops
   };
@@ -263,24 +238,10 @@ Update existing generators to leverage meta-generator:
 ### Multi-Agent Review Process
 
 #### Code Quality Review
-@Task(description="Quality review", prompt="Review generated components for:
-1. Code clarity and maintainability
-2. Error handling completeness
-3. Performance optimization opportunities
-4. Documentation quality
-5. Test coverage requirements
-6. Integration smoothness
-Provide improvement recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Quality review.
 
 #### Opus 4 Optimization Review
-@Task(description="Opus4 optimization", prompt="Analyze generated components for Opus 4 optimization:
-1. Extended thinking usage effectiveness
-2. Multi-agent collaboration efficiency
-3. Reasoning pattern optimization
-4. Token usage efficiency
-5. Response quality maximization
-6. User experience enhancement
-Suggest optimizations", subagent_type="general-purpose")
+I'll have the general-purpose agent Opus4 optimization.
 
 ## Phase 7: Delivery & Documentation
 
@@ -402,9 +363,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Integration Checklist

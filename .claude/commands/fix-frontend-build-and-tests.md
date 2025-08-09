@@ -2,16 +2,11 @@
 description: Fix frontend build and test failures using specialized Frontend Developer agent with incremental verification after each fix
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, WebSearch, TodoWrite]
 argument-hint: optional specific error or issue description (e.g., "TypeScript errors in field components" or leave empty for full diagnosis)
-agent-dependencies: [Frontend Developer, UX Reviewer, Security Reviewer, Code Reviewer]
-complexity: moderate
-estimated-time: 15-20 minutes
-category: quality
 ---
 
 # 🧠 Fix Frontend Build & Tests: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - FRONTEND SPECIALIST MODE
-<think harder about frontend-specific build failures, test issues, and their root causes using specialized frontend expertise>
+
 
 **Directive**: Fix frontend build and test failures using expert frontend knowledge, focusing on framework-specific patterns, TypeScript intricacies, and modern build tooling.
 
@@ -21,55 +16,9 @@ category: quality
 
 I'll invoke specialized agents simultaneously, with the Frontend Developer leading the technical analysis:
 
-@Task(description="Frontend technical analysis", prompt="As an elite Frontend Developer, analyze build/test failures for '$ARGUMENTS':
-1. **TypeScript Issues**
-   - Type inference problems
-   - Generic constraints violations
-   - Discriminated union errors
-   - Module resolution failures
-   - Declaration file issues
-2. **Angular-Specific Problems**
-   - Signal usage errors
-   - Change detection issues
-   - Dependency injection failures
-   - Template compilation errors
-   - Standalone component problems
-3. **Build Configuration**
-   - angular.json misconfigurations
-   - tsconfig.json path mapping
-   - Webpack optimization issues
-   - Bundle size problems
-   - Source map generation
-4. **Test Infrastructure**
-   - Jest/Karma configuration
-   - Test module setup
-   - Mock service issues
-   - Async test failures
-   - Coverage configuration
-5. **Performance Issues**
-   - Bundle splitting problems
-   - Tree shaking failures
-   - Lazy loading errors
-   - Preloading strategy issues
-Provide expert diagnosis with specific fixes prioritized by impact", subagent_type="Frontend Developer")
-@Task(description="UX impact assessment", prompt="Analyze UI/UX implications of build/test failures for '$ARGUMENTS':
-1. Component architecture impact
-2. Accessibility compliance breaks
-3. Responsive design issues
-4. User interaction failures
-5. Visual regression risks
-6. Design system violations
-7. Loading performance impact
-Provide UX-focused priorities", subagent_type="Visual Designer")
-@Task(description="Security assessment", prompt="Review security implications of frontend failures for '$ARGUMENTS':
-1. XSS vulnerability risks
-2. Dependency vulnerabilities
-3. Build-time secret exposure
-4. CSP violations
-5. Authentication flow breaks
-6. Session handling issues
-7. Input validation failures
-Identify security-critical fixes", subagent_type="general-purpose")
+I'll have the Frontend Developer agent Frontend technical analysis.
+I'll have the Visual Designer agent UX impact assessment.
+I'll have the general-purpose agent Security assessment.
 
 ### Synthesis of Expert Findings
 
@@ -81,13 +30,13 @@ Based on the parallel analyses, I'll prioritize fixes using the Frontend Develop
 
 I'll collect comprehensive diagnostic information in parallel:
 
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build 2>&1", description="Capture build output")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch 2>&1 | head -100", description="Capture test output")
-@Read(file_path="src/PTA.VineyardManagement.Web/tsconfig.json")
-@Read(file_path="src/PTA.VineyardManagement.Web/angular.json")
-@Read(file_path="src/PTA.VineyardManagement.Web/package.json")
-@Grep(pattern="ERROR TS[0-9]+:|error TS[0-9]+:", path="src/PTA.VineyardManagement.Web/", output_mode="content", head_limit=20)
-@Bash(command="cd src/PTA.VineyardManagement.Web && npx tsc --noEmit --listFiles | grep -E '(error|ERROR)' | head -20", description="TypeScript diagnostics")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run build 2>&1`
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch 2>&1 | head -100`
+Reading file: src/PTA.VineyardManagement.Web/tsconfig.json
+Reading file: src/PTA.VineyardManagement.Web/angular.json
+Reading file: src/PTA.VineyardManagement.Web/package.json
+Searching for pattern: ERROR TS[0-9]+:|error TS[0-9]+:
+Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit --listFiles | grep -E '(error|ERROR)' | head -20`
 
 ## Phase 3: Iterative Fix Implementation with Verification
 
@@ -118,8 +67,8 @@ if (state.status === 'success' && 'data' in state) {
 ```
 
 ### Verification After TypeScript Fixes
-@Bash(command="cd src/PTA.VineyardManagement.Web && npx tsc --noEmit", description="Verify TypeScript fixes")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build", description="Quick build check after TS fixes")
+Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit`
+Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
 
 <think about whether TypeScript fixes resolved the issues before proceeding>
 
@@ -128,16 +77,13 @@ If TypeScript verification passes, proceed with Angular-specific fixes:
 
 ```typescript
 // ❌ WRONG: Old patterns that break with signals
-@Component({
-  template: `{{ data | async }}`
-})
+Using Component tool for this operation.
 class OldComponent {
   data = this.service.getData(); // Observable pattern
 }
 
 // ✅ CORRECT: Modern signal patterns
-@Component({
-  template: `{{ data() }}` // Signal invocation
+Using Component tool for this operation. }}` // Signal invocation
 })
 class ModernComponent {
   readonly data = toSignal(this.service.getData(), { initialValue: [] });
@@ -145,8 +91,8 @@ class ModernComponent {
 ```
 
 ### Verification After Angular Updates
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build", description="Build after Angular pattern fixes")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='component' | head -50", description="Test component-related changes")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='component' | head -50`
 
 <think about build and test results before continuing with configuration changes>
 
@@ -167,8 +113,8 @@ If previous verifications pass, update build configurations:
 ```
 
 ### Verification After Configuration Updates
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build", description="Full build after config changes")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --maxWorkers=2 | head -100", description="Run subset of tests to verify config")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --maxWorkers=2 | head -100`
 
 ## Phase 4: Test Infrastructure Fixes with Incremental Verification
 
@@ -196,7 +142,7 @@ beforeEach(() => {
 ```
 
 ### Verification After Test Setup Fixes
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testNamePattern='setup|configuration' | head -50", description="Verify test setup fixes")
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testNamePattern='setup|configuration' | head -50`
 
 #### Step 2: Signal Testing Patterns
 If test setup verification passes, fix signal-specific test patterns:
@@ -217,8 +163,8 @@ it('should update data when signal changes', () => {
 ```
 
 ### Verification After Signal Test Fixes
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='signal|reactive' | head -50", description="Verify signal-related test fixes")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --coverage --coverageReporters=text-summary", description="Check overall test health")
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --testPathPattern='signal|reactive' | head -50`
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --coverage --coverageReporters=text-summary`
 
 ## Phase 5: Final Comprehensive Verification
 
@@ -227,54 +173,25 @@ it('should update data when signal changes', () => {
 After all incremental fixes and verifications, run final comprehensive checks:
 
 ### Final Build and Test Suite
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build", description="Final build verification")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --code-coverage", description="Full test suite with coverage")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run build`
+Running command: `cd src/PTA.VineyardManagement.Web && npm test -- --no-watch --code-coverage`
 
 ### Quality Checks
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run lint", description="Linting compliance")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npx tsc --noEmit", description="Final TypeScript validation")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run lint`
+Running command: `cd src/PTA.VineyardManagement.Web && npx tsc --noEmit`
 
 ### Performance Verification
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run analyze", description="Bundle size check")
+Running command: `cd src/PTA.VineyardManagement.Web && npm run analyze`
 
 <think about whether all verifications passed and if any additional fixes are needed>
 
 ## Phase 6: Performance & Quality Validation
 
 ### Frontend Developer Final Review
-@Task(description="Final technical validation", prompt="As Frontend Developer, validate all fixes:
-1. **Code Quality**
-   - TypeScript best practices
-   - Angular patterns compliance
-   - Performance optimizations
-   - Bundle size impact
-2. **Test Quality**
-   - Coverage adequacy
-   - Test reliability
-   - Mock appropriateness
-   - Edge case handling
-3. **Build Health**
-   - Configuration correctness
-   - Optimization settings
-   - Development experience
-   - CI/CD compatibility
-4. **Long-term Maintainability**
-   - Code clarity
-   - Pattern consistency
-   - Documentation
-   - Upgrade path
-Provide final assessment and any remaining optimizations", subagent_type="Frontend Developer")
+I'll have the Frontend Developer agent Final technical validation.
 
 ### Parallel Quality Checks
-@Task(description="Code quality review", prompt="Review the implemented fixes for:
-1. Pattern consistency
-2. Error handling completeness
-3. Memory leak prevention
-4. Code duplication
-5. Complexity metrics
-6. Documentation coverage
-7. Test maintainability
-Provide improvement suggestions", subagent_type="general-purpose")
+I'll have the general-purpose agent Code quality review.
 
 ## Success Criteria
 

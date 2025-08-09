@@ -2,10 +2,6 @@
 description: Refactor and simplify code to improve quality, readability, and maintainability
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: file path, directory, or pattern to refactor (e.g., "src/services/FieldService.cs" or "**/*Service.cs")
-agent-dependencies: [Code Simplifier, Code Reviewer, Tech Lead, Technical Debt Analyst, Test Quality Analyst]
-complexity: moderate
-estimated-time: 15-30 minutes (with parallel agent execution)
-category: quality
 ---
 
 # 🔧 Refactor Code: $ARGUMENTS
@@ -27,17 +23,17 @@ extract-methods: Aggressively extract complex logic into smaller methods
 
 ## Phase 1: Code Analysis
 
-<think harder about code complexity and maintainability issues>
+
 
 ### Initial Assessment
 I'll analyze the target code to understand its current state and identify refactoring opportunities.
 
 ```bash
 # Examine code structure
-@Grep(pattern="class|interface|method|function", path="$ARGUMENTS", output_mode="files_with_matches")
+Searching for pattern: class|interface|method|function
 
 # Check complexity indicators
-@Grep(pattern="if.*else|switch|while|for", path="$ARGUMENTS", output_mode="count")
+Searching for pattern: if.*else|switch|while|for
 ```
 
 ### Multi-Agent Analysis
@@ -45,55 +41,26 @@ I'll analyze the target code to understand its current state and identify refact
 #### Code Simplifier Assessment
 I'll invoke the Code Simplifier agent to identify simplification opportunities.
 
-@Task(description="Identify refactoring opportunities", prompt="Analyze $ARGUMENTS for:
-1. Complex methods that should be broken down
-2. Duplicate code that can be consolidated
-3. Over-engineered abstractions
-4. Long parameter lists
-5. Deep nesting levels
-6. Unclear naming conventions
-7. Violation of SOLID principles
-Provide specific refactoring recommendations with examples", subagent_type="Technical Debt Analyst")
+I'll have the Technical Debt Analyst agent Identify refactoring opportunities.
 
 #### Code Quality Review
 Next, I'll get a comprehensive code quality assessment.
 
-@Task(description="Code quality analysis", prompt="Review $ARGUMENTS for:
-1. Code smells and anti-patterns
-2. Maintainability index
-3. Cyclomatic complexity
-4. Test coverage gaps
-5. Documentation needs
-6. Performance bottlenecks
-Prioritize issues by impact", subagent_type="general-purpose")
+I'll have the general-purpose agent Code quality analysis.
 
 #### Technical Debt Assessment
 I'll identify technical debt that should be addressed during refactoring.
 
-@Task(description="Technical debt analysis", prompt="Analyze $ARGUMENTS for technical debt:
-1. Legacy patterns that need modernization
-2. Accumulated workarounds and hacks
-3. Deferred refactorings now critical
-4. Outdated dependencies affecting code quality
-5. Missing abstractions causing duplication
-6. Architectural debt limiting flexibility
-Prioritize by refactoring ROI", subagent_type="Technical Debt Analyst")
+I'll have the Technical Debt Analyst agent Technical debt analysis.
 
 #### Test Quality Analysis
 I'll ensure test coverage supports safe refactoring.
 
-@Task(description="Test coverage analysis", prompt="Evaluate test quality for $ARGUMENTS:
-1. Current test coverage percentage
-2. Critical paths without tests
-3. Brittle tests that may break during refactoring
-4. Missing characterization tests
-5. Test quality and maintainability
-6. Recommended test additions before refactoring
-Identify test gaps that could make refactoring risky", subagent_type="general-purpose")
+I'll have the general-purpose agent Test coverage analysis.
 
 ## Phase 2: Refactoring Strategy
 
-<think step-by-step about refactoring approach and order of operations>
+
 
 ### Refactoring Priorities
 Based on the analysis, I'll create a prioritized refactoring plan:
@@ -191,13 +158,7 @@ Proceed with refactoring? (yes/no/dry-run)
 ### Tech Lead Architecture Review
 I'll have the Tech Lead validate that refactorings maintain architectural integrity.
 
-@Task(description="Validate refactoring architecture", prompt="Review the refactored code in $ARGUMENTS to ensure:
-1. Architectural patterns are preserved or improved
-2. No performance regressions introduced
-3. Scalability is maintained or enhanced
-4. Technical debt is reduced, not shifted
-5. Integration points remain stable
-Provide approval or additional recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Validate refactoring architecture.
 
 ### Documentation Updates
 After refactoring, I'll update:

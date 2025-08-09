@@ -2,10 +2,6 @@
 description: Create sophisticated UI features with Frontend Developer expertise, accessibility focus and exceptional user experience
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "field management dashboard with real-time updates")
-agent-dependencies: [Frontend Developer, Visual Designer, Tech Lead, Code Reviewer, Security Reviewer, UX Reviewer]
-complexity: high
-estimated-time: 20-25 minutes (reduced from 40 with parallel execution)
-category: development
 ---
 
 # 🎨 Add UI Feature: $ARGUMENTS
@@ -13,18 +9,9 @@ category: development
 ## Phase 0: Task Management Setup
 
 ### 📋 TodoWrite Task Management
-<think step-by-step about organizing the frontend feature development>
 
-@TodoWrite(todos=[
-  {id: "1", content: "Frontend architecture planning", status: "in_progress", priority: "high"},
-  {id: "2", content: "Visual design system creation", status: "pending", priority: "high"},
-  {id: "3", content: "API readiness verification", status: "pending", priority: "high"},
-  {id: "4", content: "Component implementation", status: "pending", priority: "high"},
-  {id: "5", content: "State management setup", status: "pending", priority: "high"},
-  {id: "6", content: "Accessibility implementation", status: "pending", priority: "high"},
-  {id: "7", content: "Testing and validation", status: "pending", priority: "high"},
-  {id: "8", content: "Performance optimization", status: "pending", priority: "high"}
-])
+
+I'll update the task list to track our progress.
 
 ### 📊 Agent Specialization Matrix
 
@@ -36,7 +23,7 @@ category: development
 | Mobile UI | UX Reviewer, Frontend Developer | Visual Designer | ✅ Yes |
 
 ## 🧠 OPUS 4 DEEP ACTIVATION
-<think harder about creating an exceptional user experience that balances beauty, functionality, accessibility, and performance while maintaining strict multi-tenant security>
+
 
 ### Cognitive Enhancement Triggers
 - **Visual Excellence**: Think deeply about visual hierarchy, typography, spacing, and micro-interactions
@@ -53,24 +40,24 @@ Internalize CLAUDE.md critical rules:
 
 ## Phase 1: Frontend Developer-Led Feature Planning
 
-<think harder about technical implementation, user experience, and architectural decisions>
-<think step-by-step about modern Angular patterns and signals>
+
+
 
 ### 🚀 Parallel Execution Pattern (40-60% Performance Gain)
 ```typescript
 // ✅ OPTIMAL: All discovery operations run in parallel
-@Glob(pattern="**/*.component.ts")
-@Glob(pattern="**/*.service.ts")
-@Grep(pattern="signal|computed|effect", output_mode="files_with_matches")
-@Read(file_path="angular.json")
-@Read(file_path="package.json")
-@Bash(command="ng version", description="Check Angular version")
+Finding files matching: **/*.component.ts
+Finding files matching: **/*.service.ts
+Searching for pattern: signal|computed|effect
+Reading file: angular.json
+Reading file: package.json
+Running command: `ng version`
 ```
 
 ### Frontend Technical Leadership & Implementation Strategy
 I'll have multiple agents analyze in parallel for comprehensive coverage.
 
-@Task(description="Frontend feature architecture and implementation planning", prompt="As an elite Frontend Developer, design the complete technical approach for implementing $ARGUMENTS:
+Using the Frontend Developer agent to: As an elite Frontend Developer, design the complete technical approach for implementing $ARGUMENTS:
 
 TECHNICAL ARCHITECTURE:
 1. **Component Architecture**
@@ -125,22 +112,13 @@ UX TECHNICAL REQUIREMENTS:
 6. Offline functionality needs
 7. Progressive enhancement strategy
 
-Provide comprehensive technical blueprint with specific implementation details, code patterns, and architectural decisions.", subagent_type="Frontend Developer")
-@Task(description="UX analysis", prompt="Analyze user experience requirements for $ARGUMENTS:
-1. User journey mapping
-2. Task flow optimization
-3. Error recovery patterns
-4. Loading state strategies
-5. Mobile-first considerations
-6. Accessibility requirements
-7. Internationalization needs
-8. Performance perception
-Provide UX implementation guidelines", subagent_type="Visual Designer")
+Provide comprehensive technical blueprint with specific implementation details, code patterns, and architectural decisions.
+I'll have the Visual Designer agent UX analysis.
 
 ### Visual Design System Creation (Parallel)
 Following the Frontend Developer's architecture, I'll have the Visual Designer create the design system.
 
-@Task(description="Design system and visual language", prompt="As a Visual Designer, create a cohesive design system for $ARGUMENTS that complements the technical architecture:
+Using the Visual Designer agent to: As a Visual Designer, create a cohesive design system for $ARGUMENTS that complements the technical architecture:
 
 VISUAL DESIGN SYSTEM:
 1. Generate harmonious color palette with semantic meanings
@@ -164,7 +142,7 @@ UX PATTERNS & REQUIREMENTS:
 7. Create loading/error/empty states
 8. Design keyboard navigation flow
 
-Return integrated design system with UX specifications, including design tokens, interaction patterns, and implementation guidelines.", subagent_type="Visual Designer")
+Return integrated design system with UX specifications, including design tokens, interaction patterns, and implementation guidelines.
 
 ### 🎨 Modern Frontend Patterns
 ```typescript
@@ -206,16 +184,16 @@ export class FeatureComponent {
 
 ## Phase 2: API & Architecture Analysis (OPTIMIZED)
 
-<think step-by-step about backend readiness and architectural patterns>
-<think harder about API contracts and real-time requirements>
+
+
 
 ### Task Progress Update
-@TodoWrite(todos=[/* Update task 1 to completed, task 2-3 to in_progress */])
+I'll update the task list to track our progress.
 
 ### Combined API & Code Pattern Analysis
 Running parallel technical analyses for comprehensive coverage.
 
-@Task(description="API and architecture analysis", prompt="As Tech Lead, analyze the technical foundation for $ARGUMENTS:
+Using the general-purpose agent to: As Tech Lead, analyze the technical foundation for $ARGUMENTS:
 
 API READINESS:
 1. Verify all required endpoints exist
@@ -237,7 +215,7 @@ CODE PATTERNS & ARCHITECTURE:
 7. Suggest component composition strategies
 8. Recommend performance optimizations
 
-Provide comprehensive technical assessment with specific recommendations for implementation.", subagent_type="general-purpose")
+Provide comprehensive technical assessment with specific recommendations for implementation.
 
 ### Manual Research Tasks (Execute Simultaneously)
 - Search similar UI patterns: @src/PTA.VineyardManagement.Web/src/app/features
@@ -251,7 +229,7 @@ Provide comprehensive technical assessment with specific recommendations for imp
 
 ## Phase 2: Implementation Synthesis
 
-<think harder about combining all expert insights into a cohesive implementation plan>
+
 
 ### Unified Implementation Strategy
 Based on the Frontend Developer's technical blueprint, Visual Designer's system, and Tech Lead's analysis, I'll synthesize a complete implementation approach that:
@@ -279,7 +257,7 @@ Based on the Frontend Developer's technical blueprint, Visual Designer's system,
 
 ## Phase 3: Advanced Component Architecture with Visual Excellence
 
-<think harder about creating components that are both beautiful and maintainable>
+
 
 ### Visual Design Token Integration (NEW)
 ```typescript
@@ -702,12 +680,12 @@ export const uiAnimations = {
 
 ## Phase 7: Visual Quality Assurance (ENHANCED)
 
-<think harder about validating beauty and excellence>
+
 
 ### Comprehensive Quality Validation
 I'll have the Code Reviewer perform complete quality assessment.
 
-@Task(description="Comprehensive quality review", prompt="As Code Reviewer with visual design awareness, validate the complete implementation of $ARGUMENTS:
+Using the general-purpose agent to: As Code Reviewer with visual design awareness, validate the complete implementation of $ARGUMENTS:
 
 VISUAL QUALITY:
 1. Color harmony and accessibility (contrast ratios)
@@ -729,7 +707,7 @@ CODE QUALITY:
 7. Security best practices
 8. Maintainability and documentation
 
-Provide integrated quality assessment with specific improvements and overall excellence score.", subagent_type="general-purpose")
+Provide integrated quality assessment with specific improvements and overall excellence score.
 
 ### Enhanced Design Tokens Implementation
 ```typescript
@@ -782,7 +760,7 @@ export const designTokens = {
 ### Comprehensive Testing & Security Validation
 I'll have the Security Reviewer perform complete testing and security assessment.
 
-@Task(description="Complete testing and security audit", prompt="As Security Reviewer with testing expertise, conduct comprehensive validation of $ARGUMENTS:
+Using the general-purpose agent to: As Security Reviewer with testing expertise, conduct comprehensive validation of $ARGUMENTS:
 
 FUNCTIONAL & VISUAL TESTING:
 1. Visual regression across viewports (mobile/tablet/desktop)
@@ -813,7 +791,7 @@ SECURITY ASSESSMENT:
 7. CORS and CSP compliance
 8. OWASP Top 10 verification
 
-Provide unified testing report with security certification and performance metrics.", subagent_type="general-purpose")
+Provide unified testing report with security certification and performance metrics.
 
 ## Phase 9: Documentation & Knowledge Capture
 
@@ -858,15 +836,7 @@ Use `/update-changelog` command for automated updates
 ### Final Optimization Review
 I'll have the Code Simplifier identify final improvements.
 
-@Task(description="Final optimization review", prompt="Review $ARGUMENTS for final optimizations:
-1. Component simplification opportunities
-2. Reusable hook extraction
-3. Template complexity reduction
-4. Event handler consolidation
-5. State management optimization
-6. Performance improvements
-7. Code clarity enhancements
-Provide prioritized optimization checklist.", subagent_type="Technical Debt Analyst")
+I'll have the Technical Debt Analyst agent Final optimization review.
 
 ## Phase 10: Beauty & Excellence Metrics (NEW)
 
@@ -915,7 +885,7 @@ const calculateBeautyScore = (feature: FeatureImplementation): UIBeautyScore => 
 
 ## OPUS 4 FINAL REFLECTION
 
-<think harder about creating an interface that users will love and remember>
+
 
 ### Excellence Achievement Dashboard
 ```

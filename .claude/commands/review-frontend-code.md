@@ -2,10 +2,6 @@
 description: Perform comprehensive UI code review led by Frontend Developer for framework compliance, performance, and quality
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]
 argument-hint: component path, PR number, or feature name to review
-agent-dependencies: [Frontend Developer, UX Reviewer, Security Reviewer, Code Reviewer]
-complexity: moderate
-estimated-time: 15-20 minutes
-category: quality
 ---
 
 # Review UI Code: $ARGUMENTS
@@ -18,7 +14,7 @@ I'll have the Frontend Developer lead the technical review while other agents pr
 
 ### Phase 0: Multi-Agent Parallel Review
 
-@Task(description="Frontend technical code review", prompt="As an elite Frontend Developer, perform comprehensive code review of $ARGUMENTS:
+Using the Frontend Developer agent to: As an elite Frontend Developer, perform comprehensive code review of $ARGUMENTS:
 
 FRAMEWORK COMPLIANCE:
 1. **Angular Best Practices**
@@ -58,29 +54,9 @@ FRAMEWORK COMPLIANCE:
    - State management
    - Error handling
 
-Provide detailed review with specific improvements, code examples, and severity ratings.", subagent_type="Frontend Developer")
-@Task(description="UX and accessibility review", prompt="Review UI/UX aspects of $ARGUMENTS:
-1. WCAG 2.1 AA compliance verification
-2. Keyboard navigation completeness
-3. Screen reader compatibility
-4. Mobile responsiveness
-5. Touch target sizes
-6. Color contrast ratios
-7. Focus management
-8. Error messaging clarity
-9. Loading state quality
-10. Animation performance
-Provide accessibility score and UX improvements", subagent_type="Visual Designer")
-@Task(description="Security code review", prompt="Analyze security aspects of $ARGUMENTS:
-1. XSS vulnerability assessment
-2. Input sanitization verification
-3. Safe innerHTML usage
-4. Content Security Policy compliance
-5. Authentication state handling
-6. Sensitive data exposure
-7. Third-party library risks
-8. CORS implementation
-Provide security assessment with risk ratings", subagent_type="general-purpose")
+Provide detailed review with specific improvements, code examples, and severity ratings.
+I'll have the Visual Designer agent UX and accessibility review.
+I'll have the general-purpose agent Security code review.
 
 ### Synthesis of Expert Reviews
 
@@ -148,7 +124,7 @@ Use interleaved thinking to understand the UI code:
 #### 3. Keyboard Navigation
 ```typescript
 // ✅ GOOD: Keyboard support
-@HostListener('keydown', ['$event'])
+Using HostListener tool for this operation.
 handleKeyboardEvent(event: KeyboardEvent) {
   switch (event.key) {
     case 'Enter':
@@ -185,17 +161,10 @@ handleKeyboardEvent(event: KeyboardEvent) {
 #### 1. Change Detection Optimization
 ```typescript
 // ❌ BAD: Default change detection
-@Component({
-  selector: 'app-field-list',
-  templateUrl: './field-list.component.html'
-})
+Using Component tool for this operation.
 
 // ✅ GOOD: OnPush strategy
-@Component({
-  selector: 'app-field-list',
-  templateUrl: './field-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
+Using Component tool for this operation.
 ```
 
 #### 2. Signal Patterns
@@ -264,18 +233,7 @@ import { debounce } from 'lodash-es/debounce';
 #### 1. Standalone Components
 ```typescript
 // ✅ GOOD: Standalone with explicit imports
-@Component({
-  selector: 'app-field-card',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule
-  ],
-  templateUrl: './field-card.component.html',
-  styleUrl: './field-card.component.scss'
-})
+Using Component tool for this operation.
 ```
 
 #### 2. Control Flow Syntax
@@ -311,34 +269,21 @@ ngOnInit() {
 
 ### Phase 4.5: Security Analysis
 
-I'll invoke the Security Reviewer agent for this analysis.
+I'll invoke the Security Reviewer
+ agent for this analysis.
 
-@Task(description="Security Reviewer analysis", prompt="Review UI security for $ARGUMENTS:
-1. XSS vulnerability assessment
-2. Secure handling of user inputs
-3. Safe innerHTML usage verification
-4. Content Security Policy compliance
-5. Authentication state management
-6. Sensitive data exposure in DOM
-7. Third-party library vulnerabilities
-8. CORS and API security
-Provide UI security assessment report
-", subagent_type="Security Reviewer")
+I'll have the Security Reviewer
+ agent Security Reviewer
+ analysis.
 
 ### Phase 5: Code Simplification Opportunities
 
-I'll invoke the Code Simplifier agent for this analysis.
+I'll invoke the Code Simplifier
+ agent for this analysis.
 
-@Task(description="Code Simplifier analysis", prompt="Identify complexity reduction opportunities in $ARGUMENTS:
-1. Over-engineered components
-2. Redundant state management
-3. Complex template logic that belongs in components
-4. Repeated patterns that could be extracted
-5. Unnecessary abstractions
-6. Consolidation of similar components
-7. Simplification of event handling
-Provide refactoring recommendations
-", subagent_type="Code Simplifier")
+I'll have the Code Simplifier
+ agent Code Simplifier
+ analysis.
 
 ### Phase 5.1: UI/UX Review
 
@@ -481,19 +426,12 @@ npx webpack-bundle-analyzer dist/stats.json
 
 ### Phase 6: Final Comprehensive Assessment
 
-I'll invoke the general-purpose agent for this analysis.
+I'll invoke the general-purpose
+ agent for this analysis.
 
-@Task(description="general-purpose analysis", prompt="Conduct final testing verification for $ARGUMENTS:
-1. Cross-browser compatibility testing
-2. Mobile device testing checklist
-3. Integration test coverage
-4. E2E test scenarios
-5. Visual regression test requirements
-6. Performance budget compliance
-7. Error boundary implementation
-8. Production build verification
-Generate testing compliance report
-", subagent_type="general-purpose")
+I'll have the general-purpose
+ agent general-purpose
+ analysis.
 
 ## 📝 Frontend Developer-Led Review Output
 

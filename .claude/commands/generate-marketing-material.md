@@ -2,22 +2,17 @@
 description: Transform technical features into compelling marketing materials that wow potential customers and drive sales
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]
 argument-hint: material type and audience (e.g., "brochure for enterprise customers" or "email campaign for farmers")
-agent-dependencies: [Marketing Strategist, Feature Analyzer, Customer Value Translator, Sales Genius, Visual Designer]
-complexity: high
-estimated-time: 25-35 minutes
-category: marketing
 ---
 
 # 🚀 Generate Marketing Material: $ARGUMENTS
 
-## OPUS 4 ACTIVATION - TRANSFORM FEATURES INTO REVENUE
-<think harder about understanding customer psychology, crafting compelling narratives, and creating materials that drive action>
+
 
 **Marketing Directive**: Transform our technical excellence into irresistible customer value propositions that showcase our vineyard management solution as the industry-leading choice.
 
 ## Phase 1: Strategic Context Analysis
 
-<think step-by-step about the marketing request and target audience>
+
 
 ### Parse Marketing Request
 I'll analyze your request to understand:
@@ -42,7 +37,7 @@ Context Analysis:
 ### Comprehensive Feature Analysis
 I'll have our Feature Analyzer extract and categorize all capabilities from FEATURES.md.
 
-@Task(description="Extract and categorize features", prompt="Analyze FEATURES.md to extract all implemented features and capabilities:
+Using the Feature Analyzer agent to: Analyze FEATURES.md to extract all implemented features and capabilities:
 
 1. **Feature Extraction**:
    - Parse all feature categories (Field Management, Import/Export, Analytics, etc.)
@@ -63,14 +58,14 @@ I'll have our Feature Analyzer extract and categorize all capabilities from FEAT
    - Industry-specific features
    - Performance metrics
 
-Return structured feature data with categories, capabilities, and differentiation points.", subagent_type="Feature Analyzer")
+Return structured feature data with categories, capabilities, and differentiation points.
 
 ## Phase 3: Value Transformation Engine
 
 ### Customer-Centric Value Translation
 I'll have our Customer Value Translator transform technical features into compelling benefits.
 
-@Task(description="Transform features to benefits", prompt="Transform technical features into customer-centric value propositions for $ARGUMENTS:
+Using the Customer Value Translator agent to: Transform technical features into customer-centric value propositions for $ARGUMENTS:
 
 TARGET AUDIENCE ANALYSIS:
 - Audience: [Extracted from arguments]
@@ -96,16 +91,16 @@ TRANSLATION FRAMEWORK:
    - Pride (innovation, leadership)
    - Confidence (data-driven decisions)
 
-Return value propositions with quantified benefits and emotional connections.", subagent_type="Customer Value Translator")
+Return value propositions with quantified benefits and emotional connections.
 
 ## Phase 4: Strategic Content Creation
 
-<think harder about crafting a narrative that compels action>
+
 
 ### Marketing Strategy Synthesis
 Based on the feature analysis and value propositions, I'll have our Marketing Strategist create compelling content.
 
-@Task(description="Create marketing content", prompt="Create compelling marketing material for $ARGUMENTS:
+Using the Marketing Strategist agent to: Create compelling marketing material for $ARGUMENTS:
 
 CONTENT REQUIREMENTS:
 - Type: [Material type from arguments]
@@ -140,16 +135,16 @@ CONTENT STRUCTURE:
    - Secondary CTA (lower commitment option)
    - Contact information and next steps
 
-Return complete marketing content with compelling narrative flow.", subagent_type="Marketing Strategist")
+Return complete marketing content with compelling narrative flow.
 
 ## Phase 5: Sales Optimization & Conversion Enhancement
 
-<think harder about maximizing conversion and driving immediate action>
+
 
 ### Sales Psychology Enhancement
 Now I'll have our Sales Genius optimize the content for maximum conversion and sales effectiveness.
 
-@Task(description="Optimize for sales conversion", prompt="Apply advanced sales psychology to marketing content for $ARGUMENTS:
+Using the Sales Genius agent to: Apply advanced sales psychology to marketing content for $ARGUMENTS:
 
 SALES OPTIMIZATION REQUIREMENTS:
 1. **Urgency Creation**:
@@ -188,14 +183,14 @@ SALES OPTIMIZATION REQUIREMENTS:
    - Body copy that builds desire
    - P.S. lines that create action
 
-Return sales-optimized content with psychological triggers mapped.", subagent_type="Sales Genius")
+Return sales-optimized content with psychological triggers mapped.
 
 ## Phase 6: Visual Excellence & Design
 
 ### Professional Visual Enhancement
 I'll have our Visual Designer create visual elements that enhance the sales-optimized message.
 
-@Task(description="Design visual elements", prompt="Create visual design recommendations for $ARGUMENTS marketing material with sales optimization:
+Using the Visual Designer agent to: Create visual design recommendations for $ARGUMENTS marketing material with sales optimization:
 
 VISUAL REQUIREMENTS:
 1. **Layout Design**:
@@ -222,7 +217,7 @@ VISUAL REQUIREMENTS:
    - Icon selections
    - Photography style
 
-Return visual design system with specific recommendations for professional appeal.", subagent_type="Visual Designer")
+Return visual design system with specific recommendations for professional appeal.
 
 ## Phase 7: Material Generation & Formatting
 

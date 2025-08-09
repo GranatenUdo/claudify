@@ -2,16 +2,12 @@
 description: Replace backend feature entirely with modern patterns, removing all legacy code
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: backend feature replacement description (e.g., "replace monolithic service with microservices")
-agent-dependencies: [Tech Lead, Security Reviewer, Technical Debt Analyst, Test Quality Analyst]
-complexity: high
-estimated-time: 20-25 minutes
-category: development
 ---
 
 # 🔥 Replace Backend Feature (No Compatibility): $ARGUMENTS
 
 ## ⚠️ AGGRESSIVE BACKEND MODERNIZATION
-<think harder about completely replacing backend with modern cloud-native patterns, zero legacy code>
+
 
 ### Radical Backend Transformation
 - **Microservices/Serverless Only**: No monoliths
@@ -22,51 +18,29 @@ category: development
 
 ## Phase 0: Legacy Backend Elimination Planning
 
-<think step-by-step about removing all legacy backend code>
+
 
 ### Legacy Backend Discovery
 ```bash
 # Find all legacy backend code
-@Grep(pattern="Repository|Service|Controller.*$FEATURE", output_mode="files_with_matches")
-@Grep(pattern="stored.?procedure|trigger|view", path="**/*.sql", output_mode="files_with_matches")
-@Glob(pattern="**/*Legacy*.*")
-@Glob(pattern="**/*Deprecated*.*")
+Searching for pattern: Repository|Service|Controller.*$FEATURE
+Searching for pattern: stored.?procedure|trigger|view
+Finding files matching: **/*Legacy*.*
+Finding files matching: **/*Deprecated*.*
 ```
 
 ### Aggressive Backend Cleanup Tasks
-@TodoWrite(todos=[
-  {id: "1", content: "Identify all legacy backend components", status: "pending", priority: "high"},
-  {id: "2", content: "Remove legacy controllers", status: "pending", priority: "high"},
-  {id: "3", content: "Remove legacy services", status: "pending", priority: "high"},
-  {id: "4", content: "Remove legacy repositories", status: "pending", priority: "high"},
-  {id: "5", content: "Drop legacy database objects", status: "pending", priority: "high"},
-  {id: "6", content: "Implement modern microservices", status: "pending", priority: "high"},
-  {id: "7", content: "Implement event sourcing", status: "pending", priority: "high"},
-  {id: "8", content: "Create new test suite", status: "pending", priority: "high"},
-  {id: "9", content: "Achieve 100% test success", status: "pending", priority: "high"},
-  {id: "10", content: "Validate cloud-native deployment", status: "pending", priority: "high"}
-])
+I'll update the task list to track our progress.
 
 ## Phase 1: Parallel Modern Architecture Design
 
-<think harder about designing without any legacy constraints>
+
 
 ### Unrestricted Backend Redesign
 
-@Task(description="Microservices architecture design", prompt="Design modern microservices architecture for $ARGUMENTS:
-1. Decompose into bounded contexts
-2. Design event-driven communication
-3. Implement CQRS where beneficial
-4. Use event sourcing for audit trails
-5. Design for horizontal scaling
-6. Implement circuit breakers
-7. Design service mesh integration
-8. Use gRPC for inter-service communication
-9. Implement distributed tracing
-10. Design for zero-downtime deployments
-Provide complete microservices blueprint", subagent_type="general-purpose")
+I'll have the general-purpose agent Microservices architecture design.
 
-@Task(description="Modern security architecture", prompt="Design zero-trust security for $ARGUMENTS:
+Using the general-purpose agent to: Design zero-trust security for $ARGUMENTS:
 1. Service-to-service authentication (mTLS)
 2. API gateway with rate limiting
 3. Secrets management (Vault/KMS)
@@ -77,20 +51,9 @@ Provide complete microservices blueprint", subagent_type="general-purpose")
 8. Pod security policies
 9. Image scanning in CI/CD
 10. Compliance automation
-Provide complete security implementation", subagent_type="general-purpose")
+Provide complete security implementation
 
-@Task(description="Legacy elimination plan", prompt="Create complete legacy removal plan for $ARGUMENTS:
-1. Identify all legacy patterns
-2. Find stored procedures to remove
-3. Locate triggers to eliminate
-4. Find views to replace
-5. Identify ORM anti-patterns
-6. Find synchronous dependencies
-7. Locate shared databases
-8. Identify tight coupling
-9. Find missing abstractions
-10. Locate performance bottlenecks
-Provide elimination sequence", subagent_type="Technical Debt Analyst")
+I'll have the Technical Debt Analyst agent Legacy elimination plan.
 
 ## Phase 2: Aggressive Legacy Removal
 
@@ -98,25 +61,25 @@ Provide elimination sequence", subagent_type="Technical Debt Analyst")
 
 ```bash
 # Remove entire legacy structure
-@Bash(command="rm -rf src/Controllers/Legacy*")
-@Bash(command="rm -rf src/Services/Legacy*")
-@Bash(command="rm -rf src/Repositories/*")  # Remove all repositories
+Running command: `rm -rf src/Controllers/Legacy*`
+Running command: `rm -rf src/Services/Legacy*`
+Running command: `rm -rf src/Repositories/*`  # Remove all repositories
 
 # Drop legacy database objects
-@Bash(command="psql -c 'DROP SCHEMA legacy CASCADE'")
-@Bash(command="psql -c 'DROP ALL PROCEDURES'")
-@Bash(command="psql -c 'DROP ALL TRIGGERS'")
+Running command: `psql -c 'DROP SCHEMA legacy CASCADE'`
+Running command: `psql -c 'DROP ALL PROCEDURES'`
+Running command: `psql -c 'DROP ALL TRIGGERS'`
 ```
 
 ## Phase 3: Modern Microservices Implementation
 
-<think harder about implementing cutting-edge backend patterns>
+
 
 ### Event-Driven Microservice
 
 ```typescript
 // Command Service (Write Side)
-@Injectable()
+Using Injectable tool for this operation.
 export class FeatureCommandService {
     constructor(
         private eventStore: EventStore,
@@ -137,7 +100,7 @@ export class FeatureCommandService {
 }
 
 // Query Service (Read Side)
-@Injectable()
+Using Injectable tool for this operation.
 export class FeatureQueryService {
     constructor(
         private projection: Projection,
@@ -561,9 +524,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Validation

@@ -2,16 +2,12 @@
 description: Update backend feature with comprehensive testing and backward compatibility
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: backend feature update description (e.g., "update payment processing to support new gateway")
-agent-dependencies: [Tech Lead, Security Reviewer, Code Reviewer, Test Quality Analyst]
-complexity: moderate
-estimated-time: 20-30 minutes
-category: development
 ---
 
 # 🔧 Update Backend Feature: $ARGUMENTS
 
 ## 🧠 OPUS 4 BACKEND OPTIMIZATION MODE
-<think harder about backend-specific concerns: data integrity, transaction management, API contracts, and achieving 100% test success>
+
 
 ### Backend Excellence Principles
 - **Data Integrity First**: ACID compliance, transaction boundaries
@@ -22,27 +18,20 @@ category: development
 
 ## Phase 0: Backend Discovery & Planning
 
-<think step-by-step about understanding the current backend implementation>
+
 
 ### Backend Component Discovery
 ```bash
 # Parallel backend discovery
-@Glob(pattern="**/Controllers/*$FEATURE*.*")
-@Glob(pattern="**/Services/*$FEATURE*.*")
-@Glob(pattern="**/Repositories/*$FEATURE*.*")
-@Glob(pattern="**/Models/*$FEATURE*.*")
-@Grep(pattern="class.*$FEATURE|interface.*$FEATURE", output_mode="files_with_matches")
+Finding files matching: **/Controllers/*$FEATURE*.*
+Finding files matching: **/Services/*$FEATURE*.*
+Finding files matching: **/Repositories/*$FEATURE*.*
+Finding files matching: **/Models/*$FEATURE*.*
+Searching for pattern: class.*$FEATURE|interface.*$FEATURE
 ```
 
 ### Backend Update Task List
-@TodoWrite(todos=[
-  {id: "1", content: "Analyze current backend implementation", status: "pending", priority: "high"},
-  {id: "2", content: "Identify API contract requirements", status: "pending", priority: "high"},
-  {id: "3", content: "Update domain models", status: "pending", priority: "high"},
-  {id: "4", content: "Update repository layer", status: "pending", priority: "high"},
-  {id: "5", content: "Update service layer", status: "pending", priority: "high"},
-  {id: "6", content: "Update API controllers", status: "pending", priority: "high"},
-  {id: "7", content: "Update database schema (backward compatible)", status: "pending", priority: "high"},
+I'll update the task list to track our progress.", status: "pending", priority: "high"},
   {id: "8", content: "Generate comprehensive unit tests", status: "pending", priority: "high"},
   {id: "9", content: "Generate integration tests", status: "pending", priority: "high"},
   {id: "10", content: "Achieve 100% test success", status: "pending", priority: "high"}
@@ -50,11 +39,11 @@ category: development
 
 ## Phase 1: Parallel Backend Analysis
 
-<think harder about backend architectural concerns and patterns>
+
 
 ### Specialized Backend Analysis
 
-@Task(description="Backend architecture analysis", prompt="Analyze backend architecture for updating $ARGUMENTS:
+Using the general-purpose agent to: Analyze backend architecture for updating $ARGUMENTS:
 1. Current design patterns used (Repository, UoW, CQRS)
 2. Transaction boundary analysis
 3. Database schema impacts
@@ -65,50 +54,17 @@ category: development
 8. Scalability considerations
 9. Data migration requirements
 10. Rollback procedures
-Provide technical implementation plan with risk assessment", subagent_type="general-purpose")
+Provide technical implementation plan with risk assessment
 
-@Task(description="Security impact analysis", prompt="Analyze security implications of updating $ARGUMENTS:
-1. Authentication/authorization changes
-2. Input validation requirements
-3. SQL injection prevention
-4. Data encryption needs
-5. Audit logging requirements
-6. Rate limiting adjustments
-7. CORS policy updates
-8. Token management changes
-9. Session handling impacts
-10. Multi-tenant isolation verification
-Provide security checklist with validation steps", subagent_type="general-purpose")
+I'll have the general-purpose agent Security impact analysis.
 
-@Task(description="Code quality assessment", prompt="Review backend code quality for $ARGUMENTS:
-1. SOLID principle adherence
-2. Design pattern correctness
-3. Error handling completeness
-4. Logging strategy
-5. Configuration management
-6. Dependency injection usage
-7. Code duplication analysis
-8. Method complexity metrics
-9. Class cohesion assessment
-10. Documentation coverage
-Provide refactoring recommendations", subagent_type="general-purpose")
+I'll have the general-purpose agent Code quality assessment.
 
-@Task(description="Test strategy planning", prompt="Design backend test strategy for $ARGUMENTS:
-1. Unit test coverage analysis
-2. Repository test patterns
-3. Service layer test scenarios
-4. Controller test requirements
-5. Integration test design
-6. Database test strategies
-7. Mock/stub requirements
-8. Test data management
-9. Performance test scenarios
-10. Contract test requirements
-Provide test implementation plan for 100% coverage", subagent_type="general-purpose")
+I'll have the general-purpose agent Test strategy planning.
 
 ## Phase 2: Domain Model Updates
 
-<think step-by-step about updating domain models while preserving integrity>
+
 
 ### Domain Model Enhancement
 
@@ -157,7 +113,7 @@ public class Feature
 
 ## Phase 3: Repository Layer Updates
 
-<think harder about data access patterns and optimization>
+
 
 ### Repository Enhancement
 
@@ -210,7 +166,7 @@ public class FeatureRepository : IFeatureRepository
 
 ## Phase 4: Service Layer Updates
 
-<think step-by-step about business logic enhancements>
+
 
 ### Service Enhancement with New Logic
 
@@ -268,7 +224,7 @@ public class FeatureService : IFeatureService
 
 ## Phase 5: API Controller Updates
 
-<think harder about API design and versioning>
+
 
 ### API Enhancement with Versioning
 
@@ -323,7 +279,7 @@ public class FeatureController : ControllerBase
 
 ## Phase 6: Database Migration (Backward Compatible)
 
-<think step-by-step about safe database changes>
+
 
 ### Safe Database Updates
 
@@ -356,7 +312,7 @@ $$ LANGUAGE plpgsql;
 
 ## Phase 7: Comprehensive Test Generation
 
-<think harder about achieving 100% test success>
+
 
 ### Backend Test Suite
 
@@ -455,7 +411,7 @@ public class FeatureIntegrationTests
 
 ## Phase 8: Validation Loop Until Success
 
-<think step-by-step about ensuring 100% success>
+
 
 ### Continuous Backend Validation
 
@@ -575,9 +531,9 @@ Based on the changes made, update these files:
 ### Parallel Documentation Check
 Check all documentation files simultaneously for existing references:
 ```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
+Searching for pattern: $ARGUMENTS
 ```
 
 ## Final Validation
