@@ -1,6 +1,5 @@
 ---
 name: optimize-performance
-model: opus
 think-mode: think_harder
 description: Analyze and optimize code performance, focusing on database queries, caching, and resource usage
 allowed-tools: [Task, Bash, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]

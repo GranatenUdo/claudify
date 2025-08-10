@@ -1,6 +1,5 @@
 ---
 name: fix-backend-build-and-tests
-model: opus
 think-mode: think_harder
 execution-mode: iterative-per-file
 verification-strategy: immediate

@@ -3,7 +3,6 @@ name: add-backend-feature
 description: Create backend API feature with domain-driven design and comprehensive agent analysis
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: feature description (e.g., "harvest scheduling with weather integration")
-model: opus
 think-mode: think_hard
 ---
 

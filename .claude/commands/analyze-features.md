@@ -1,6 +1,5 @@
 ---
 name: analyze-features
-model: opus
 think-mode: think_harder
 description: Extract, categorize, and analyze feature sets to reveal competitive advantages and market positioning
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash, WebSearch]

@@ -1,6 +1,5 @@
 ---
 name: analyze-test-quality
-model: opus
 think-mode: think_harder
 description: Performs comprehensive test quality analysis across the entire codebase, identifying gaps, redundancies, and improvement opportunities
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, Bash, WebSearch]

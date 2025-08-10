@@ -1,6 +1,5 @@
 ---
 name: update-backend-feature-no-backward-compatibility
-model: opus
 think-mode: think_harder
 description: Replace backend feature entirely with modern patterns, removing all legacy code
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]

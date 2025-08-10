@@ -3,7 +3,6 @@ name: comprehensive-review
 description: Perform holistic analysis using all specialized agents for maximum insight and quality
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]
 argument-hint: feature name, PR number, or directory to review comprehensively
-model: opus
 think-mode: think_harder
 ---
 

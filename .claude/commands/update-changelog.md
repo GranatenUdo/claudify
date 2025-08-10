@@ -1,6 +1,5 @@
 ---
 name: update-changelog
-model: opus
 think-mode: standard
 description: Update CHANGELOG.md with recent changes following Keep a Changelog format
 allowed-tools: [Read, Write, Edit, MultiEdit, Grep, TodoWrite]

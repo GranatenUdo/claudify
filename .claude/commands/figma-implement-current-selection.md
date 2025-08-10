@@ -1,6 +1,5 @@
 ---
 name: figma-implement-current-selection
-model: opus
 think-mode: think_hard
 description: Transform current Figma selection into production-ready code led by Frontend Developer expertise with multi-agent support
 allowed-tools: [Task, WebFetch, WebSearch, TodoWrite, Read, Write, Edit, MultiEdit, Bash, Grep, Glob, LS]

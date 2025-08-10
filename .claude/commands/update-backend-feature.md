@@ -3,7 +3,6 @@ name: update-backend-feature
 description: Update backend feature with comprehensive testing and backward compatibility
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: backend feature update description (e.g., "update payment processing to support new gateway")
-model: opus
 think-mode: think_hard
 ---
 

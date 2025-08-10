@@ -1,6 +1,5 @@
 ---
 name: update-comprehensive-feature-no-backward-compatibility
-model: opus
 think-mode: think_harder
 description: Replace existing feature entirely with no backward compatibility, removing legacy code and implementing modern patterns
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]

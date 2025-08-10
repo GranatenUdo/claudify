@@ -3,7 +3,6 @@ name: generate-documentation
 description: Generate comprehensive technical documentation for features, APIs, or systems
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch, Bash]
 argument-hint: documentation type and target (e.g., "api docs for field management" or "user guide for import feature")
-model: opus
 think-mode: think_hard
 ---
 

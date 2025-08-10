@@ -1,6 +1,5 @@
 ---
 name: update-comprehensive-feature
-model: opus
 think-mode: think_hard
 description: Update existing feature across entire stack with comprehensive analysis, testing, and validation
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]

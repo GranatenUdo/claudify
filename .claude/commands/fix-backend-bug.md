@@ -3,7 +3,6 @@ name: fix-backend-bug
 description: Debug and fix backend API issues using systematic root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: bug description (e.g., "null reference in field service when updating boundaries")
-model: opus
 think-mode: think_hard
 ---
 

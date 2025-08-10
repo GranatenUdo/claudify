@@ -3,7 +3,6 @@ name: refactor-code
 description: Refactor and simplify code to improve quality, readability, and maintainability
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Glob, LS, TodoWrite]
 argument-hint: file path, directory, or pattern to refactor (e.g., "src/services/FieldService.cs" or "**/*Service.cs")
-model: opus
 think-mode: think_hard
 ---
 

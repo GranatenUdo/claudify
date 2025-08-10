@@ -1,6 +1,5 @@
 ---
 name: analyze-domain-use-cases
-model: opus
 think-mode: think_harder
 description: Extract business logic and use cases from a domain, presenting them from customer and user perspectives
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]

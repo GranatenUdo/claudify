@@ -1,6 +1,5 @@
 ---
 name: create-command-and-or-agent
-model: opus
 think-mode: think_harder
 description: Intelligently analyze requirements and generate optimized commands, agents, hooks, and tools that maximize Opus 4's capabilities through deep reasoning and multi-agent collaboration
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebSearch, WebFetch, Bash]

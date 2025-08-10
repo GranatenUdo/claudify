@@ -1,6 +1,5 @@
 ---
 name: review-backend-code
-model: opus
 think-mode: think_harder
 description: Perform comprehensive API code review using extended thinking for security, performance, and architectural analysis
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]

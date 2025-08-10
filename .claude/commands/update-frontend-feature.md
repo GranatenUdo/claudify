@@ -3,7 +3,6 @@ name: update-frontend-feature
 description: Update frontend feature with modern UI patterns, accessibility, and comprehensive testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, Bash]
 argument-hint: frontend feature update description (e.g., "update dashboard with real-time data visualization")
-model: opus
 think-mode: think_hard
 ---
 

@@ -1,6 +1,5 @@
 ---
 name: review-frontend-code
-model: opus
 think-mode: think_harder
 description: Perform comprehensive UI code review led by Frontend Developer for framework compliance, performance, and quality
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]

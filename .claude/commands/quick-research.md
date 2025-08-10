@@ -1,6 +1,5 @@
 ---
 name: quick-research
-model: opus
 think-mode: standard
 description: Perform focused research on specific technical topics or implementation approaches
 allowed-tools: [Task, Read, WebSearch, TodoWrite]

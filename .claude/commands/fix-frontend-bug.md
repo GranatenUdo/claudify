@@ -1,6 +1,5 @@
 ---
 name: fix-frontend-bug
-model: opus
 think-mode: think_hard
 description: Debug and fix UI issues using Frontend Developer expertise with systematic debugging approach
 allowed-tools: [Task, Bash, Glob, Grep, LS, Read, Edit, MultiEdit, Write, WebFetch, TodoWrite]

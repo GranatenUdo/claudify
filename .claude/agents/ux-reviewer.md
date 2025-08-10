@@ -2,7 +2,6 @@
 name: ux-reviewer
 description: UX design and accessibility specialist. Reviews user interfaces for usability and accessibility compliance.
 tools: Read, Write, Edit, MultiEdit, Grep, Glob, LS
-model: opus
 ---
 --------|-----------|-------------|---------------|-------------|
 | Button | 47 | 89% | 94% | Good |

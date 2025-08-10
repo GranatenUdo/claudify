@@ -1,6 +1,5 @@
 ---
 name: do-extensive-research
-model: opus
 think-mode: think_harder
 description: Conduct deep technical research with multi-agent analysis and extended thinking
 allowed-tools: [Task, Read, Grep, Glob, LS, TodoWrite, WebSearch, Bash]

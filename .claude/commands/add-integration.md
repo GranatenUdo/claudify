@@ -1,6 +1,5 @@
 ---
 name: add-integration
-model: opus
 think-mode: think_hard
 description: Add third-party service integration with proper authentication, error handling, and testing
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, WebSearch, TodoWrite]

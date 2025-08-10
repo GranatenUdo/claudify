@@ -1,6 +1,5 @@
 ---
 name: generate-marketing-material
-model: opus
 think-mode: think_hard
 description: Transform technical features into compelling marketing materials that wow potential customers and drive sales
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Grep, Glob, LS, TodoWrite, WebFetch]
