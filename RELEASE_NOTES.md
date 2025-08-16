@@ -1,41 +1,34 @@
-## 🎉 Claudify v2.0.1 - Cleanup and Documentation Update
+## 🎉 Claudify v4.0.0 - Interactive Project Configuration
 
-This release focuses on cleaning up temporary files, improving documentation, and enhancing the setup experience.
+Major update with interactive project detection and configuration, full template system, and proper handling of multiple projects.
 
-### ✨ What's New
+### ✨ What's New in 4.0.0
 
-- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Minimal/Standard/Comprehensive)
-- **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
-- **🧹 Clean Install Option** - Recommended for major version upgrades
-- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack
-- **🎯 Fixed Agent Mappings** - All commands now use available Claude agents
-- **📁 Better Organization** - Documentation moved to docs/ folder
+- **🎯 Interactive Configuration** - Confirm or correct each detected project
+- **📦 Full Project Names** - Preserves complete names with suffixes (e.g., MyCompany.Product.Web)
+- **🔄 Multi-Project Support** - Handles multiple web/API projects gracefully
+- **✏️ Manual Override** - Type custom project names if detection is wrong
+- **🎨 New Template Variables** - `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}`
+- **💾 Enhanced Configuration** - Detailed projects.json with all settings
 
-### 🐛 Fixed
-- Corrected release date for version 2.0.0 in documentation
-- Removed temporary test scripts (4 files)
-- Removed temporary documentation (2 files)
-- **Critical Fix**: CLAUDE.md and FEATURES.md are now preserved during clean install
-  - Previously these user-customized files were deleted and regenerated
-  - Now properly detected and preserved with all customizations intact
-- **Critical Fix**: Fixed "Could not find a part of the path" error in setup.ps1
-  - Now creates parent directories before copying nested documentation files
-  - Ensures docs/ directory exists when copying AGENT-COLLABORATION files
-- **Simplified Setup**: Removed minimal installation mode
-  - Standard and Comprehensive modes only
-  - Standard mode provides a solid baseline with ~15-25 files
+### 🎯 What's Included
 
-### 📝 Changed
-- Updated version to 2.0.1
-- Cleaned up project structure
-- Moved agent collaboration docs to `docs/` folder
-- Updated all references to new documentation locations
+**Specialized Agents**
+- Tech Lead, Code Reviewer, Security Reviewer
+- Frontend Developer, UX Designer, Visual Designer
+- Infrastructure Architect, Technical Debt Analyst
 
-### 📚 Documentation
-- Updated README.md to reflect new integrated intelligent setup flow
-- Added installation modes section to clarify options
-- Enhanced Quick Start section with detailed setup process
-- Updated Common Questions to reflect new features
+**Commands**
+- Backend: Add features, fix bugs, review code
+- Frontend: UI development, bug fixes
+- Quality: Technical debt analysis, test coverage
+- Documentation: Generation and changelog updates
+
+**Additional Features**
+- Multi-tenant isolation validation
+- Azure DevOps pipeline templates
+- Docker containerization support
+- Security scanning capabilities
 
 ### 🚀 Quick Start
 
@@ -47,12 +40,26 @@ This release focuses on cleaning up temporary files, improving documentation, an
 pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 ```
 
-Choose your installation mode when prompted:
-- **[S]** Standard - Core components for your stack
-- **[C]** Comprehensive - Everything available **(Recommended)**
+Choose **Comprehensive** installation for full capabilities. The system will:
+1. Automatically detect your project namespace
+2. Configure all commands and agents
+3. Generate project-specific documentation
+4. Complete setup in under 2 minutes
 
-### 📋 Full Changelog
-See [CHANGELOG.md](https://github.com/GranatenUdo/claudify/blob/main/CHANGELOG.md) for complete details.
+
+### 📚 Documentation
+
+- [Setup Guide](./SETUP-GUIDE.md) - Complete installation instructions
+- [Features](./FEATURES.md) - Comprehensive capability list
+- [Architecture](./CLAUDE.md) - System design and configuration
+- [Changelog](./CHANGELOG.md) - Complete version history
+
+### 💔 Breaking Changes
+
+If upgrading from v3.0.0:
+- Update your custom commands to use new template variables
+- Re-run setup to configure project names interactively
+- Check `.claude/config/projects.json` for new configuration format
 
 ---
-**Note**: Version 2.0.0 users should perform a clean install when updating to 2.0.1.
+**Claudify v4.0.0** - Interactive project configuration for Claude Code.

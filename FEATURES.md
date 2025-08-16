@@ -1,8 +1,8 @@
-# Claudify Features
+# Claudify Features - Version 4.0.0
 
 ## Overview
 
-Claudify is a comprehensive AI-powered development acceleration toolkit that transforms any codebase into a Claude Code-optimized environment. This document outlines all features and capabilities.
+Claudify is an automated configuration system that transforms .NET/Angular repositories into Claude Code-optimized environments with namespace detection and project-specific customization.
 
 ## 🔒 Security Features
 
@@ -86,8 +86,8 @@ Claudify is a comprehensive AI-powered development acceleration toolkit that tra
 ## 📊 Analysis and Reporting
 
 ### Comprehensive Analysis Features
-- **Technology Stack Detection**: Automatic identification of languages, frameworks, and tools
-- **Pattern Recognition**: Identifies architectural patterns (DDD, CQRS, Repository, etc.)
+- **Technology Stack Detection**: Automatic identification of .NET 8/9, Angular 17-19, and supporting tools
+- **Pattern Recognition**: Identifies architectural patterns (DDD, Repository, Factory methods)
 - **Domain Model Extraction**: Understands business entities and relationships
 - **Multi-Tenant Analysis**: Detects isolation models and security patterns
 
@@ -149,21 +149,15 @@ Claudify is a comprehensive AI-powered development acceleration toolkit that tra
 - **Access Control**: Role-based permissions for agents
 - **Documentation Trail**: Comprehensive documentation of all changes
 
-## 🎯 Future Roadmap
+## 🎯 Key Features
 
-### Planned Features
-- **MCP Integration**: Model Context Protocol support
-- **Interactive Prompts**: Enhanced user interaction in commands
-- **Agent Versioning**: Semantic versioning for agents
-- **Team Repositories**: Centralized agent sharing
-- **AI Model Selection**: Support for different Claude models
-- **Custom Tool Development**: SDK for creating new tools
-
-### Community Features
-- **Agent Marketplace**: Share and discover community agents
-- **Pattern Exchange**: Collaborative pattern library
-- **Integration Hub**: Third-party tool integrations
-- **Learning Resources**: Tutorials and best practices
+### Deployment Features
+- **Automatic Namespace Detection**: Extracts project namespace from .csproj files
+- **Project-Specific Configuration**: All commands adapted to your namespace
+- **Convention-Based Architecture**: Works with standard .NET/Angular layouts
+- **Cross-Platform Support**: Windows, Linux, macOS compatibility
+- **Version Control Integration**: Git-aware with PR automation
+- **Team Collaboration**: Shared configurations and standards
 
 ---
 

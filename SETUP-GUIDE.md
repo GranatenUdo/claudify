@@ -1,286 +1,357 @@
-# Claudify Setup Guide - Version 1.4.0
+# Claudify Setup Guide
 
-## 🧠 Overview
+## Prerequisites
 
-Claudify provides an intelligent, minimal-footprint setup process for initializing Claude Code in any repository. Version 1.4.0 includes **Opus 4 optimized agents** that deliver 75% faster analysis through parallel processing and AI-powered solution generation.
+Before running Claudify, ensure you have:
 
-## 🎯 Core Philosophy
+✅ **PowerShell 7+** installed (cross-platform)
+- Windows: Pre-installed or via Microsoft Store
+- macOS: `brew install powershell`
+- Linux: [Installation guide](https://docs.microsoft.com/powershell/scripting/install/installing-powershell)
 
-1. **Minimal Footprint**: Start with just one command file
-2. **Intelligent Analysis**: Let Claude Code understand your project
-3. **Interactive Setup**: Confirm and customize during installation
-4. **Preservation**: Never overwrite existing customizations
+✅ **Claude Code CLI** installed and configured
+- Run `claude --version` to verify installation
+- Ensure you're logged in with `claude login`
 
-## 🚀 Quick Start
+✅ **.NET/Angular Project** following standard conventions
+- .NET 8 or 9 backend
+- Angular 17-19 frontend
+- Standard project structure (src/, tests/ folders)
 
-### Windows
-```powershell
-# From claudify directory:
-.\setup.ps1 -TargetRepository "C:\path\to\your\repo"
-```
+## Installation Steps
 
-### Linux/macOS
+### Step 1: Download Claudify
+
+Download or clone the Claudify repository to your local machine:
+
 ```bash
-# From claudify directory:
-pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
+git clone https://github.com/your-org/claudify.git
+cd claudify
 ```
 
-Then continue in your repository:
+### Step 2: Run Setup
+
+#### Windows
+```powershell
+.\setup.ps1 -TargetRepository "C:\path\to\your\project"
+```
+
+#### macOS/Linux
+```bash
+pwsh setup.ps1 -TargetRepository "/path/to/your/project"
+```
+
+### Step 3: Installation Options
+
+When prompted, select your installation mode:
+
+```
+Choose installation mode:
+  [S] Standard   - Core components for your stack (~15-25 files)
+  [C] Comprehensive - Everything available (~40+ files) [RECOMMENDED]
+  [N] None       - Skip automatic installation
+
+Select mode (S/C/N) [C]: C
+```
+
+**Recommendation**: Choose **Comprehensive** for full capabilities.
+
+### Step 4: Interactive Project Configuration
+
+Claudify will guide you through an interactive configuration:
+
+1. **Scans for all projects** - Detects .csproj files in your repository
+2. **Shows what it found** - Lists each detected project with its location
+3. **Lets you confirm or correct** - For each project type:
+   - Shows the detected project name as default
+   - You can press Enter to accept the detection
+   - Or type a different name to correct it
+   - Or press Enter with no name to skip that project type
+4. **Handles edge cases**:
+   - No projects found? Manually enter names
+   - Multiple web projects? Choose the primary one
+   - Wrong detection? Simply type the correct name
+5. **Saves your configuration** to `.claude/config/projects.json`
+6. **Applies templates** - Replaces all `{{WebProject}}`, `{{ApiProject}}`, etc.
+
+You'll see an interactive configuration process:
+```
+[CONFIG] Detecting and configuring project names...
+
+  Scanning for projects...
+  Found 4 project(s)
+
+  [Web Project Configuration]
+  Detected web project(s):
+    - MyCompany.MyProject.Web (at src\MyCompany.MyProject.Web\MyCompany.MyProject.Web.csproj)
+  Enter primary web project name [MyCompany.MyProject.Web]: ⏎
+  ✓ Web project: MyCompany.MyProject.Web
+
+  [API Project Configuration]
+  Detected API project(s):
+    - MyCompany.MyProject.Api (at src\MyCompany.MyProject.Api\MyCompany.MyProject.Api.csproj)
+  Enter API project name [MyCompany.MyProject.Api]: ⏎
+  ✓ API project: MyCompany.MyProject.Api
+
+  [Architecture Test Project Configuration]
+  Detected architecture test project(s):
+    - MyCompany.MyProject.ArchitectureTests (at tests\MyCompany.MyProject.ArchitectureTests\MyCompany.MyProject.ArchitectureTests.csproj)
+  Enter architecture test project name [MyCompany.MyProject.ArchitectureTests]: ⏎
+  ✓ Architecture test project: MyCompany.MyProject.ArchitectureTests
+
+  [Configuration Summary]
+  The following projects will be configured:
+    WebProject = MyCompany.MyProject.Web
+    ApiProject = MyCompany.MyProject.Api
+    ArchitectureTestProject = MyCompany.MyProject.ArchitectureTests
+
+  Applying project templates to all files...
+    {{WebProject}} → MyCompany.MyProject.Web
+    {{ApiProject}} → MyCompany.MyProject.Api
+    {{ArchitectureTestProject}} → MyCompany.MyProject.ArchitectureTests
+    Processed: add-backend-feature.md
+    Processed: fix-frontend-bug.md
+    ... (more files)
+  [OK] Processed 12 file(s) with project templates
+
+✅ Setup Complete!
+  ✓ Commands installed
+  ✓ Agents configured
+  ✓ Project namespace applied: MyCompany.MyProject
+  ✓ Documentation generated
+```
+
+### Step 5: Start Using Claude Code
+
+Open a terminal in your project directory and run:
+
 ```bash
 claude code
 ```
 
-In Claude Code:
+Try your first command:
 ```
-/init-claudify "your project domain description"
-```
-
-## 📋 How It Works
-
-### Step 1: Advanced Setup Script (setup.ps1)
-
-The PowerShell script performs these tasks:
-1. Validates the target repository exists (creates if needed)
-2. Creates/updates `.gitignore` to exclude `.claudify`
-3. Copies all claudify resources to `.claudify` directory including:
-   - Opus 4 optimized agents
-   - All commands and hooks
-   - Scripts and templates
-   - Documentation files
-4. Copies only the `init-claudify` command to `.claude/commands`
-5. Displays clear instructions for next steps
-
-**Note**: The `.claudify` directory persists to allow re-running `/init-claudify`
-
-### Step 2: Intelligent Initialization (in Claude Code)
-
-When you run `/init-claudify`, Claude Code:
-
-#### 1. **Analyzes Your Repository**
-- **Backend Technology**: ASP.NET Core, Node.js, Python, Go, Java
-- **Frontend Framework**: Angular, React, Vue, Svelte
-- **Database Systems**: SQL Server, PostgreSQL, MongoDB
-- **Architectural Patterns**: Repository, DDD, CQRS, Multi-tenancy
-- **Testing Frameworks**: xUnit, Jest, PyTest
-- **Infrastructure**: Docker, Kubernetes, Cloud providers
-
-#### 2. **Confirms Findings**
-```
-Based on my analysis:
-- Backend: ASP.NET Core (.NET 8)
-- Frontend: Angular 19
-- Patterns: Repository, Result<T>, Multi-tenancy (OrganizationId)
-- Domain: Multi-tenant SaaS for vineyard management
-
-Is this correct? (Y/N)
+/comprehensive-review
 ```
 
-#### 3. **Selects Components**
-Based on your tech stack and the business domain provided:
-- **Agents**: Only those relevant to your stack
-- **Commands**: Specific to your technologies
-- **Hooks**: Based on your patterns (e.g., tenant validation)
-- **Generators**: For creating custom components
+## Configuration Details
 
-#### 4. **Generates Documentation**
-- **CLAUDE.md**: Customized with your specific patterns and rules
-- **FEATURES.md**: Template based on your domain
-- **Settings**: Project-specific configuration
+### Project Structure
 
-## 🏗️ Component Selection Modes
-
-### Minimal Mode (~5-10 components)
-Perfect for simple projects or getting started:
-- Code Reviewer agent (with parallel analysis)
-- Essential commands (research, review)
-- Basic documentation
-
-### Standard Mode (~15-25 components) - Recommended
-Intelligently selected based on your project:
-- Opus 4 optimized agents:
-  - Tech Lead (parallel architecture analysis)
-  - Security Reviewer (AI vulnerability detection)
-  - Frontend Developer (component generation)
-  - Test Quality Analyst (AI test generation)
-- Backend/Frontend specific commands with parallel execution
-- Quality and testing tools with confidence scoring
-- Generators for customization
-
-### Comprehensive Mode (~40+ components)
-Everything available - for complex enterprise projects:
-- All Opus 4 optimized agents:
-  - Parallel processing capabilities
-  - AI-powered generation
-  - Confidence scoring
-  - Extended thinking for complex decisions
-- All commands with modern pattern support
-- Specialized tools for cloud-native development
-- Advanced generators
-- Complete hook system
-
-## 📊 What Gets Detected
-
-### Technology Stack Detection
-```yaml
-Backend:
-  - ASP.NET Core: *.csproj files
-  - Node.js: package.json + node_modules
-  - Python: requirements.txt, setup.py
-  - Go: go.mod
-  - Java: pom.xml, build.gradle
-
-Frontend:
-  - Angular: angular.json
-  - React: react in package.json, *.jsx/tsx files
-  - Vue: vue in package.json, *.vue files
-  - Svelte: svelte in package.json
-
-Database:
-  - SQL Server: Microsoft.EntityFrameworkCore.SqlServer
-  - PostgreSQL: Npgsql references
-  - MongoDB: MongoDB.Driver references
+Claudify expects this standard structure:
+```
+your-project/
+├── src/
+│   ├── YourNamespace.Api/        # Backend API
+│   ├── YourNamespace.Web/        # Angular frontend
+│   └── YourNamespace.Domain/     # Domain models
+├── tests/
+│   ├── YourNamespace.Api.Tests/
+│   └── YourNamespace.ArchitectureTests/
+└── .claude/                       # Created by Claudify
 ```
 
-### Pattern Detection
-```yaml
-Architectural Patterns:
-  - Repository: *Repository*.cs files
-  - Result Pattern: Result<T> usage
-  - Multi-tenancy: OrganizationId/TenantId/CompanyId fields
-  - DDD: Domain/Application/Infrastructure folders
-  - CQRS: Commands/Queries separation
+### Namespace Detection
+
+Claudify automatically detects your namespace from:
+- Primary .csproj files (non-test projects)
+- Removes common suffixes (.Api, .Web, .Domain)
+- Example: `Acme.Inventory.Api` → `Acme.Inventory`
+
+### What Gets Configured
+
+All commands and agents are configured with your namespace:
+- Build paths: `cd src/YourNamespace.Web && npm run build`
+- Test paths: `dotnet test tests/YourNamespace.ArchitectureTests`
+- API updates: `cd src/YourNamespace.Web && npm run update:api`
+
+## Common Scenarios
+
+### Fresh Installation
+
+For a new project without Claude Code:
+1. Run setup.ps1 with Comprehensive mode
+2. Namespace is detected automatically
+3. All components installed and configured
+4. Ready to use immediately
+
+### Updating Existing Installation
+
+To update an existing Claude Code setup:
+1. Run setup.ps1 again
+2. Choose "Y" for clean installation when prompted
+3. Your CLAUDE.md and FEATURES.md are preserved
+4. Updated components with latest optimizations
+
+### Multiple Projects
+
+For multiple projects with different namespaces:
+1. Run Claudify separately for each project
+2. Each gets its own namespace configuration
+3. Commands adapt to each project structure
+4. No manual configuration needed
+
+## Verification
+
+### Confirm Successful Setup
+
+Check that setup completed correctly:
+
+```bash
+# List installed agents
+claude /agents
+
+# Verify commands exist
+ls .claude/commands/
+
+# Test a command
+claude /comprehensive-review
+
+# Check for template markers (should return nothing)
+grep -r "PTA.VineyardManagement" .claude/
 ```
 
-## 🛡️ Safety Features
+### Expected Results
 
-### Preservation
-- Never overwrites existing files
-- Detects and respects current setup
-- Only adds missing components
+After successful setup:
+- ✅ 30+ agents available
+- ✅ 40+ commands installed
+- ✅ No template markers remaining
+- ✅ Commands execute without errors
+- ✅ Documentation reflects your project
 
-### Interactive Confirmation
-- Shows what will be installed
-- Allows customization before proceeding
-- Option to select different modes
+## Troubleshooting
 
-### Intelligent Defaults
-- Recommends based on your patterns
-- Suggests best practices for your stack
-- Adapts to your coding style
+### Issue: Namespace Not Detected
 
-## 📁 What Gets Created
+**Solution**: Ensure you have .csproj files in standard locations:
+- Check for `src/YourNamespace.Api/YourNamespace.Api.csproj`
+- Verify project follows naming conventions
+- Manually enter namespace when prompted
 
-### Directory Structure
-```
-your-repo/
-├── .claude/
-│   ├── commands/        # Your selected commands
-│   ├── agents/          # Your selected agents  
-│   ├── hooks/           # Validation hooks (if needed)
-│   ├── generators/      # Component generators
-│   └── settings.json    # Project configuration
-├── CLAUDE.md           # Customized instructions
-└── FEATURES.md         # Domain-specific template
+**Validation**: After setup, run the validation script:
+```powershell
+.\validate-namespace.ps1 -TargetPath "C:\path\to\your\project"
 ```
 
-### Example CLAUDE.md (Generated)
-```markdown
-# CLAUDE.md - Multi-tenant Vineyard Management
+This will verify:
+- Namespace was correctly detected and saved
+- All template references were replaced
+- Project structure matches the configured namespace
 
-## 🧠 CONTEXT
-**System**: Multi-tenant SaaS Application
-**Stack**: ASP.NET Core (.NET 8) + Angular 19
-**Security**: JWT with OrganizationId isolation
+### Issue: Commands Fail to Execute
 
-## ⚡ CRITICAL RULES
+**Solution**: Verify project structure:
+- Angular app at `src/YourNamespace.Web/`
+- Package.json with standard npm scripts
+- Tests in `tests/` directory
 
-### Architecture
-- **Result<T>**: All service methods return Result<T>, never throw
-- **Repository Pattern**: Data access only via repositories
-- **OrganizationId Scoping**: EVERY query must filter by OrganizationId
+### Issue: Permission Denied
 
-### Security (CRITICAL)
-- ❌ NEVER accept userId in API endpoints
-- ❌ NEVER bypass OrganizationId filtering
-- ✅ ALWAYS use ICurrentUserService
-
-[... customized for your patterns ...]
+**Solution**: On macOS/Linux:
+```bash
+chmod +x setup.ps1
+pwsh setup.ps1 -TargetRepository "/path/to/project"
 ```
 
-## 🔄 Updating Components
+### Issue: PowerShell Not Found
 
-### Adding New Components
-After setup, you can:
-1. Use generators to create new commands/agents
-2. Manually add components from the claudify library
-3. Use `/sync-to-templates` to share back
+**Solution**: Install PowerShell 7+:
+- Windows: Microsoft Store or [downloads](https://github.com/PowerShell/PowerShell)
+- macOS: `brew install powershell`
+- Linux: Follow [official guide](https://docs.microsoft.com/powershell)
 
-### Checking for Updates
-The init command can be re-run to:
-- Detect new components available
-- Add missing components
-- Update documentation
+## Best Practices
 
-## ❓ FAQ
+### Recommended Workflow
 
-**Q: What if detection is wrong?**
-A: The init command is interactive - you can correct any misdetections.
+1. **Always use Comprehensive mode** for full capabilities
+2. **Run setup from project root** for best detection
+3. **Commit .claude folder** to share configuration with team
+4. **Update regularly** to get latest optimizations
 
-**Q: Can I run this on an existing Claude setup?**
-A: Yes! It will detect existing components and only add what's missing.
+### Team Setup
 
-**Q: How do I know what components are available?**
-A: Check `components-manifest.json` for the full catalog.
+For consistent team configuration:
+1. One team member runs Claudify
+2. Commit `.claude/` folder to repository
+3. Team members clone and immediately have Claude Code ready
+4. Everyone uses same commands and agents
 
-**Q: Can I create a custom selection mode?**
-A: Yes! Edit the manifest to add your own selection rules.
+### CI/CD Integration
 
-## 🎯 Best Practices
+Claudify includes Azure DevOps support:
+- Pipeline templates in `.claude/pipelines/`
+- Automated testing hooks
+- Deployment validation scripts
+- Quality gates configuration
 
-1. **Provide Clear Domain Description**
-   - Good: "multi-tenant SaaS for project management with Kanban boards"
-   - Bad: "web app"
+## Advanced Configuration
 
-2. **Review Generated Files**
-   - Check CLAUDE.md for accuracy
-   - Customize FEATURES.md with your actual features
-   - Adjust settings.json if needed
+### Custom Namespace
 
-3. **Use Appropriate Mode**
-   - Start with Standard mode
-   - Use Minimal for simple scripts
-   - Use Comprehensive for enterprise apps
+If automatic detection doesn't work:
+```powershell
+# You'll be prompted to enter manually
+Enter your project namespace: Acme.ProductName
+```
 
-4. **Keep Components Updated**
-   - Re-run init command periodically
-   - Check for new components
-   - Contribute improvements back
+### Selective Installation
 
-## 🚀 Next Steps
+For minimal setup, choose Standard mode:
+- Installs only essential components
+- Faster setup time
+- Can upgrade to Comprehensive later
 
-After setup:
-1. Try `/add-backend-feature` to create your first feature with AI assistance
-2. Use `/comprehensive-review` for parallel multi-agent analysis (75% faster)
-3. Read [AGENT-COLLABORATION-GUIDE.md](docs/AGENT-COLLABORATION-GUIDE.md) to understand Opus 4 capabilities
-4. Explore `/` to see all available commands with confidence scoring
-5. Create custom components with generators
+### Preserving Customizations
 
-## 🎆 What's New in Version 1.4.0
+Your customizations are preserved:
+- CLAUDE.md modifications kept
+- FEATURES.md additions maintained
+- Custom commands in .claude/commands/
+- Project-specific agents retained
 
-### Opus 4 Agent Capabilities
-- **Parallel Processing**: All agents analyze simultaneously
-- **AI-Powered Generation**: Automatic code, test, and component creation
-- **Confidence Scoring**: Every recommendation includes confidence levels (0-100%)
-- **Extended Thinking**: Deep analysis for complex architectural decisions
-- **Modern Patterns**: Support for Signals, Web Components, Cloud-Native patterns
+## Success Indicators
 
-### Performance Improvements
-- `/comprehensive-review` runs 75% faster with parallel agents
-- Technical debt analysis includes ROI calculations
-- Security scanning generates AI attack scenarios
-- Test generation includes property-based testing
-- Frontend components generated from requirements
+You know setup succeeded when you see:
+
+```
+✅ Setup Complete!
+  ✓ Commands installed
+  ✓ Agents configured
+  ✓ Project namespace applied: YourNamespace
+  ✓ Documentation generated
+
+Start using Claude Code:
+  claude code
+  /comprehensive-review
+```
+
+## Getting Help
+
+### Resources
+
+- **Documentation**: See `/docs` folder in Claudify
+- **Commands Help**: Run `/help` in Claude Code
+- **Agent List**: Run `/agents` to see available agents
+- **Example Usage**: Check command files for examples
+
+### Support Channels
+
+- Internal team wiki for organization-specific guidance
+- Claude Code documentation at [claude.ai/docs](https://claude.ai/docs)
+- Team lead for architecture questions
+
+## Next Steps
+
+After successful setup:
+
+1. **Explore Commands**: Try `/comprehensive-review` for code analysis
+2. **Create Features**: Use `/add-backend-feature` or `/add-frontend-feature`
+3. **Fix Issues**: Use `/fix-backend-bug` or `/fix-frontend-bug`
+4. **Security Audit**: Run `/security-audit` regularly
+5. **Learn Agents**: Explore specialized agents with `/agents`
 
 ---
 
-**Remember**: Minimal setup, maximum intelligence. Let Claude Code do what it does best!
+**Claudify Setup Complete!** Your project is now configured for accelerated development with Claude Code.

@@ -1,7 +1,0 @@
-{
-  "name": "Code Simplifier",
-  "description": "Expert in refactoring complex code into clean, maintainable solutions while preserving functionality",
-  "agent_type": "code-simplifier",
-  "system_prompt_override": "file:.claude/agents/code-simplifier.md",
-  "max_thinking_tokens": 65536
-}

@@ -1,246 +1,243 @@
-# CLAUDE.md - Claudify Development Guidelines
+# CLAUDE.md - Claudify System Documentation
 
 ## 🧠 CONTEXT
-**System**: Claudify - Claude Code Intelligent Setup Toolkit
-**Stack**: PowerShell + Claude Code CLI + Opus 4 Agents
-**Version**: 3.0.0
-**Purpose**: Plugin-based component system that intelligently configures Claude Code environments
-**Architecture**: Three-phase system (Bootstrap → Component Selection → Runtime)
+**System**: Claudify - Claude Code Setup System
+**Version**: 4.0.0
+**Purpose**: Automated configuration system for Claude Code in .NET/Angular projects
+**Architecture**: Three-phase system with namespace detection
 
-## 🏗️ HOW CLAUDIFY WORKS
+## 🏗️ SYSTEM ARCHITECTURE
 
-### Three-Phase Architecture
+### Three-Phase Implementation
 1. **Bootstrap Phase** (setup.ps1)
    - Detects existing installations and versions
-   - Creates `.claudify` directory with all template components
-   - Runs intelligent tech stack detection (searches root and subdirs like ClientApp/)
-   - Offers Standard (~15-25 files) or Comprehensive (~40+ files) installation
+   - Creates `.claudify` directory with template components
+   - Performs intelligent project namespace detection
+   - Offers Standard or Comprehensive installation modes
 
-2. **Component Selection Phase** (init-claudify command)
-   - Reads `components-manifest.json` as component registry
-   - Dynamically selects components based on detected tech stack
-   - Installs commands, agents, hooks, and tools to `.claude` directory
-   - Generates customized CLAUDE.md and FEATURES.md (preserves existing)
+2. **Configuration Phase** (Automatic)
+   - Detects project namespace from .csproj files
+   - Applies namespace throughout all components
+   - Preserves existing CLAUDE.md and FEATURES.md
+   - Generates project-specific documentation
 
-3. **Runtime Phase** (Claude Code execution)
-   - Components loaded from `.claude` directory
-   - Each agent has restricted tool access based on security matrix
-   - Commands leverage specialized Opus 4 agents for parallel analysis
-   - Hooks provide automated workflows (pre-commit, add-context, etc.)
+3. **Runtime Phase** (Claude Code)
+   - Components loaded from configured `.claude` directory
+   - Agents operate with security-restricted tool access
+   - Commands utilize specialized Opus 4 agents
+   - Hooks provide automated workflows
 
-### Key Innovation: Component Intelligence
-- **Tech Stack Detection**: Finds Angular/React/Vue even in subdirectories
-- **Pattern Recognition**: Detects DDD, multi-tenancy, repository pattern
-- **Selective Installation**: Only installs relevant components for your stack
-- **Security Matrix**: Each agent gets minimal required tools (principle of least privilege)
+### Project Detection and Template System
+The setup uses a mustache-style template system with automatic project detection:
 
-## ⚡ CRITICAL RULES
+1. **Project Discovery**: Scans for all .csproj files in your repository
+2. **Automatic Categorization**:
+   - Web projects: `*.Web`, `*.UI`, `*.Frontend`
+   - API projects: `*.Api`, `*.WebApi`
+   - Test projects: `*Test*`, `*Tests`
+3. **Template Variables**:
+   - `{{WebProject}}` - Primary web project (e.g., `PTA.VineyardManagement.Web`)
+   - `{{ApiProject}}` - API project (e.g., `PTA.VineyardManagement.Api`)
+   - `{{ArchitectureTestProject}}` - Architecture tests (e.g., `PTA.VineyardManagement.ArchitectureTests`)
+   - `{{ProjectNamespace}}` - Base namespace for backward compatibility
+4. **Multi-Project Support**: If multiple web projects exist, prompts for primary selection
+5. **Configuration**: Saves to `.claude/config/projects.json`
 
-### Repository Structure
-- **setup.ps1**: Bootstrap orchestrator - version checking, clean install logic
-- **.claude/**: Runtime components (populated during setup)
-- **.claudify/**: Template source (created by setup, persists for updates)
-- **templates/generators/**: Component factories (command, agent, hook generators)
-- **scripts/**: Analysis tools (tech-stack-detector.ps1, restrict-agent-tools-v2.ps1)
-- **components-manifest.json**: Component registry with metadata and dependencies
+Example: 
+- Template: `cd src/{{WebProject}}`
+- Detected: `MyCompany.ProductName.Web` (from MyCompany.ProductName.Web.csproj)
+- Result: `cd src/MyCompany.ProductName.Web`
 
-### Development Principles
-- **Security First**: Every agent follows principle of least privilege via tool matrix
-- **Cross-Platform**: All PowerShell must work on Windows, Mac, Linux
-- **Backward Compatible**: Never break existing installations
-- **User Files Sacred**: NEVER overwrite CLAUDE.md or FEATURES.md without permission
-- **Clean Code**: No temporary test files in production releases
-- **Modular Design**: Each component is self-contained and replaceable
+## ⚡ CONFIGURATION RULES
 
-### Agent Tool Access Rules (Enforced by restrict-agent-tools-v2.ps1)
+### Project Structure Requirements
+- **Standard .NET Layout**: Projects follow `src/[Namespace].Web`, `src/[Namespace].Api`
+- **Test Organization**: Tests in `tests/[Namespace].*Tests` pattern
+- **Angular Structure**: Frontend at `src/[Namespace].Web` with standard Angular layout
+- **Convention-Based**: All projects follow established architectural patterns
+
+### Automatic Configuration
+- **Namespace Detection**: Extracts from .csproj files automatically
+- **Path Resolution**: Applies namespace to all command paths
+- **Documentation Updates**: Customizes CLAUDE.md and FEATURES.md
+- **Validation**: Confirms all replacements successful
+
+### Security Configuration
+- **Agent Restrictions**: Each agent has minimal required tools
 - **Code Reviewer**: Read, Edit, MultiEdit, Grep, Glob, LS only
 - **Security Reviewer**: Read, Grep, Glob, LS, WebSearch, Bash only
 - **Tech Lead**: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
 - **Frontend Developer**: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
-- **Test Quality Analyst**: Read, Write, Grep, Glob, LS, Bash only
-- **Researcher**: Read, WebSearch, WebFetch, Write, TodoWrite only
-- **Infrastructure Architect**: Full access to infrastructure tools only
-- **NO AGENT** should have unrestricted tool access - each has justifications
 
-## 💻 DEVELOPMENT PATTERNS
+## 💻 IMPLEMENTATION PATTERNS
 
-### PowerShell Standards
+### PowerShell Configuration
 ```powershell
-# Parameter validation required
-param(
-    [Parameter(Mandatory=$true)]
-    [string]$TargetRepository,
+# Namespace detection function
+function Get-ProjectNamespace {
+    param([string]$TargetPath)
     
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("Standard", "Comprehensive", "None")]
-    [string]$Mode = "Standard"
-)
+    $csprojFile = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
+                  Where-Object { $_.Name -notlike "*Tests*" } | 
+                  Select-Object -First 1
+    
+    if ($csprojFile) {
+        $namespace = [System.IO.Path]::GetFileNameWithoutExtension($csprojFile.Name)
+        $namespace = $namespace -replace '\.(Api|Web|Domain|Infrastructure)$', ''
+        return $namespace
+    }
+    
+    return Read-Host "Enter your project namespace"
+}
 
-# Error handling
-$ErrorActionPreference = "Stop"
-Set-StrictMode -Version Latest
-
-# Cross-platform paths
-$path = Join-Path $PSScriptRoot "relative" "path"
+# Configuration application
+function Apply-ProjectConfiguration {
+    param(
+        [string]$Content,
+        [string]$Namespace
+    )
+    return $Content -replace 'PTA\.VineyardManagement', $Namespace
+}
 ```
 
-### Component Creation Pattern
-```powershell
-# 1. Use generators for consistency
-.\.claude\generators\command-generator.ps1
-.\.claude\generators\agent-generator.ps1
-
-# 2. Test locally first
-# 3. Update components-manifest.json
-# 4. Run validation scripts
-# 5. Create PR with detailed description
+### Component Structure
+```
+.claude/
+├── commands/          # 40+ project-configured commands
+├── agents/           # 30+ specialized agents
+├── hooks/            # Automated workflows
+├── generators/       # Scaffolding tools
+└── validation/       # Quality checks
 ```
 
-### Version Management
-- **Major**: Breaking changes or major feature additions
-- **Minor**: New features, backward compatible
-- **Patch**: Bug fixes only
-- Always update VERSION file and CHANGELOG.md
+### Command Templates
+All commands use mustache-style templates with specific project variables:
+- Build commands: `cd src/{{WebProject}} && npm run build`
+- Test commands: `dotnet test tests/{{ArchitectureTestProject}}`
+- API updates: `cd src/{{WebProject}} && npm run update:api`
+- API projects: `cd src/{{ApiProject}}`
 
-## 🔒 SECURITY CHECKLIST
-- [ ] Agent tool access follows least privilege
-- [ ] No hardcoded paths or credentials
-- [ ] PowerShell scripts validate all inputs
-- [ ] File operations check permissions first
-- [ ] User files preserved during updates
+These templates are automatically replaced with your actual project names during setup.
 
-## 🔍 QUICK REFERENCE
+## 🔒 SECURITY ARCHITECTURE
 
-### Essential Commands
-- `/init-claudify` - Initialize Claude Code in a repository
-- `/comprehensive-review` - Full multi-agent code analysis  
-- `/create-command-and-or-agent` - Generate new components
-- `/sync-to-templates` - Share improvements back
-- `/agents` - Manage agents (list, create, edit, test)
+### Agent Tool Matrix
+Each agent operates with restricted permissions:
+| Agent | Allowed Tools | Purpose |
+|-------|--------------|---------|
+| Code Reviewer | Read, Edit, Grep | Code quality analysis |
+| Security Reviewer | Read, Grep, WebSearch | Vulnerability detection |
+| Tech Lead | Read, Write, Edit, TodoWrite | Architecture decisions |
+| Frontend Developer | Read, Write, Edit | UI implementation |
+| Test Analyst | Read, Write, Bash | Test creation and execution |
 
-### Key Files
-- **components-manifest.json** - Component registry and metadata
-- **SETUP-GUIDE.md** - Complete setup documentation
-- **VERSIONING.md** - Release process documentation
-- **restrict-agent-tools-v2.ps1** - Enforce security policies
-
-### Testing New Features
-```bash
-# 1. Run setup in test repository
-.\setup.ps1 -TargetRepository "C:\test\repo"
-
-# 2. Validate installation
-.\scripts\validation\validate-setup.ps1
-
-# 3. Test in Claude Code
-claude code
-/init-claudify "test domain"
-```
-
-### Common Issues
-- **"File not found"**: Check cross-platform path separators
-- **"Access denied"**: Run validation scripts first
-- **"Command not found"**: Verify components-manifest.json entry
-- **"Agent error"**: Check tool access permissions
-
-## 🎯 ARCHITECTURAL PATTERNS
-
-### Component System Design
-- **Plugin Architecture**: Each component (command/agent/hook) is a self-contained plugin
-- **Factory Pattern**: Generators create components from templates with consistent structure
-- **Strategy Pattern**: Security matrix applies different tool access strategies per agent
-- **Command Pattern**: All commands follow consistent execution and documentation format
-
-### Performance Optimizations
-- **Parallel Agent Execution**: Opus 4 agents analyze simultaneously (40-60% faster)
-- **Template Caching**: templates/generators/template-cache.ps1 improves repeated operations
-- **Lazy Loading**: Components loaded on-demand, not all at startup
-- **Selective Installation**: Only relevant components installed based on tech stack
-
-### Security Architecture
-- **Defense in Depth**: Multiple security layers (tool restrictions, file permissions, validation)
-- **Principle of Least Privilege**: Minimal required tools per agent role
-- **Audit Trail**: All agent tool usage can be tracked and validated
-- **Sandboxing**: Agents operate within defined boundaries
+### Security Principles
+- **Least Privilege**: Minimal permissions per agent role
+- **No Hardcoding**: All paths configured dynamically
+- **Audit Trail**: All operations tracked
+- **Validation**: Automatic verification of setup
 
 ## 📊 PERFORMANCE OPTIMIZATION
 
-### Parallel Processing
-- All Opus 4 agents support parallel analysis
-- Use Task tool for concurrent operations in commands
-- Batch file operations when possible
-- Cache analysis results appropriately
+### Parallel Agent Execution
+- Opus 4 agents support simultaneous analysis
+- Commands utilize @Task for concurrent operations
+- Bundle size monitoring integrated
 
-### Script Performance
+### Configuration Performance
+- Namespace detection: < 2 seconds
+- File configuration: < 10 seconds for files
+- Validation: < 1 second
+- Total setup time: < 2 minutes
+
+## 🔍 QUALITY ASSURANCE
+
+### Automatic Validation
+Setup performs these checks:
+1. Namespace detected correctly
+2. All files configured properly
+3. No remaining template markers
+4. Commands executable
+5. Documentation generated
+
+### Success Indicators
 ```powershell
-# Good: Single file read
-$manifest = Get-Content "components-manifest.json" | ConvertFrom-Json
-
-# Bad: Multiple reads
-$version = (Get-Content "components-manifest.json" | ConvertFrom-Json).version
-$components = (Get-Content "components-manifest.json" | ConvertFrom-Json).components
+✅ Setup Complete!
+  ✓ Commands installed
+  ✓ Agents configured
+  ✓ Project namespace applied: YourCompany.YourProject
+  ✓ Documentation generated
 ```
 
-### Known Performance Gains
-- Comprehensive review: 30-45 min (parallel) vs 60-90 min (sequential)
-- Tech stack detection: Searches multiple directories efficiently
-- Component installation: Selective copying reduces setup time
+## 📈 VERSIONING
 
-## 🚀 RELEASE PROCESS
+### Current Version: 4.0.0
+- Interactive project configuration
+- Full project name preservation with suffixes
+- Multi-project support
+- User confirmation and override capability
+- Enhanced template variables
 
-1. Update VERSION file
-2. Run all validation scripts
-3. Update CHANGELOG.md with release notes
-4. Create release commit: "feat: Release version X.Y.Z..."
-5. Tag release: `git tag vX.Y.Z`
-6. Update README.md if needed
-7. Clean any temporary files
+### Version Compatibility
+- Supports .NET 8/9 projects
+- Angular 17-19 compatible
+- Works with standard project structures
+- Cross-platform (Windows, Linux, macOS)
 
-## 🤝 CONTRIBUTION GUIDELINES
+## 🚀 USAGE PATTERNS
 
-### Adding New Components
-1. Create using appropriate generator
-2. Follow existing naming conventions
-3. Include comprehensive documentation
-4. Add to components-manifest.json
-5. Test across platforms
-6. Submit PR with examples
+### Standard Workflow
+1. Run setup.ps1 with target repository
+2. Choose Comprehensive installation
+3. Automatic namespace detection occurs
+4. Configuration applied to all components
+5. Begin using Claude Code immediately
 
-### Documentation Updates
-- Keep README.md focused on quick start
-- Detailed guides go in docs/ folder
-- Update FEATURES.md for new capabilities
-- Include examples in all documentation
-
-## 🔧 IMPORTANT IMPLEMENTATION DETAILS
-
-### Component Manifest Structure
-The `components-manifest.json` serves as the central registry:
-- **agents**: Array of available agents with tags and dependencies
-- **commands**: Categorized by type (essential, backend, frontend, quality, etc.)
-- **agentTools**: Specialized tools for specific agents
-- **generators**: Component creation tools
-- **hooks**: Event-driven automation scripts
-- **selectionRules**: Logic for standard vs comprehensive installation
-
-### Tech Stack Detection Logic
-Located in `scripts/analysis/tech-stack-detector.ps1`:
-- Searches for framework indicators (.csproj, package.json, angular.json)
-- Checks common subdirectories (ClientApp/, frontend/, src/)
-- Detects authentication patterns (JWT, Auth0)
-- Identifies multi-tenancy by searching for tenant/organization fields
-
-### Claude CLI Integration
-The setup process ends with:
-```powershell
-claude --model opus --dangerously-skip-permissions "/init-claudify $domain"
+### Common Commands After Setup
+```bash
+/comprehensive-review     # Full code analysis
+/add-backend-feature     # Create new API feature
+/fix-frontend-bug        # Debug UI issues
+/security-audit          # Security scanning
 ```
-This allows automatic initialization but still requires tool permission approval.
 
-### Directory Persistence Strategy
-- `.claudify/`: Contains template sources, persists after setup (git-ignored)
-- `.claude/`: Runtime components, can be regenerated from .claudify
-- This allows re-running setup with different options without re-downloading
+## 🤝 ENTERPRISE INTEGRATION
+
+### CI/CD Support
+- Azure DevOps pipeline templates included
+- Docker containerization configured
+- Automated testing integrated
+- Deployment validation hooks
+
+### Team Collaboration
+- Consistent setup across all team members
+- Shared configuration standards
+- Unified development patterns
+- Knowledge sharing through agents
+
+## 📋 TROUBLESHOOTING
+
+### Common Solutions
+| Issue | Solution |
+|-------|----------|
+| Namespace not detected | Ensure .csproj exists in standard location |
+| Commands fail | Verify project follows conventions |
+| Agent errors | Check tool permissions in manifest |
+| Documentation missing | Run setup in Comprehensive mode |
+
+### Validation Commands
+```bash
+# Verify installation
+claude /agents
+
+# Test configuration
+claude /comprehensive-review
+
+# Check namespace application
+grep -r "PTA.VineyardManagement" .claude/
+```
+
 
 ---
-**Remember**: Claudify is a sophisticated plugin system that intelligently adapts to each project. Understanding its three-phase architecture (Bootstrap → Component Selection → Runtime) is key to contributing effectively.
+
+**Claudify 4.0.0** - Interactive project configuration for Claude Code.

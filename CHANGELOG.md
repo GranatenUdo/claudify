@@ -5,82 +5,72 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0.0] - 2025-01-16
 
-### Security
-- **Agent Tool Access Restrictions**: Implemented Claude Code security best practices
-  - Applied principle of least privilege to all 19 agents
-  - Reduced average tool access from 10-12 tools to 4-6 tools per agent
-  - Added tool justifications for all granted permissions
-  - Created automated tool restriction script (scripts/restrict-agent-tools-v2.ps1)
-  - Updated agent generators to include secure tool assignments
-  - Implemented role-based tool access matrix
+### 🎉 Major Release - Interactive Project Configuration with Full Template System
+
+This release introduces a complete overhaul of the project configuration system with interactive user prompts, proper handling of project suffixes, and support for multiple projects of the same type.
+
+### Breaking Changes
+- **Template Variables Changed**: 
+  - `{{ProjectNamespace}}.Web` → `{{WebProject}}`
+  - `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
+  - `{{ProjectNamespace}}.Api` → `{{ApiProject}}`
+- **Configuration Format**: Now saves to `projects.json` instead of `namespace.json`
+- **Full Project Names**: Projects now retain their complete names including suffixes
 
 ### Added
-- **Agent Management Command**: New /agents command for sub-agent management
-  - List all available agents with capabilities
-  - Create new agents with interactive wizard
-  - Edit existing agents while maintaining security
-  - Test agent functionality and compliance
-  - Share agents with team (version control ready)
+- **Interactive Project Configuration**: Setup now prompts for confirmation/correction of each detected project
+- **Multi-Project Support**: Handles multiple web/API projects with user selection
+- **Manual Entry Option**: Users can manually enter project names if detection fails
+- **Project Type Detection**: Automatically categorizes projects as Web, API, or Test
 
 ### Changed
-- **Agent Generator Templates**: Updated to include secure tool assignments
-  - Code reviewer: Read, Edit, MultiEdit, Grep, Glob, LS only
-  - Security reviewer: Read, Grep, Glob, LS, WebSearch, Bash only
-  - Tech lead: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
-  - Researcher: Read, WebSearch, WebFetch, Write, TodoWrite only
-  - Frontend developer: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
-  - All agents now include tool_justification metadata
+- **Template System**: Now uses specific template variables for each project type
+- **Project Detection**: Preserves full project names with suffixes (e.g., `MyCompany.Product.Web`)
+- **User Experience**: Clear prompts with defaults shown in brackets
+- **Configuration Storage**: Enhanced configuration file with more details
 
-### Infrastructure
-- **Claude Code Best Practices Compliance**:
-  - Comprehensive gap analysis document (docs/CLAUDE-CODE-BEST-PRACTICES-GAPS.md)
-  - Agent tool restriction automation script
-  - Improved agent naming conventions
-  - Enhanced security through limited tool access
+### Fixed
+- **Suffix Handling**: No longer incorrectly strips suffixes from project names
+- **Multiple Projects**: Properly handles repositories with multiple projects of the same type
+- **Edge Cases**: Better handling of non-standard project structures
+
+### Removed
+- **Old Namespace Logic**: Removed legacy namespace detection that stripped suffixes
+- **Automatic Assumptions**: No longer makes assumptions about project structure
+- **Marketing Language**: Removed all unsubstantiated claims and metrics from documentation
 
 ## [3.0.0] - 2025-08-05
 
-### 🎉 Major Release - Complete Documentation Automation & Production Ready
+### 🎉 Major Release - Automated Configuration System
 
-This release represents a major milestone with comprehensive documentation automation, simplified Claude CLI integration, and production-ready codebase cleanup. All components now include intelligent documentation update guidance following Opus 4 best practices.
+This release establishes Claudify with automatic namespace detection and project configuration for Claude Code. The system automatically adapts to .NET/Angular repositories following standard conventions.
 
-### Added
-- **Simplified Claude CLI Integration**: Direct automatic initialization after setup
-  - Prompts for optional project domain description
-  - Automatically executes `claude --model opus --dangerously-skip-permissions "/init-claudify"`
-  - Changes to correct working directory before execution
-  - Streamlined user experience with single command invocation
-  - Removed complex automation attempts in favor of simple, reliable approach
+### Core Features
+- **Automatic Namespace Detection**: Detection from .csproj files
+  - Extracts base namespace (removes .Api, .Web, .Domain suffixes)
+  - Applies namespace across all commands
+  - Configures agents with project context
+  - Zero manual configuration required
 
-- **Documentation Automation Infrastructure**:
-  - PowerShell script `add-documentation-updates.ps1` for bulk updates
-  - Documentation best practices guide (docs/DOCUMENTATION-BEST-PRACTICES.md)
-  - Implementation report (docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)
-  - Comprehensive coverage verification system
+- **Security Model**: Role-based agent tool access
+  - Principle of least privilege for all agents
+  - Security-first design patterns
+  - Multi-tenant isolation validation
 
-### Changed
-- **Documentation Update Instructions**: Added to all commands and agents
-  - 19 command files now include documentation update sections
-  - 19 agent files now include documentation reminder sections
-  - Follows Opus 4 best practices with parallel checks and confidence scoring
-  - Automated with PowerShell script for consistent implementation
-  - References `/update-changelog` command for easy updates
-  - 100% coverage achieved across all components
+- **Opus 4 Support**: Agents enhanced with latest capabilities
+  - Parallel execution support
+  - Extended thinking for complex problems
+  - Confidence scoring for recommendations
 
-### Removed
-- **Temporary Test Files**: Cleaned up 14 development/test files
-  - PowerShell test scripts: test-syntax.ps1, test-end-section.ps1, test-minimal.ps1, test-repro.ps1, temp_section.ps1, part1.ps1, part2.ps1
-  - Alternative setup scripts: setup-clean.ps1, setup-nobom.ps1, simple-init.ps1, validate-syntax.ps1
-  - Python utility scripts: check_quotes.py, check_quotes_better.py, convert_encoding.py
-
-### Infrastructure
-- **Documentation Standards**: Established comprehensive documentation practices
-  - Confidence-based prioritization system
-  - Parallel documentation verification
-  - Intelligent context-aware updates
-  - Consistent templates for commands and agents
+### Production Capabilities
+- **Comprehensive Installation Mode**: Full suite of commands and agents
+- **Standard Installation Mode**: Essential components for most projects
+- **Cross-Platform Support**: Windows, Linux, macOS compatibility
+- **Version Control Integration**: Git-aware with PR automation
+- **Azure DevOps Pipeline Templates**: CI/CD ready configurations
+- **Docker Containerization**: Deployment support
 
 
 ## [2.0.1] - 2025-08-04

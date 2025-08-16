@@ -1,451 +1,117 @@
-# Claude Code Commands
+# 📚 Claude Code Commands
 
-This directory contains project-specific slash commands for Claude Code. These commands enhance productivity by providing structured approaches to common development tasks.
+## 🔍 Research Commands
+Intelligent research that provides actionable insights, not just information.
 
-## Command Categories
+### Core Research
+- **`quick-research`** - Fast, intelligent research (2-3 min) for direct answers
+- **`smart-research`** - Parallel multi-agent research (3-5 min) with synthesis and recommendations
+
+### Specialized Research
+- **`research-security`** - Security vulnerability and defense research (3-4 min)
+- **`research-performance`** - Performance bottleneck and optimization research (3-4 min)
+- **`research-architecture`** - Architecture pattern and trade-off analysis (4-5 min)
+
+## 🚀 Development Commands
 
 ### Feature Development
-- **Backend**: `/add-backend-feature`
-- **Frontend**: `/add-frontend-feature`
-- **Integration**: `/add-integration`
-
-### Code Quality & Maintenance
-- **Bug Fixes**: `/fix-backend-bug`, `/fix-frontend-bug`, `/fix-api-bug`
-- **Build & Tests**: `/fix-backend-build-and-tests`, `/fix-frontend-build-and-tests`
-- **Reviews**: `/review-backend-code`, `/review-frontend-code`
-- **Refactoring**: `/refactor-code`
-- **Performance**: `/optimize-performance`
-
-### Analysis & Research
-- **Technical Debt**: `/analyze-technical-debt`
-- **Legacy Systems**: `/analyze-legacy-system`
-- **Domain Analysis**: `/analyze-domain-use-cases`
-- **Research**: `/do-extensive-research`, `/quick-research`
-
-### Documentation & Marketing
-- **Technical Docs**: `/generate-documentation`, `/generate-docs`
-- **Marketing**: `/generate-marketing-material`
-
-### Meta & Utilities
-- **Command Creation**: `/create-command-and-or-agent`
-- **Template Sync**: `/sync-to-templates`
-- **Changelog**: `/update-changelog`
-
-## Available Commands
-
-### `/add-api-feature`
-
-Implements a new backend API feature using domain-driven design and extended thinking.
-
-**Usage:**
-```
-/add-api-feature harvest tracking with yield calculations
-```
-
-**What it does:**
-- Uses extended thinking for deep domain analysis
-- Enforces multi-tenant security (OrganizationId filtering)
-- Follows Domain-Driven Design with factory methods
-- Implements Result<T> pattern for all services
-- Includes caching, real-time updates, and audit trails
-- Creates proper RESTful API endpoints
-
-**Example invocations:**
-- `/add-api-feature weather data integration for frost alerts`
-- `/add-api-feature equipment maintenance scheduling`
-- `/add-api-feature harvest quality metrics and reporting`
-
-The command guides Claude through:
-1. Domain analysis with extended thinking
-2. Entity modeling with business logic
-3. Repository pattern implementation
-4. Service layer with Result pattern
-5. RESTful API design
-6. Comprehensive testing
-7. FEATURES.md documentation
-
-### `/fix-ui-bug`
-
-Debug and fix UI issues using extended thinking and systematic debugging approach.
-
-**Usage:**
-```
-/fix-ui-bug field import wizard not showing file preview
-```
-
-**What it does:**
-- Uses extended thinking for root cause analysis
-- Systematic debugging process (reproduce → isolate → investigate → fix)
-- Comprehensive testing across browsers and edge cases
-- Implements prevention strategies to avoid similar bugs
-- Follows Angular 18 and TypeScript best practices
-- Documents fixes for future reference
-
-**Example invocations:**
-- `/fix-ui-bug login button not responding on mobile`
-- `/fix-ui-bug data grid sorting breaks after filter applied`
-- `/fix-ui-bug memory leak in harvest schedule component`
-
-The command guides Claude through:
-1. Bug reproduction and isolation
-2. Root cause analysis with extended thinking
-3. Investigation of frontend and backend
-4. Implementation of proper fix
-5. Comprehensive testing
-6. Prevention strategies
-7. Documentation updates
-
-### `/fix-api-bug`
-
-Debug and fix backend API issues using extended thinking and systematic root cause analysis.
-
-**Usage:**
-```
-/fix-api-bug fields endpoint returns 500 when filtering by date range
-```
-
-**What it does:**
-- Uses extended thinking for deep root cause analysis
-- Multi-layer investigation (Controller → Service → Repository → Domain)
-- Checks for common patterns: multi-tenant leaks, N+1 queries, concurrency
-- Implements proper error handling with ProblemDetails
-- Ensures transaction consistency and caching integrity
-- Adds comprehensive logging and monitoring
-
-**Example invocations:**
-- `/fix-api-bug organization filter not applied in harvest endpoint`
-- `/fix-api-bug deadlock when updating multiple fields concurrently`
-- `/fix-api-bug memory leak in SignalR notifications`
-
-The command guides Claude through:
-1. Bug reproduction and data collection
-2. Multi-layer systematic investigation
-3. Root cause analysis with extended thinking
-4. Implementation of robust fix
-5. Security and performance verification
-6. Load testing and monitoring setup
-7. Documentation and prevention strategies
-
-### `/review-api-code`
-
-Perform comprehensive API code review using extended thinking for security, performance, and architectural analysis.
-
-**Usage:**
-```
-/review-api-code src/PTA.VineyardManagement.Api/Services/FieldService.cs
-```
-
-**What it does:**
-- Uses extended thinking for deep code analysis
-- Performs OWASP API Security Top 10 review
-- Analyzes performance (N+1 queries, async patterns, caching)
-- Verifies architectural patterns (DDD, Result<T>, clean architecture)
-- Checks multi-tenant isolation and authorization
-- Reviews testing coverage and quality
-
-**Example invocations:**
-- `/review-api-code PR #42 field management feature`
-- `/review-api-code HarvestController and related services`
-- `/review-api-code recent changes to warehouse module`
-
-The command provides:
-1. Security vulnerability assessment
-2. Performance bottleneck identification
-3. Architecture compliance verification
-4. Code quality analysis
-5. Testing coverage review
-6. Detailed findings with fixes
-7. Production readiness assessment
-
-Output includes a structured review with severity ratings, specific code examples, and improvement recommendations.
-
-### `/review-ui-code`
-
-Perform comprehensive UI code review using extended thinking for accessibility, performance, and user experience analysis.
-
-**Usage:**
-```
-/review-ui-code src/app/features/fields/components/field-list/field-list.component.ts
-```
-
-**What it does:**
-- Uses extended thinking for deep UI/UX analysis
-- Performs WCAG 2.1 AA accessibility review
-- Analyzes performance (signals, OnPush, bundle size)
-- Verifies Angular 19 patterns (standalone, control flow)
-- Checks Material Design 3 compliance
-- Reviews responsive design and mobile experience
-
-**Example invocations:**
-- `/review-ui-code field import wizard component`
-- `/review-ui-code PR #35 harvest schedule UI`
-- `/review-ui-code dashboard performance optimizations`
-
-The command provides:
-1. Accessibility compliance assessment
-2. Performance optimization opportunities
-3. User experience improvements
-4. Angular 18 best practices verification
-5. Design system consistency check
-6. Memory leak detection
-7. Testing coverage analysis
-
-Output includes structured findings with severity levels, code examples, and specific fixes for accessibility, performance, and UX issues.
-
-### `/do-extensive-research`
-
-Perform deep research with Opus 4 extended and interleaved thinking for comprehensive analysis and recommendations.
-
-**Usage:**
-```
-/do-extensive-research optimal database architecture for multi-tenant spatial data
-```
-
-**What it does:**
-- Leverages Opus 4's extended thinking capabilities for deep analysis
-- Uses interleaved thinking to refine insights progressively
-- Performs multi-dimensional analysis (technical, business, operational)
-- Synthesizes findings from codebase analysis and external research
-- Provides evidence-based recommendations with implementation roadmaps
-- Includes risk analysis and mitigation strategies
-
-**Example invocations:**
-- `/do-extensive-research harvest season workflow automation strategies`
-- `/do-extensive-research microservices migration path for vineyard management`
-- `/do-extensive-research optimal caching strategies for geographic data`
-
-The command guides Claude through:
-1. Research scope definition with deep reasoning
-2. Parallel information gathering from multiple sources
-3. Multi-dimensional analysis framework
-4. Synthesis and strategic recommendations
-5. Risk analysis and mitigation planning
-6. Detailed technical specifications
-7. Monitoring and success metrics
-8. Knowledge transfer documentation
-
-Output includes:
-- Executive summary with key findings
-- Detailed analysis with supporting evidence
-- Implementation roadmap with timelines
-- Risk matrix with mitigation strategies
-- Architecture Decision Records (ADRs)
-- Success metrics and KPIs
-- Next steps checklist
-
-### `/fix-frontend-build-and-tests`
-
-Fix frontend build and test failures using Opus 4 extended thinking with iterative reflection and parallel operations.
-
-**Usage:**
-```
-/fix-frontend-build-and-tests TypeScript errors in field components
-```
-
-**What it does:**
-- Uses iterative thinking to analyze build and test failures
-- Runs operations in parallel for maximum efficiency
-- Reflects on results before determining next steps
-- Focuses on understanding problem requirements, not just passing tests
-- Implements correct algorithms based on business logic
-- Asks for user clarification when confidence < 99%
-
-**Example invocations:**
-- `/fix-frontend-build-and-tests` (full diagnosis)
-- `/fix-frontend-build-and-tests module resolution errors`
-- `/fix-frontend-build-and-tests failing component tests`
-
-The command guides Claude through:
-1. Parallel information gathering (build, tests, config, changes)
-2. Iterative build fixing with reflection after each step
-3. Deep understanding of test intent and requirements
-4. Parallel implementation of independent fixes
-5. Comprehensive verification
-6. Documentation and prevention strategies
-
-Key principles:
-- Tests verify correctness, they don't define the solution
-- Understand requirements before implementing
-- When unsure (confidence < 99%), ask for clarification
-
-### `/fix-backend-build-and-tests`
-
-Fix backend build and test failures using Opus 4 extended thinking with iterative reflection and parallel operations.
-
-**Usage:**
-```
-/fix-backend-build-and-tests dependency injection errors in services
-```
-
-**What it does:**
-- Analyzes C# compilation errors and test failures iteratively
-- Focuses on domain logic and architectural patterns
-- Ensures multi-tenant security (OrganizationId scoping)
-- Implements fixes based on agricultural domain knowledge
-- Validates architectural decisions when confidence < 99%
-- Runs parallel operations for faster resolution
-
-**Example invocations:**
-- `/fix-backend-build-and-tests` (full diagnosis)
-- `/fix-backend-build-and-tests EF Core migration conflicts`
-- `/fix-backend-build-and-tests failing integration tests`
-
-The command guides Claude through:
-1. Parallel .NET build and test analysis
-2. Domain-driven fixes with business logic understanding
-3. Multi-tenant security verification
-4. Architecture compliance (DDD, Result<T>, clean architecture)
-5. Integration test database issues
-6. Performance and security validation
-
-Key principles:
-- Rich domain models with business logic in entities
-- Every query must filter by OrganizationId
-- Tests verify domain logic correctness
-- When uncertain about architecture, seek validation
-
-## Figma MCP Integration Commands
-
-### `/figma-generate-code`
-
-Transform Figma designs into production-ready code using Opus 4's deep reasoning for framework-specific optimizations.
-
-**Usage:**
-```
-/figma-generate-code login form in Vue 3 with Vuetify
-```
-
-**What it does:**
-- Generates framework-specific code (React, Angular, Vue)
-- Automatic accessibility enhancements (WCAG AA/AAA)
-- Performance optimizations (code splitting, memoization)
-- Component architecture recommendations
-- Comprehensive test generation
-- Full documentation with usage examples
-
-### `/figma-extract-tokens`
-
-Extract and transform Figma design tokens into framework-specific theme systems using Opus 4's deep analysis.
-
-**Usage:**
-```
-/figma-extract-tokens CSS custom properties with dark mode
-```
-
-**What it does:**
-- Hierarchical token organization (primitives → semantic → component)
-- Multi-platform transformation (CSS, Material, Tailwind)
-- Automatic dark mode generation
-- WCAG compliance validation
-- Token documentation generator
-- Migration strategy planning
-
-### `/figma-map-components`
-
-Map Figma components to codebase implementations using Opus 4's pattern recognition for consistent design-code alignment.
-
-**Usage:**
-```
-/figma-map-components verify Button component consistency
-```
-
-**What it does:**
-- Automated component discovery
-- Variant-to-prop mapping
-- Visual regression testing
-- Drift detection and sync recommendations
-- Code Connect configuration
-- Component catalog generation
-
-### `/figma-capture-design`
-
-Capture high-fidelity design screenshots from Figma for documentation, handoff, or visual reference using Opus 4's visual analysis.
-
-**Usage:**
-```
-/figma-capture-design component documentation with annotations
-```
-
-**What it does:**
-- Annotated design specifications
-- Responsive breakpoint captures
-- Developer handoff packages
-- Accessibility overlays
-- Visual QA validation
-- Asset organization and cataloging
-
-### `/figma-analyze-file`
-
-Analyze Figma file structure, components, and design system using Opus 4's deep architectural reasoning.
-
-**Usage:**
-```
-/figma-analyze-file abc123xyz component architecture
-```
-
-**What it does:**
-- Design system maturity assessment
-- Component health checks
-- Consistency audit
-- Performance analysis
-- Architectural recommendations
-- Improvement roadmap generation
-
-### `/figma-list-projects`
-
-List and analyze Figma projects and files using Opus 4's organizational intelligence for design system discovery.
-
-**Usage:**
-```
-/figma-list-projects project-123 design systems
-```
-
-**What it does:**
-- Intelligent file classification
-- Team collaboration analysis
-- Asset inventory creation
-- Usage analytics
-- Reorganization strategies
-- Design system extraction
-
-### `/figma-create-tokens`
-
-Create and manage design tokens in Figma using Opus 4's system design intelligence for scalable design systems.
-
-**Usage:**
-```
-/figma-create-tokens color palette for harvest app
-```
-
-**What it does:**
-- Multi-tier token architecture
-- Automatic scale generation
-- Platform-specific tokens
-- Dark mode support
-- Accessibility validation
-- Migration planning
-
-### `/figma-create-theme`
-
-Create and configure comprehensive themes in Figma using Opus 4's multi-dimensional design intelligence.
-
-**Usage:**
-```
-/figma-create-theme harvest season dark theme
-```
-
-**What it does:**
-- Multi-dimensional theming (color, density, motion)
-- Accessibility modes (high contrast, reduced motion)
-- Brand variations
-- Platform adaptations
-- Theme validation and testing
-- Automation and CI/CD integration
-
-All commands reference CLAUDE.md and FEATURES.md to maintain consistency with the production system's patterns and requirements.
-
-## Additional Resources
-
-- **Figma Commands Deep Dive**: See [FIGMA-COMMANDS.md](./FIGMA-COMMANDS.md) for comprehensive documentation on Figma MCP integration
-- **Project Instructions**: Refer to [CLAUDE.md](../../CLAUDE.md) for project-specific patterns and requirements
-- **Feature Documentation**: Check [FEATURES.md](../../FEATURES.md) for implemented features and their details
+- **`implement-full-stack-feature`** ⚡ - Parallel 7-agent feature implementation (2-3 min)
+- **`add-backend-feature`** - RESTful API with C# 13/.NET 9 patterns (10-15 min)
+- **`add-frontend-feature`** - Angular 19 with signals, no Observables (10-15 min)
+
+### Code Quality
+- **`comprehensive-review`** ⚡ - Parallel 5-agent code review (1-2 min)
+- **`security-audit`** ⚡ - Parallel security analysis across 5 vectors (1-2 min)
+- **`performance-optimization`** ⚡ - Parallel performance analysis across all layers (2 min)
+
+### Bug Fixes
+- **`fix-backend-bug`** - Debug and fix backend issues with root cause analysis
+- **`fix-frontend-bug`** - Fix Angular/TypeScript issues with proper patterns
+- **`debug-cross-layer-issue`** - Trace issues across full stack
+
+## 🏗️ Architecture & Infrastructure
+
+### Architecture
+- **`add-integration`** - Add third-party service integration
+- **`update-backend-feature`** - Evolve existing backend features
+- **`update-backend-feature-no-backward-compatibility`** - Breaking changes when needed
+
+### Build & Deploy
+- **`fix-backend-build-and-tests`** - Resolve build and test failures
+- **`fix-frontend-build-and-tests`** - Fix npm/Angular build issues
+- **`generate-documentation`** - Create project documentation
+- **`update-changelog`** - Smart changelog updates
+
+## 🧪 Testing Commands
+
+### Test Creation
+- **`add-backend-tests`** - Unit and integration tests for C#/.NET
+- **`add-frontend-tests`** - Component and service tests for Angular
+
+### Validation
+- **`validate-release`** - Release readiness validation
+- **`health-check`** - System health assessment
+
+## 🎨 Specialized Commands
+
+### UI/UX
+- **`figma-implement-current-selection`** - Convert Figma designs to code
+
+### Marketing & Sales
+- **`generate-marketing-material`** - Create marketing content
+
+### Meta Commands
+- **`create-command-and-or-agent`** - Create new commands or agents
+- **`optimize-command`** - Improve existing commands
+
+## ⚡ Parallel Execution Commands
+
+Commands marked with ⚡ use parallel agent execution for 85-90% time savings:
+- Multiple specialized agents work simultaneously
+- Automatic result consolidation
+- Comprehensive coverage with no blind spots
+
+## 📖 Documentation
+
+- [PARALLEL-EXECUTION-GUIDE.md](../PARALLEL-EXECUTION-GUIDE.md) - How parallel execution works
+- [RESEARCH-BEST-PRACTICES.md](../RESEARCH-BEST-PRACTICES.md) - Research command guidelines
+- [CLAUDE.md](../../CLAUDE.md) - Project conventions and patterns
+
+## 🎯 Command Selection Guide
+
+### For Research
+- **Simple question?** → `quick-research`
+- **Need synthesis?** → `smart-research`
+- **Security concern?** → `research-security`
+- **Performance issue?** → `research-performance`
+- **Architecture decision?** → `research-architecture`
+
+### For Development
+- **New feature?** → `implement-full-stack-feature`
+- **Code review?** → `comprehensive-review`
+- **Security check?** → `security-audit`
+- **Performance fix?** → `performance-optimization`
+
+### Time-Sensitive?
+Choose ⚡ parallel commands for fastest results:
+- `comprehensive-review` - 1 minute vs 5 minutes
+- `implement-full-stack-feature` - 3 minutes vs 20 minutes
+- `security-audit` - 1 minute vs 10 minutes
+
+## 💡 Best Practices
+
+1. **Use specialized research** for important decisions
+2. **Leverage parallel execution** for complex tasks
+3. **Choose the right depth** - not every question needs deep research
+4. **Focus on actionable output** - research should lead to decisions
+
+## 🚫 Deprecated Commands
+
+The following patterns have been removed as anti-patterns:
+- Overly complex "extensive research" templates
+- Commands that generate documentation without purpose
+- Generic commands that don't leverage specialized agents
+
+---
+
+*Commands are continuously improved based on real usage patterns. See individual command files for detailed documentation.*

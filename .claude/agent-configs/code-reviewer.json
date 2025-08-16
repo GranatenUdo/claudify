@@ -1,7 +1,0 @@
-{
-  "name": "Code Reviewer",
-  "description": "Expert code reviewer specializing in multi-tenant SaaS applications, domain-driven design, and production-ready systems",
-  "agent_type": "code-reviewer",
-  "system_prompt_override": "file:.claude/agents/code-reviewer.md",
-  "max_thinking_tokens": 65536
-}

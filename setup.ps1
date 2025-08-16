@@ -856,6 +856,280 @@ if ($setupMode) {
         Copy-Item -Path $sourceGuidelines -Destination $destGuidelines -Force
     }
     
+    # Project Detection and Configuration
+    Write-Info "`n[CONFIG] Detecting and configuring project names..."
+    
+    # Function to detect and confirm project names with user
+    function Get-ProjectNamesInteractive {
+        param([string]$Path)
+        
+        Write-Host "`n  Scanning for projects..." -ForegroundColor Cyan
+        
+        # Find all .csproj files
+        $csprojFiles = Get-ChildItem -Path $Path -Recurse -Filter "*.csproj" -ErrorAction SilentlyContinue
+        
+        $detectedProjects = @()
+        foreach ($csproj in $csprojFiles) {
+            $projectName = [System.IO.Path]::GetFileNameWithoutExtension($csproj.Name)
+            $relativePath = $csproj.FullName.Replace($Path, "").TrimStart("\", "/")
+            $detectedProjects += @{
+                Name = $projectName
+                Path = $relativePath
+                Type = Get-ProjectType $projectName
+            }
+        }
+        
+        if ($detectedProjects.Count -eq 0) {
+            Write-Warning "  No .csproj files found in the repository"
+            Write-Host "  You can manually enter project names or skip configuration" -ForegroundColor Yellow
+        } else {
+            Write-Success "  Found $($detectedProjects.Count) project(s)"
+        }
+        
+        # Helper function to determine project type
+        function Get-ProjectType {
+            param([string]$Name)
+            if ($Name -like "*.Web" -or $Name -like "*.UI" -or $Name -like "*.Frontend") {
+                return "Web"
+            } elseif ($Name -like "*.Api" -or $Name -like "*.WebApi") {
+                return "API"
+            } elseif ($Name -like "*ArchitectureTest*") {
+                return "ArchitectureTest"
+            } elseif ($Name -like "*Test*") {
+                return "Test"
+            } else {
+                return "Other"
+            }
+        }
+        
+        # Interactive confirmation for each project type
+        $confirmedProjects = @{}
+        
+        # Web Project
+        Write-Host "`n  [Web Project Configuration]" -ForegroundColor Cyan
+        $webProjects = $detectedProjects | Where-Object { $_.Type -eq "Web" }
+        
+        if ($webProjects.Count -gt 0) {
+            Write-Host "  Detected web project(s):" -ForegroundColor White
+            foreach ($proj in $webProjects) {
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
+            }
+            
+            $defaultWeb = $webProjects[0].Name
+            Write-Host "  Enter primary web project name [$defaultWeb]: " -NoNewline -ForegroundColor Yellow
+            $userInput = Read-Host
+            $confirmedProjects.WebProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultWeb } else { $userInput }
+        } else {
+            Write-Host "  No web project detected." -ForegroundColor Yellow
+            Write-Host "  Enter web project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+            $userInput = Read-Host
+            if (![string]::IsNullOrWhiteSpace($userInput)) {
+                $confirmedProjects.WebProject = $userInput
+            }
+        }
+        
+        if ($confirmedProjects.WebProject) {
+            Write-Success "  ✓ Web project: $($confirmedProjects.WebProject)"
+        }
+        
+        # API Project
+        Write-Host "`n  [API Project Configuration]" -ForegroundColor Cyan
+        $apiProjects = $detectedProjects | Where-Object { $_.Type -eq "API" }
+        
+        if ($apiProjects.Count -gt 0) {
+            Write-Host "  Detected API project(s):" -ForegroundColor White
+            foreach ($proj in $apiProjects) {
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
+            }
+            
+            $defaultApi = $apiProjects[0].Name
+            Write-Host "  Enter API project name [$defaultApi]: " -NoNewline -ForegroundColor Yellow
+            $userInput = Read-Host
+            $confirmedProjects.ApiProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultApi } else { $userInput }
+        } else {
+            Write-Host "  No API project detected." -ForegroundColor Yellow
+            Write-Host "  Enter API project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+            $userInput = Read-Host
+            if (![string]::IsNullOrWhiteSpace($userInput)) {
+                $confirmedProjects.ApiProject = $userInput
+            }
+        }
+        
+        if ($confirmedProjects.ApiProject) {
+            Write-Success "  ✓ API project: $($confirmedProjects.ApiProject)"
+        }
+        
+        # Architecture Test Project
+        Write-Host "`n  [Architecture Test Project Configuration]" -ForegroundColor Cyan
+        $archProjects = $detectedProjects | Where-Object { $_.Type -eq "ArchitectureTest" }
+        
+        if ($archProjects.Count -gt 0) {
+            Write-Host "  Detected architecture test project(s):" -ForegroundColor White
+            foreach ($proj in $archProjects) {
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
+            }
+            
+            $defaultArch = $archProjects[0].Name
+            Write-Host "  Enter architecture test project name [$defaultArch]: " -NoNewline -ForegroundColor Yellow
+            $userInput = Read-Host
+            $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultArch } else { $userInput }
+        } else {
+            # Look for any test project as fallback
+            $testProjects = $detectedProjects | Where-Object { $_.Type -eq "Test" -or $_.Type -eq "ArchitectureTest" }
+            if ($testProjects.Count -gt 0) {
+                Write-Host "  Detected test project(s):" -ForegroundColor White
+                foreach ($proj in $testProjects) {
+                    Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
+                }
+                
+                $defaultTest = ($testProjects | Where-Object { $_.Name -like "*Architecture*" })[0].Name
+                if (-not $defaultTest) {
+                    $defaultTest = $testProjects[0].Name
+                }
+                Write-Host "  Enter architecture test project name [$defaultTest]: " -NoNewline -ForegroundColor Yellow
+                $userInput = Read-Host
+                $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultTest } else { $userInput }
+            } else {
+                Write-Host "  No test project detected." -ForegroundColor Yellow
+                Write-Host "  Enter architecture test project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+                $userInput = Read-Host
+                if (![string]::IsNullOrWhiteSpace($userInput)) {
+                    $confirmedProjects.ArchitectureTestProject = $userInput
+                }
+            }
+        }
+        
+        if ($confirmedProjects.ArchitectureTestProject) {
+            Write-Success "  ✓ Architecture test project: $($confirmedProjects.ArchitectureTestProject)"
+        }
+        
+        # Summary
+        Write-Host "`n  [Configuration Summary]" -ForegroundColor Cyan
+        if ($confirmedProjects.Count -eq 0) {
+            Write-Warning "  No projects configured. Templates will remain unchanged."
+        } else {
+            Write-Host "  The following projects will be configured:" -ForegroundColor White
+            foreach ($key in $confirmedProjects.Keys) {
+                Write-Host "    $key = $($confirmedProjects[$key])" -ForegroundColor Green
+            }
+        }
+        
+        return $confirmedProjects
+    }
+    
+    # Function to process mustache templates in all Claudify files
+    function Apply-ProjectTemplates {
+        param(
+            [string]$ClaudePath,
+            [hashtable]$Projects
+        )
+        
+        if ($Projects.Count -eq 0) {
+            Write-Info "  No projects to configure, skipping template processing"
+            return 0
+        }
+        
+        Write-Info "  Applying project templates to all files..."
+        
+        # Build replacement dictionary from confirmed projects
+        $replacements = @{}
+        
+        if ($Projects.WebProject) {
+            $replacements['{{WebProject}}'] = $Projects.WebProject
+            Write-Detail "    {{WebProject}} → $($Projects.WebProject)"
+        }
+        
+        if ($Projects.ApiProject) {
+            $replacements['{{ApiProject}}'] = $Projects.ApiProject
+            Write-Detail "    {{ApiProject}} → $($Projects.ApiProject)"
+        }
+        
+        if ($Projects.ArchitectureTestProject) {
+            $replacements['{{ArchitectureTestProject}}'] = $Projects.ArchitectureTestProject
+            Write-Detail "    {{ArchitectureTestProject}} → $($Projects.ArchitectureTestProject)"
+        }
+        
+        # For any remaining {{ProjectNamespace}} templates (backward compatibility)
+        # Use the base namespace from the first configured project
+        if ($Projects.Count -gt 0) {
+            $firstProject = ($Projects.Values | Select-Object -First 1)
+            $baseNamespace = $firstProject -replace '\.(Web|Api|Domain|Infrastructure|Tests|Test|UI|Frontend|WebApi)$', ''
+            $replacements['{{ProjectNamespace}}'] = $baseNamespace
+            Write-Detail "    {{ProjectNamespace}} → $baseNamespace (for backward compatibility)"
+        }
+        
+        $replacementCount = 0
+        $filesProcessed = @()
+        
+        # Get all files to update
+        $filesToUpdate = @()
+        $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "commands") -Filter "*.md" -ErrorAction SilentlyContinue
+        $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "agents") -Filter "*.md" -ErrorAction SilentlyContinue
+        $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "hooks") -Filter "*.ps1" -ErrorAction SilentlyContinue
+        
+        foreach ($file in $filesToUpdate) {
+            $content = Get-Content -Path $file.FullName -Raw -ErrorAction SilentlyContinue
+            if ($content) {
+                $modified = $false
+                $updatedContent = $content
+                
+                # Apply all replacements
+                foreach ($template in $replacements.Keys) {
+                    if ($updatedContent.Contains($template)) {
+                        $updatedContent = $updatedContent -replace [regex]::Escape($template), $replacements[$template]
+                        $modified = $true
+                    }
+                }
+                
+                if ($modified) {
+                    Set-Content -Path $file.FullName -Value $updatedContent -NoNewline
+                    $replacementCount++
+                    $filesProcessed += $file.Name
+                    Write-Detail "    Processed: $($file.Name)"
+                }
+            }
+        }
+        
+        # Save configuration to file
+        $configPath = Join-Path $ClaudePath "config"
+        if (-not (Test-Path $configPath)) {
+            New-Item -ItemType Directory -Path $configPath -Force | Out-Null
+        }
+        
+        $projectConfig = @{
+            ConfiguredProjects = $Projects
+            TemplateReplacements = $replacements
+            FilesProcessed = $filesProcessed
+            ConfiguredDate = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+        } | ConvertTo-Json -Depth 10
+        
+        Set-Content -Path (Join-Path $configPath "projects.json") -Value $projectConfig
+        
+        if ($replacementCount -gt 0) {
+            Write-Success "  [OK] Processed $replacementCount file(s) with project templates"
+        } else {
+            Write-Info "  [INFO] No template replacements were needed"
+        }
+        
+        return $replacementCount
+    }
+    
+    # Get project configuration from user
+    $confirmedProjects = Get-ProjectNamesInteractive -Path $TargetRepository
+    
+    # Apply the templates with confirmed project names
+    $updatedFiles = Apply-ProjectTemplates -ClaudePath $claudePath -Projects $confirmedProjects
+    
+    if ($updatedFiles -gt 0) {
+        Write-Success "`n  [SUCCESS] Project configuration complete!"
+    } elseif ($confirmedProjects.Count -gt 0) {
+        Write-Info "`n  [INFO] Projects configured but no templates needed updating"
+    } else {
+        Write-Warning "`n  [INFO] No project configuration applied"
+        Write-Host "  Commands will use default template placeholders" -ForegroundColor Yellow
+        Write-Host "  You can manually edit them later if needed" -ForegroundColor Gray
+    }
+    
     # Generate CLAUDE.md if it doesn't exist
     $claudeMdPath = Join-Path $TargetRepository "CLAUDE.md"
     if (-not (Test-Path $claudeMdPath)) {
