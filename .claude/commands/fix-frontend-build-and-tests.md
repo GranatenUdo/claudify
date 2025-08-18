@@ -1,5 +1,5 @@
 ---
-description: Fix frontend build and test failures with parallel diagnosis - 75% faster
+description: Fix frontend build and test failures with parallel diagnosis
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
 argument-hint: error message or test failure description
 complexity: simple

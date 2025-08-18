@@ -5,7 +5,7 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2025-01-16
+## [4.0.0] - 2025-08-18
 
 ### 🎉 Major Release - Interactive Project Configuration with Full Template System
 
@@ -113,7 +113,7 @@ This release establishes Claudify with automatic namespace detection and project
 
 ### Breaking Changes
 - **Clean installation required** - Major architectural changes
-- **init-claudify command rewritten** - Previous version had critical bugs
+- **init-claudify command deprecated** - Functionality moved to setup.ps1
 - All agents renamed (removed "-enhanced" suffix)
 - File preservation logic changed - Won't overwrite existing CLAUDE.md/FEATURES.md
 
@@ -141,10 +141,10 @@ This release establishes Claudify with automatic namespace detection and project
   - Now detects Angular in `ClientApp/`, `frontend/`, `client/`, `web/`, `ui/` and other standard subdirectories
   - Supports ASP.NET Core default Angular template structure
   - Handles both `angular.json` and package.json detection
-  - 197% improvement in setup success rate for enterprise projects
+  - Improved setup success rate for enterprise projects
 - **Comprehensive Setup Mode** - Fixed missing agents and commands
   - All 19 agents now properly included in comprehensive mode
-  - All 30 commands correctly installed (init-claudify handled separately)
+  - All 30 commands correctly installed
   - Added verification script to ensure completeness
 - **Agent Availability Mismatch** - Resolved critical issue where documented agents don't exist in Claude
   - Mapped all custom agent types to available Claude agents
@@ -166,8 +166,8 @@ This release establishes Claudify with automatic namespace detection and project
   - Better error handling and warnings
 
 ### Performance Improvements
-- 40-60% faster analysis with parallel processing
-- 75% reduction in sequential operations
+- Parallel processing for analysis tasks
+- Reduced sequential operations
 - Extended thinking for complex problems
 - Confidence scoring reduces uncertainty
 

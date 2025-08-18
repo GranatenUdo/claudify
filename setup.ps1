@@ -25,7 +25,6 @@ $version = if (Test-Path $versionFile) { Get-Content $versionFile -Raw -ErrorAct
 # Display Claudify banner
 Write-Host "`n"
 Write-Host "    +--- CLAUDIFY ---+ Smart Claude Code Setup v$version" -ForegroundColor Cyan
-Write-Host "    |> Initialize < | Opus 4 Optimized - AI-Powered" -ForegroundColor White
 Write-Host "    +----------------+ github.com/claudify" -ForegroundColor DarkGray
 Write-Host "    $ whoami" -ForegroundColor Yellow
 Write-Host "    > GranatenUdo | Tobi" -ForegroundColor Yellow
@@ -51,46 +50,15 @@ if (Test-Path $existingVersionPath) {
     }
 }
 
-# Check for version 2.0.0 and recommend clean install
-$recommendClean = $false
-if ($version -eq "2.0.0" -and ($existingVersion -eq $null -or $existingVersion -lt "2.0.0")) {
-    Write-Host "    [NEW!] " -NoNewline -ForegroundColor Cyan
-    Write-Host "Version 2.0.0 MAJOR UPDATE!" -ForegroundColor Yellow
-    Write-Host "    " + ("-" * 50) -ForegroundColor DarkGray
-    Write-Host "    This major release includes:" -ForegroundColor White
-    Write-Host "    * Opus 4 optimized agents with parallel analysis" -ForegroundColor Green
-    Write-Host "    * Extended thinking capabilities (65536 tokens)" -ForegroundColor Green
-    Write-Host "    * AI-powered generation with confidence scoring" -ForegroundColor Green
-    Write-Host "    [WARNING] BREAKING CHANGES - Clean install required" -ForegroundColor Yellow
-    Write-Host "    " + ("-" * 50) -ForegroundColor DarkGray
-    $recommendClean = $true
-}
-
-if ($recommendClean) {
-    Write-Host "[WARNING] " -NoNewline -ForegroundColor Yellow
-    Write-Host "Clean installation is " -NoNewline -ForegroundColor White
-    Write-Host "REQUIRED" -NoNewline -ForegroundColor Red
-    Write-Host " for version 2.0.0" -ForegroundColor White
-    Write-Host "   Major architectural changes require a fresh installation." -ForegroundColor DarkGray
-}
-
 Write-Host "Would you like to perform a clean installation? (Y/N)" -ForegroundColor Yellow
 Write-Host "This will remove all existing Claudify components before installing." -ForegroundColor DarkGray
-if ($recommendClean -or $version -eq "2.0.0") {
-    Write-Host "[Default: Y]: " -NoNewline -ForegroundColor Green
-} else {
-    Write-Host "[Default: N]: " -NoNewline
-}
+Write-Host "[Default: N]: " -NoNewline
 
 $cleanResponse = Read-Host
 
-# Default to Yes for v2.0.0, No for others
+# Default to No for normal updates
 if ([string]::IsNullOrWhiteSpace($cleanResponse)) {
-    if ($recommendClean -or $version -eq "2.0.0") {
-        $CleanInstall = $true
-    } else {
-        $CleanInstall = $false
-    }
+    $CleanInstall = $false
 } else {
     $CleanInstall = ($cleanResponse -eq 'Y' -or $cleanResponse -eq 'y')
 }
@@ -98,11 +66,7 @@ if ([string]::IsNullOrWhiteSpace($cleanResponse)) {
 if ($CleanInstall) {
     Write-Host "[OK] Clean installation selected" -ForegroundColor Green
 } else {
-    if ($recommendClean) {
-        Write-Host "[WARNING] Proceeding with normal installation (not recommended for v1.4.0)" -ForegroundColor Yellow
-    } else {
-        Write-Host "[OK] Normal installation selected" -ForegroundColor Green
-    }
+    Write-Host "[OK] Normal installation selected" -ForegroundColor Green
 }
 Write-Host "`n"
 
@@ -188,18 +152,8 @@ $commandsPath = Join-Path $TargetRepository ".claude" "commands"
 Write-Host "`nCreating Claude Code directory structure..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Path $commandsPath -Force | Out-Null
 
-# Copy the init command from claudify
-$initCommand = Join-Path $scriptDir ".claude" "commands" "init-claudify.md"
-$destPath = Join-Path $commandsPath "init-claudify.md"
-
-if (-not (Test-Path $initCommand)) {
-    Write-Host "Error: init-claudify.md not found at: $initCommand" -ForegroundColor Red
-    Write-Host "Please ensure you're running this script from the claudify directory." -ForegroundColor Yellow
-    exit 1
-}
-
-Write-Host "Copying initialization command..." -ForegroundColor Cyan
-Copy-Item $initCommand -Destination $destPath -Force
+# Note: init-claudify.md command has been deprecated in v4.0.0
+# The setup process now handles all initialization directly
 
 # Create VERSION file in .claude directory for update tracking
 $targetVersionPath = Join-Path $TargetRepository ".claude" "VERSION"
@@ -317,7 +271,7 @@ foreach ($docFile in $docFiles) {
 
 Write-Host "Claudify resources copied to .claudify successfully!" -ForegroundColor Green
 Write-Host "Note: .claudify is excluded from git via .gitignore" -ForegroundColor DarkGray
-Write-Host "      This directory will persist to allow re-running /init-claudify" -ForegroundColor DarkGray
+Write-Host "      This directory will persist for future configuration updates" -ForegroundColor DarkGray
 
 # Offer intelligent automatic setup
 Write-Host "`n" + ("-" * 60) -ForegroundColor DarkGray
@@ -328,12 +282,11 @@ Write-Host "Claudify can automatically install Claude Code components now" -Fore
 Write-Host "based on your detected technology stack." -ForegroundColor White
 Write-Host ""
 Write-Host "Choose installation mode:" -ForegroundColor Yellow
-Write-Host "  [S] Standard   - Core components for your stack (~15-25 files)" -ForegroundColor White
+Write-Host "  [M] Minimal    - Core components for your stack (~15-25 files)" -ForegroundColor White
 Write-Host "  [C] Comprehensive - Everything available (~40+ files) " -NoNewline -ForegroundColor White
 Write-Host "[RECOMMENDED]" -ForegroundColor Green
-Write-Host "  [N] None       - Skip automatic installation" -ForegroundColor White
 Write-Host ""
-Write-Host "Select mode (S/C/N) [C]: " -NoNewline -ForegroundColor Yellow
+Write-Host "Select mode (M/C) [C]: " -NoNewline -ForegroundColor Yellow
 $setupResponse = Read-Host
 
 # Default to comprehensive if no input
@@ -341,26 +294,23 @@ if ([string]::IsNullOrWhiteSpace($setupResponse)) {
     $setupResponse = 'C'
 }
 
-$setupMode = $null
 switch ($setupResponse.ToUpper()) {
-    'S' { $setupMode = "standard" }
+    'M' { $setupMode = "minimal" }
     'C' { $setupMode = "comprehensive" }
-    'N' { $setupMode = $null }
     default { $setupMode = "comprehensive" }
 }
 
-if ($setupMode) {
-    Write-Host ""
-    Write-Host "Starting intelligent setup ($setupMode mode)..." -ForegroundColor Cyan
-    Write-Host ""
-    
-    # Intelligent Setup Logic (merged from intelligent-setup.ps1)
-    # Color functions for cross-platform compatibility
-    function Write-Success { param($msg) Write-Host $msg -ForegroundColor Green }
-    function Write-Info { param($msg) Write-Host $msg -ForegroundColor Cyan }
-    function Write-Warning { param($msg) Write-Host $msg -ForegroundColor Yellow }
-    function Write-Error { param($msg) Write-Host $msg -ForegroundColor Red }
-    function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGray }
+Write-Host ""
+Write-Host "Starting intelligent setup ($setupMode mode)..." -ForegroundColor Cyan
+Write-Host ""
+
+# Intelligent Setup Logic (merged from intelligent-setup.ps1)
+# Color functions for cross-platform compatibility
+function Write-Success { param($msg) Write-Host $msg -ForegroundColor Green }
+function Write-Info { param($msg) Write-Host $msg -ForegroundColor Cyan }
+function Write-Warning { param($msg) Write-Host $msg -ForegroundColor Yellow }
+function Write-Error { param($msg) Write-Host $msg -ForegroundColor Red }
+function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGray }
     
     Write-Info "🎯 Intelligent Claude Code Setup"
     Write-Host "=================================" -ForegroundColor DarkGray
@@ -392,189 +342,6 @@ if ($setupMode) {
         New-Item -ItemType Directory -Path $path -Force | Out-Null
     }
     Write-Success "  [OK] Directories created"
-    
-    # Technology Stack Detection
-    Write-Info "`n🔍 Detecting technology stack..."
-    
-    $detectedStack = @{
-        Backend = $null
-        Frontend = $null
-        MultiTenant = $false
-        Database = $null
-        Infrastructure = $null
-    }
-    
-    # Backend detection
-    if (Get-ChildItem -Path $TargetRepository -Filter "*.csproj" -Recurse -ErrorAction SilentlyContinue) {
-        $detectedStack.Backend = ".NET/C#"
-        Write-Success "  [OK] .NET/C# backend detected"
-    } elseif (Test-Path (Join-Path $TargetRepository "go.mod")) {
-        $detectedStack.Backend = "Go"
-        Write-Success "  [OK] Go backend detected"
-    } elseif (Test-Path (Join-Path $TargetRepository "pom.xml")) {
-        $detectedStack.Backend = "Java"
-        Write-Success "  [OK] Java backend detected"
-    } elseif (Test-Path (Join-Path $TargetRepository "requirements.txt")) {
-        $detectedStack.Backend = "Python"
-        Write-Success "  [OK] Python backend detected"
-    } elseif (Test-Path (Join-Path $TargetRepository "package.json")) {
-        $packageJson = Get-Content (Join-Path $TargetRepository "package.json") -Raw | ConvertFrom-Json
-        if ($packageJson.dependencies -and ($packageJson.dependencies.PSObject.Properties.Name -match "express|fastify|nestjs")) {
-            $detectedStack.Backend = "Node.js"
-            Write-Success "  [OK] Node.js backend detected"
-        }
-    }
-    
-    # Frontend detection with enhanced Angular support
-    function Find-FrontendProject {
-        param([string]$RootPath)
-        
-        # Common frontend project locations in enterprise projects
-        $searchPaths = @(
-            "",                  # Root directory
-            "ClientApp",         # Default ASP.NET Core Angular template
-            "frontend",          # Common convention
-            "client",            # Alternative naming
-            "web",               # Web app folder
-            "ui",                # UI folder
-            "src",               # Source folder
-            "app",               # App folder
-            "wwwroot",           # ASP.NET static files
-            "apps"               # Nx workspace convention
-        )
-        
-        foreach ($subPath in $searchPaths) {
-            $checkPath = if ($subPath) { 
-                Join-Path $RootPath $subPath 
-            } else { 
-                $RootPath 
-            }
-            
-            if (-not (Test-Path $checkPath)) {
-                continue
-            }
-            
-            # Check for Angular-specific files first
-            $angularJson = Join-Path $checkPath "angular.json"
-            if (Test-Path $angularJson) {
-                return @{
-                    Type = "Angular"
-                    Path = $checkPath
-                    RelativePath = if ($subPath) { $subPath } else { "." }
-                    ConfigFile = "angular.json"
-                }
-            }
-            
-            # Check package.json for framework detection
-            $packageJsonPath = Join-Path $checkPath "package.json"
-            if (Test-Path $packageJsonPath) {
-                try {
-                    $packageJson = Get-Content $packageJsonPath -Raw | ConvertFrom-Json
-                    
-                    # Check both dependencies and devDependencies
-                    $allDeps = @()
-                    if ($packageJson.dependencies) {
-                        $allDeps += $packageJson.dependencies.PSObject.Properties.Name
-                    }
-                    if ($packageJson.devDependencies) {
-                        $allDeps += $packageJson.devDependencies.PSObject.Properties.Name
-                    }
-                    
-                    # Angular detection
-                    if ($allDeps | Where-Object { $_ -match "^@angular/" -or $_ -eq "angular" }) {
-                        $angularVersion = $null
-                        if ($packageJson.dependencies."@angular/core") {
-                            $angularVersion = $packageJson.dependencies."@angular/core"
-                        } elseif ($packageJson.devDependencies."@angular/core") {
-                            $angularVersion = $packageJson.devDependencies."@angular/core"
-                        }
-                        
-                        return @{
-                            Type = "Angular"
-                            Path = $checkPath
-                            RelativePath = if ($subPath) { $subPath } else { "." }
-                            Version = $angularVersion
-                            ConfigFile = "package.json"
-                        }
-                    }
-                    
-                    # React detection
-                    if ($allDeps -contains "react" -or $allDeps -contains "next") {
-                        return @{
-                            Type = "React"
-                            Path = $checkPath
-                            RelativePath = if ($subPath) { $subPath } else { "." }
-                            ConfigFile = "package.json"
-                        }
-                    }
-                    
-                    # Vue detection
-                    if ($allDeps -contains "vue" -or $allDeps -contains "@vue/cli") {
-                        return @{
-                            Type = "Vue"
-                            Path = $checkPath
-                            RelativePath = if ($subPath) { $subPath } else { "." }
-                            ConfigFile = "package.json"
-                        }
-                    }
-                    
-                    # Svelte detection
-                    if ($allDeps -contains "svelte") {
-                        return @{
-                            Type = "Svelte"
-                            Path = $checkPath
-                            RelativePath = if ($subPath) { $subPath } else { "." }
-                            ConfigFile = "package.json"
-                        }
-                    }
-                }
-                catch {
-                    Write-Warning "Failed to parse package.json at $packageJsonPath"
-                }
-            }
-        }
-        
-        return $null
-    }
-    
-    # Execute frontend detection
-    $frontendProject = Find-FrontendProject -RootPath $TargetRepository
-    if ($frontendProject) {
-        $detectedStack.Frontend = $frontendProject.Type
-        $relativePath = $frontendProject.RelativePath
-        
-        if ($relativePath -eq ".") {
-            Write-Success "  [OK] $($frontendProject.Type) frontend detected in root directory"
-        } else {
-            Write-Success "  [OK] $($frontendProject.Type) frontend detected in '$relativePath' directory"
-        }
-        
-        if ($frontendProject.Version) {
-            Write-Detail "    Version: $($frontendProject.Version)"
-        }
-        Write-Detail "    Config: $($frontendProject.ConfigFile)"
-    }
-    
-    # Multi-tenancy detection
-    $multiTenantPatterns = @("OrganizationId", "TenantId", "CompanyId", "multi-tenant", "IMultiTenant")
-    $searchExtensions = @("*.cs", "*.ts", "*.js", "*.py", "*.go", "*.java")
-    foreach ($ext in $searchExtensions) {
-        $files = Get-ChildItem -Path $TargetRepository -Filter $ext -Recurse -ErrorAction SilentlyContinue | Select-Object -First 10
-        foreach ($file in $files) {
-            $content = Get-Content $file.FullName -Raw -ErrorAction SilentlyContinue
-            foreach ($pattern in $multiTenantPatterns) {
-                if ($content -match $pattern) {
-                    $detectedStack.MultiTenant = $true
-                    Write-Success "  [OK] Multi-tenant patterns detected"
-                    break
-                }
-            }
-            if ($detectedStack.MultiTenant) { break }
-        }
-        if ($detectedStack.MultiTenant) { break }
-    }
-    
-    Write-Host ""
     Write-Info "[PACKAGE] Installing components for $setupMode setup..."
     
     # Define component lists based on mode
@@ -585,23 +352,23 @@ if ($setupMode) {
     $installHooks = $false
     
     switch ($setupMode) {
-        "standard" {
+        "minimal" {
             $commandsToInstall = @(
                 "comprehensive-review",
-                "do-extensive-research",
+                "smart-research",
                 "quick-research",
-                "create-command-and-or-agent",
+                "security-audit",
                 "update-changelog",
                 "optimize-performance",
                 "refactor-code"
             )
             $agentsToInstall = @(
-                "code-reviewer",
-                "tech-lead",
-                "researcher",
+                "code-review-expert",
+                "tech-lead-engineer",
+                "best-practices-researcher",
                 "code-simplifier",
-                "technical-debt-analyst",
-                "test-quality-analyst"
+                "technical-debt-analyzer",
+                "test-quality-analyzer"
             )
             $installGenerators = $true
             $installHooks = $true
@@ -609,20 +376,22 @@ if ($setupMode) {
         "comprehensive" {
             $commandsToInstall = @(
                 "comprehensive-review",
-                "do-extensive-research",
+                "smart-research",
                 "quick-research",
-                "create-command-and-or-agent",
+                "research-architecture",
+                "research-performance",
+                "research-security",
                 "update-changelog",
                 "optimize-performance",
+                "performance-optimization",
                 "refactor-code",
-                "analyze-test-quality",
-                "analyze-features",
-                "analyze-domain-use-cases",
-                "analyze-legacy-system",
-                "analyze-technical-debt",
+                "security-audit",
+                "health-check",
+                "validate-release",
                 "generate-documentation",
+                "generate-docs",
                 "generate-marketing-material",
-                "add-integration",
+                "implement-full-stack-feature",
                 "add-backend-feature",
                 "add-frontend-feature",
                 "figma-implement-current-selection",
@@ -634,64 +403,33 @@ if ($setupMode) {
                 "review-frontend-code",
                 "update-backend-feature",
                 "update-frontend-feature",
-                "update-comprehensive-feature",
                 "update-backend-feature-no-backward-compatibility",
                 "update-frontend-feature-no-backward-compatibility",
-                "update-comprehensive-feature-no-backward-compatibility"
+                "optimize-command"
             )
             $agentsToInstall = @(
-                "code-reviewer",
-                "tech-lead",
-                "researcher",
+                "code-review-expert",
+                "tech-lead-engineer",
+                "best-practices-researcher",
                 "code-simplifier",
-                "technical-debt-analyst",
-                "test-quality-analyst",
+                "technical-debt-analyzer",
+                "test-quality-analyzer",
                 "infrastructure-architect",
-                "ux-reviewer",
-                "business-domain-analyst",
-                "legacy-system-analyzer",
-                "visual-designer",
-                "visual-designer-marketing",
-                "security-reviewer",
-                "frontend-developer",
-                "technical-documentation-expert",
-                "customer-value-translator",
-                "feature-analyzer",
+                "ux-design-expert",
+                "legacy-codebase-analyzer",
+                "visual-design-expert",
+                "security-vulnerability-scanner",
+                "frontend-implementation-expert",
+                "technical-documentation-writer",
+                "tech-docs-specialist",
+                "feature-scope-architect",
                 "marketing-strategist",
-                "sales-genius"
+                "sales-pitch-creator"
             )
             $installGenerators = $true
             $installTools = $true
             $installHooks = $true
         }
-    }
-    
-    # Add backend-specific components (for non-comprehensive setups)
-    if ($detectedStack.Backend -and $setupMode -ne "comprehensive") {
-        $backendCommands = @(
-            "add-backend-feature",
-            "fix-backend-bug",
-            "review-backend-code",
-            "fix-backend-build-and-tests"
-        )
-        $commandsToInstall += $backendCommands
-    }
-    
-    # Add frontend-specific components (for non-comprehensive setups)
-    if ($detectedStack.Frontend -and $setupMode -ne "comprehensive") {
-        $frontendCommands = @(
-            "add-frontend-feature",
-            "fix-frontend-bug",
-            "review-frontend-code",
-            "fix-frontend-build-and-tests"
-        )
-        $commandsToInstall += $frontendCommands
-        $agentsToInstall += "frontend-developer"
-    }
-    
-    # Add security components for multi-tenant
-    if ($detectedStack.MultiTenant) {
-        $agentsToInstall += "security-reviewer"
     }
     
     # Remove duplicates
@@ -774,10 +512,6 @@ if ($setupMode) {
             "pre-commit-quality-check.ps1",
             "check-changelog-updates.ps1"
         )
-        
-        if ($detectedStack.MultiTenant) {
-            $hookFiles += "check-tenant-scoping.ps1"
-        }
         
         $installedHooks = 0
         foreach ($hook in $hookFiles) {
@@ -865,41 +599,73 @@ if ($setupMode) {
         
         Write-Host "`n  Scanning for projects..." -ForegroundColor Cyan
         
-        # Find all .csproj files
-        $csprojFiles = Get-ChildItem -Path $Path -Recurse -Filter "*.csproj" -ErrorAction SilentlyContinue
+        # Detect Web Projects (Angular)
+        Write-Host "  Looking for Angular projects (angular.json)..." -ForegroundColor DarkGray
+        $angularJsonFiles = Get-ChildItem -Path $Path -Recurse -Filter "angular.json" -ErrorAction SilentlyContinue
+        $webProjects = @()
+        foreach ($angularJson in $angularJsonFiles) {
+            $projectDir = Split-Path $angularJson.FullName -Parent
+            $projectDirName = Split-Path $projectDir -Leaf
+            # Try to find corresponding folder name or use parent directory name
+            $webProjects += @{
+                Name = $projectDirName
+                Path = $projectDir.Replace($Path, "").TrimStart("\", "/")
+                Type = "Web"
+                DetectedBy = "angular.json"
+            }
+        }
         
-        $detectedProjects = @()
+        # Detect .NET Projects
+        Write-Host "  Looking for .NET projects (.csproj files)..." -ForegroundColor DarkGray
+        $csprojFiles = Get-ChildItem -Path $Path -Recurse -Filter "*.csproj" -ErrorAction SilentlyContinue
+        $apiProjects = @()
+        $testProjects = @()
+        $otherProjects = @()
+        
         foreach ($csproj in $csprojFiles) {
+            $content = Get-Content $csproj.FullName -Raw
             $projectName = [System.IO.Path]::GetFileNameWithoutExtension($csproj.Name)
             $relativePath = $csproj.FullName.Replace($Path, "").TrimStart("\", "/")
-            $detectedProjects += @{
-                Name = $projectName
-                Path = $relativePath
-                Type = Get-ProjectType $projectName
+            
+            if ($content -match 'Microsoft\.NET\.Sdk\.Web') {
+                # It's a Web API project
+                $apiProjects += @{
+                    Name = $projectName
+                    Path = $relativePath
+                    Type = "API"
+                    DetectedBy = "Microsoft.NET.Sdk.Web"
+                }
+            } elseif ($content -match 'Microsoft\.NET\.Sdk' -and ($projectName -like "*Test*" -or $projectName -like "*Tests")) {
+                # It's a test project (has Microsoft.NET.Sdk and Test in name)
+                $testType = if ($projectName -like "*ArchitectureTest*") { "ArchitectureTest" } else { "Test" }
+                $testProjects += @{
+                    Name = $projectName
+                    Path = $relativePath
+                    Type = $testType
+                    DetectedBy = "Microsoft.NET.Sdk (test project)"
+                }
+            } elseif ($content -match 'Microsoft\.NET\.Sdk') {
+                # It's a regular .NET project (library, console app, etc.)
+                $otherProjects += @{
+                    Name = $projectName
+                    Path = $relativePath
+                    Type = "Other"
+                    DetectedBy = "Microsoft.NET.Sdk"
+                }
             }
         }
         
-        if ($detectedProjects.Count -eq 0) {
-            Write-Warning "  No .csproj files found in the repository"
+        # Summary
+        $totalFound = $webProjects.Count + $apiProjects.Count + $testProjects.Count + $otherProjects.Count
+        if ($totalFound -eq 0) {
+            Write-Warning "  No projects found in the repository"
             Write-Host "  You can manually enter project names or skip configuration" -ForegroundColor Yellow
         } else {
-            Write-Success "  Found $($detectedProjects.Count) project(s)"
-        }
-        
-        # Helper function to determine project type
-        function Get-ProjectType {
-            param([string]$Name)
-            if ($Name -like "*.Web" -or $Name -like "*.UI" -or $Name -like "*.Frontend") {
-                return "Web"
-            } elseif ($Name -like "*.Api" -or $Name -like "*.WebApi") {
-                return "API"
-            } elseif ($Name -like "*ArchitectureTest*") {
-                return "ArchitectureTest"
-            } elseif ($Name -like "*Test*") {
-                return "Test"
-            } else {
-                return "Other"
-            }
+            Write-Success "  Found $totalFound project(s):"
+            if ($webProjects.Count -gt 0) { Write-Host "    - $($webProjects.Count) Angular/Web project(s)" -ForegroundColor Gray }
+            if ($apiProjects.Count -gt 0) { Write-Host "    - $($apiProjects.Count) .NET Web API project(s)" -ForegroundColor Gray }
+            if ($testProjects.Count -gt 0) { Write-Host "    - $($testProjects.Count) Test project(s)" -ForegroundColor Gray }
+            if ($otherProjects.Count -gt 0) { Write-Host "    - $($otherProjects.Count) Other .NET project(s)" -ForegroundColor Gray }
         }
         
         # Interactive confirmation for each project type
@@ -907,21 +673,29 @@ if ($setupMode) {
         
         # Web Project
         Write-Host "`n  [Web Project Configuration]" -ForegroundColor Cyan
-        $webProjects = $detectedProjects | Where-Object { $_.Type -eq "Web" }
         
         if ($webProjects.Count -gt 0) {
-            Write-Host "  Detected web project(s):" -ForegroundColor White
+            Write-Host "  Detected Angular project(s):" -ForegroundColor White
             foreach ($proj in $webProjects) {
                 Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
             }
             
-            $defaultWeb = $webProjects[0].Name
-            Write-Host "  Enter primary web project name [$defaultWeb]: " -NoNewline -ForegroundColor Yellow
+            $defaultWeb = if ($webProjects.Count -eq 1) { 
+                $webProjects[0].Name 
+            } else { 
+                ($webProjects | ForEach-Object { $_.Name }) -join ", " 
+            }
+            
+            if ($webProjects.Count -eq 1) {
+                Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+            } else {
+                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+            }
             $userInput = Read-Host
             $confirmedProjects.WebProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultWeb } else { $userInput }
         } else {
-            Write-Host "  No web project detected." -ForegroundColor Yellow
-            Write-Host "  Enter web project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+            Write-Host "  No Angular project detected (no angular.json found)." -ForegroundColor Yellow
+            Write-Host "  Enter web project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
             $userInput = Read-Host
             if (![string]::IsNullOrWhiteSpace($userInput)) {
                 $confirmedProjects.WebProject = $userInput
@@ -934,21 +708,29 @@ if ($setupMode) {
         
         # API Project
         Write-Host "`n  [API Project Configuration]" -ForegroundColor Cyan
-        $apiProjects = $detectedProjects | Where-Object { $_.Type -eq "API" }
         
         if ($apiProjects.Count -gt 0) {
-            Write-Host "  Detected API project(s):" -ForegroundColor White
+            Write-Host "  Detected .NET Web API project(s):" -ForegroundColor White
             foreach ($proj in $apiProjects) {
                 Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
             }
             
-            $defaultApi = $apiProjects[0].Name
-            Write-Host "  Enter API project name [$defaultApi]: " -NoNewline -ForegroundColor Yellow
+            $defaultApi = if ($apiProjects.Count -eq 1) { 
+                $apiProjects[0].Name 
+            } else { 
+                ($apiProjects | ForEach-Object { $_.Name }) -join ", " 
+            }
+            
+            if ($apiProjects.Count -eq 1) {
+                Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+            } else {
+                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+            }
             $userInput = Read-Host
             $confirmedProjects.ApiProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultApi } else { $userInput }
         } else {
-            Write-Host "  No API project detected." -ForegroundColor Yellow
-            Write-Host "  Enter API project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+            Write-Host "  No .NET Web API project detected (no Microsoft.NET.Sdk.Web found)." -ForegroundColor Yellow
+            Write-Host "  Enter API project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
             $userInput = Read-Host
             if (![string]::IsNullOrWhiteSpace($userInput)) {
                 $confirmedProjects.ApiProject = $userInput
@@ -961,7 +743,7 @@ if ($setupMode) {
         
         # Architecture Test Project
         Write-Host "`n  [Architecture Test Project Configuration]" -ForegroundColor Cyan
-        $archProjects = $detectedProjects | Where-Object { $_.Type -eq "ArchitectureTest" }
+        $archProjects = $testProjects | Where-Object { $_.Type -eq "ArchitectureTest" }
         
         if ($archProjects.Count -gt 0) {
             Write-Host "  Detected architecture test project(s):" -ForegroundColor White
@@ -969,29 +751,46 @@ if ($setupMode) {
                 Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
             }
             
-            $defaultArch = $archProjects[0].Name
-            Write-Host "  Enter architecture test project name [$defaultArch]: " -NoNewline -ForegroundColor Yellow
+            $defaultArch = if ($archProjects.Count -eq 1) { 
+                $archProjects[0].Name 
+            } else { 
+                ($archProjects | ForEach-Object { $_.Name }) -join ", " 
+            }
+            
+            if ($archProjects.Count -eq 1) {
+                Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+            } else {
+                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+            }
             $userInput = Read-Host
             $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultArch } else { $userInput }
         } else {
             # Look for any test project as fallback
-            $testProjects = $detectedProjects | Where-Object { $_.Type -eq "Test" -or $_.Type -eq "ArchitectureTest" }
             if ($testProjects.Count -gt 0) {
-                Write-Host "  Detected test project(s):" -ForegroundColor White
+                Write-Host "  Detected test project(s) (no architecture-specific tests found):" -ForegroundColor White
                 foreach ($proj in $testProjects) {
                     Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
                 }
                 
                 $defaultTest = ($testProjects | Where-Object { $_.Name -like "*Architecture*" })[0].Name
                 if (-not $defaultTest) {
-                    $defaultTest = $testProjects[0].Name
+                    $defaultTest = if ($testProjects.Count -eq 1) { 
+                        $testProjects[0].Name 
+                    } else { 
+                        ($testProjects | ForEach-Object { $_.Name }) -join ", " 
+                    }
                 }
-                Write-Host "  Enter architecture test project name [$defaultTest]: " -NoNewline -ForegroundColor Yellow
+                
+                if ($testProjects.Count -eq 1) {
+                    Write-Host "  Press Enter to use as architecture tests, or enter different name: " -NoNewline -ForegroundColor Yellow
+                } else {
+                    Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+                }
                 $userInput = Read-Host
                 $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultTest } else { $userInput }
             } else {
-                Write-Host "  No test project detected." -ForegroundColor Yellow
-                Write-Host "  Enter architecture test project name (or press Enter to skip): " -NoNewline -ForegroundColor Yellow
+                Write-Host "  No test project detected (no .csproj with Test in name)." -ForegroundColor Yellow
+                Write-Host "  Enter architecture test project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
                 $userInput = Read-Host
                 if (![string]::IsNullOrWhiteSpace($userInput)) {
                     $confirmedProjects.ArchitectureTestProject = $userInput
@@ -1139,23 +938,20 @@ if ($setupMode) {
 # CLAUDE.md - Project Configuration
 
 ## CONTEXT
-**System**: $(if ($detectedStack.Backend) { $detectedStack.Backend } else { "Not detected - please specify" })
-**Frontend**: $(if ($detectedStack.Frontend) { $detectedStack.Frontend } else { "Not detected - please specify" })
-**Database**: $(if ($detectedStack.Database) { $detectedStack.Database } else { "Not detected - please specify" })
-**Infrastructure**: $(if ($detectedStack.Infrastructure) { $detectedStack.Infrastructure } else { "Not detected - please specify" })
-**Multi-tenant**: $(if ($detectedStack.MultiTenant) { "Yes - ensure tenant isolation" } else { "No" })
+**System**: [Please specify your backend technology]
+**Frontend**: [Please specify your frontend framework]
+**Database**: [Please specify your database]
+**Infrastructure**: [Please specify your infrastructure]
 **Domain**: [Please specify your business domain]
 
 ## CRITICAL RULES
 
 ### Architecture
-$(if ($detectedStack.Backend -eq ".NET/C#") { "* Follow Domain-Driven Design (DDD) principles`n* Use Result pattern for operation outcomes`n* Implement repository pattern with Entity Framework Core" })
-$(if ($detectedStack.Frontend -eq "React") { "* Use functional components with hooks`n* Implement proper state management (Redux/Context)`n* Follow React best practices and patterns" })
-$(if ($detectedStack.Frontend -eq "Angular") { "* Use standalone components (Angular 19+)`n* Implement reactive forms`n* Follow Angular style guide" })
-$(if ($detectedStack.MultiTenant) { "* ALWAYS scope data by tenant`n* Validate tenant context in all operations`n* Never allow cross-tenant data access" })
 * Write clean, maintainable, testable code
 * Follow SOLID principles
 * Implement comprehensive error handling
+* Use appropriate design patterns for your technology stack
+* Maintain clear separation of concerns
 
 ### Development Workflow
 1. Backend first: Model to Repository to Service to API
@@ -1167,12 +963,18 @@ $(if ($detectedStack.MultiTenant) { "* ALWAYS scope data by tenant`n* Validate t
 ## 💻 CODE PATTERNS
 
 ### Backend Patterns
-$(if ($detectedStack.Backend -eq ".NET/C#") { "* Async/await for all I/O operations`n* Dependency injection for all services`n* DTOs for API contracts`n* Entity models for database`n* Value objects for domain concepts" })
-$(if ($detectedStack.Backend -eq "Node.js") { "* Express middleware for cross-cutting concerns`n* Async/await for all async operations`n* Validation middleware for request validation`n* Error handling middleware" })
-$(if ($detectedStack.Backend -eq "Python") { "* Type hints for all functions`n* Pydantic for data validation`n* Async/await for async operations`n* Proper exception handling" })
+* Use async patterns appropriately for your language
+* Implement dependency injection where applicable
+* Use DTOs/contracts for API boundaries
+* Separate domain models from persistence models
+* Apply appropriate validation at all layers
 
 ### Frontend Patterns
-$(if ($detectedStack.Frontend) { "* Component-based architecture`n* Proper state management`n* Responsive design (mobile-first)`n* Accessibility (WCAG 2.1 AA compliance)`n* Performance optimization (lazy loading, code splitting)" })
+* Component-based architecture
+* Proper state management
+* Responsive design (mobile-first)
+* Accessibility (WCAG 2.1 AA compliance)
+* Performance optimization (lazy loading, code splitting)
 
 ## SECURITY CHECKLIST
 * [ ] Input validation on all endpoints
@@ -1180,7 +982,6 @@ $(if ($detectedStack.Frontend) { "* Component-based architecture`n* Proper state
 * [ ] SQL injection prevention (parameterized queries)
 * [ ] XSS prevention (output encoding)
 * [ ] CSRF protection
-$(if ($detectedStack.MultiTenant) { "* [ ] Tenant isolation verified`n* [ ] Cross-tenant access prevented" })
 * [ ] Sensitive data encryption
 * [ ] Security headers configured
 * [ ] Rate limiting implemented
@@ -1210,7 +1011,7 @@ $(if ($detectedStack.MultiTenant) { "* [ ] Tenant isolation verified`n* [ ] Cros
 $(foreach ($agent in $agentsToInstall) { "* **$agent** - Specialized expert agent" })
 
 ---
-**Setup**: Claudify v2.0.0 | Mode: $setupMode | Generated: $(Get-Date -Format "yyyy-MM-dd")
+**Setup**: Claudify v$version | Mode: $setupMode | Generated: $(Get-Date -Format "yyyy-MM-dd")
 **Remember**: Always prioritize code quality, security, and maintainability.
 "@
         
@@ -1234,15 +1035,14 @@ $(foreach ($agent in $agentsToInstall) { "* **$agent** - Specialized expert agen
 ## System Architecture
 
 ### Technology Stack
-- **Backend**: $(if ($detectedStack.Backend) { $detectedStack.Backend } else { "Not detected" })
-- **Frontend**: $(if ($detectedStack.Frontend) { $detectedStack.Frontend } else { "Not detected" })
-- **Database**: $(if ($detectedStack.Database) { $detectedStack.Database } else { "Not detected" })
-- **Infrastructure**: $(if ($detectedStack.Infrastructure) { $detectedStack.Infrastructure } else { "Not detected" })
+- **Backend**: [Specify your backend technology]
+- **Frontend**: [Specify your frontend framework]
+- **Database**: [Specify your database]
+- **Infrastructure**: [Specify your infrastructure]
 
 ### Architectural Patterns
-$(if ($detectedStack.Backend -eq ".NET/C#") { "- Domain-Driven Design (DDD)`n- Repository Pattern`n- CQRS (if applicable)" })
-$(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isolation strategy" })
 - [Add your architectural patterns]
+- [e.g., Domain-Driven Design, Repository Pattern, etc.]
 
 ### Key Components
 - [List your main system components]
@@ -1327,7 +1127,7 @@ $(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isola
 ---
 
 *Last updated: $(Get-Date -Format "yyyy-MM-dd")*
-*Generated by Claudify v2.0.0 Intelligent Setup*
+*Generated by Claudify v$version Intelligent Setup*
 "@
         
         Set-Content -Path $featuresMdPath -Value $featuresMdContent -NoNewline
@@ -1343,7 +1143,7 @@ $(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isola
     Write-Success "OK: Commands installed: $installedCommands"
     Write-Success "OK: Agents installed: $installedAgents"
     if ($installGenerators) { Write-Success "OK: Generators installed: 3" }
-    if ($installHooks) { Write-Success "OK: Hooks installed: $(if ($detectedStack.MultiTenant) { 4 } else { 3 })" }
+    if ($installHooks) { Write-Success "OK: Hooks installed: 3" }
     if ($installTools) { Write-Success "OK: Agent tools installed: 3 sets" }
     Write-Success "OK: Validation tools: $installedValidation"
     
@@ -1351,12 +1151,5 @@ $(if ($detectedStack.MultiTenant) { "- Multi-tenant architecture`n- Tenant isola
     Write-Host ""
     Write-Success "✅ Claudify setup completed successfully!"
     
-    Write-Output "Optional: Describe your the domain of your project. This will help Claude understand the context better. Press Enter to skip."
-    $prompt = Read-Host
-    cd $WorkingDirectory
-    claude --model opus --dangerously-skip-permissions "/init-claudify $prompt"
-} else {
-    Write-Host ""
-    Write-Host "Skipping automatic installation." -ForegroundColor Yellow
-    Write-Host "You can run /init-claudify in Claude Code for manual setup." -ForegroundColor White
-}
+    Write-Host "You can now start using Claude Code with your project!" -ForegroundColor Green
+    Write-Host "Run '/init' in Claude Code if you haven't initialized Claude Code in your repository yet." -ForegroundColor White

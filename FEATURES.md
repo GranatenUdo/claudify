@@ -48,7 +48,6 @@ Claudify is an automated configuration system that transforms .NET/Angular repos
 ### Documentation Commands
 - `/update-changelog`: Automated changelog updates with proper formatting
 - `/comprehensive-review`: Full codebase analysis with documentation recommendations
-- `/init-claudify`: Initial setup with comprehensive documentation generation
 
 ## 🛠️ Development Tools
 
