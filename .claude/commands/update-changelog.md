@@ -1,12 +1,14 @@
 ---
 description: Smart changelog update with git analysis
-allowed-tools: [Task, Read, Edit, Bash]
+allowed-tools: [Task, WebSearch, WebFetch, Read, Edit, Bash]
 estimated-time: 30 seconds (parallel)
 complexity: simple
 category: documentation
 ---
 
 # 📝 Update Changelog: $ARGUMENTS
+
+Be sure to research the current date of today.
 
 ## Parallel Analysis & Update (30 seconds)
 

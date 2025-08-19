@@ -122,7 +122,7 @@ if ($CleanInstall) {
     Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
     Write-Host "  - .claude/hooks/* (all hooks)" -ForegroundColor DarkGray
     Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
-    Write-Host "  Note: CLAUDE.md and FEATURES.md will be preserved" -ForegroundColor Green
+    Write-Host "  Note: CLAUDE.md is a user-managed file" -ForegroundColor Green
     
     Write-Host "`nPerforming clean removal..." -ForegroundColor Cyan
         
@@ -140,8 +140,7 @@ if ($CleanInstall) {
             Remove-Item -Path $claudifyPath -Recurse -Force -ErrorAction SilentlyContinue
         }
         
-        # Preserve CLAUDE.md and FEATURES.md (user-customized files)
-        Write-Host "  - Preserving CLAUDE.md and FEATURES.md (if they exist)..." -ForegroundColor Green
+        # Note: CLAUDE.md is a user-managed file (not touched by setup)
         
     Write-Host "[OK] Clean removal complete!" -ForegroundColor Green
     Write-Host "`nProceeding with fresh installation..." -ForegroundColor Cyan
@@ -578,9 +577,14 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     Write-Success "  Validation tools: $installedValidation installed"
     
     # Copy documentation templates
+    $templatesDocPath = Join-Path $claudePath "templates" "documentation"
+    if (-not (Test-Path $templatesDocPath)) {
+        New-Item -ItemType Directory -Path $templatesDocPath -Force | Out-Null
+    }
+    
     $sourceTemplates = Join-Path $claudifyPath ".claude" "templates" "documentation" "*.template"
-    if (Test-Path $sourceTemplates) {
-        Copy-Item -Path $sourceTemplates -Destination (Join-Path $claudePath "templates" "documentation") -Force
+    if (Test-Path (Split-Path $sourceTemplates -Parent)) {
+        Copy-Item -Path $sourceTemplates -Destination $templatesDocPath -Force -ErrorAction SilentlyContinue
     }
     
     # Copy design guidelines
@@ -603,57 +607,106 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         Write-Host "  Looking for Angular projects (angular.json)..." -ForegroundColor DarkGray
         $angularJsonFiles = Get-ChildItem -Path $Path -Recurse -Filter "angular.json" -ErrorAction SilentlyContinue
         $webProjects = @()
+        
+        # First pass: collect all projects
+        $tempWebProjects = @()
         foreach ($angularJson in $angularJsonFiles) {
             $projectDir = Split-Path $angularJson.FullName -Parent
             $projectDirName = Split-Path $projectDir -Leaf
-            # Try to find corresponding folder name or use parent directory name
-            $webProjects += @{
+            $projectPath = $projectDir.Replace($Path, "").TrimStart("\", "/")
+            
+            $tempWebProjects += @{
                 Name = $projectDirName
-                Path = $projectDir.Replace($Path, "").TrimStart("\", "/")
+                Path = $projectPath
                 Type = "Web"
                 DetectedBy = "angular.json"
+                FullPath = $projectDir
+            }
+        }
+        
+        # Second pass: handle duplicates
+        $nameGroups = $tempWebProjects | Group-Object -Property Name
+        foreach ($group in $nameGroups) {
+            if ($group.Count -eq 1) {
+                # No duplicates, use as-is
+                $webProjects += $group.Group[0]
+            } else {
+                # Has duplicates, make unique by prepending parent folder
+                foreach ($project in $group.Group) {
+                    $parentFolderName = Split-Path (Split-Path $project.FullPath -Parent) -Leaf
+                    $project.Name = "$parentFolderName.$($project.Name)"
+                    $webProjects += $project
+                }
             }
         }
         
         # Detect .NET Projects
         Write-Host "  Looking for .NET projects (.csproj files)..." -ForegroundColor DarkGray
         $csprojFiles = Get-ChildItem -Path $Path -Recurse -Filter "*.csproj" -ErrorAction SilentlyContinue
-        $apiProjects = @()
-        $testProjects = @()
-        $otherProjects = @()
+        $tempApiProjects = @()
+        $tempTestProjects = @()
+        $tempOtherProjects = @()
         
+        # First pass: collect all projects
         foreach ($csproj in $csprojFiles) {
             $content = Get-Content $csproj.FullName -Raw
             $projectName = [System.IO.Path]::GetFileNameWithoutExtension($csproj.Name)
             $relativePath = $csproj.FullName.Replace($Path, "").TrimStart("\", "/")
+            $fullPath = $csproj.FullName
             
             if ($content -match 'Microsoft\.NET\.Sdk\.Web') {
                 # It's a Web API project
-                $apiProjects += @{
+                $tempApiProjects += @{
                     Name = $projectName
                     Path = $relativePath
                     Type = "API"
                     DetectedBy = "Microsoft.NET.Sdk.Web"
+                    FullPath = $fullPath
                 }
             } elseif ($content -match 'Microsoft\.NET\.Sdk' -and ($projectName -like "*Test*" -or $projectName -like "*Tests")) {
                 # It's a test project (has Microsoft.NET.Sdk and Test in name)
                 $testType = if ($projectName -like "*ArchitectureTest*") { "ArchitectureTest" } else { "Test" }
-                $testProjects += @{
+                $tempTestProjects += @{
                     Name = $projectName
                     Path = $relativePath
                     Type = $testType
                     DetectedBy = "Microsoft.NET.Sdk (test project)"
+                    FullPath = $fullPath
                 }
             } elseif ($content -match 'Microsoft\.NET\.Sdk') {
                 # It's a regular .NET project (library, console app, etc.)
-                $otherProjects += @{
+                $tempOtherProjects += @{
                     Name = $projectName
                     Path = $relativePath
                     Type = "Other"
                     DetectedBy = "Microsoft.NET.Sdk"
+                    FullPath = $fullPath
                 }
             }
         }
+        
+        # Second pass: handle duplicates for each project type
+        function Resolve-DuplicateNames {
+            param($Projects)
+            $resolvedProjects = @()
+            $nameGroups = $Projects | Group-Object -Property Name
+            foreach ($group in $nameGroups) {
+                if ($group.Count -eq 1) {
+                    $resolvedProjects += $group.Group[0]
+                } else {
+                    foreach ($project in $group.Group) {
+                        $parentFolder = Split-Path (Split-Path $project.FullPath -Parent) -Leaf
+                        $project.Name = "$parentFolder.$($project.Name)"
+                        $resolvedProjects += $project
+                    }
+                }
+            }
+            return $resolvedProjects
+        }
+        
+        $apiProjects = Resolve-DuplicateNames -Projects $tempApiProjects
+        $testProjects = Resolve-DuplicateNames -Projects $tempTestProjects
+        $otherProjects = Resolve-DuplicateNames -Projects $tempOtherProjects
         
         # Summary
         $totalFound = $webProjects.Count + $apiProjects.Count + $testProjects.Count + $otherProjects.Count
@@ -772,8 +825,13 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
                     Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
                 }
                 
-                $defaultTest = ($testProjects | Where-Object { $_.Name -like "*Architecture*" })[0].Name
-                if (-not $defaultTest) {
+                # Try to find architecture test project, but handle empty results safely
+                $archTestProjects = @($testProjects | Where-Object { $_.Name -like "*Architecture*" })
+                
+                if ($archTestProjects.Count -gt 0) {
+                    $defaultTest = $archTestProjects[0].Name
+                } else {
+                    # Fall back to first test project or all test projects
                     $defaultTest = if ($testProjects.Count -eq 1) { 
                         $testProjects[0].Name 
                     } else { 
@@ -929,211 +987,14 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         Write-Host "  You can manually edit them later if needed" -ForegroundColor Gray
     }
     
-    # Generate CLAUDE.md if it doesn't exist
+    # Note about CLAUDE.md
     $claudeMdPath = Join-Path $TargetRepository "CLAUDE.md"
-    if (-not (Test-Path $claudeMdPath)) {
-        Write-Info "`n[DOC] Generating intelligent CLAUDE.md..."
-        
-        $claudeMdContent = @"
-# CLAUDE.md - Project Configuration
-
-## CONTEXT
-**System**: [Please specify your backend technology]
-**Frontend**: [Please specify your frontend framework]
-**Database**: [Please specify your database]
-**Infrastructure**: [Please specify your infrastructure]
-**Domain**: [Please specify your business domain]
-
-## CRITICAL RULES
-
-### Architecture
-* Write clean, maintainable, testable code
-* Follow SOLID principles
-* Implement comprehensive error handling
-* Use appropriate design patterns for your technology stack
-* Maintain clear separation of concerns
-
-### Development Workflow
-1. Backend first: Model to Repository to Service to API
-2. Update FEATURES.md immediately after implementing features
-3. Frontend last: Only create UI for existing APIs
-4. Write tests for business logic (80% coverage target)
-5. Document all public APIs and complex logic
-
-## 💻 CODE PATTERNS
-
-### Backend Patterns
-* Use async patterns appropriately for your language
-* Implement dependency injection where applicable
-* Use DTOs/contracts for API boundaries
-* Separate domain models from persistence models
-* Apply appropriate validation at all layers
-
-### Frontend Patterns
-* Component-based architecture
-* Proper state management
-* Responsive design (mobile-first)
-* Accessibility (WCAG 2.1 AA compliance)
-* Performance optimization (lazy loading, code splitting)
-
-## SECURITY CHECKLIST
-* [ ] Input validation on all endpoints
-* [ ] Authentication and authorization implemented
-* [ ] SQL injection prevention (parameterized queries)
-* [ ] XSS prevention (output encoding)
-* [ ] CSRF protection
-* [ ] Sensitive data encryption
-* [ ] Security headers configured
-* [ ] Rate limiting implemented
-
-## 🔍 QUICK REFERENCE
-
-### Key Commands
-**Backend Development:**
-- `/add-backend-feature` - Create new backend features with DDD
-- `/fix-backend-bug` - Debug and fix backend issues
-- `/review-backend-code` - Comprehensive backend code review
-- `/fix-backend-build-and-tests` - Fix build and test failures
-
-**Frontend Development:**
-- `/add-frontend-feature` - Create UI features with excellence
-- `/fix-frontend-bug` - Debug UI issues systematically
-- `/review-frontend-code` - Frontend code review with UX focus
-- `/fix-frontend-build-and-tests` - Fix frontend build issues
-
-**Quality & Analysis:**
-- `/comprehensive-review` - Multi-agent comprehensive review
-- `/analyze-technical-debt` - Identify and prioritize tech debt
-- `/optimize-performance` - Performance optimization
-- `/refactor-code` - Improve code quality
-
-### Available Agents
-$(foreach ($agent in $agentsToInstall) { "* **$agent** - Specialized expert agent" })
-
----
-**Setup**: Claudify v$version | Mode: $setupMode | Generated: $(Get-Date -Format "yyyy-MM-dd")
-**Remember**: Always prioritize code quality, security, and maintainability.
-"@
-        
-        Set-Content -Path $claudeMdPath -Value $claudeMdContent -NoNewline
-        Write-Success "  [OK] CLAUDE.md generated with intelligent defaults"
-    } else {
-        Write-Success "  [OK] CLAUDE.md already exists - preserved"
-    }
     
-    # Generate FEATURES.md if it doesn't exist
-    $featuresMdPath = Join-Path $TargetRepository "FEATURES.md"
-    if (-not (Test-Path $featuresMdPath)) {
-        Write-Info "[DOC] Generating FEATURES.md template..."
-        
-        $featuresMdContent = @"
-# Features Documentation
-
-## Overview
-[Please provide a brief description of your project]
-
-## System Architecture
-
-### Technology Stack
-- **Backend**: [Specify your backend technology]
-- **Frontend**: [Specify your frontend framework]
-- **Database**: [Specify your database]
-- **Infrastructure**: [Specify your infrastructure]
-
-### Architectural Patterns
-- [Add your architectural patterns]
-- [e.g., Domain-Driven Design, Repository Pattern, etc.]
-
-### Key Components
-- [List your main system components]
-- [e.g., API Gateway, Auth Service, etc.]
-
----
-
-## Core Features
-
-### Feature 1: [Feature Name]
-- **Description**: [What it does]
-- **API Endpoints**: 
-  - `GET /api/[endpoint]` - [Description]
-  - `POST /api/[endpoint]` - [Description]
-- **Business Rules**: 
-  - [Key rule 1]
-  - [Key rule 2]
-- **Status**: ✅ Implemented / 🚧 In Progress / 📋 Planned
-
-### Feature 2: [Feature Name]
-- **Description**: [What it does]
-- **API Endpoints**: [List endpoints]
-- **Business Rules**: [Key rules]
-- **Status**: [Status]
-
----
-
-## Planned Features
-
-### Q1 2025
-1. **[Feature Name]** - [Brief description]
-   - Priority: High/Medium/Low
-   - Estimated effort: [X days/weeks]
-
-2. **[Feature Name]** - [Brief description]
-   - Priority: High/Medium/Low
-   - Estimated effort: [X days/weeks]
-
-### Q2 2025
-1. **[Feature Name]** - [Brief description]
-2. **[Feature Name]** - [Brief description]
-
----
-
-## API Documentation
-
-### Authentication
-- **Method**: [JWT/OAuth2/etc.]
-- **Endpoints**: [Auth endpoints]
-
-### Main API Endpoints
-[Document your main API endpoints here or link to API documentation]
-
----
-
-## Development Guidelines
-
-### Coding Standards
-- [Language-specific standards]
-- [Framework conventions]
-- [Testing requirements]
-
-### Git Workflow
-- [Branch naming conventions]
-- [Commit message format]
-- [PR process]
-
----
-
-## Deployment
-
-### Environments
-- **Development**: [URL/details]
-- **Staging**: [URL/details]
-- **Production**: [URL/details]
-
-### CI/CD Pipeline
-- [Build process]
-- [Test automation]
-- [Deployment steps]
-
----
-
-*Last updated: $(Get-Date -Format "yyyy-MM-dd")*
-*Generated by Claudify v$version Intelligent Setup*
-"@
-        
-        Set-Content -Path $featuresMdPath -Value $featuresMdContent -NoNewline
-        Write-Success "  [OK] FEATURES.md template generated"
+    Write-Info "`n[DOC] Documentation:"
+    if (Test-Path $claudeMdPath) {
+        Write-Success "  [OK] CLAUDE.md exists - preserved (user-managed)"
     } else {
-        Write-Success "  [OK] FEATURES.md already exists - preserved"
+        Write-Host "  [INFO] CLAUDE.md not found - create your own project-specific CLAUDE.md" -ForegroundColor Yellow
     }
     
     # Installation summary
