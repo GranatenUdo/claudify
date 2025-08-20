@@ -5,11 +5,11 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2025-08-18
+## [4.0.0] - 2025-08-20
 
-### 🎉 Major Release - Interactive Project Configuration with Full Template System
+### 🎉 Major Release - Intelligent Project Detection & User-Managed Documentation
 
-This release introduces a complete overhaul of the project configuration system with interactive user prompts, proper handling of project suffixes, and support for multiple projects of the same type.
+This release introduces smart project detection based on file markers and SDK types, robust handling of duplicate project names, and complete removal of automatic documentation generation in favor of user-managed files.
 
 ### Breaking Changes
 - **Template Variables Changed**: 
@@ -17,29 +17,39 @@ This release introduces a complete overhaul of the project configuration system 
   - `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
   - `{{ProjectNamespace}}.Api` → `{{ApiProject}}`
 - **Configuration Format**: Now saves to `projects.json` instead of `namespace.json`
-- **Full Project Names**: Projects now retain their complete names including suffixes
+- **Installation Modes**: "Standard" renamed to "Minimal", "None" option removed
+- **Documentation Generation**: CLAUDE.md and FEATURES.md are no longer auto-generated
 
 ### Added
-- **Interactive Project Configuration**: Setup now prompts for confirmation/correction of each detected project
-- **Multi-Project Support**: Handles multiple web/API projects with user selection
+- **Smart Project Detection**:
+  - Angular projects detected via `angular.json` files
+  - .NET API projects detected via `Microsoft.NET.Sdk.Web` in .csproj
+  - Test projects detected via `Microsoft.NET.Sdk` with "Test" in name
+- **Duplicate Name Handling**: Automatically prepends parent folder for duplicate project names
+- **Interactive Configuration**: User prompts for confirmation/correction of detected projects
+- **Multi-Project Support**: Handles multiple projects with comma-separated input
 - **Manual Entry Option**: Users can manually enter project names if detection fails
-- **Project Type Detection**: Automatically categorizes projects as Web, API, or Test
 
 ### Changed
-- **Template System**: Now uses specific template variables for each project type
-- **Project Detection**: Preserves full project names with suffixes (e.g., `MyCompany.Product.Web`)
-- **User Experience**: Clear prompts with defaults shown in brackets
-- **Configuration Storage**: Enhanced configuration file with more details
+- **Project Detection Logic**: Now uses SDK types and file markers instead of naming conventions
+- **Installation Flow**: Simplified to Minimal/Comprehensive choice only
+- **User Prompts**: Improved with better context and comma-separation support
+- **Template System**: Full project names preserved with suffixes
+- **Documentation Approach**: CLAUDE.md and FEATURES.md are user-managed files
 
 ### Fixed
-- **Suffix Handling**: No longer incorrectly strips suffixes from project names
-- **Multiple Projects**: Properly handles repositories with multiple projects of the same type
+- **Array Indexing Error**: Fixed "Cannot index into a null array" when no architecture tests exist
+- **Duplicate Names**: Properly handles multiple projects with same name (e.g., multiple "ClientApp")
+- **Project Detection**: More robust detection using proper SDK markers
 - **Edge Cases**: Better handling of non-standard project structures
 
 ### Removed
-- **Old Namespace Logic**: Removed legacy namespace detection that stripped suffixes
-- **Automatic Assumptions**: No longer makes assumptions about project structure
-- **Marketing Language**: Removed all unsubstantiated claims and metrics from documentation
+- **"None" Installation Option**: Removed as it didn't serve a purpose
+- **CLAUDE.md Generation**: No longer generates or modifies CLAUDE.md files
+- **FEATURES.md Generation**: No longer generates or modifies FEATURES.md files
+- **Documentation Bootstrapping**: All project documentation is user-managed
+- **Legacy References**: Cleaned up deprecated init-claudify references
+- **False Performance Claims**: Removed unsubstantiated metrics from documentation
 
 ## [3.0.0] - 2025-08-05
 

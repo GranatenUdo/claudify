@@ -47,11 +47,10 @@ When prompted, select your installation mode:
 
 ```
 Choose installation mode:
-  [S] Standard   - Core components for your stack (~15-25 files)
+  [M] Minimal   - Core components for your stack (~15-25 files)
   [C] Comprehensive - Everything available (~40+ files) [RECOMMENDED]
-  [N] None       - Skip automatic installation
 
-Select mode (S/C/N) [C]: C
+Select mode (M/C) [C]: C
 ```
 
 **Recommendation**: Choose **Comprehensive** for full capabilities.
@@ -60,17 +59,17 @@ Select mode (S/C/N) [C]: C
 
 Claudify will guide you through an interactive configuration:
 
-1. **Scans for all projects** - Detects .csproj files in your repository
+1. **Scans for all projects**:
+   - Angular projects via angular.json files
+   - .NET Web API projects via Microsoft.NET.Sdk.Web
+   - Test projects via Microsoft.NET.Sdk with 'Test' in name
 2. **Shows what it found** - Lists each detected project with its location
-3. **Lets you confirm or correct** - For each project type:
-   - Shows the detected project name as default
-   - You can press Enter to accept the detection
-   - Or type a different name to correct it
+3. **Handles duplicates** - If multiple projects have the same name (e.g., ClientApp), prepends parent folder
+4. **Lets you confirm or correct** - For each project type:
+   - Shows the detected project name(s) as default
+   - Press Enter to accept all detected projects
+   - Or enter names (comma-separated for multiple)
    - Or press Enter with no name to skip that project type
-4. **Handles edge cases**:
-   - No projects found? Manually enter names
-   - Multiple web projects? Choose the primary one
-   - Wrong detection? Simply type the correct name
 5. **Saves your configuration** to `.claude/config/projects.json`
 6. **Applies templates** - Replaces all `{{WebProject}}`, `{{ApiProject}}`, etc.
 
@@ -117,8 +116,8 @@ You'll see an interactive configuration process:
 ✅ Setup Complete!
   ✓ Commands installed
   ✓ Agents configured
-  ✓ Project namespace applied: MyCompany.MyProject
-  ✓ Documentation generated
+  ✓ Project configuration applied
+  ✓ CLAUDE.md and FEATURES.md preserved (user-managed)
 ```
 
 ### Step 5: Start Using Claude Code
@@ -208,7 +207,7 @@ ls .claude/commands/
 claude /comprehensive-review
 
 # Check for template markers (should return nothing)
-grep -r "PTA.VineyardManagement" .claude/
+grep -r "{{.*}}" .claude/
 ```
 
 ### Expected Results

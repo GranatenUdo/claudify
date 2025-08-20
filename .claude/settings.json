@@ -64,7 +64,6 @@
     "logLevel": "info",
     "parallelExecution": false,
     "environmentVariables": {
-      "CLAUDE_PROJECT_DIR": "E:\\PTA.Robotics.VinyardClaude",
       "HOOK_LOG_DIR": ".claude\\logs"
     }
   }

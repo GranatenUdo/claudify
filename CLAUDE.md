@@ -12,14 +12,15 @@
 1. **Bootstrap Phase** (setup.ps1)
    - Detects existing installations and versions
    - Creates `.claudify` directory with template components
-   - Performs intelligent project namespace detection
-   - Offers Standard or Comprehensive installation modes
+   - Performs intelligent project detection
+   - Offers Minimal or Comprehensive installation modes
 
 2. **Configuration Phase** (Automatic)
-   - Detects project namespace from .csproj files
-   - Applies namespace throughout all components
-   - Preserves existing CLAUDE.md and FEATURES.md
-   - Generates project-specific documentation
+   - Detects Angular projects via angular.json
+   - Detects .NET APIs via Microsoft.NET.Sdk.Web
+   - Detects test projects via Microsoft.NET.Sdk with 'Test' in name
+   - Handles duplicate project names intelligently
+   - Preserves existing CLAUDE.md and FEATURES.md (user-managed)
 
 3. **Runtime Phase** (Claude Code)
    - Components loaded from configured `.claude` directory
@@ -30,15 +31,17 @@
 ### Project Detection and Template System
 The setup uses a mustache-style template system with automatic project detection:
 
-1. **Project Discovery**: Scans for all .csproj files in your repository
+1. **Project Discovery**: 
+   - Angular: Scans for angular.json files
+   - .NET: Scans for .csproj files with SDK detection
 2. **Automatic Categorization**:
-   - Web projects: `*.Web`, `*.UI`, `*.Frontend`
-   - API projects: `*.Api`, `*.WebApi`
-   - Test projects: `*Test*`, `*Tests`
+   - Web projects: Folders containing angular.json
+   - API projects: Projects with Microsoft.NET.Sdk.Web
+   - Test projects: Projects with Microsoft.NET.Sdk and 'Test' in name
 3. **Template Variables**:
-   - `{{WebProject}}` - Primary web project (e.g., `PTA.VineyardManagement.Web`)
-   - `{{ApiProject}}` - API project (e.g., `PTA.VineyardManagement.Api`)
-   - `{{ArchitectureTestProject}}` - Architecture tests (e.g., `PTA.VineyardManagement.ArchitectureTests`)
+   - `{{WebProject}}` - Primary web project (e.g., `MyCompany.Product.Web`)
+   - `{{ApiProject}}` - API project (e.g., `MyCompany.Product.Api`)
+   - `{{ArchitectureTestProject}}` - Architecture tests (e.g., `MyCompany.Product.ArchitectureTests`)
    - `{{ProjectNamespace}}` - Base namespace for backward compatibility
 4. **Multi-Project Support**: If multiple web projects exist, prompts for primary selection
 5. **Configuration**: Saves to `.claude/config/projects.json`
@@ -57,9 +60,10 @@ Example:
 - **Convention-Based**: All projects follow established architectural patterns
 
 ### Automatic Configuration
-- **Namespace Detection**: Extracts from .csproj files automatically
-- **Path Resolution**: Applies namespace to all command paths
-- **Documentation Updates**: Customizes CLAUDE.md and FEATURES.md
+- **Project Detection**: Smart detection based on file markers and SDK types
+- **Duplicate Handling**: Prepends parent folder for duplicate names
+- **Path Resolution**: Applies project names to all command paths
+- **Documentation**: CLAUDE.md and FEATURES.md remain user-managed
 - **Validation**: Confirms all replacements successful
 
 ### Security Configuration
@@ -73,30 +77,45 @@ Example:
 
 ### PowerShell Configuration
 ```powershell
-# Namespace detection function
-function Get-ProjectNamespace {
+# Project detection example
+function Detect-Projects {
     param([string]$TargetPath)
     
-    $csprojFile = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
-                  Where-Object { $_.Name -notlike "*Tests*" } | 
-                  Select-Object -First 1
+    # Angular detection
+    $angularProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "angular.json"
     
-    if ($csprojFile) {
-        $namespace = [System.IO.Path]::GetFileNameWithoutExtension($csprojFile.Name)
-        $namespace = $namespace -replace '\.(Api|Web|Domain|Infrastructure)$', ''
-        return $namespace
+    # .NET API detection
+    $apiProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
+                   Where-Object { 
+                       (Get-Content $_.FullName -Raw) -match 'Microsoft\.NET\.Sdk\.Web'
+                   }
+    
+    # Test project detection
+    $testProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
+                    Where-Object { 
+                        $_.Name -like "*Test*" -or $_.Name -like "*Tests"
+                    }
+    
+    return @{
+        Web = $angularProjects
+        Api = $apiProjects
+        Tests = $testProjects
     }
-    
-    return Read-Host "Enter your project namespace"
 }
 
-# Configuration application
-function Apply-ProjectConfiguration {
-    param(
-        [string]$Content,
-        [string]$Namespace
-    )
-    return $Content -replace 'PTA\.VineyardManagement', $Namespace
+# Handle duplicate names
+function Resolve-DuplicateNames {
+    param($Projects)
+    $nameGroups = $Projects | Group-Object -Property Name
+    foreach ($group in $nameGroups) {
+        if ($group.Count -gt 1) {
+            foreach ($project in $group.Group) {
+                $parentFolder = Split-Path (Split-Path $project.FullPath -Parent) -Leaf
+                $project.Name = "$parentFolder.$($project.Name)"
+            }
+        }
+    }
+    return $Projects
 }
 ```
 
@@ -234,7 +253,7 @@ claude /agents
 claude /comprehensive-review
 
 # Check namespace application
-grep -r "PTA.VineyardManagement" .claude/
+grep -r "MyCompany.Product" .claude/
 ```
 
 

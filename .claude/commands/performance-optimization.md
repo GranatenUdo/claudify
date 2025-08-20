@@ -3,13 +3,13 @@ description: Parallel performance optimization across all layers - 5 agents find
 allowed-tools: [Task, Read, Grep, Glob, Bash, Edit, MultiEdit]
 argument-hint: area to optimize (e.g., "database", "api", "frontend", "all")
 complexity: moderate
-estimated-time: 90 seconds (parallel execution)
+estimated-time: 2-3 minutes
 category: optimization
 ---
 
 # ⚡ Parallel Performance Optimization: $ARGUMENTS
 
-## Phase 1: Parallel Analysis & Fix (60 seconds)
+## Phase 1: Parallel Analysis & Fix
 
 ### 🗄️ Database Performance Agent
 @Task(
@@ -26,7 +26,7 @@ category: optimization
   - Problems found with file:line
   - Optimized code implementations
   - Index creation scripts
-  - Expected performance gains
+  - Optimization opportunities
   
   Focus on queries taking >100ms.",
   subagent_type="technical-debt-analyst"
@@ -91,7 +91,7 @@ category: optimization
   - Caching implementations
   - Cost reduction opportunities
   
-  Target 50% resource reduction.",
+  Look for resource optimization opportunities.",
   subagent_type="infrastructure-architect"
 )
 
@@ -116,7 +116,7 @@ category: optimization
   subagent_type="test-quality-analyst"
 )
 
-## Phase 2: Parallel Validation (30 seconds)
+## Phase 2: Parallel Validation
 
 ### Build & Benchmark
 @Bash(command="dotnet build --configuration Release", description="Release build")
@@ -130,17 +130,17 @@ category: optimization
 # Performance Results: $ARGUMENTS
 
 ## 🎯 Top 3 Wins
-1. **[Biggest Win]**: Xms → Yms (Z% faster)
-2. **[Second Win]**: Xms → Yms (Z% faster)  
-3. **[Third Win]**: Xms → Yms (Z% faster)
+1. **[Biggest Win]**: Description of improvement
+2. **[Second Win]**: Description of improvement  
+3. **[Third Win]**: Description of improvement
 
 ## 📊 Metrics
 | Layer | Before | After | Gain |
 |-------|--------|-------|------|
-| Database | Xms | Yms | Z% |
-| API | Xms | Yms | Z% |
-| Frontend | XKB | YKB | Z% |
-| Memory | XMB | YMB | Z% |
+| Database | Before | After | Change |
+| API | Before | After | Change |
+| Frontend | Before | After | Change |
+| Memory | Before | After | Change |
 
 ## ✅ Optimizations Applied
 - Database: [List of fixes]
@@ -148,16 +148,16 @@ category: optimization
 - Frontend: [List of fixes]
 - Infrastructure: [List of fixes]
 
-## 💰 Impact
-- User Experience: X% faster
-- Cloud Costs: $X/month saved
-- Capacity: X% more headroom
+## Impact
+- User Experience: Improved response times
+- Cloud Costs: Potential savings identified
+- Capacity: Additional headroom available
 ```
 
 ## 🎯 Why This Works
 - **5 parallel agents** - All layers optimized simultaneously
 - **Integrated fixes** - Analysis and implementation together
 - **Measurable results** - Concrete before/after metrics
-- **90 seconds total** - Fast enough to run frequently
+- **Parallel execution** - Multiple agents work simultaneously
 
 Remember: Fix the bottlenecks users actually feel.

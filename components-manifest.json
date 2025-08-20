@@ -1,64 +1,72 @@
 {
   "claudifyVersion": "4.0.0",
   "version": "4.0.0",
-  "releaseDate": "2025-01-16",
-  "lastUpdated": "2025-01-16",
+  "releaseDate": "2025-08-20",
+  "lastUpdated": "2025-08-20",
   "minimumClaudeCodeVersion": "1.0.0",
   "components": {
     "agents": [
       {
         "name": "code-reviewer",
         "file": "code-reviewer.md",
-        "description": "Expert code reviewer for quality and standards",
+        "description": "Code review focusing on quality and standards",
+        "allowedTools": ["Read", "Edit", "MultiEdit", "Grep", "Glob", "LS"],
         "tags": ["essential", "quality", "all-projects"],
         "requiredFor": ["all"]
       },
       {
         "name": "security-reviewer",
         "file": "security-reviewer.md",
-        "description": "Security expert for vulnerability detection",
+        "description": "Security vulnerability detection",
+        "allowedTools": ["Read", "Grep", "Glob", "LS", "WebSearch", "Bash"],
         "tags": ["security", "multi-tenant", "production"],
         "requiredFor": ["multi-tenant", "production"]
       },
       {
         "name": "tech-lead",
         "file": "tech-lead.md",
-        "description": "Strategic technical architect",
+        "description": "Technical architecture guidance",
+        "allowedTools": ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "LS", "TodoWrite"],
         "tags": ["architecture", "scalability", "leadership"],
         "requiredFor": ["complex-architecture", "ddd"]
       },
       {
         "name": "frontend-developer",
         "file": "frontend-developer.md",
-        "description": "Frontend expert with 15+ years experience",
+        "description": "Frontend development and implementation",
+        "allowedTools": ["Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "LS"],
         "tags": ["frontend", "ui", "angular", "react"],
         "requiredFor": ["frontend"]
       },
       {
         "name": "ux-reviewer",
         "file": "ux-reviewer.md",
-        "description": "UX designer and accessibility specialist",
+        "description": "UX design and accessibility review",
+        "allowedTools": ["Read", "Grep", "Glob", "LS", "WebFetch"],
         "tags": ["frontend", "accessibility", "design"],
         "requiredFor": ["frontend", "user-facing"]
       },
       {
         "name": "test-quality-analyst",
         "file": "test-quality-analyst.md",
-        "description": "Testing strategy and quality expert",
+        "description": "Test coverage and quality analysis",
+        "allowedTools": ["Read", "Write", "Edit", "Grep", "Glob", "LS", "Bash"],
         "tags": ["testing", "quality", "coverage"],
         "requiredFor": ["test-heavy"]
       },
       {
         "name": "technical-debt-analyst",
         "file": "technical-debt-analyst.md",
-        "description": "Technical debt identification specialist",
+        "description": "Technical debt identification",
+        "allowedTools": ["Read", "Grep", "Glob", "LS"],
         "tags": ["maintenance", "refactoring", "debt"],
         "requiredFor": ["legacy", "refactoring"]
       },
       {
         "name": "infrastructure-architect",
         "file": "infrastructure-architect.md",
-        "description": "Cloud and DevOps expert",
+        "description": "Infrastructure and DevOps configuration",
+        "allowedTools": ["Read", "Write", "Edit", "Grep", "Glob", "LS", "Bash"],
         "tags": ["cloud", "kubernetes", "azure", "infrastructure"],
         "requiredFor": ["cloud", "microservices"]
       }

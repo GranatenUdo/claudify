@@ -1,35 +1,26 @@
-# Claudify - Enterprise Claude Code Setup System
+# Claudify - Claude Code Configuration for .NET/Angular Projects
 
 ![Version](https://img.shields.io/badge/version-4.0.0-blue)
-![Released](https://img.shields.io/badge/released-2025--08--05-green)
-![Opus 4](https://img.shields.io/badge/agents-Opus%204%20Optimized-purple)
+![Released](https://img.shields.io/badge/released-2025--08--20-green)
 
-**Automated Project Configuration for Claude Code**
+Claudify is a setup tool that configures Claude Code for .NET/Angular projects. It detects your project structure and applies project-specific configurations to commands and agents.
 
-Claudify provides automated Claude Code setup for .NET/Angular applications. It detects your project namespace and configures commands and agents accordingly.
+## Features
 
-## ✨ Core Capabilities
+### Project Detection
+- Detects Angular projects by finding `angular.json` files
+- Detects .NET API projects by checking for `Microsoft.NET.Sdk.Web` in .csproj files
+- Detects test projects by looking for `Microsoft.NET.Sdk` with "Test" in the project name
+- Handles duplicate project names by prepending the parent folder name
+- Provides interactive prompts for confirmation or manual entry when detection is uncertain
 
-### 🎯 Intelligent Project Detection
-- **Automatic Namespace Discovery** - Detects your project namespace from .csproj files
-- **Dynamic Path Configuration** - All commands adapt to your project structure
-- **Convention-Based Setup** - Works with standard .NET/Angular project layouts
-- **Zero Manual Configuration** - Fully automated for compliant architectures
-- **Multi-Project Support** - Handles complex solution structures
+### Configuration
+- Replaces template variables in commands with your actual project names
+- Supports multiple projects (you can enter them comma-separated)
+- Saves configuration to `.claude/config/projects.json`
+- Preserves existing CLAUDE.md and FEATURES.md files (these are user-managed)
 
-### 🤖 Agent Suite
-- **Specialized Agents** - Each optimized for specific development tasks
-- **Security-First Design** - Role-based tool access with principle of least privilege
-- **Parallel Execution** - Multiple agents can work simultaneously
-- **Architecture Support** - Helps maintain consistency across your codebase
-
-### 📝 Automation Features
-- **Project-Specific Configuration** - Adapts commands to your namespace and structure
-- **Documentation Generation** - Creates CLAUDE.md tailored to your project
-- **Test Support** - Includes test generators and quality analyzers
-- **CI/CD Support** - Azure DevOps pipeline templates included
-
-## 🚀 Setup Process
+## Setup
 
 ### Prerequisites
 - PowerShell 7+ (cross-platform)
@@ -52,98 +43,83 @@ pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 
 ### What Happens During Setup
 
-1. **Project Analysis** - Automatically detects:
-   - Project namespace from .csproj files
-   - Angular application structure
-   - Test project organization
-   - Database and infrastructure patterns
+1. **Project Detection**:
+   - Scans for angular.json files
+   - Scans for .csproj files with SDK type detection
+   - Groups projects by type (Web, API, Test)
 
-2. **Component Selection** - Choose your installation:
-   - **[S] Standard** - Essential components (~15-25 files)
-   - **[C] Comprehensive** - Full suite (~40+ files) **[RECOMMENDED]**
-   - **[N] None** - Manual configuration
+2. **Installation Mode**:
+   - Minimal - Core components (typically 15-25 files)
+   - Comprehensive - All available components (40 or more files)
 
-3. **Automatic Configuration** - Claudify will:
-   - Apply your project namespace throughout
-   - Install appropriate commands and agents
-   - Configure security policies
-   - Generate project documentation
+3. **Configuration**:
+   - Applies project names to command templates
+   - Installs selected commands and agents
+   - Preserves existing CLAUDE.md and FEATURES.md files
 
-4. **Immediate Productivity** - Start using Claude Code:
+4. **Usage**:
    ```bash
    claude code
    /comprehensive-review
    ```
 
-## 📊 What It Does
+## How It Works
 
-Claudify configures Claude Code for your specific project by:
-- Detecting your project namespace from .csproj files
-- Applying that namespace to all commands
-- Installing agents and commands based on your project type
-- Setting up hooks for automated workflows
+1. Scans your repository for project files (angular.json, .csproj)
+2. Identifies project types based on SDK references and naming patterns
+3. Replaces template placeholders in commands with your actual project names
+4. Copies the configured commands and agents to your `.claude` directory
+5. Optionally sets up hooks for workflow automation
 
-## 🏗️ Architecture Support
+## Supported Project Types
 
-Claudify is optimized for enterprise architectures featuring:
-- **.NET 8/9** backend with Domain-Driven Design
-- **Angular 19** frontend with signals architecture
-- **Entity Framework Core** with repository pattern
-- **Multi-tenant** data isolation
-- **Azure DevOps** CI/CD pipelines
-- **Docker** containerization
-- **SQL Server** database
+- .NET 8/9 Web APIs
+- Angular 17-19 applications
+- .NET test projects
+- Multi-project solutions
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 claudify/
 ├── setup.ps1                     # Setup orchestrator
 ├── components-manifest.json      # Component registry
 ├── .claude/
-│   ├── commands/                 # Optimized commands
-│   ├── agents/                   # Specialized agents
+│   ├── commands/                 # Command definitions
+│   ├── agents/                   # Agent configurations
 │   ├── hooks/                    # Automation workflows
 │   └── generators/               # Code scaffolding tools
 ├── docs/                         # Documentation
 └── VERSION                       # Current version (4.0.0)
 ```
 
-## 🔒 Security & Compliance
+## Security Considerations
 
-- **Least Privilege Access** - Each agent has minimal required permissions
-- **No Hardcoded Secrets** - All configuration externalized
-- **Audit Trail Support** - Full command history and tracking
-- **Enterprise SSO Ready** - Works with your authentication
+- Each agent is restricted to specific tools based on its role
+- No hardcoded paths or secrets in the configuration
+- All configuration is stored locally in `.claude/config/`
 
-## 🤝 Support & Resources
+## Documentation
 
-- **Documentation**: See `/docs` folder for detailed guides
-- **Issues**: Report via your internal support channel
-- **Updates**: Automatic version checking on setup
-- **Training**: Available for enterprise teams
+- Configuration files are documented inline with comments
+- For issues or questions, please use your organization's support channel
+- The setup script checks for updates when run
+- Additional documentation will be created in `.claude/docs/` after setup
 
-## 📈 Version History
+## Version History
 
-**4.0.0** (Current) - Interactive Configuration Release
-- Interactive project detection with user confirmation
-- Full project names with suffixes preserved
-- Multi-project support with selection
-- New template variables for each project type
+**4.0.0** - Current Release
+- Project detection based on SDK types and file markers
+- Automatic handling of duplicate project names
+- Documentation files (CLAUDE.md, FEATURES.md) are preserved and user-managed
+- Simplified installation with two clear options (Minimal/Comprehensive)
 
-**3.0.0** - Template System
-- Automatic namespace detection
-- Opus 4 agent optimization
-- Enterprise security policies
-- Comprehensive documentation automation
+See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 
-## 🚦 Getting Started
+## Getting Started
 
-1. **Download** Claudify to your local machine
-2. **Run** setup.ps1 pointing to your repository
-3. **Choose** Comprehensive installation
-4. **Start** developing with Claude Code immediately
-
----
-
-**Claudify** - Automated Claude Code configuration for .NET/Angular projects.
+1. Clone or download this repository
+2. Run `setup.ps1 -TargetRepository "path/to/your/repo"`
+3. Choose installation mode (Minimal or Comprehensive)
+4. Review the detected projects and confirm or correct them
+5. Begin using Claude Code with your configured commands

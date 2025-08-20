@@ -57,7 +57,7 @@ category: optimization
 
 @Task(
   description="Measure improvements",
-  prompt="Measure performance gains:
+  prompt="Assess performance improvements:
   
   BASELINE & VALIDATE:
   1. Response times before/after
@@ -70,4 +70,4 @@ category: optimization
 )
 
 ## ✅ Complete
-Performance optimized. Typical improvement: 50-80% faster.
+Performance optimization complete. Review the metrics report to verify improvements.

@@ -1,17 +1,17 @@
 ---
-description: Run parallel multi-agent review finding TOP 3 issues across security, performance, and quality
+description: Multi-agent code review for security, performance, and quality issues
 allowed-tools: [Task, Read, Grep, Glob]
 argument-hint: what to review (e.g., "FieldService" or "api/controllers")
 complexity: simple
-estimated-time: 1-2 minutes (parallel execution)
+estimated-time: 1-2 minutes
 category: quality
 ---
 
-# 🚀 Parallel Comprehensive Review: $ARGUMENTS
+# Comprehensive Review: $ARGUMENTS
 
-## Parallel Multi-Agent Analysis (60 seconds with parallel execution)
+## Parallel Multi-Agent Analysis
 
-### 🔴 Security Review Agent
+### Security Review Agent
 @Task(
   description="Security vulnerability scan",
   prompt="Review '$ARGUMENTS' for CRITICAL security issues:
@@ -33,7 +33,7 @@ category: quality
   subagent_type="security-reviewer"
 )
 
-### ⚡ Performance Review Agent
+### Performance Review Agent
 @Task(
   description="Performance bottleneck scan",
   prompt="Review '$ARGUMENTS' for PERFORMANCE KILLERS:
@@ -55,7 +55,7 @@ category: quality
   subagent_type="technical-debt-analyst"
 )
 
-### 📊 Code Quality Agent  
+### Code Quality Agent  
 @Task(
   description="Code complexity scan",
   prompt="Review '$ARGUMENTS' for MAINTAINABILITY ISSUES:
@@ -77,7 +77,7 @@ category: quality
   subagent_type="code-reviewer"
 )
 
-### 🏗️ Architecture Review Agent
+### Architecture Review Agent
 @Task(
   description="Architecture pattern violations",
   prompt="Review '$ARGUMENTS' for ARCHITECTURE VIOLATIONS:
@@ -99,7 +99,7 @@ category: quality
   subagent_type="tech-lead"
 )
 
-### 🧪 Test Quality Agent
+### Test Quality Agent
 @Task(
   description="Test coverage and quality scan",
   prompt="Review tests for '$ARGUMENTS' checking:
@@ -121,24 +121,24 @@ category: quality
   subagent_type="test-quality-analyst"
 )
 
-## 📋 Consolidated Report Format
+## Consolidated Report Format
 
 After parallel analysis completes, consolidate findings:
 
 ```markdown
 # Review Summary for $ARGUMENTS
 
-## 🔴 CRITICAL (Must Fix Now)
+## CRITICAL (Must Fix Now)
 1. [Security Issue with proof and fix]
 2. [Performance killer with solution]
 3. [Architecture violation with correction]
 
-## 🟡 IMPORTANT (Fix This Sprint)  
+## IMPORTANT (Fix This Sprint)  
 1. [Quality issue affecting maintenance]
 2. [Missing critical test]
 3. [Technical debt item]
 
-## 🟢 MINOR (Track for Later)
+## MINOR (Track for Later)
 1. [Style improvements]
 2. [Documentation needs]
 3. [Optimization opportunities]
@@ -150,11 +150,11 @@ After parallel analysis completes, consolidate findings:
 - Overall Health: X/10
 ```
 
-## Parallel Execution Benefits
-- **5x faster**: All agents run simultaneously
-- **Comprehensive**: No blind spots with specialized agents
-- **Consistent**: Each agent focuses on their expertise
-- **Actionable**: Concrete fixes, not just problems
+## Parallel Execution
+- All agents run simultaneously
+- Each agent focuses on their specific expertise
+- Results are consolidated into actionable findings
+- Provides concrete fixes, not just problem identification
 
 ## What We SKIP
 - Perfect code style
@@ -163,4 +163,4 @@ After parallel analysis completes, consolidate findings:
 - Academic best practices
 - Minor optimizations
 
-Remember: Find the 20% of issues that cause 80% of problems.
+Focus: Identify the most impactful issues that affect system quality.

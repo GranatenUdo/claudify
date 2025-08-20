@@ -32,7 +32,7 @@ OPTIMIZE FOR VALUE:
 - Evidence: Must read actual files
 - Delivery: Working code over plans
 - Agents: Minimum necessary (usually 1-2)
-- Time: 50%+ reduction possible
+- Time: Look for reduction opportunities
 
 VALUE PRINCIPLES:
 1. Ship what users need TODAY
@@ -60,7 +60,7 @@ PROVIDE:
 # BEFORE (trying to do everything):
 - Comprehensive analysis
 - Complete documentation
-- 100% test coverage
+- Complete test coverage
 - All edge cases
 - Perfect code style
 
@@ -95,7 +95,7 @@ Analyze, wait...
 
 # AFTER (parallel):
 All reads + analysis simultaneously
-60% faster execution
+Reduced waiting time
 ```
 
 ## Phase 3: Value Validation (2 min)
@@ -106,20 +106,20 @@ All reads + analysis simultaneously
 - [ ] Run operations in parallel
 - [ ] Focus on working code
 - [ ] Include security checks
-- [ ] Reduce time by 50%+
+- [ ] Reduce time where possible
 - [ ] Be <150 lines total
 
 ### Document Value Gains
-- Original approach: X minutes, Y agents
-- Value approach: X/2 minutes, Y/3 agents
+- Original approach: Document time and agents used
+- Optimized approach: Document improvements made
 - What we skip: Low-value activities
 - What we deliver: High-impact results
 
 ## Success Metrics
-- Value focus: TOP 3-5 only
-- Agent reduction: >60%
-- Time reduction: >50%
-- Line reduction: >50%
-- Actionable output: 100%
+- Value focus: TOP 3-5 items only
+- Agent reduction: Use minimum necessary
+- Time reduction: Optimize where possible
+- Line reduction: Keep concise
+- Actionable output: Always provide next steps
 
 Remember: Every line should help ship value. If it doesn't directly contribute to working features, remove it.

@@ -66,10 +66,10 @@ Intelligent research that provides actionable insights, not just information.
 
 ## ⚡ Parallel Execution Commands
 
-Commands marked with ⚡ use parallel agent execution for 85-90% time savings:
+Commands marked with ⚡ use parallel agent execution:
 - Multiple specialized agents work simultaneously
 - Automatic result consolidation
-- Comprehensive coverage with no blind spots
+- Comprehensive analysis from different perspectives
 
 ## 📖 Documentation
 
@@ -93,10 +93,10 @@ Commands marked with ⚡ use parallel agent execution for 85-90% time savings:
 - **Performance fix?** → `performance-optimization`
 
 ### Time-Sensitive?
-Choose ⚡ parallel commands for fastest results:
-- `comprehensive-review` - 1 minute vs 5 minutes
-- `implement-full-stack-feature` - 3 minutes vs 20 minutes
-- `security-audit` - 1 minute vs 10 minutes
+Choose ⚡ parallel commands for faster results:
+- `comprehensive-review` - Multiple agents review simultaneously
+- `implement-full-stack-feature` - Frontend and backend work in parallel
+- `security-audit` - Concurrent security checks across different vectors
 
 ## 💡 Best Practices
 

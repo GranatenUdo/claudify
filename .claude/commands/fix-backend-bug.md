@@ -8,7 +8,7 @@ category: quality
 
 # 🔧 Fix Backend Bug: $ARGUMENTS
 
-## Phase 1: Parallel Diagnosis (45 seconds)
+## Phase 1: Parallel Diagnosis
 
 @Task(
   description="Root cause analysis",
@@ -20,7 +20,7 @@ category: quality
   3. Code flow and dependencies
   
   ANALYZE:
-  - Missing OrganizationId filters (30% of bugs!)
+  - Missing OrganizationId filters (common issue)
   - Null references and defensive programming gaps
   - Async/await deadlocks or .Result usage
   - EF tracking issues or Include() problems
@@ -58,7 +58,7 @@ category: quality
   subagent_type="security-vulnerability-scanner"
 )
 
-## Phase 2: Fix Implementation (45 seconds)
+## Phase 2: Fix Implementation
 
 @Task(
   description="Implement fix with tests",

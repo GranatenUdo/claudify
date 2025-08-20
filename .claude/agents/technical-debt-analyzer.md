@@ -69,12 +69,12 @@ When analyzing technical debt:
 - Be realistic - consider team capacity and business priorities
 
 **Red Flags to Identify**:
-- Methods over 50 lines or cyclomatic complexity > 10
-- Classes with more than 7 dependencies
-- Code duplication over 5%
-- Test coverage below 60% for critical paths
-- Dependencies more than 2 major versions behind
-- TODO/FIXME comments older than 3 months
+- Long methods or high cyclomatic complexity
+- Classes with many dependencies
+- Significant code duplication
+- Insufficient test coverage for critical paths
+- Outdated dependencies
+- Old TODO/FIXME comments
 - Inconsistent patterns within the same module
 
 **Output Format**:

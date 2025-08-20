@@ -1,36 +1,45 @@
-## 🎉 Claudify v4.0.0 - Interactive Project Configuration
+# Claudify v4.0.0
 
-Major update with interactive project detection and configuration, full template system, and proper handling of multiple projects.
+## Summary
 
-### ✨ What's New in 4.0.0
+This release improves project detection accuracy, handles duplicate project names properly, and removes automatic documentation generation.
 
-- **🎯 Interactive Configuration** - Confirm or correct each detected project
-- **📦 Full Project Names** - Preserves complete names with suffixes (e.g., MyCompany.Product.Web)
-- **🔄 Multi-Project Support** - Handles multiple web/API projects gracefully
-- **✏️ Manual Override** - Type custom project names if detection is wrong
-- **🎨 New Template Variables** - `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}`
-- **💾 Enhanced Configuration** - Detailed projects.json with all settings
+## Breaking Changes
 
-### 🎯 What's Included
+### Template Variables
+- `{{ProjectNamespace}}.Web` → `{{WebProject}}`
+- `{{ProjectNamespace}}.Api` → `{{ApiProject}}`  
+- `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
 
-**Specialized Agents**
-- Tech Lead, Code Reviewer, Security Reviewer
-- Frontend Developer, UX Designer, Visual Designer
-- Infrastructure Architect, Technical Debt Analyst
+### Installation
+- "Standard" mode renamed to "Minimal"
+- "None" option removed
 
-**Commands**
-- Backend: Add features, fix bugs, review code
-- Frontend: UI development, bug fixes
-- Quality: Technical debt analysis, test coverage
-- Documentation: Generation and changelog updates
+### Documentation
+- CLAUDE.md and FEATURES.md are no longer auto-generated
 
-**Additional Features**
-- Multi-tenant isolation validation
-- Azure DevOps pipeline templates
-- Docker containerization support
-- Security scanning capabilities
+## New Features
 
-### 🚀 Quick Start
+### Project Detection
+- Angular projects detected via `angular.json` files
+- .NET API projects detected via `Microsoft.NET.Sdk.Web` in .csproj
+- Test projects detected via `Microsoft.NET.Sdk` with "Test" in name
+
+### Duplicate Name Handling
+- Projects with identical folder names (e.g., multiple "ClientApp") are disambiguated by prepending the parent folder name
+
+### Interactive Configuration
+- Prompts for confirmation of detected projects
+- Supports comma-separated input for multiple projects
+- Manual entry available when detection fails
+
+## Bug Fixes
+
+- Fixed "Cannot index into a null array" error when no architecture test projects exist
+- Fixed duplicate project name handling
+- Improved project detection using SDK markers instead of naming conventions
+
+## Installation
 
 ```powershell
 # Windows
@@ -40,26 +49,32 @@ Major update with interactive project detection and configuration, full template
 pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 ```
 
-Choose **Comprehensive** installation for full capabilities. The system will:
-1. Automatically detect your project namespace
-2. Configure all commands and agents
-3. Generate project-specific documentation
-4. Complete setup in under 2 minutes
+## Upgrading from 3.x
 
+1. Existing CLAUDE.md and FEATURES.md files will be preserved
+2. Template variables in commands will be updated automatically
+3. Choose "Comprehensive" for all available components
 
-### 📚 Documentation
+## Changes
 
-- [Setup Guide](./SETUP-GUIDE.md) - Complete installation instructions
-- [Features](./FEATURES.md) - Comprehensive capability list
-- [Architecture](./CLAUDE.md) - System design and configuration
-- [Changelog](./CHANGELOG.md) - Complete version history
+### Added
+- SDK-based project detection
+- Duplicate name resolution
+- Interactive configuration with multi-project support
 
-### 💔 Breaking Changes
+### Changed
+- Project detection logic uses file markers and SDK types
+- Installation flow simplified to Minimal/Comprehensive
+- Documentation files are user-managed
 
-If upgrading from v3.0.0:
-- Update your custom commands to use new template variables
-- Re-run setup to configure project names interactively
-- Check `.claude/config/projects.json` for new configuration format
+### Removed
+- "None" installation option
+- Automatic documentation generation
+- Legacy init-claudify references
+- Unsubstantiated performance claims
 
----
-**Claudify v4.0.0** - Interactive project configuration for Claude Code.
+## Documentation
+
+- [Setup Guide](SETUP-GUIDE.md)
+- [Features](FEATURES.md)
+- [Changelog](CHANGELOG.md)
