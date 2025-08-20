@@ -1,105 +1,60 @@
 ---
-description: Perform focused research on specific technical topics or implementation approaches
-allowed-tools: [Task, Read, WebSearch, TodoWrite]
-argument-hint: research topic (e.g., "best practices for real-time agricultural data streaming")
-agent-dependencies: [Researcher]
+description: Fast parallel research with actionable answers
+allowed-tools: [Task, Grep, Read, WebSearch, Glob]
+estimated-time: 90 seconds (parallel)
 complexity: simple
-estimated-time: 5-15 minutes
 category: research
 ---
 
-# 🔍 Quick Research: $ARGUMENTS
+# ⚡ Quick Research: $ARGUMENTS
 
-## Quick Context
-Get rapid, focused insights on specific technical questions without the overhead of comprehensive analysis.
+## Parallel Smart Discovery (90 seconds)
 
-## Execution Flow
-1. **Focused Research** - Targeted investigation of the specific topic
-2. **Key Findings** - Summarized insights and recommendations
-3. **Action Items** - Next steps based on findings
+@Task(
+  description="Codebase research",
+  prompt="Research '$ARGUMENTS' in codebase:
+  
+  FIND:
+  1. Implementations and patterns
+  2. Current usage examples
+  3. Known issues (TODOs, FIXMEs)
+  4. Related documentation
+  
+  FOCUS: Actual code, not theory
+  OUTPUT: Findings with file:line references",
+  subagent_type="best-practices-researcher"
+)
 
-## Research Approach
+@Task(
+  description="External research",
+  prompt="Research '$ARGUMENTS' best practices:
+  
+  SEARCH:
+  1. Production implementations
+  2. Common pitfalls
+  3. Performance considerations
+  4. Security implications
+  
+  SOURCES: Stack Overflow, GitHub, official docs
+  OUTPUT: Proven patterns and anti-patterns",
+  subagent_type="best-practices-researcher"
+)
 
-<think step-by-step about the most efficient research strategy>
+@Task(
+  description="Solution synthesis",
+  prompt="Synthesize research for '$ARGUMENTS':
+  
+  DELIVER:
+  1. Direct answer (1 paragraph)
+  2. Our codebase approach
+  3. Industry best practice
+  4. Specific recommendation
+  5. Code example if applicable
+  
+  FORMAT: Actionable, not academic
+  OUTPUT: Clear next steps",
+  subagent_type="tech-lead-engineer"
+)
 
-### Targeted Investigation
-@Task(description="Quick research", prompt="Conduct focused research on $ARGUMENTS:
-1. Find the most relevant and recent information
-2. Identify best practices and common patterns
-3. Note any warnings or pitfalls
-4. Provide 3-5 key takeaways
-5. Suggest practical next steps
-Keep response concise and actionable", subagent_type="general-purpose")
-
-### Quick Web Search
-If needed for current information:
-```
-@WebSearch(query="$ARGUMENTS site:stackoverflow.com OR site:github.com OR site:docs.microsoft.com")
-```
-
-## Output Format
-
-### Executive Summary
-- **Topic**: $ARGUMENTS
-- **Key Finding**: [Most important insight]
-- **Recommendation**: [Primary action to take]
-
-### Key Insights
-1. [Finding 1]
-2. [Finding 2]
-3. [Finding 3]
-
-### Resources
-- [Link 1]: [Description]
-- [Link 2]: [Description]
-
-#
-## Documentation Updates
-
-<think about what documentation needs updating based on the changes made>
-
-### Update Checklist
-Based on the changes made, update these files:
-
-1. **CHANGELOG.md** (Confidence: 95%)
-   - Add entry under `[Unreleased]` section
-   - Use appropriate section: Added/Changed/Fixed/Removed
-   - Include technical details and user impact
-
-2. **FEATURES.md** (If capabilities changed)
-   - Document new or modified features
-   - Update technical implementation details
-   - Include usage examples
-
-3. **CLAUDE.md** (If patterns/conventions introduced)
-   - Document new code patterns
-   - Update architectural decisions
-   - Add domain-specific rules
-
-### Quick Update Commands
-```bash
-# Automated changelog update
-/update-changelog "$ARGUMENTS"
-
-# Manual update template
-### [Section]
-- Description of change
-  - Technical implementation details
-  - User-facing impact
-  - Breaking changes (if any)
-```
-
-### Parallel Documentation Check
-Check all documentation files simultaneously for existing references:
-```bash
-@Grep(pattern="$ARGUMENTS", path="CHANGELOG.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="FEATURES.md", output_mode="content", head_limit=5)
-@Grep(pattern="$ARGUMENTS", path="CLAUDE.md", output_mode="content", head_limit=5)
-```
-
-## Next Steps
-- [ ] [Action 1]
-- [ ] [Action 2]
-- [ ] [Action 3]
-
-This quick research provides focused insights without extensive analysis overhead.
+## ✅ Answer Ready
+Research complete with actionable recommendations.

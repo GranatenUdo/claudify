@@ -1,43 +1,45 @@
-## 🎉 Claudify v2.0.1 - Cleanup and Documentation Update
+# Claudify v4.0.0
 
-This release focuses on cleaning up temporary files, improving documentation, and enhancing the setup experience.
+## Summary
 
-### ✨ What's New
+This release improves project detection accuracy, handles duplicate project names properly, and removes automatic documentation generation.
 
-- **🚀 Integrated Intelligent Setup** - Choose installation mode during setup (Minimal/Standard/Comprehensive)
-- **🔍 Enhanced Tech Detection** - Finds Angular/React/Vue in subdirectories like `ClientApp/`, `frontend/`
-- **🧹 Clean Install Option** - Recommended for major version upgrades
-- **📝 Auto-Generated Config** - Creates CLAUDE.md and FEATURES.md tailored to your stack
-- **🎯 Fixed Agent Mappings** - All commands now use available Claude agents
-- **📁 Better Organization** - Documentation moved to docs/ folder
+## Breaking Changes
 
-### 🐛 Fixed
-- Corrected release date for version 2.0.0 in documentation
-- Removed temporary test scripts (4 files)
-- Removed temporary documentation (2 files)
-- **Critical Fix**: CLAUDE.md and FEATURES.md are now preserved during clean install
-  - Previously these user-customized files were deleted and regenerated
-  - Now properly detected and preserved with all customizations intact
-- **Critical Fix**: Fixed "Could not find a part of the path" error in setup.ps1
-  - Now creates parent directories before copying nested documentation files
-  - Ensures docs/ directory exists when copying AGENT-COLLABORATION files
-- **Simplified Setup**: Removed minimal installation mode
-  - Standard and Comprehensive modes only
-  - Standard mode provides a solid baseline with ~15-25 files
+### Template Variables
+- `{{ProjectNamespace}}.Web` → `{{WebProject}}`
+- `{{ProjectNamespace}}.Api` → `{{ApiProject}}`  
+- `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
 
-### 📝 Changed
-- Updated version to 2.0.1
-- Cleaned up project structure
-- Moved agent collaboration docs to `docs/` folder
-- Updated all references to new documentation locations
+### Installation
+- "Standard" mode renamed to "Minimal"
+- "None" option removed
 
-### 📚 Documentation
-- Updated README.md to reflect new integrated intelligent setup flow
-- Added installation modes section to clarify options
-- Enhanced Quick Start section with detailed setup process
-- Updated Common Questions to reflect new features
+### Documentation
+- CLAUDE.md and FEATURES.md are no longer auto-generated
 
-### 🚀 Quick Start
+## New Features
+
+### Project Detection
+- Angular projects detected via `angular.json` files
+- .NET API projects detected via `Microsoft.NET.Sdk.Web` in .csproj
+- Test projects detected via `Microsoft.NET.Sdk` with "Test" in name
+
+### Duplicate Name Handling
+- Projects with identical folder names (e.g., multiple "ClientApp") are disambiguated by prepending the parent folder name
+
+### Interactive Configuration
+- Prompts for confirmation of detected projects
+- Supports comma-separated input for multiple projects
+- Manual entry available when detection fails
+
+## Bug Fixes
+
+- Fixed "Cannot index into a null array" error when no architecture test projects exist
+- Fixed duplicate project name handling
+- Improved project detection using SDK markers instead of naming conventions
+
+## Installation
 
 ```powershell
 # Windows
@@ -47,12 +49,32 @@ This release focuses on cleaning up temporary files, improving documentation, an
 pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
 ```
 
-Choose your installation mode when prompted:
-- **[S]** Standard - Core components for your stack
-- **[C]** Comprehensive - Everything available **(Recommended)**
+## Upgrading from 3.x
 
-### 📋 Full Changelog
-See [CHANGELOG.md](https://github.com/GranatenUdo/claudify/blob/main/CHANGELOG.md) for complete details.
+1. Existing CLAUDE.md and FEATURES.md files will be preserved
+2. Template variables in commands will be updated automatically
+3. Choose "Comprehensive" for all available components
 
----
-**Note**: Version 2.0.0 users should perform a clean install when updating to 2.0.1.
+## Changes
+
+### Added
+- SDK-based project detection
+- Duplicate name resolution
+- Interactive configuration with multi-project support
+
+### Changed
+- Project detection logic uses file markers and SDK types
+- Installation flow simplified to Minimal/Comprehensive
+- Documentation files are user-managed
+
+### Removed
+- "None" installation option
+- Automatic documentation generation
+- Legacy init-claudify references
+- Unsubstantiated performance claims
+
+## Documentation
+
+- [Setup Guide](SETUP-GUIDE.md)
+- [Features](FEATURES.md)
+- [Changelog](CHANGELOG.md)

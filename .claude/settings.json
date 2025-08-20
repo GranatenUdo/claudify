@@ -1,0 +1,70 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "description": "Add critical context based on prompt keywords",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -File \".claude/hooks/add-context.ps1\" -UserPrompt \"$USER_PROMPT\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "description": "Track significant changes for changelog",
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -File \".claude/hooks/check-changelog-updates.ps1\" -EventName PostToolUse -ToolName \"$TOOL_NAME\" -FilePath \"$FILE_PATH\""
+          }
+        ]
+      },
+      {
+        "description": "Verify deployment success",
+        "matcher": "Bash.*deploy|Bash.*azd up|Bash.*docker.*up",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -File \".claude/hooks/post-deploy-verify.ps1\" -Arguments \"$ARGUMENTS\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "description": "Quality gate for git commits",
+        "matcher": "Bash.*git commit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -File \".claude/hooks/pre-commit-quality-check.ps1\" -ToolName \"$TOOL_NAME\" -Arguments \"$ARGUMENTS\"",
+            "canBlock": true
+          }
+        ]
+      },
+      {
+        "description": "Block secrets from being written",
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -File \".claude/hooks/security-secrets-check.ps1\" -ToolName \"$TOOL_NAME\" -Content \"$CONTENT\"",
+            "canBlock": true
+          }
+        ]
+      }
+    ]
+  },
+  "hookSettings": {
+    "enabled": true,
+    "timeout": 5000,
+    "logLevel": "info",
+    "parallelExecution": false,
+    "environmentVariables": {
+      "HOOK_LOG_DIR": ".claude\\logs"
+    }
+  }
+}

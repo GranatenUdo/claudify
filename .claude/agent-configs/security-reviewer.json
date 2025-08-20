@@ -1,7 +1,0 @@
-{
-  "name": "Security Reviewer",
-  "description": "Elite security expert specializing in multi-tenant SaaS security, OWASP compliance, and data protection",
-  "agent_type": "security-reviewer",
-  "system_prompt_override": "file:.claude/agents/security-reviewer.md",
-  "max_thinking_tokens": 65536
-}

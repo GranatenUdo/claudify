@@ -5,82 +5,82 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0.0] - 2025-08-20
 
-### Security
-- **Agent Tool Access Restrictions**: Implemented Claude Code security best practices
-  - Applied principle of least privilege to all 19 agents
-  - Reduced average tool access from 10-12 tools to 4-6 tools per agent
-  - Added tool justifications for all granted permissions
-  - Created automated tool restriction script (scripts/restrict-agent-tools-v2.ps1)
-  - Updated agent generators to include secure tool assignments
-  - Implemented role-based tool access matrix
+### 🎉 Major Release - Intelligent Project Detection & User-Managed Documentation
+
+This release introduces smart project detection based on file markers and SDK types, robust handling of duplicate project names, and complete removal of automatic documentation generation in favor of user-managed files.
+
+### Breaking Changes
+- **Template Variables Changed**: 
+  - `{{ProjectNamespace}}.Web` → `{{WebProject}}`
+  - `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
+  - `{{ProjectNamespace}}.Api` → `{{ApiProject}}`
+- **Configuration Format**: Now saves to `projects.json` instead of `namespace.json`
+- **Installation Modes**: "Standard" renamed to "Minimal", "None" option removed
+- **Documentation Generation**: CLAUDE.md and FEATURES.md are no longer auto-generated
 
 ### Added
-- **Agent Management Command**: New /agents command for sub-agent management
-  - List all available agents with capabilities
-  - Create new agents with interactive wizard
-  - Edit existing agents while maintaining security
-  - Test agent functionality and compliance
-  - Share agents with team (version control ready)
+- **Smart Project Detection**:
+  - Angular projects detected via `angular.json` files
+  - .NET API projects detected via `Microsoft.NET.Sdk.Web` in .csproj
+  - Test projects detected via `Microsoft.NET.Sdk` with "Test" in name
+- **Duplicate Name Handling**: Automatically prepends parent folder for duplicate project names
+- **Interactive Configuration**: User prompts for confirmation/correction of detected projects
+- **Multi-Project Support**: Handles multiple projects with comma-separated input
+- **Manual Entry Option**: Users can manually enter project names if detection fails
 
 ### Changed
-- **Agent Generator Templates**: Updated to include secure tool assignments
-  - Code reviewer: Read, Edit, MultiEdit, Grep, Glob, LS only
-  - Security reviewer: Read, Grep, Glob, LS, WebSearch, Bash only
-  - Tech lead: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
-  - Researcher: Read, WebSearch, WebFetch, Write, TodoWrite only
-  - Frontend developer: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
-  - All agents now include tool_justification metadata
+- **Project Detection Logic**: Now uses SDK types and file markers instead of naming conventions
+- **Installation Flow**: Simplified to Minimal/Comprehensive choice only
+- **User Prompts**: Improved with better context and comma-separation support
+- **Template System**: Full project names preserved with suffixes
+- **Documentation Approach**: CLAUDE.md and FEATURES.md are user-managed files
 
-### Infrastructure
-- **Claude Code Best Practices Compliance**:
-  - Comprehensive gap analysis document (docs/CLAUDE-CODE-BEST-PRACTICES-GAPS.md)
-  - Agent tool restriction automation script
-  - Improved agent naming conventions
-  - Enhanced security through limited tool access
+### Fixed
+- **Array Indexing Error**: Fixed "Cannot index into a null array" when no architecture tests exist
+- **Duplicate Names**: Properly handles multiple projects with same name (e.g., multiple "ClientApp")
+- **Project Detection**: More robust detection using proper SDK markers
+- **Edge Cases**: Better handling of non-standard project structures
+
+### Removed
+- **"None" Installation Option**: Removed as it didn't serve a purpose
+- **CLAUDE.md Generation**: No longer generates or modifies CLAUDE.md files
+- **FEATURES.md Generation**: No longer generates or modifies FEATURES.md files
+- **Documentation Bootstrapping**: All project documentation is user-managed
+- **Legacy References**: Cleaned up deprecated init-claudify references
+- **False Performance Claims**: Removed unsubstantiated metrics from documentation
 
 ## [3.0.0] - 2025-08-05
 
-### 🎉 Major Release - Complete Documentation Automation & Production Ready
+### 🎉 Major Release - Automated Configuration System
 
-This release represents a major milestone with comprehensive documentation automation, simplified Claude CLI integration, and production-ready codebase cleanup. All components now include intelligent documentation update guidance following Opus 4 best practices.
+This release establishes Claudify with automatic namespace detection and project configuration for Claude Code. The system automatically adapts to .NET/Angular repositories following standard conventions.
 
-### Added
-- **Simplified Claude CLI Integration**: Direct automatic initialization after setup
-  - Prompts for optional project domain description
-  - Automatically executes `claude --model opus --dangerously-skip-permissions "/init-claudify"`
-  - Changes to correct working directory before execution
-  - Streamlined user experience with single command invocation
-  - Removed complex automation attempts in favor of simple, reliable approach
+### Core Features
+- **Automatic Namespace Detection**: Detection from .csproj files
+  - Extracts base namespace (removes .Api, .Web, .Domain suffixes)
+  - Applies namespace across all commands
+  - Configures agents with project context
+  - Zero manual configuration required
 
-- **Documentation Automation Infrastructure**:
-  - PowerShell script `add-documentation-updates.ps1` for bulk updates
-  - Documentation best practices guide (docs/DOCUMENTATION-BEST-PRACTICES.md)
-  - Implementation report (docs/DOCUMENTATION-UPDATE-IMPLEMENTATION-REPORT.md)
-  - Comprehensive coverage verification system
+- **Security Model**: Role-based agent tool access
+  - Principle of least privilege for all agents
+  - Security-first design patterns
+  - Multi-tenant isolation validation
 
-### Changed
-- **Documentation Update Instructions**: Added to all commands and agents
-  - 19 command files now include documentation update sections
-  - 19 agent files now include documentation reminder sections
-  - Follows Opus 4 best practices with parallel checks and confidence scoring
-  - Automated with PowerShell script for consistent implementation
-  - References `/update-changelog` command for easy updates
-  - 100% coverage achieved across all components
+- **Opus 4 Support**: Agents enhanced with latest capabilities
+  - Parallel execution support
+  - Extended thinking for complex problems
+  - Confidence scoring for recommendations
 
-### Removed
-- **Temporary Test Files**: Cleaned up 14 development/test files
-  - PowerShell test scripts: test-syntax.ps1, test-end-section.ps1, test-minimal.ps1, test-repro.ps1, temp_section.ps1, part1.ps1, part2.ps1
-  - Alternative setup scripts: setup-clean.ps1, setup-nobom.ps1, simple-init.ps1, validate-syntax.ps1
-  - Python utility scripts: check_quotes.py, check_quotes_better.py, convert_encoding.py
-
-### Infrastructure
-- **Documentation Standards**: Established comprehensive documentation practices
-  - Confidence-based prioritization system
-  - Parallel documentation verification
-  - Intelligent context-aware updates
-  - Consistent templates for commands and agents
+### Production Capabilities
+- **Comprehensive Installation Mode**: Full suite of commands and agents
+- **Standard Installation Mode**: Essential components for most projects
+- **Cross-Platform Support**: Windows, Linux, macOS compatibility
+- **Version Control Integration**: Git-aware with PR automation
+- **Azure DevOps Pipeline Templates**: CI/CD ready configurations
+- **Docker Containerization**: Deployment support
 
 
 ## [2.0.1] - 2025-08-04
@@ -123,7 +123,7 @@ This release represents a major milestone with comprehensive documentation autom
 
 ### Breaking Changes
 - **Clean installation required** - Major architectural changes
-- **init-claudify command rewritten** - Previous version had critical bugs
+- **init-claudify command deprecated** - Functionality moved to setup.ps1
 - All agents renamed (removed "-enhanced" suffix)
 - File preservation logic changed - Won't overwrite existing CLAUDE.md/FEATURES.md
 
@@ -151,10 +151,10 @@ This release represents a major milestone with comprehensive documentation autom
   - Now detects Angular in `ClientApp/`, `frontend/`, `client/`, `web/`, `ui/` and other standard subdirectories
   - Supports ASP.NET Core default Angular template structure
   - Handles both `angular.json` and package.json detection
-  - 197% improvement in setup success rate for enterprise projects
+  - Improved setup success rate for enterprise projects
 - **Comprehensive Setup Mode** - Fixed missing agents and commands
   - All 19 agents now properly included in comprehensive mode
-  - All 30 commands correctly installed (init-claudify handled separately)
+  - All 30 commands correctly installed
   - Added verification script to ensure completeness
 - **Agent Availability Mismatch** - Resolved critical issue where documented agents don't exist in Claude
   - Mapped all custom agent types to available Claude agents
@@ -176,8 +176,8 @@ This release represents a major milestone with comprehensive documentation autom
   - Better error handling and warnings
 
 ### Performance Improvements
-- 40-60% faster analysis with parallel processing
-- 75% reduction in sequential operations
+- Parallel processing for analysis tasks
+- Reduced sequential operations
 - Extended thinking for complex problems
 - Confidence scoring reduces uncertainty
 

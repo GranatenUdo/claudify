@@ -1,16 +1,15 @@
-# Claudify Features
+# Claudify Features - Version 4.0.0
 
 ## Overview
 
-Claudify is a comprehensive AI-powered development acceleration toolkit that transforms any codebase into a Claude Code-optimized environment. This document outlines all features and capabilities.
+Claudify configures Claude Code for .NET/Angular projects by detecting project structure and applying templates to commands and agents.
 
-## 🔒 Security Features
+## Security
 
 ### Agent Tool Access Control
-- **Principle of Least Privilege**: Each agent only has access to tools necessary for its function
-- **Role-Based Access Matrix**: Predefined tool sets for different agent roles
-- **Tool Justifications**: Every granted tool permission is documented with its purpose
-- **Automated Enforcement**: PowerShell script to audit and apply tool restrictions
+- Each agent has restricted tool access based on its role
+- Tool permissions are defined in agent configuration files
+- No agent has access to all tools
 
 #### Tool Access by Role
 | Role | Allowed Tools | Purpose |
@@ -22,33 +21,32 @@ Claudify is a comprehensive AI-powered development acceleration toolkit that tra
 | Frontend Developer | Read, Write, Edit, MultiEdit, Grep, Glob, LS | UI/UX development |
 | Test Analyst | Read, Write, Grep, Glob, LS, Bash | Test creation and execution |
 
-## 🤖 Agent Management
+## Agents
 
-### /agents Command Suite
-- **list**: Display all available agents with their capabilities
-- **create <name>**: Interactive wizard for new agent creation
-- **edit <name>**: Modify existing agents while maintaining security
-- **test <name>**: Validate agent functionality and compliance
-- **share <name>**: Prepare agents for team collaboration
+### Available Agents
+17 specialized agents for different development tasks:
+- Code review and quality analysis
+- Security vulnerability scanning
+- Technical architecture decisions
+- Frontend and backend implementation
+- Test creation and analysis
+- Documentation writing
 
-### Agent Features
-- **Opus 4 Optimizations**: Extended thinking, parallel analysis, confidence scoring
-- **Specialized Expertise**: 19 domain-specific agents covering all development aspects
-- **Collaborative Intelligence**: Agents can delegate to each other for specialized tasks
-- **Version Control Ready**: All agents stored as markdown files for easy tracking
+### Agent Configuration
+- Agents defined as markdown files with metadata
+- Tool access restrictions per agent
+- Stored in `.claude/agents/` directory
 
-## 📝 Documentation Automation
+## Documentation
 
-### Intelligent Documentation Updates
-- **Automatic Guidance**: All commands and agents include documentation update instructions
-- **Confidence Scoring**: Prioritize documentation updates based on change certainty
-- **Parallel Verification**: Check multiple documentation files simultaneously
-- **Context-Aware**: Suggests specific sections to update based on changes
+### User-Managed Files
+- CLAUDE.md - Project-specific configuration (not auto-generated)
+- FEATURES.md - Feature documentation (not auto-generated)
+- These files remain under user control
 
-### Documentation Commands
-- `/update-changelog`: Automated changelog updates with proper formatting
-- `/comprehensive-review`: Full codebase analysis with documentation recommendations
-- `/init-claudify`: Initial setup with comprehensive documentation generation
+### Commands
+- `/update-changelog` - Helps update changelog
+- `/comprehensive-review` - Analyzes codebase
 
 ## 🛠️ Development Tools
 
@@ -73,21 +71,23 @@ Claudify is a comprehensive AI-powered development acceleration toolkit that tra
 
 ### Automated Setup
 - **Cross-Platform**: PowerShell-based setup works on Windows, Mac, and Linux
-- **Intelligent Detection**: Automatically analyzes your codebase and generates appropriate configuration
-- **Selective Installation**: Choose between comprehensive, standard, or custom installations
-- **Claude CLI Integration**: Automatic initialization with Claude Code after setup
+- **Intelligent Detection**: Detects Angular projects (angular.json), .NET APIs (Microsoft.NET.Sdk.Web), and test projects
+- **Duplicate Handling**: Automatically resolves duplicate project names by prepending parent folders
+- **Selective Installation**: Choose between Minimal or Comprehensive installations
+- **User-Managed Docs**: CLAUDE.md and FEATURES.md remain under user control
 
 ### Configuration Files
-- **CLAUDE.md**: Project-specific guidelines and patterns
+- **CLAUDE.md**: User-managed project-specific guidelines (not generated)
+- **FEATURES.md**: User-managed features documentation (not generated)
 - **agent-configs/**: JSON configurations for each agent
 - **hooks/**: Event-driven automation scripts
-- **commands/**: Custom command definitions
+- **commands/**: Custom command definitions with project variables
 
 ## 📊 Analysis and Reporting
 
 ### Comprehensive Analysis Features
-- **Technology Stack Detection**: Automatic identification of languages, frameworks, and tools
-- **Pattern Recognition**: Identifies architectural patterns (DDD, CQRS, Repository, etc.)
+- **Technology Stack Detection**: Automatic identification of .NET 8/9, Angular 17-19, and supporting tools
+- **Pattern Recognition**: Identifies architectural patterns (DDD, Repository, Factory methods)
 - **Domain Model Extraction**: Understands business entities and relationships
 - **Multi-Tenant Analysis**: Detects isolation models and security patterns
 
@@ -149,21 +149,15 @@ Claudify is a comprehensive AI-powered development acceleration toolkit that tra
 - **Access Control**: Role-based permissions for agents
 - **Documentation Trail**: Comprehensive documentation of all changes
 
-## 🎯 Future Roadmap
+## 🎯 Key Features
 
-### Planned Features
-- **MCP Integration**: Model Context Protocol support
-- **Interactive Prompts**: Enhanced user interaction in commands
-- **Agent Versioning**: Semantic versioning for agents
-- **Team Repositories**: Centralized agent sharing
-- **AI Model Selection**: Support for different Claude models
-- **Custom Tool Development**: SDK for creating new tools
-
-### Community Features
-- **Agent Marketplace**: Share and discover community agents
-- **Pattern Exchange**: Collaborative pattern library
-- **Integration Hub**: Third-party tool integrations
-- **Learning Resources**: Tutorials and best practices
+### Deployment Features
+- **Automatic Namespace Detection**: Extracts project namespace from .csproj files
+- **Project-Specific Configuration**: All commands adapted to your namespace
+- **Convention-Based Architecture**: Works with standard .NET/Angular layouts
+- **Cross-Platform Support**: Windows, Linux, macOS compatibility
+- **Version Control Integration**: Git-aware with PR automation
+- **Team Collaboration**: Shared configurations and standards
 
 ---
 
