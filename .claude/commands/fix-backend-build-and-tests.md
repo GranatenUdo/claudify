@@ -111,7 +111,7 @@ category: quality
 ### Full Validation Suite
 @Bash(command="dotnet restore --no-cache", description="Package restore")
 @Bash(command="dotnet build --no-restore", description="Build verification")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Unit tests")
+@Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
 @Bash(command="docker build -t test-backend . 2>&1 | tail -10", description="Docker build")
 
 ## Quick Reference

@@ -93,7 +93,7 @@ category: quality
 ## Phase 3: Parallel Validation
 
 @Bash(command="dotnet build --configuration Release", description="Build")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Unit tests")
+@Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
 @Bash(command="dotnet test tests/{{ArchitectureTestProject}}", description="Architecture")
 
 ## ✅ Complete

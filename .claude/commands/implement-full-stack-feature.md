@@ -123,7 +123,7 @@ category: development
 ### Build Verification
 @Bash(command="dotnet build --no-restore", description="Backend build")
 @Bash(command="cd src/{{WebProject}} && npm run build", description="Frontend build")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Quick tests")
+@Bash(command="dotnet test --filter Category!=Integration", description="Quick tests")
 
 ## Summary Output
 

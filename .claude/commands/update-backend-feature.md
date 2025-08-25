@@ -73,7 +73,7 @@ category: development
 ## Phase 2: Parallel Validation (30 seconds)
 
 @Bash(command="dotnet build --configuration Release", description="Build")
-@Bash(command="dotnet test --no-build --filter FullyQualifiedName~$ARGUMENTS", description="Tests")
+@Bash(command="dotnet test --filter FullyQualifiedName~$ARGUMENTS", description="Tests")
 @Bash(command="cd src/{{WebProject}} && npm run update:api", description="Update client")
 
 ## ✅ Complete

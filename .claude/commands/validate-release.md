@@ -122,7 +122,7 @@ category: devops
 ## Quick Validation Commands
 
 ### Manual Override Checks
-@Bash(command="dotnet test --no-build --logger minimal | grep -E 'Passed|Failed' | tail -3", description="Quick test check")
+@Bash(command="dotnet test --logger minimal | grep -E 'Passed|Failed' | tail -3", description="Quick test check")
 @Bash(command="docker build -t release-test:$ARGUMENTS . 2>&1 | tail -5", description="Docker build test")
 
 ## Release Report Format
