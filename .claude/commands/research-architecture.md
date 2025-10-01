@@ -5,9 +5,12 @@ argument-hint: architecture decision or pattern (e.g., "microservices vs monolit
 complexity: moderate
 estimated-time: 4-5 minutes
 category: architecture
+model: opus
 ---
 
 # 🏛️ Architecture Research: $ARGUMENTS
+
+**For major architecture decisions or complex trade-off analysis, enable extended thinking for comprehensive evaluation.**
 
 ## Phase 1: Parallel Architecture Analysis (3 minutes)
 
@@ -32,7 +35,7 @@ category: architecture
   - What new problems does it create?
   
   Be skeptical. Include failure stories.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 💰 Cost-Benefit Agent
@@ -59,7 +62,7 @@ category: architecture
   - Point of positive ROI
   
   Include hidden costs most ignore.",
-  subagent_type="business-domain-analyst"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🔄 Migration Path Agent
@@ -106,7 +109,7 @@ category: architecture
   Sometimes the best architecture is the simplest one that could possibly work.
   
   Include the 'do nothing' option.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ## Phase 2: Our Codebase Analysis (1 minute)

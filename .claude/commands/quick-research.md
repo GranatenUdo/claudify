@@ -4,9 +4,12 @@ allowed-tools: [Task, Grep, Read, WebSearch, Glob]
 estimated-time: 90 seconds (parallel)
 complexity: simple
 category: research
+model: opus
 ---
 
 # ⚡ Quick Research: $ARGUMENTS
+
+**For complex questions despite being quick research, enable extended thinking for comprehensive answers.**
 
 ## Parallel Smart Discovery (90 seconds)
 

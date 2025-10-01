@@ -5,9 +5,12 @@ argument-hint: feature name and requirements (e.g., "user notifications with rea
 complexity: moderate
 estimated-time: 2-3 minutes
 category: development
+model: opus
 ---
 
 # 🚀 Parallel Full-Stack Feature: $ARGUMENTS
+
+**For complex features or unfamiliar domains, enable extended thinking for comprehensive architecture design.**
 
 ## Phase 1: Parallel Architecture & Design
 
@@ -18,7 +21,7 @@ category: development
   DELIVER: Domain model, service contracts, API design, database schema
   OUTPUT: Entity properties, API endpoints (REST), service signatures, DTOs
   Keep it MVP - simplest thing that works.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🔒 Security Reviewer - Security Requirements
@@ -28,7 +31,7 @@ category: development
   ANALYZE: Multi-tenant isolation, authorization, validation, audit needs
   OUTPUT: Required auth attributes, org scoping approach, sensitive data handling
   Focus on preventing actual exploits.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🎨 UX Reviewer - UI/UX Requirements
@@ -38,7 +41,7 @@ category: development
   MAP: User workflows, error handling, loading states, mobile needs
   OUTPUT: Component hierarchy, key interactions, validations, feedback patterns
   Simple and intuitive wins.",
-  subagent_type="ux-reviewer"
+  subagent_type="ux-design-expert"
 )
 
 ## Phase 2: Parallel Implementation
@@ -59,7 +62,7 @@ category: development
   VALIDATE: Build compiles, tests pass, security enforced
   
   Generate complete working code with organization scoping.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🎯 Frontend Developer - UI Implementation  
@@ -78,7 +81,7 @@ category: development
   VALIDATE: Builds successfully, tests pass, responsive design
   
   Generate complete working Angular 19 code.",
-  subagent_type="frontend-developer"
+  subagent_type="frontend-implementation-expert"
 )
 
 ### 🧪 Test Engineer - Test Suite
@@ -94,7 +97,7 @@ category: development
   FOCUS: Business logic, not framework testing
   
   Generate executable test code.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🚀 Integration Validator

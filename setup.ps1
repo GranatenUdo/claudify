@@ -118,7 +118,6 @@ if ($CleanInstall) {
     Write-Host "Affected items:" -ForegroundColor DarkGray
     Write-Host "  - .claude/commands/* (all commands)" -ForegroundColor DarkGray
     Write-Host "  - .claude/agents/* (all agents)" -ForegroundColor DarkGray
-    Write-Host "  - .claude/agent-tools/* (all agent tools)" -ForegroundColor DarkGray
     Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
     Write-Host "  - .claude/hooks/* (all hooks)" -ForegroundColor DarkGray
     Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
@@ -329,7 +328,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     $paths = @(
         (Join-Path $claudePath "commands"),
         (Join-Path $claudePath "agents"),
-        (Join-Path $claudePath "agent-tools"),
         (Join-Path $claudePath "hooks"),
         (Join-Path $claudePath "generators"),
         (Join-Path $claudePath "validation"),
@@ -524,37 +522,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
             }
         }
         Write-Success "  Hooks: $installedHooks installed"
-    }
-    
-    # Install agent tools (comprehensive only)
-    if ($installTools) {
-        Write-Info "Installing agent tools..."
-        $toolDirs = @(
-            "security-reviewer",
-            "technical-debt-analyst",
-            "infrastructure-architect"
-        )
-        
-        $installedTools = 0
-        foreach ($toolDir in $toolDirs) {
-            $sourcePath = Join-Path $claudifyPath ".claude" "agent-tools" $toolDir
-            $destPath = Join-Path $claudePath "agent-tools" $toolDir
-            
-            if (Test-Path $sourcePath) {
-                Copy-Item -Path $sourcePath -Destination $destPath -Recurse -Force
-                Write-Detail "[OK] $toolDir tools"
-                $installedTools++
-            }
-        }
-        
-        # Copy agent-tools config
-        $sourceConfig = Join-Path $claudifyPath ".claude" "agent-tools" "agent-tools-config.json"
-        $destConfig = Join-Path $claudePath "agent-tools" "agent-tools-config.json"
-        if (Test-Path $sourceConfig) {
-            Copy-Item -Path $sourceConfig -Destination $destConfig -Force
-        }
-        
-        Write-Success "  Agent tools: $installedTools tool sets installed"
     }
     
     # Copy validation tools

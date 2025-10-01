@@ -5,9 +5,12 @@ argument-hint: area to check (e.g., "security", "performance", "all")
 complexity: simple
 estimated-time: 1.5 minutes
 category: devops
+model: opus
 ---
 
 # 🏥 Project Health Check: $ARGUMENTS
+
+**For comprehensive health analysis or risk assessment, enable extended thinking for detailed evaluation.**
 
 ## Phase 1: Parallel Health Analysis (60 seconds)
 
@@ -28,7 +31,7 @@ category: devops
   - Proper isolation: 10 pts
   
   Return: Score, issues found, top action needed",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 📊 Code Quality Analyzer
@@ -48,7 +51,7 @@ category: devops
   - >80% coverage: 15 pts
   
   Return: Score, issues found, top action needed",
-  subagent_type="code-reviewer"
+  subagent_type="code-review-expert"
 )
 
 ### ⚡ Performance Analyzer
@@ -68,7 +71,7 @@ category: devops
   - Optimized: 10 pts
   
   Return: Score, issues found, top action needed",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ## Phase 2: Scoring & Recommendations (30 seconds)
@@ -90,7 +93,7 @@ category: devops
   - Risk areas
   
   Return: Final score and health status",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 📋 Action Recommender
@@ -110,7 +113,7 @@ category: devops
   - User-facing issues first
   
   Return: Actionable recommendations",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ## Quick Health Commands

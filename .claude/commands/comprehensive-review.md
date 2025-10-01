@@ -5,9 +5,12 @@ argument-hint: what to review (e.g., "FieldService" or "api/controllers")
 complexity: simple
 estimated-time: 1-2 minutes
 category: quality
+model: opus
 ---
 
 # Comprehensive Review: $ARGUMENTS
+
+**For complex codebases or architecture analysis, enable extended thinking for comprehensive review.**
 
 ## Parallel Multi-Agent Analysis
 
@@ -30,7 +33,7 @@ category: quality
   Provide exact fix code for each issue found.
   
   Skip theoretical risks - focus on actual vulnerabilities.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### Performance Review Agent
@@ -52,7 +55,7 @@ category: quality
   Show before/after code for each fix.
   
   Ignore micro-optimizations.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ### Code Quality Agent  
@@ -74,7 +77,7 @@ category: quality
   Provide refactored code for complex sections.
   
   Skip style preferences.",
-  subagent_type="code-reviewer"
+  subagent_type="code-review-expert"
 )
 
 ### Architecture Review Agent
@@ -96,7 +99,7 @@ category: quality
   Show correct pattern implementation.
   
   Ignore minor deviations.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### Test Quality Agent
@@ -118,7 +121,7 @@ category: quality
   Provide test code for uncovered paths.
   
   Skip test style issues.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ## Consolidated Report Format

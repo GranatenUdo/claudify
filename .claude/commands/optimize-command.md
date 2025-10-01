@@ -46,7 +46,7 @@ PROVIDE:
 2. What to FOCUS ON (top 3 deliverables)
 3. Agents to consolidate
 4. Parallel execution opportunities
-5. Rewritten core prompt (concise, value-focused)", subagent_type="Tech Lead")
+5. Rewritten core prompt (concise, value-focused)", subagent_type="tech-lead-engineer")
 
 ## Phase 2: Generate Value-Focused Version (3 min)
 

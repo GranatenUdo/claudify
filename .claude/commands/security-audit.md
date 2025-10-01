@@ -5,9 +5,12 @@ argument-hint: scope to audit (e.g., "all", "api", "frontend", "infrastructure")
 complexity: moderate
 estimated-time: 1-2 minutes (parallel execution)
 category: security
+model: opus
 ---
 
 # 🔒 Parallel Security Audit: $ARGUMENTS
+
+**For complex security analysis or novel threat vectors, enable extended thinking for comprehensive threat modeling.**
 
 ## Parallel Multi-Vector Security Analysis
 
@@ -39,7 +42,7 @@ category: security
   - Fix code
   
   Focus on exploitable issues only.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔑 Secrets & Credentials Agent
@@ -69,7 +72,7 @@ category: security
   - Severity level
   - Immediate action required
   - Proper secret management approach",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🌐 Infrastructure Security Agent
@@ -135,7 +138,7 @@ category: security
   - Attack vector
   - Risk level
   - Implementation fix",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 📊 Compliance & Audit Agent
@@ -171,7 +174,7 @@ category: security
   - Regulation violated
   - Business impact
   - Remediation priority",
-  subagent_type="business-domain-analyst"
+  subagent_type="tech-lead-engineer"
 )
 
 ## 🎯 Consolidated Security Report

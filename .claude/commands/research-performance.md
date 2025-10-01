@@ -5,9 +5,12 @@ argument-hint: performance issue or optimization target (e.g., "database queries
 complexity: moderate
 estimated-time: 3-4 minutes
 category: optimization
+model: opus
 ---
 
 # ⚡ Performance Research: $ARGUMENTS
+
+**For complex performance issues or system-wide optimizations, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Performance Investigation (2 minutes)
 
@@ -32,7 +35,7 @@ category: optimization
   - Cost of poor performance (user impact)
   
   Focus on measurable, achievable targets.",
-  subagent_type="researcher"
+  subagent_type="best-practices-researcher"
 )
 
 ### 🔧 Optimization Patterns Agent
@@ -56,7 +59,7 @@ category: optimization
   - Solutions with measured improvements
   
   Include specific code examples.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🐌 Bottleneck Detection Agent
@@ -81,7 +84,7 @@ category: optimization
   - Specific optimization needed
   
   Focus on the worst offenders.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ## Phase 2: Measurement & Validation (1 minute)

@@ -5,9 +5,12 @@ argument-hint: security concern or vulnerability type (e.g., "JWT validation", "
 complexity: moderate
 estimated-time: 3-4 minutes
 category: security
+model: opus
 ---
 
 # 🔒 Security Research: $ARGUMENTS
+
+**For complex vulnerabilities or novel attack vectors, enable extended thinking for comprehensive threat analysis.**
 
 ## Phase 1: Parallel Security Analysis (2 minutes)
 
@@ -32,7 +35,7 @@ category: security
   - Time to exploit
   
   Provide proof-of-concept if safe to demonstrate.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔐 Defense Research Agent
@@ -56,7 +59,7 @@ category: security
   - Automated detection methods
   
   Include code examples that work in our stack.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔍 Codebase Vulnerability Scan
@@ -80,7 +83,7 @@ category: security
   - Specific fix required
   
   Be paranoid. Assume attackers know our code.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ## Phase 2: Synthesis (1 minute)

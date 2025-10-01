@@ -23,7 +23,7 @@ category: quality
   4. C# 13 issues: Primary constructors, collection expressions
   
   Return: Specific build issues found",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🧪 Test Failure Analyzer
@@ -38,7 +38,7 @@ category: quality
   4. Database: In-memory DB setup, migrations
   
   Return: Test failure patterns found",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🗄️ Migration Checker
@@ -72,7 +72,7 @@ category: quality
   
   Apply minimal fixes for compilation.
   Generate working code changes.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### ✅ Test Fixer
@@ -88,7 +88,7 @@ category: quality
   
   Fix failing tests with minimal changes.
   Generate working test fixes.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🐳 Docker Fixer

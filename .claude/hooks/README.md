@@ -19,9 +19,10 @@ Hooks provide automated quality gates and enhancements to your Claude Code workf
 **Trigger**: Before `git commit` commands
 **Purpose**: Blocks commits with critical issues
 **TOP 3 Checks**:
-1. Build must succeed
-2. No hardcoded credentials
-3. Multi-tenant isolation enforced
+1. Build must succeed (.NET + TypeScript)
+2. No hardcoded credentials (code files only)
+3. Multi-tenant isolation enforced (queries require OrganizationId)
+**Performance**: Only checks staged code files, skips binaries/images
 **Can Block**: Yes (exit code 2)
 
 ### 🔐 Secrets Detection (`security-secrets-check.ps1`)
@@ -53,6 +54,9 @@ Run all hook tests:
 
 ## Best Practices
 1. **Keep hooks fast** - Under 2 seconds execution
+   - Check tool availability before using (npx, dotnet, etc.)
+   - Only process relevant files (code files for secrets, staged files for commits)
+   - Use ErrorAction SilentlyContinue for graceful failures
 2. **TOP 3 focus** - Check only critical issues
 3. **Non-blocking default** - Only block for security/build issues
 4. **Clear messages** - Tell user what's wrong and how to fix
@@ -60,6 +64,10 @@ Run all hook tests:
    - 0 = Success, continue
    - 1 = Warning, continue
    - 2 = Error, block operation
+6. **Performance optimizations**:
+   - Filter files by extension before reading
+   - Check null content before pattern matching
+   - Search in specific directories (src/) before recursive
 
 ## Adding New Hooks
 1. Create `.ps1` file in `.claude/hooks/`

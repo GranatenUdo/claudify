@@ -5,9 +5,12 @@ argument-hint: research question or topic (e.g., "should we migrate to .NET 9", 
 complexity: moderate
 estimated-time: 3-5 minutes
 category: research
+model: opus
 ---
 
 # 🧠 Smart Research: $ARGUMENTS
+
+**For complex topics or unfamiliar domains, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Deep Analysis (2 minutes)
 
@@ -32,7 +35,7 @@ category: research
   - What we should do (with reasoning)
   
   Skip theory. Find what practitioners actually do.",
-  subagent_type="researcher"
+  subagent_type="best-practices-researcher"
 )
 
 ### 💰 Business Impact Agent
@@ -57,7 +60,7 @@ category: research
   - Payback period
   
   No hand-waving. Use numbers where possible.",
-  subagent_type="business-domain-analyst"
+  subagent_type="tech-lead-engineer"
 )
 
 ### ⚡ Implementation Reality Agent
@@ -81,7 +84,7 @@ category: research
   - Testing requirements
   
   Give me the truth, not the sales pitch.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🔄 Alternative Solutions Agent

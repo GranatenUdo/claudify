@@ -23,7 +23,7 @@ category: quality
   4. Dependencies: Missing packages, version conflicts
   
   Return: Specific build issues found",
-  subagent_type="frontend-developer"
+  subagent_type="frontend-implementation-expert"
 )
 
 ### 🧪 Test Failure Analyzer
@@ -38,7 +38,7 @@ category: quality
   4. DOM issues: detectChanges needed, element queries
   
   Return: Test failure patterns found",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 📝 Lint/Type Checker
@@ -53,7 +53,7 @@ category: quality
   4. Import order: Circular deps, barrel exports
   
   Return: Lint and type issues found",
-  subagent_type="code-reviewer"
+  subagent_type="code-review-expert"
 )
 
 ## Phase 2: Parallel Fix Implementation (90 seconds)
@@ -71,7 +71,7 @@ category: quality
   
   Apply minimal fixes for compilation.
   Generate working code changes.",
-  subagent_type="frontend-developer"
+  subagent_type="frontend-implementation-expert"
 )
 
 ### ✅ Test Fixer
@@ -87,7 +87,7 @@ category: quality
   
   Fix failing tests with minimal changes.
   Generate working test fixes.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### ⚙️ Config Fixer

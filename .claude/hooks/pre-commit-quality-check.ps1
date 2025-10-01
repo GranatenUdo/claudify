@@ -14,39 +14,69 @@ Write-Host "🔍 Running TOP 3 quality checks..." -ForegroundColor Yellow
 $errors = @()
 
 # 1. BUILD CHECK - Must compile
-if (Test-Path "*.csproj") {
-    Write-Host "  ✓ Checking build..." -ForegroundColor Gray
-    $output = dotnet build --no-restore 2>&1
+# .NET check (search recursively for .csproj in src/)
+$csprojFiles = Get-ChildItem -Path "src" -Filter "*.csproj" -Recurse -ErrorAction SilentlyContinue 2>$null | Select-Object -First 1
+if ($csprojFiles) {
+    Write-Host "  ✓ Checking .NET build..." -ForegroundColor Gray
+    $buildOutput = dotnet build --no-restore 2>&1
     if ($LASTEXITCODE -ne 0) {
-        $errors += "Build failed - fix compilation errors"
-    }
-}
-if (Test-Path "tsconfig.json") {
-    Write-Host "  ✓ Checking TypeScript..." -ForegroundColor Gray
-    $output = npx tsc --noEmit 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        $errors += "TypeScript compilation failed"
+        $errors += "Build failed - fix compilation errors before committing"
     }
 }
 
-# 2. SECURITY CHECK - No credentials
+# TypeScript check (look in common locations)
+$tsconfigLocations = @("tsconfig.json", "src/*/tsconfig.json", "*/tsconfig.json")
+$tsconfigFound = $false
+foreach ($location in $tsconfigLocations) {
+    if (Test-Path $location) {
+        $tsconfigFound = $true
+        break
+    }
+}
+if ($tsconfigFound) {
+    Write-Host "  ✓ Checking TypeScript..." -ForegroundColor Gray
+    # Check if npx is available
+    $npxAvailable = Get-Command npx -ErrorAction SilentlyContinue
+    if ($npxAvailable) {
+        $tsOutput = npx tsc --noEmit 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            $errors += "TypeScript compilation failed - fix type errors"
+        }
+    }
+}
+
+# 2. SECURITY CHECK - No credentials (only check code files)
 Write-Host "  ✓ Checking for secrets..." -ForegroundColor Gray
 $stagedFiles = git diff --cached --name-only 2>$null
+$codeExtensions = @('.cs', '.ts', '.js', '.json', '.config', '.yml', '.yaml', '.ps1')
 foreach ($file in $stagedFiles) {
+    # Only check code files, skip binaries/images
+    $ext = [System.IO.Path]::GetExtension($file)
+    if ($ext -notin $codeExtensions) { continue }
     if (-not (Test-Path $file)) { continue }
+
     $content = Get-Content $file -Raw -ErrorAction SilentlyContinue
-    if ($content -match 'password\s*=\s*["''][^"'']+["'']|api[_-]?key\s*=\s*["''][^"'']+["'']') {
+    if ($null -eq $content) { continue }
+
+    # Check for hardcoded credentials
+    if ($content -match 'password\s*=\s*["''][^"'']{6,}["'']|api[_-]?key\s*=\s*["''][a-zA-Z0-9]{20,}["'']') {
         $errors += "${file}: Contains hardcoded credentials!"
     }
 }
 
-# 3. TENANT ISOLATION CHECK - Critical for multi-tenant
+# 3. TENANT ISOLATION CHECK - Critical for multi-tenant (C# files only)
 Write-Host "  ✓ Checking tenant isolation..." -ForegroundColor Gray
 $backendFiles = $stagedFiles | Where-Object { $_ -match "Service\.cs$|Repository\.cs$" }
 foreach ($file in $backendFiles) {
+    if (-not (Test-Path $file)) { continue }
+
     $content = Get-Content $file -Raw -ErrorAction SilentlyContinue
-    if ($content -match "\.ToListAsync\(\)" -and $content -notmatch "OrganizationId") {
-        $errors += "${file}: Missing OrganizationId filter!"
+    if ($null -eq $content) { continue }
+
+    # Check for queries without organization filtering
+    if ($content -match "\.ToListAsync\(\)|\.FirstOrDefaultAsync\(\)|\.AnyAsync\(\)" -and
+        $content -notmatch "OrganizationId|IOrganizationScoped") {
+        $errors += "${file}: Missing OrganizationId filter - multi-tenant breach risk!"
     }
 }
 

@@ -46,7 +46,7 @@ FOR EACH ISSUE:
 - Fix: [Exact code to implement]
 - Priority: [Critical/High/Medium]
 
-Skip style preferences. Focus on what actually matters.", subagent_type="Frontend Developer")
+Skip style preferences. Focus on what actually matters.", subagent_type="frontend-implementation-expert")
 
 ### Security Quick Check
 @Task(description="Security review", prompt="Security check for '$ARGUMENTS' frontend code:
@@ -60,7 +60,7 @@ CHECK ONLY:
 If SECURE: Say 'Security ✓'
 If ISSUES: Provide exact fix
 
-Skip theoretical risks.", subagent_type="Security Reviewer")
+Skip theoretical risks.", subagent_type="security-vulnerability-scanner")
 
 ## Phase 3: Actionable Output (2 min)
 

@@ -5,9 +5,12 @@ argument-hint: area to optimize (e.g., "database", "api", "frontend", "all")
 complexity: moderate
 estimated-time: 2-3 minutes
 category: optimization
+model: opus
 ---
 
 # ⚡ Parallel Performance Optimization: $ARGUMENTS
+
+**For complex performance optimization or system-wide bottlenecks, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Analysis & Fix
 
@@ -29,7 +32,7 @@ category: optimization
   - Optimization opportunities
   
   Focus on queries taking >100ms.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ### 🚀 API Performance Agent
@@ -50,7 +53,7 @@ category: optimization
   - Memory optimizations
   
   Target sub-200ms response times.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🎨 Frontend Performance Agent
@@ -71,7 +74,7 @@ category: optimization
   - Rendering optimizations
   
   Target <3s load time, <100ms interactions.",
-  subagent_type="frontend-developer"
+  subagent_type="frontend-implementation-expert"
 )
 
 ### 🏗️ Infrastructure Performance Agent
@@ -113,7 +116,7 @@ category: optimization
   - ROI calculation
   
   Provide hard numbers only.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ## Phase 2: Parallel Validation

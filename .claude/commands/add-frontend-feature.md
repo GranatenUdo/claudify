@@ -70,10 +70,10 @@ category: development
 
 ## Phase 2: Parallel Validation (30 seconds)
 
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run update:api", description="Sync API")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run build", description="Build")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm test -- --watch=false", description="Test")
-@Bash(command="cd src/PTA.VineyardManagement.Web && npm run lint && npm run typecheck", description="Validate")
+@Bash(command="cd src/{{WebProject}} && npm run update:api", description="Sync API")
+@Bash(command="cd src/{{WebProject}} && npm run build", description="Build")
+@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test")
+@Bash(command="cd src/{{WebProject}} && npm run lint && npm run typecheck", description="Validate")
 
 ## ✅ Complete
 Frontend feature with UX, implementation, and tests.

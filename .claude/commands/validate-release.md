@@ -5,9 +5,12 @@ argument-hint: release version (e.g., "v1.2.3" or "next")
 complexity: simple
 estimated-time: 1.5 minutes
 category: devops
+model: opus
 ---
 
 # 🚀 Validate Release: $ARGUMENTS
+
+**For complex release validation or risk assessment, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Validation Checks (60 seconds)
 
@@ -27,7 +30,7 @@ category: devops
   - Coverage acceptable
   
   Return: Test status and any failures",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🔒 Security Scanner
@@ -42,7 +45,7 @@ category: devops
   4. OWASP top 10 compliance
   
   Return: Security status and critical issues",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔨 Build Validator
@@ -76,7 +79,7 @@ category: devops
   4. Breaking changes documented
   
   Return: Documentation status",
-  subagent_type="technical-documentation-expert"
+  subagent_type="technical-documentation-writer"
 )
 
 ## Phase 2: Risk Analysis & Decision (30 seconds)
@@ -99,7 +102,7 @@ category: devops
   - Rollback strategy
   
   Return: Release decision with rationale",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 📊 Report Generator
@@ -116,7 +119,7 @@ category: devops
   6. Next steps
   
   Format as markdown summary",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ## Quick Validation Commands

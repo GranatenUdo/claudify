@@ -64,7 +64,7 @@ FOR EACH ISSUE:
 - Fix: [Exact code to implement]
 - Priority: [Critical/High/Medium]
 
-Skip style preferences. Focus on production issues.", subagent_type="Tech Lead")
+Skip style preferences. Focus on production issues.", subagent_type="tech-lead-engineer")
 
 ### Security Reviewer - Critical Validation
 @Task(description="Security review", prompt="Security review for '$ARGUMENTS' backend:
@@ -79,7 +79,7 @@ CRITICAL CHECKS ONLY:
 If SECURE: Say 'Security ✓'
 If ISSUES: Provide exact fix with code
 
-Focus on exploitable vulnerabilities.", subagent_type="Security Reviewer")
+Focus on exploitable vulnerabilities.", subagent_type="security-vulnerability-scanner")
 
 ## Phase 3: Actionable Output (2 min)
 
