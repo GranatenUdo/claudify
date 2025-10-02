@@ -1,6 +1,6 @@
 # Claudify
 
-![Version](https://img.shields.io/badge/version-5.0.0-blue)
+![Version](https://img.shields.io/badge/version-4.0.0-blue)
 
 **Intelligent Claude Code setup for .NET/Angular projects.**
 
@@ -215,9 +215,9 @@ your-solution/
 
 ## Version
 
-**Current**: 5.0.0
+**Current**: 4.0.0
 
-**What's New in 5.0.0** (Breaking):
+**What's New in 4.0.0** (Breaking):
 - Commands are now pure and path-agnostic
 - Work in current directory context (no hardcoded paths)
 - Simplified setup (just copies files, no project detection)

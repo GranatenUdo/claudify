@@ -5,43 +5,31 @@
 
 ---
 
-## What's New in v4.0.0
+## ⚠️ BREAKING CHANGES
 
-### Major Feature: Dual-Mode Convention Detection
+v4.0.0 is a **major breaking release** that removes the template system and aligns with official Claude Code best practices.
 
-Claudify now offers two modes for detecting and applying project conventions:
+### What Changed
 
-1. **Smart Mode (Default)** - Pre-analyzes your entire codebase during setup
-2. **Adaptive Mode** - On-demand pattern detection when commands run
+1. **Template System Removed**: No more `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}` variables
+2. **No Project Detection**: Setup no longer scans for or configures projects
+3. **Pure Commands**: Commands are path-agnostic and work in current directory context
+4. **No "Primary" Project**: Concept removed entirely
+5. **Context-Driven**: Commands work where Claude Code is launched from
 
-This gives you flexibility to choose between speed (Smart) and always-current detection (Adaptive).
+### Why This Change?
 
-### Key Changes
+Research into official Anthropic Claude Code best practices revealed:
+- Commands should be **"intentionally low-level and unopinionated"**
+- No hardcoded paths or project-specific configuration
+- Work in directory context provided by Claude Code
+- Commands describe actions, not paths
 
-- **Interactive mode selection** during setup
-- **All 32 commands** now support pattern detection
-- **Automatic fallback** from Smart to Adaptive if cache missing
-- **New command**: `.\setup.ps1 -RefreshAnalysis` to update conventions
-- **Convention cache**: `.claude/config/project-knowledge.json` (Smart Mode)
-- **Mode tracking**: `.claude/config/claudify.json`
-
----
-
-## Breaking Changes
-
-### NONE - Fully Backward Compatible
-
-v4.0.0 is designed to be **100% backward compatible**:
-
-- Existing CLAUDE.md and FEATURES.md files are preserved
-- Existing commands continue to work
-- Project configuration format unchanged
-- No changes to agent definitions
-- All generators remain functional
+v4.0.0 implements this philosophy correctly.
 
 ---
 
-## Upgrading
+## Migration Steps
 
 ### Step 1: Pull Latest Claudify
 
@@ -50,315 +38,208 @@ cd path/to/claudify
 git pull origin main
 ```
 
-### Step 2: Re-run Setup on Your Project
+### Step 2: Re-run Setup
+
+**Important**: You must re-run setup. The old commands won't work.
 
 ```bash
-cd path/to/your/project
+cd your-project
 ..\claudify\setup.ps1 -TargetRepository "."
 ```
 
-### Step 3: Choose Mode
+Choose Smart or Adaptive mode when prompted.
 
-You'll be prompted:
+### Step 3: Delete Obsolete Config
 
-```
-Choose detection mode:
-  [1] SMART MODE (Recommended)
-  [2] ADAPTIVE MODE (Lightweight)
-
-Select mode [1/2] (default: 1):
+```bash
+# If this file exists from v3.x, delete it:
+rm .claude/config/projects.json
 ```
 
-**Recommendation**: Choose **Smart Mode (1)** for best results.
+This file is no longer used in v4.0.0.
 
-### Step 4: Complete Setup
+### Step 4: Update Your Workflow
 
-Setup will:
-- Update all commands with pattern detection
-- Create convention cache (if Smart Mode selected)
-- Preserve your existing CLAUDE.md and FEATURES.md
-- Save mode configuration
+**OLD workflow (v3.x)**:
+```bash
+cd your-project-root
+claude
+> /add-frontend-feature "Dashboard"
+# Worked because paths were hardcoded during setup
+```
 
-**Time**: 2-3 minutes (including analysis)
+**NEW workflow (v4.0.0)**:
+```bash
+# Navigate to specific project first
+cd src/YourProject.Web
+claude
+> /add-frontend-feature "Dashboard"
+# Works because Claude Code provides directory context
+```
 
 ---
 
-## What Happens to Your Existing Setup
+## Workflow Changes
 
-### Preserved Files (Not Touched)
+### Single Project
 
-- `CLAUDE.md` - Your project documentation
-- `FEATURES.md` - Your feature list
-- `.claude/config/projects.json` - Project configuration
-- Any custom commands you added
-- Any custom agents you created
+**Before (v3.x)**:
+- Run `claude` from anywhere in repo
+- Commands used hardcoded paths from template replacement
 
-### Updated Files
+**After (v4.0.0)**:
+- Navigate to project directory: `cd src/YourProject.Web`
+- Run `claude` from that directory
+- Commands work in current context
 
-- `.claude/commands/*.md` - All commands get pattern detection
-- `.claude/agents/*.md` - Agents become convention-aware
+### Multi-Project Development
 
-### New Files Created
+**Before (v3.x)**:
+- Setup asked for "primary" project
+- Other projects unusable without re-running setup
 
-- `.claude/config/project-knowledge.json` - Convention cache (Smart Mode only)
-- `.claude/config/claudify.json` - Mode configuration
+**After (v4.0.0)**:
+- Use `cd` to switch between projects
+- Or use git worktrees for parallel work
+- All projects equally accessible
+
+**Example**:
+```bash
+# Option 1: Switch with cd
+cd src/Admin.Web && claude
+# Work on admin, then exit
+cd ../Public.Web && claude
+# Work on public
+
+# Option 2: Git worktrees (recommended)
+git worktree add ../admin-work main
+git worktree add ../public-work main
+
+# Terminal 1
+cd ../admin-work/src/Admin.Web
+claude
+
+# Terminal 2
+cd ../public-work/src/Public.Web
+claude
+```
 
 ---
 
-## Understanding the New Modes
+## What Was Removed
 
-### Smart Mode (Recommended)
+### From Setup.ps1
+- ❌ `Get-ProjectNamesInteractive` function
+- ❌ `Apply-ProjectTemplates` function
+- ❌ `Resolve-DuplicateNames` function
+- ❌ Interactive project selection prompts
+- ❌ Template replacement logic
+- ✅ Simplified from 1089 to 255 lines (76% reduction)
 
-**How It Works**:
-1. During setup, analyzes entire codebase (~60 seconds)
-2. Detects 18+ patterns: naming, constructors, properties, collections, error handling, validation
-3. Saves to `.claude/config/project-knowledge.json`
-4. Commands read cache and generate matching code instantly
+### From Commands
+- ❌ All `cd {{WebProject}} &&` prefixes
+- ❌ All `{{ApiProject}}`, `{{ArchitectureTestProject}}` templates
+- ❌ Hardcoded paths
 
-**When to Use**:
-- Teams with established conventions
-- Want fastest code generation
-- Consistent patterns across codebase
-- Node.js 18+ available
-
-**Pros**:
-- 95-100% accuracy
-- Instant code generation (no analysis delay)
-- Consistent across all commands
-
-**Cons**:
-- Requires Node.js 18+
-- Cache can become stale if conventions change
-
-### Adaptive Mode
-
-**How It Works**:
-1. No upfront analysis during setup
-2. When generating code, examines 2-3 similar files on-demand
-3. Detects patterns from those files
-4. Generates code matching observed patterns
-
-**When to Use**:
-- Rapidly changing codebases
-- Mixed conventions in different areas
-- Want always-current detection
-- Don't want dependency on Node.js
-
-**Pros**:
-- Always reflects current code
-- No cache to maintain
-- Works without Node.js
-
-**Cons**:
-- Slight delay per command (~30s examination)
-- 90% accuracy vs 95-100%
+### From Configuration
+- ❌ `.claude/config/projects.json` (no longer generated)
+- ❌ `.claude/templates/` folder (was unused)
+- ❌ "Primary project" concept
 
 ---
 
-## Switching Between Modes
+## What Stayed the Same
 
-### From Adaptive to Smart Mode
+### Convention Detection
+- ✅ Smart Mode (analyzes project, caches conventions)
+- ✅ Adaptive Mode (on-demand examination)
+- ✅ `.\setup.ps1 -RefreshAnalysis` command
+- ✅ `.claude/config/project-knowledge.json` cache format
+- ✅ All 18+ pattern categories detected
 
-```bash
-.\setup.ps1 -TargetRepository "path/to/your/project" -RefreshAnalysis
-```
-
-This will:
-- Run the analyzer
-- Create `.claude/config/project-knowledge.json`
-- Update mode to "smart" in `claudify.json`
-- Take ~60 seconds
-
-### From Smart to Adaptive Mode
-
-Simply delete the cache:
-
-```bash
-# Windows
-del .claude\config\project-knowledge.json
-
-# Linux/macOS
-rm .claude/config/project-knowledge.json
-```
-
-Commands will automatically fall back to adaptive mode.
+### Commands & Agents
+- ✅ All 40+ commands available
+- ✅ All 30+ agents available
+- ✅ Command functionality unchanged (just path-agnostic now)
+- ✅ Agent tool restrictions unchanged
 
 ---
 
-## Refreshing Convention Cache
+## Common Issues After Migration
 
-If your project conventions change (new patterns, refactored code):
+### "Command doesn't find my files"
 
+**Cause**: Claude Code not launched from correct directory
+
+**Solution**:
 ```bash
-.\setup.ps1 -TargetRepository "." -RefreshAnalysis
+cd src/YourProject.Web  # Navigate to project
+pwd                      # Verify you're in the right place
+claude                   # Launch from here
 ```
 
-**When to refresh**:
-- After major refactoring
-- When adopting new patterns (e.g., switching from exceptions to Result<T>)
-- When commands generate outdated patterns
-- Every few weeks for active projects
+### "Want to work on multiple projects"
+
+**Use git worktrees** (official Claude Code recommendation):
+```bash
+git worktree add ../worktree-admin main
+git worktree add ../worktree-public main
+
+# Each terminal works in its own worktree
+cd ../worktree-admin/src/Admin.Web && claude
+cd ../worktree-public/src/Public.Web && claude
+```
+
+### "Old commands still have {{WebProject}}"
+
+**Cause**: You didn't re-run setup
+
+**Solution**:
+```bash
+.\claudify\setup.ps1 -TargetRepository "."
+```
+
+This overwrites old command files with new v4.0.0 versions.
 
 ---
 
-## Testing Your Upgrade
+## Comparison: v3.x vs v4.0.0
 
-### 1. Verify Mode Configuration
-
-```bash
-# Windows
-cat .claude\config\claudify.json
-
-# Linux/macOS
-cat .claude/config/claudify.json
-```
-
-Should show:
-```json
-{
-  "mode": "smart",  // or "adaptive"
-  "analyzedAt": "2025-10-02T...",
-  "version": "4.0.0",
-  "installDate": "2025-10-02 ..."
-}
-```
-
-### 2. Test Pattern Detection
-
-**Smart Mode**:
-```bash
-# Should see the cache file
-ls .claude/config/project-knowledge.json
-```
-
-**Adaptive Mode**:
-```bash
-# Cache file should not exist
-ls .claude/config/project-knowledge.json  # Should error
-```
-
-### 3. Test Code Generation
-
-```bash
-claude /add-backend-feature "Test Feature"
-```
-
-Generated code should match your project's:
-- Constructor patterns
-- Property styles (public vs private setters)
-- Collection types (List vs IReadOnlyList)
-- Date field naming (CreatedAt vs CreatedAtDateTime)
-- Error handling (exceptions vs Result<T>)
+| Aspect | v3.x | v4.0.0 |
+|--------|------|--------|
+| Setup Complexity | 1089 lines, project detection | 255 lines, pure copy |
+| Project Selection | "Primary" selection required | No selection needed |
+| Command Paths | Hardcoded via templates | Pure, context-aware |
+| Multi-Project | One primary only | All projects via `cd` |
+| Configuration | `projects.json` required | No project config |
+| Philosophy | Custom template system | Aligned with Claude Code |
 
 ---
 
-## Troubleshooting
+## Benefits of v4.0.0
 
-### Q: Setup fails with "Node.js not found"
-
-**A**: You have two options:
-1. Install Node.js 18+ and choose Smart Mode
-2. Choose Adaptive Mode during setup (works without Node.js)
-
-### Q: Commands generate wrong patterns after upgrade
-
-**A**: Refresh the convention cache:
-```bash
-.\setup.ps1 -RefreshAnalysis
-```
-
-### Q: I want to see what patterns were detected
-
-**A**: Read the cache file:
-```bash
-# Windows
-cat .claude\config\project-knowledge.json
-
-# Linux/macOS
-cat .claude/config/project-knowledge.json
-```
-
-### Q: Can I use v4.0.0 without the new features?
-
-**A**: Yes! Choose **Adaptive Mode** during setup. Commands will work exactly as before, examining code on-demand with no cache.
-
-### Q: How do I know which mode I'm using?
-
-**A**: Check the config:
-```bash
-cat .claude/config/claudify.json
-```
-
-Look for the `"mode"` field.
-
-### Q: Analyzer is slow on my large codebase
-
-**A**: Analysis time scales with codebase size:
-- Small projects (< 100 files): ~15 seconds
-- Medium projects (100-500 files): ~30-60 seconds
-- Large projects (500+ files): ~60-120 seconds
-
-If too slow, choose **Adaptive Mode** instead.
+✅ **Simpler**: Setup is just file copy + optional analyzer
+✅ **Flexible**: All projects equally accessible
+✅ **Portable**: Commands work in any directory
+✅ **Aligned**: Follows official Claude Code best practices
+✅ **Maintainable**: No template logic to maintain
+✅ **Scalable**: Works with 1 project or 100 projects
 
 ---
 
-## Rollback (If Needed)
+## Rollback to v3.x
 
-If you encounter issues and need to rollback:
-
-### Option 1: Use Previous Claudify Version
+If you need to rollback:
 
 ```bash
-cd path/to/claudify
-git checkout v3.x.x  # Replace with your previous version
-cd path/to/your/project
+cd claudify
+git checkout tags/v3.0.0
+cd ../your-project
 ..\claudify\setup.ps1 -TargetRepository "."
 ```
 
-### Option 2: Manual Cleanup
-
-1. Delete convention cache:
-   ```bash
-   rm .claude/config/project-knowledge.json
-   rm .claude/config/claudify.json
-   ```
-
-2. Commands will use adaptive mode automatically
+However, v4.0.0 is recommended for better alignment with Claude Code.
 
 ---
 
-## Getting Help
-
-### Issues or Questions
-
-- GitHub Issues: https://github.com/GranatenUdo/claudify/issues
-- Documentation: See README.md
-
-### Common Issues
-
-1. **Pattern detection not working**: Run `.\setup.ps1 -RefreshAnalysis`
-2. **Commands slow in Adaptive Mode**: Switch to Smart Mode with `-RefreshAnalysis`
-3. **Node.js errors**: Update to Node.js 18+ or use Adaptive Mode
-4. **Cache stale**: Refresh with `-RefreshAnalysis`
-
----
-
-## Summary
-
-**Upgrading is simple**:
-1. Pull latest Claudify
-2. Re-run setup on your project
-3. Choose Smart Mode (recommended)
-4. Continue using Claude Code as before, now with better pattern matching
-
-**Key Benefits of v4.0.0**:
-- Smarter code generation that matches YOUR conventions
-- Flexibility to choose analysis strategy
-- Automatic fallback for reliability
-- Backward compatible with no breaking changes
-
-**Recommended Setup**: Smart Mode with periodic `.\setup.ps1 -RefreshAnalysis` after major changes.
-
----
-
-**Claudify v4.0.0 - Convention-aware code generation for Claude Code**
+**Questions?** Open an issue: https://github.com/GranatenUdo/claudify/issues

@@ -134,7 +134,7 @@ WRONG: `dotnet test --no-build`
 
 @Bash(command="dotnet build --configuration Release", description="Build")
 @Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
-@Bash(command="dotnet test tests/{{ArchitectureTestProject}}", description="Architecture")
+@Bash(command="dotnet test --filter FullyQualifiedName~ArchitectureTests", description="Architecture")
 
 ## ✅ Complete
 Bug fixed with regression test. Update CHANGELOG.md under "### Fixed".

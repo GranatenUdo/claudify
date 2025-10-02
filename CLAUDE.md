@@ -2,7 +2,7 @@
 
 ## CONTEXT
 **System**: Claudify - Claude Code Setup System
-**Version**: 5.0.0
+**Version**: 4.0.0
 **Purpose**: Specialized commands and agents for .NET/Angular development with Claude Code
 **Architecture**: Convention-aware, context-driven command system
 
@@ -292,18 +292,18 @@ Tracks mode configuration:
 
 ## VERSIONING
 
-### Current Version: 5.0.0
+### Current Version: 4.0.0
 
-**Breaking Changes from 4.x**:
+**Breaking Changes from v3.x**:
 - Removed template system (`{{WebProject}}`, etc.)
 - Removed project detection from setup
 - Commands are now pure and path-agnostic
 - Work in current directory context only
 - Setup just copies files (no configuration)
 
-**Migration from 4.x to 5.x**:
+**Migration from v3.x to v4.0.0**:
 1. Re-run `setup.ps1` on your repository
-2. Delete old `.claude/config/projects.json` (obsolete)
+2. Delete old `.claude/config/projects.json` (if exists from v3.x)
 3. Commands now work in directory context
 4. Use `cd` to switch projects
 
@@ -348,4 +348,4 @@ Tracks mode configuration:
 
 ---
 
-**Claudify 5.0.0** - Pure, context-aware commands for Claude Code.
+**Claudify 4.0.0** - Pure, context-aware commands for Claude Code.

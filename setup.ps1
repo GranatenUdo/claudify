@@ -1,4 +1,4 @@
-# Claudify - Setup Script v5.0.0
+# Claudify - Setup Script v4.0.0
 # Cross-platform setup for Windows, Linux, and macOS
 #
 # Usage:
@@ -22,7 +22,7 @@ $ErrorActionPreference = "Stop"
 # Get version and paths
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $versionFile = Join-Path $scriptDir "VERSION"
-$version = if (Test-Path $versionFile) { Get-Content $versionFile -Raw | ForEach-Object { $_.Trim() } } else { "5.0.0" }
+$version = if (Test-Path $versionFile) { Get-Content $versionFile -Raw | ForEach-Object { $_.Trim() } } else { "4.0.0" }
 
 # Sanitize target path
 $TargetRepository = $TargetRepository.Trim()
