@@ -97,10 +97,10 @@ category: development
 
 ## Phase 2: Parallel Validation (30 seconds)
 
-@Bash(command="cd {{WebProject}} && npm run build", description="Build")
-@Bash(command="cd {{WebProject}} && npm test -- --watch=false", description="Test")
-@Bash(command="cd {{WebProject}} && npm run lint --fix", description="Lint")
-@Bash(command="cd {{WebProject}} && npm run typecheck", description="Types")
+@Bash(command="npm run build", description="Build")
+@Bash(command="npm test -- --watch=false", description="Test")
+@Bash(command="npm run lint --fix", description="Lint")
+@Bash(command="npm run typecheck", description="Types")
 
 ## ✅ Complete
 Feature updated with backward compatibility. Update CHANGELOG.md.

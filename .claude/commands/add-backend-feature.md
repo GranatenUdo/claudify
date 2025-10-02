@@ -149,7 +149,7 @@ WRONG: `dotnet test --no-build`
 
 @Bash(command="dotnet build --configuration Release", description="Build")
 @Bash(command="dotnet test", description="Test")
-@Bash(command="cd {{WebProject}} && npm run update:api", description="Update client")
+@Bash(command="npm run update:api", description="Update client")
 
 ## ✅ Complete
 Feature implemented with tests and security validation.

@@ -118,7 +118,7 @@ WRONG: `dotnet test --no-build`
 
 @Bash(command="dotnet build --configuration Release", description="Build")
 @Bash(command="dotnet test --filter FullyQualifiedName~$ARGUMENTS", description="Tests")
-@Bash(command="cd {{WebProject}} && npm run update:api", description="Update client")
+@Bash(command="npm run update:api", description="Update client")
 
 ## ✅ Complete
 Feature updated with backward compatibility maintained. Update CHANGELOG.md.

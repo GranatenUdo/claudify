@@ -2,270 +2,350 @@
 
 ## CONTEXT
 **System**: Claudify - Claude Code Setup System
-**Version**: 4.0.0
-**Purpose**: Automated configuration system for Claude Code in .NET/Angular projects
-**Architecture**: Three-phase system with namespace detection
+**Version**: 5.0.0
+**Purpose**: Specialized commands and agents for .NET/Angular development with Claude Code
+**Architecture**: Convention-aware, context-driven command system
 
 ## SYSTEM ARCHITECTURE
 
-### Three-Phase Implementation
-1. **Bootstrap Phase** (setup.ps1)
-   - Detects existing installations and versions
-   - Creates `.claudify` directory with template components
-   - Performs intelligent project detection
-   - Offers Minimal or Comprehensive installation modes
+### Two-Phase Implementation
 
-2. **Configuration Phase** (Automatic)
-   - Detects Angular projects via angular.json
-   - Detects .NET APIs via Microsoft.NET.Sdk.Web
-   - Detects test projects via Microsoft.NET.Sdk with 'Test' in name
-   - Handles duplicate project names intelligently
-   - Preserves existing CLAUDE.md and FEATURES.md (user-managed)
+1. **Setup Phase** (setup.ps1)
+   - Copies command files to `.claude/commands/`
+   - Copies agent files to `.claude/agents/`
+   - Optional: Runs convention analyzer (Smart Mode)
+   - Creates `.claude/config/` directory structure
 
-3. **Runtime Phase** (Claude Code)
-   - Components loaded from configured `.claude` directory
+2. **Runtime Phase** (Claude Code)
+   - Commands execute in current working directory context
    - Agents operate with security-restricted tool access
-   - Commands utilize specialized Opus 4 agents
+   - Convention detection (Smart Mode cache or Adaptive Mode on-demand)
+   - Commands use pure bash operations (no hardcoded paths)
 
-### Project Detection and Template System
-The setup uses a mustache-style template system with automatic project detection:
+### How It Works
 
-1. **Project Discovery**: 
-   - Angular: Scans for angular.json files
-   - .NET: Scans for .csproj files with SDK detection
-2. **Automatic Categorization**:
-   - Web projects: Folders containing angular.json
-   - API projects: Projects with Microsoft.NET.Sdk.Web
-   - Test projects: Projects with Microsoft.NET.Sdk and 'Test' in name
-3. **Template Variables**:
-   - `{{WebProject}}` - Primary web project (e.g., `MyCompany.Product.Web`)
-   - `{{ApiProject}}` - API project (e.g., `MyCompany.Product.Api`)
-   - `{{ArchitectureTestProject}}` - Architecture tests (e.g., `MyCompany.Product.ArchitectureTests`)
-   - `{{ProjectNamespace}}` - Base namespace for backward compatibility
-4. **Multi-Project Support**: If multiple web projects exist, prompts for primary selection
-5. **Configuration**: Saves to `.claude/config/projects.json`
+**Key Principle**: Commands are path-agnostic and work in whatever directory Claude Code is launched from.
 
-Example: 
-- Template: `cd src/{{WebProject}}`
-- Detected: `MyCompany.ProductName.Web` (from MyCompany.ProductName.Web.csproj)
-- Result: `cd src/MyCompany.ProductName.Web`
-
-## CONFIGURATION RULES
-
-### Project Structure Requirements
-- **Standard .NET Layout**: Projects follow `src/[Namespace].Web`, `src/[Namespace].Api`
-- **Test Organization**: Tests in `tests/[Namespace].*Tests` pattern
-- **Angular Structure**: Frontend at `src/[Namespace].Web` with standard Angular layout
-- **Convention-Based**: All projects follow established architectural patterns
-
-### Automatic Configuration
-- **Project Detection**: Smart detection based on file markers and SDK types
-- **Duplicate Handling**: Prepends parent folder for duplicate names
-- **Path Resolution**: Applies project names to all command paths
-- **Documentation**: CLAUDE.md and FEATURES.md remain user-managed
-- **Validation**: Confirms all replacements successful
-
-### Convention Detection Modes
-- **Smart Mode (Default)**: Pre-analyzes entire codebase (~60s), caches conventions, 95-100% accuracy
-- **Adaptive Mode**: On-demand examination of 2-3 files per command, 90% accuracy, always current
-- **Automatic Fallback**: Commands use cache if available, examine code if not
-- **Refresh Analysis**: Run `.\setup.ps1 -RefreshAnalysis` to update cached conventions
-
-### Security Configuration
-- **Agent Restrictions**: Each agent has minimal required tools
-- **Code Reviewer**: Read, Edit, MultiEdit, Grep, Glob, LS only
-- **Security Reviewer**: Read, Grep, Glob, LS, WebSearch, Bash only
-- **Tech Lead**: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
-- **Frontend Developer**: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
-
-## IMPLEMENTATION PATTERNS
-
-### PowerShell Configuration
-```powershell
-# Project detection example
-function Detect-Projects {
-    param([string]$TargetPath)
-    
-    # Angular detection
-    $angularProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "angular.json"
-    
-    # .NET API detection
-    $apiProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
-                   Where-Object { 
-                       (Get-Content $_.FullName -Raw) -match 'Microsoft\.NET\.Sdk\.Web'
-                   }
-    
-    # Test project detection
-    $testProjects = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.csproj" | 
-                    Where-Object { 
-                        $_.Name -like "*Test*" -or $_.Name -like "*Tests"
-                    }
-    
-    return @{
-        Web = $angularProjects
-        Api = $apiProjects
-        Tests = $testProjects
-    }
-}
-
-# Handle duplicate names
-function Resolve-DuplicateNames {
-    param($Projects)
-    $nameGroups = $Projects | Group-Object -Property Name
-    foreach ($group in $nameGroups) {
-        if ($group.Count -gt 1) {
-            foreach ($project in $group.Group) {
-                $parentFolder = Split-Path (Split-Path $project.FullPath -Parent) -Leaf
-                $project.Name = "$parentFolder.$($project.Name)"
-            }
-        }
-    }
-    return $Projects
-}
-```
-
-### Component Structure
-```
-.claude/
-├── commands/          # 40+ project-configured commands
-├── agents/           # 30+ specialized agents
-├── generators/       # Scaffolding tools
-└── validation/       # Quality checks
-```
-
-### Command Templates
-All commands use mustache-style templates with specific project variables:
-- Build commands: `cd src/{{WebProject}} && npm run build`
-- Test commands: `dotnet test tests/{{ArchitectureTestProject}}`
-- API updates: `cd src/{{WebProject}} && npm run update:api`
-- API projects: `cd src/{{ApiProject}}`
-
-These templates are automatically replaced with your actual project names during setup.
-
-## SECURITY ARCHITECTURE
-
-### Agent Tool Matrix
-Each agent operates with restricted permissions:
-| Agent | Allowed Tools | Purpose |
-|-------|--------------|---------|
-| Code Reviewer | Read, Edit, Grep | Code quality analysis |
-| Security Reviewer | Read, Grep, WebSearch | Vulnerability detection |
-| Tech Lead | Read, Write, Edit, TodoWrite | Architecture decisions |
-| Frontend Developer | Read, Write, Edit | UI implementation |
-| Test Analyst | Read, Write, Bash | Test creation and execution |
-
-### Security Principles
-- **Least Privilege**: Minimal permissions per agent role
-- **No Hardcoding**: All paths configured dynamically
-- **Audit Trail**: All operations tracked
-- **Validation**: Automatic verification of setup
-
-## PERFORMANCE OPTIMIZATION
-
-### Parallel Agent Execution
-- Opus 4 agents support simultaneous analysis
-- Commands utilize @Task for concurrent operations
-- Bundle size monitoring integrated
-
-### Configuration Performance
-- Namespace detection: < 2 seconds
-- File configuration: < 10 seconds for files
-- Validation: < 1 second
-- Total setup time: < 2 minutes
-
-## QUALITY ASSURANCE
-
-### Automatic Validation
-Setup performs these checks:
-1. Namespace detected correctly
-2. All files configured properly
-3. No remaining template markers
-4. Commands executable
-5. Documentation generated
-
-### Success Indicators
-```powershell
-Setup Complete!
-  - Commands installed
-  - Agents configured
-  - Project namespace applied: YourCompany.YourProject
-  - Documentation generated
-```
-
-## VERSIONING
-
-### Current Version: 4.0.0
-- Interactive project configuration
-- Full project name preservation with suffixes
-- Multi-project support
-- User confirmation and override capability
-- Enhanced template variables
-
-### Version Compatibility
-- Supports .NET 8/9 projects
-- Angular 17-19 compatible
-- Works with standard project structures
-- Cross-platform (Windows, Linux, macOS)
-
-## USAGE PATTERNS
-
-### Standard Workflow
-1. Run setup.ps1 with target repository
-2. Choose Comprehensive installation
-3. Choose convention detection mode (Smart recommended)
-4. Automatic project detection and configuration
-5. Begin using Claude Code with convention-aware generation
-
-### Common Commands After Setup
+**User Workflow**:
 ```bash
-/comprehensive-review     # Full code analysis
-/add-backend-feature     # Create new API feature (matches your conventions)
-/fix-frontend-bug        # Debug UI issues (respects your patterns)
-/security-audit          # Security scanning (aligns with architecture)
+# Navigate to target project
+cd src/MyProject.Web
+
+# Launch Claude Code
+claude
+
+# Commands work in current directory
+> /add-frontend-feature "Dashboard"
+# Creates feature in MyProject.Web
 ```
 
-### Convention Detection Commands
-```bash
-.\setup.ps1 -RefreshAnalysis  # Update convention cache after code changes
-```
-
-## ENTERPRISE INTEGRATION
-
-### CI/CD Support
-- Azure DevOps pipeline templates included
-- Docker containerization configured
-- Automated testing integrated
-- Deployment validation
-
-### Team Collaboration
-- Consistent setup across all team members
-- Shared configuration standards
-- Unified development patterns
-- Knowledge sharing through agents
-
-## TROUBLESHOOTING
-
-### Common Solutions
-| Issue | Solution |
-|-------|----------|
-| Namespace not detected | Ensure .csproj exists in standard location |
-| Commands fail | Verify project follows conventions |
-| Agent errors | Check tool permissions in manifest |
-| Documentation missing | Run setup in Comprehensive mode |
-
-### Validation Commands
-```bash
-# Verify installation
-claude /agents
-
-# Test configuration
-claude /comprehensive-review
-
-# Check namespace application
-grep -r "MyCompany.Product" .claude/
-```
-
+**No configuration needed**. Claude Code provides directory context; commands use it.
 
 ---
 
-**Claudify 4.0.0** - Interactive project configuration for Claude Code.
+## CONVENTION DETECTION
+
+### Smart Mode (Pre-Analysis)
+- Setup runs TypeScript analyzer once (~60 seconds)
+- Analyzes entire codebase for 18+ pattern categories
+- Caches results to `.claude/config/project-knowledge.json`
+- Commands read cache and apply patterns instantly
+- 95-100% accuracy for established projects
+- Run `.\setup.ps1 -RefreshAnalysis` to update cache
+
+### Adaptive Mode (On-Demand)
+- No upfront analysis
+- Commands examine 2-3 similar files when generating code
+- Detects patterns on-demand from observed code
+- Always reflects current codebase state
+- 90% accuracy
+- Best for rapidly changing projects
+
+### Pattern Categories Detected
+1. **Naming Conventions**: Classes, methods, properties, fields, date fields
+2. **Constructors**: Parameterless, parameterized, factory methods, private
+3. **Properties**: Public set, init-only, readonly, private set
+4. **Collections**: List<T>, IReadOnlyList<T>, IEnumerable<T>, arrays
+5. **Error Handling**: Exceptions, Result<T> pattern, custom types
+6. **Validation**: Constructor validation, FluentValidation, DataAnnotations
+7. **Testing**: Framework (xUnit, NUnit, MSTest), patterns (AAA, BDD), mocking
+8. **State Management**: Signals, Observables, Services, Stores
+9. **API Patterns**: RESTful conventions, response formats, versioning
+10. **Architecture**: Layering, dependency injection, repository patterns
+
+### Fallback Strategy
+Commands automatically use Adaptive Mode if:
+- Cache doesn't exist (Adaptive Mode was chosen)
+- Cache is corrupted or missing
+- Node.js was not available during setup
+
+---
+
+## COMMAND ARCHITECTURE
+
+### Pure, Context-Aware Commands
+
+Commands do NOT contain:
+- ❌ Hardcoded project paths
+- ❌ `cd` prefixes to change directories
+- ❌ Template variables (`{{WebProject}}`, etc.)
+- ❌ Project-specific configuration
+
+Commands DO contain:
+- ✅ Pure bash commands (`npm run build`, `dotnet test`)
+- ✅ Convention detection logic (Smart or Adaptive)
+- ✅ Agent task definitions with clear prompts
+- ✅ Allowed tool restrictions
+
+### Example Command Structure
+
+```markdown
+---
+description: Create Angular 19 frontend feature
+allowed-tools: [Task, Bash, Read, Write, Edit]
+---
+
+# 🎨 Frontend Feature: $ARGUMENTS
+
+## Phase 1: Implementation
+
+@Task(
+  description="Implement feature",
+  prompt="Implement '$ARGUMENTS':
+
+  Check .claude/config/project-knowledge.json for conventions.
+
+  If exists: Apply cached patterns
+  If not: Examine 2-3 similar .component.ts files
+
+  Create Angular 19 component following detected patterns.",
+  subagent_type="frontend-implementation-expert"
+)
+
+## Phase 2: Validation
+
+@Bash(command="npm run build", description="Build")
+@Bash(command="npm test", description="Test")
+```
+
+**Note**: Commands work in current directory - no `cd` needed.
+
+---
+
+## SECURITY CONFIGURATION
+
+### Agent Tool Restrictions
+
+Each agent operates with minimal required permissions:
+
+| Agent | Allowed Tools | Purpose |
+|-------|--------------|---------|
+| code-reviewer | Read, Edit, MultiEdit, Grep, Glob | Code quality analysis |
+| security-vulnerability-scanner | Read, Grep, Glob, WebSearch | Security scanning |
+| tech-lead-engineer | Read, Write, Edit, Grep, Glob, TodoWrite, Bash | Full implementation |
+| frontend-implementation-expert | Read, Write, Edit, MultiEdit, Grep, Glob | UI development |
+| ux-design-expert | Read, Write, Glob | Design work |
+| test-quality-analyzer | Read, Grep, Glob | Test analysis |
+
+### Security Principles
+- **Least Privilege**: Agents get only tools they need
+- **No Hardcoding**: No paths, secrets, or configuration in commands
+- **Audit Trail**: All operations visible in Claude Code
+- **Local Storage**: All config in `.claude/config/` (gitignored)
+
+---
+
+## MULTI-PROJECT WORKFLOW
+
+### Working on Different Projects
+
+**Switch with `cd`**:
+```bash
+# Frontend work
+cd src/Admin.Web
+claude
+> /add-frontend-feature "Dashboard"
+
+# Backend work
+cd src/Admin.Api
+claude
+> /add-backend-feature "Orders"
+```
+
+### Parallel Development with Git Worktrees
+
+**Official Claude Code recommendation**:
+```bash
+# Create worktrees
+git worktree add ../repo-admin main
+git worktree add ../repo-public main
+
+# Terminal 1: Admin
+cd ../repo-admin/src/Admin.Web
+claude
+> /add-frontend-feature "Admin Panel"
+
+# Terminal 2: Public
+cd ../repo-public/src/Public.Web
+claude
+> /add-frontend-feature "Landing Page"
+```
+
+Each Claude session has independent context and history.
+
+---
+
+## CONFIGURATION FILES
+
+### `.claude/config/project-knowledge.json` (Smart Mode only)
+
+Contains detected conventions:
+```json
+{
+  "naming": {
+    "classes": "PascalCase",
+    "methods": "PascalCase",
+    "properties": "PascalCase",
+    "fields": "_camelCase",
+    "dateFields": "CreatedAt"
+  },
+  "patterns": {
+    "entityConstructors": "parameterless",
+    "collectionProperties": "List<T>",
+    "errorHandling": "exceptions",
+    "validation": "FluentValidation"
+  },
+  "testing": {
+    "framework": "xUnit",
+    "pattern": "AAA",
+    "mockingLibrary": "Moq"
+  }
+}
+```
+
+**Generated by**: TypeScript analyzer during setup
+**Refreshed by**: `.\setup.ps1 -RefreshAnalysis`
+
+### `.claude/config/claudify.json`
+
+Tracks mode configuration:
+```json
+{
+  "mode": "smart",
+  "configuredAt": "2025-10-02 15:30:00"
+}
+```
+
+---
+
+## BEST PRACTICES
+
+### For Users
+
+1. **Navigate before launching**: `cd` to project, then run `claude`
+2. **Use git worktrees**: For parallel multi-project work
+3. **Refresh analysis**: After major convention changes
+4. **Choose Smart Mode**: For established projects
+5. **Choose Adaptive Mode**: For rapidly evolving codebases
+
+### For Command Authors
+
+1. **Never hardcode paths**: Commands must be path-agnostic
+2. **Use pure bash commands**: `npm run build` not `cd X && npm run build`
+3. **Include convention detection**: Check cache, fallback to examination
+4. **Restrict agent tools**: Minimal required permissions only
+5. **Test in multiple directories**: Verify context-awareness
+
+### For Agent Authors
+
+1. **Don't assume paths**: Discover structure from current directory
+2. **Respect conventions**: Apply detected patterns consistently
+3. **Work in context**: Use current working directory
+4. **Document operations**: Clear descriptions of what you're doing
+5. **Handle fallbacks**: Graceful defaults when patterns unclear
+
+---
+
+## TROUBLESHOOTING
+
+### Commands Generate Wrong Patterns
+
+**Cause**: Stale convention cache
+**Solution**: `.\setup.ps1 -RefreshAnalysis`
+
+### Commands Don't Find Files
+
+**Cause**: Claude Code launched from wrong directory
+**Solution**: `cd` to project directory before `claude`
+
+### Analyzer Fails
+
+**Cause**: Node.js not available or project structure unexpected
+**Solution**: Commands automatically fall back to Adaptive Mode
+
+### Want to Switch Modes
+
+**Smart → Adaptive**: Delete `.claude/config/project-knowledge.json`
+**Adaptive → Smart**: Run `.\setup.ps1 -RefreshAnalysis`
+
+---
+
+## VERSIONING
+
+### Current Version: 5.0.0
+
+**Breaking Changes from 4.x**:
+- Removed template system (`{{WebProject}}`, etc.)
+- Removed project detection from setup
+- Commands are now pure and path-agnostic
+- Work in current directory context only
+- Setup just copies files (no configuration)
+
+**Migration from 4.x to 5.x**:
+1. Re-run `setup.ps1` on your repository
+2. Delete old `.claude/config/projects.json` (obsolete)
+3. Commands now work in directory context
+4. Use `cd` to switch projects
+
+### Version Compatibility
+- Supports .NET 8/9
+- Supports Angular 17-19
+- Works with standard project structures
+- Cross-platform (Windows, Linux, macOS)
+
+---
+
+## PERFORMANCE
+
+### Setup Performance
+- File copy: < 5 seconds
+- Smart Mode analysis: ~60 seconds (one-time)
+- Adaptive Mode: 0 seconds (no analysis)
+
+### Command Performance
+- Smart Mode: Instant (reads cache)
+- Adaptive Mode: +2-3 seconds (examines files on-demand)
+- Both modes: Acceptable for development workflow
+
+---
+
+## QUALITY ASSURANCE
+
+### Automatic Behaviors
+- Commands examine conventions (Smart cache or Adaptive scan)
+- Fallback to Adaptive if cache unavailable
+- Work in current directory context
+- Pure bash commands (no path manipulation)
+
+### Success Indicators
+```
+✓ Setup copies 40+ commands
+✓ Setup copies 30+ agents
+✓ Convention analyzer runs (Smart Mode)
+✓ Commands work without path configuration
+✓ Multi-project switching with cd
+```
+
+---
+
+**Claudify 5.0.0** - Pure, context-aware commands for Claude Code.

@@ -101,7 +101,7 @@ WRONG: `dotnet test --no-build`
 
 @Bash(command="dotnet build --configuration Release", description="Verify build")
 @Bash(command="dotnet test", description="Run tests")
-@Bash(command="cd {{WebProject}} && npm run update:api", description="Update client")
+@Bash(command="npm run update:api", description="Update client")
 
 ## ✅ Complete
 Breaking changes implemented. Update all consumers before deployment.

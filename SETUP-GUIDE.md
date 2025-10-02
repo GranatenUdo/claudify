@@ -13,344 +13,213 @@ Before running Claudify, ensure you have:
 - Run `claude --version` to verify installation
 - Ensure you're logged in with `claude login`
 
-**.NET/Angular Project** following standard conventions
+**.NET/Angular Project**
 - .NET 8 or 9 backend
-- Angular 17-19 frontend
-- Standard project structure (src/, tests/ folders)
+- Angular 17-19 frontend (optional)
+- Any standard project structure
 
 ## Installation Steps
 
-### Step 1: Download Claudify
-
-Download or clone the Claudify repository to your local machine:
+### Step 1: Clone Claudify
 
 ```bash
-git clone https://github.com/your-org/claudify.git
-cd claudify
+git clone https://github.com/GranatenUdo/claudify.git
 ```
 
 ### Step 2: Run Setup
 
+Navigate to your project and run setup:
+
 #### Windows
 ```powershell
-.\setup.ps1 -TargetRepository "C:\path\to\your\project"
+cd C:\path\to\your\project
+..\claudify\setup.ps1 -TargetRepository "."
 ```
 
 #### macOS/Linux
 ```bash
-pwsh setup.ps1 -TargetRepository "/path/to/your/project"
+cd /path/to/your/project
+pwsh ../claudify/setup.ps1 -TargetRepository "."
 ```
 
-### Step 3: Installation Options
+### Step 3: Choose Convention Mode
 
-When prompted, select your installation mode:
+When prompted, select your convention detection mode:
 
 ```
-Choose installation mode:
-  [M] Minimal   - Core components for your stack (~15-25 files)
-  [C] Comprehensive - Everything available (~40+ files) [RECOMMENDED]
+Choose detection mode:
+  [1] SMART MODE (Recommended)
+      • Analyzes your project once (~60 seconds)
+      • Commands generate matching code instantly
+      • 95-100% accuracy, best for teams
 
-Select mode (M/C) [C]: C
+  [2] ADAPTIVE MODE (Lightweight)
+      • Skips analysis, commands examine code on-demand
+      • 90% accuracy, always reflects current code
+      • Best for rapidly changing codebases
+
+Select mode [1/2] (default: 1):
 ```
 
-**Recommendation**: Choose **Comprehensive** for full capabilities.
+**Smart Mode**: Recommended for established projects with consistent conventions
+**Adaptive Mode**: Best for rapidly evolving codebases or when Node.js unavailable
 
-### Step 4: Interactive Project Configuration
+### Step 4: Setup Completes
 
-Claudify will guide you through an interactive configuration:
-
-1. **Scans for all projects**:
-   - Angular projects via angular.json files
-   - .NET Web API projects via Microsoft.NET.Sdk.Web
-   - Test projects via Microsoft.NET.Sdk with 'Test' in name
-2. **Shows what it found** - Lists each detected project with its location
-3. **Handles duplicates** - If multiple projects have the same name (e.g., ClientApp), prepends parent folder
-4. **Lets you confirm or correct** - For each project type:
-   - Shows the detected project name(s) as default
-   - Press Enter to accept all detected projects
-   - Or enter names (comma-separated for multiple)
-   - Or press Enter with no name to skip that project type
-5. **Saves your configuration** to `.claude/config/projects.json`
-6. **Applies templates** - Replaces all `{{WebProject}}`, `{{ApiProject}}`, etc.
-
-You'll see an interactive configuration process:
 ```
-[CONFIG] Detecting and configuring project names...
+✓ Claudify components installed!
 
-  Scanning for projects...
-  Found 4 project(s)
+🎯 Mode: smart
+📁 Location: .claude
 
-  [Web Project Configuration]
-  Detected web project(s):
-    - MyCompany.MyProject.Web (at src\MyCompany.MyProject.Web\MyCompany.MyProject.Web.csproj)
-  Enter primary web project name [MyCompany.MyProject.Web]: ⏎
-  Web project: MyCompany.MyProject.Web
+Next steps:
+  1. Navigate to your project directory:
+     cd src/YourProject.Web
+  2. Launch Claude Code:
+     claude
+  3. Try a command:
+     /add-frontend-feature "My Feature"
 
-  [API Project Configuration]
-  Detected API project(s):
-    - MyCompany.MyProject.Api (at src\MyCompany.MyProject.Api\MyCompany.MyProject.Api.csproj)
-  Enter API project name [MyCompany.MyProject.Api]: ⏎
-  API project: MyCompany.MyProject.Api
-
-  [Architecture Test Project Configuration]
-  Detected architecture test project(s):
-    - MyCompany.MyProject.ArchitectureTests (at tests\MyCompany.MyProject.ArchitectureTests\MyCompany.MyProject.ArchitectureTests.csproj)
-  Enter architecture test project name [MyCompany.MyProject.ArchitectureTests]: ⏎
-  Architecture test project: MyCompany.MyProject.ArchitectureTests
-
-  [Configuration Summary]
-  The following projects will be configured:
-    WebProject = MyCompany.MyProject.Web
-    ApiProject = MyCompany.MyProject.Api
-    ArchitectureTestProject = MyCompany.MyProject.ArchitectureTests
-
-  Applying project templates to all files...
-    {{WebProject}} → MyCompany.MyProject.Web
-    {{ApiProject}} → MyCompany.MyProject.Api
-    {{ArchitectureTestProject}} → MyCompany.MyProject.ArchitectureTests
-    Processed: add-backend-feature.md
-    Processed: fix-frontend-bug.md
-    ... (more files)
-  [OK] Processed 12 file(s) with project templates
-
-Setup Complete!
-  - Commands installed
-  - Agents configured
-  - Project configuration applied
-  - CLAUDE.md and FEATURES.md preserved (user-managed)
+Commands will automatically work in your current directory context.
 ```
 
-### Step 5: Start Using Claude Code
+## What Gets Installed
 
-Open a terminal in your project directory and run:
-
-```bash
-claude code
-```
-
-Try your first command:
-```
-/comprehensive-review
-```
-
-## Configuration Details
-
-### Project Structure
-
-Claudify expects this standard structure:
 ```
 your-project/
-├── src/
-│   ├── YourNamespace.Api/        # Backend API
-│   ├── YourNamespace.Web/        # Angular frontend
-│   └── YourNamespace.Domain/     # Domain models
-├── tests/
-│   ├── YourNamespace.Api.Tests/
-│   └── YourNamespace.ArchitectureTests/
-└── .claude/                       # Created by Claudify
+├── .claude/
+│   ├── commands/          # 40+ specialized commands
+│   ├── agents/            # 30+ expert agents
+│   └── config/
+│       ├── project-knowledge.json # Convention cache (Smart Mode only)
+│       └── claudify.json          # Mode configuration
 ```
 
-### Namespace Detection
+## Using Claudify Commands
 
-Claudify automatically detects your namespace from:
-- Primary .csproj files (non-test projects)
-- Removes common suffixes (.Api, .Web, .Domain)
-- Example: `Acme.Inventory.Api` → `Acme.Inventory`
-
-### What Gets Configured
-
-All commands and agents are configured with your namespace:
-- Build paths: `cd src/YourNamespace.Web && npm run build`
-- Test paths: `dotnet test tests/YourNamespace.ArchitectureTests`
-- API updates: `cd src/YourNamespace.Web && npm run update:api`
-
-## Common Scenarios
-
-### Fresh Installation
-
-For a new project without Claude Code:
-1. Run setup.ps1 with Comprehensive mode
-2. Namespace is detected automatically
-3. All components installed and configured
-4. Ready to use immediately
-
-### Updating Existing Installation
-
-To update an existing Claude Code setup:
-1. Run setup.ps1 again
-2. Choose "Y" for clean installation when prompted
-3. Your CLAUDE.md and FEATURES.md are preserved
-4. Updated components with latest optimizations
-
-### Multiple Projects
-
-For multiple projects with different namespaces:
-1. Run Claudify separately for each project
-2. Each gets its own namespace configuration
-3. Commands adapt to each project structure
-4. No manual configuration needed
-
-## Verification
-
-### Confirm Successful Setup
-
-Check that setup completed correctly:
+### Single Project
 
 ```bash
-# List installed agents
-claude /agents
+# Navigate to your project
+cd src/MyProject.Web
 
-# Verify commands exist
-ls .claude/commands/
+# Launch Claude Code
+claude
 
-# Test a command
-claude /comprehensive-review
-
-# Check for template markers (should return nothing)
-grep -r "{{.*}}" .claude/
+# Use commands - they work in current directory
+> /add-frontend-feature "User Dashboard"
+> /fix-frontend-bug "Button not clicking"
+> /comprehensive-review
 ```
 
-### Expected Results
+### Multi-Project Monorepo
 
-After successful setup:
-- 30+ agents available
-- 40+ commands installed
-- No template markers remaining
-- Commands execute without errors
-- Documentation reflects your project
+**Option 1: Switch with `cd`**
+```bash
+# Work on admin project
+cd src/Admin.Web
+claude
+> /add-frontend-feature "Admin Panel"
+# Exit Claude (Ctrl+D)
+
+# Work on public project
+cd ../Public.Web
+claude
+> /add-frontend-feature "Landing Page"
+```
+
+**Option 2: Git Worktrees (Recommended)**
+```bash
+# Create worktrees for parallel work
+git worktree add ../repo-admin main
+git worktree add ../repo-public main
+
+# Terminal 1: Admin work
+cd ../repo-admin/src/Admin.Web
+claude
+> /add-frontend-feature "Admin Dashboard"
+
+# Terminal 2: Public work
+cd ../repo-public/src/Public.Web
+claude
+> /add-frontend-feature "Home Page"
+```
+
+## Refreshing Convention Analysis
+
+If your codebase conventions change (e.g., you refactor from exceptions to Result<T>):
+
+```bash
+.\setup.ps1 -TargetRepository "." -RefreshAnalysis
+```
+
+This re-runs the analyzer without reinstalling commands/agents.
+
+## Switching Between Modes
+
+**Adaptive → Smart**:
+```bash
+.\setup.ps1 -TargetRepository "." -RefreshAnalysis
+```
+
+**Smart → Adaptive**:
+```bash
+rm .claude/config/project-knowledge.json
+```
+
+Commands automatically fall back to Adaptive Mode when cache is missing.
 
 ## Troubleshooting
 
-### Issue: Namespace Not Detected
+### Node.js Not Found
 
-**Solution**: Ensure you have .csproj files in standard locations:
-- Check for `src/YourNamespace.Api/YourNamespace.Api.csproj`
-- Verify project follows naming conventions
-- Manually enter namespace when prompted
+**During setup**:
+- Choose Adaptive Mode (option 2)
+- Or install Node.js 18+ and re-run setup
 
-**Validation**: After setup, run the validation script:
-```powershell
-.\validate-namespace.ps1 -TargetPath "C:\path\to\your\project"
-```
+**After setup**:
+- Commands work fine in Adaptive Mode
+- To use Smart Mode: Install Node.js, then run `-RefreshAnalysis`
 
-This will verify:
-- Namespace was correctly detected and saved
-- All template references were replaced
-- Project structure matches the configured namespace
+### Analyzer Fails
 
-### Issue: Commands Fail to Execute
-
-**Solution**: Verify project structure:
-- Angular app at `src/YourNamespace.Web/`
-- Package.json with standard npm scripts
-- Tests in `tests/` directory
-
-### Issue: Permission Denied
-
-**Solution**: On macOS/Linux:
+Commands automatically fall back to Adaptive Mode. Check:
 ```bash
-chmod +x setup.ps1
-pwsh setup.ps1 -TargetRepository "/path/to/project"
+node --version  # Should be 18+
 ```
 
-### Issue: PowerShell Not Found
+### Commands Generate Wrong Patterns
 
-**Solution**: Install PowerShell 7+:
-- Windows: Microsoft Store or [downloads](https://github.com/PowerShell/PowerShell)
-- macOS: `brew install powershell`
-- Linux: Follow [official guide](https://docs.microsoft.com/powershell)
-
-## Best Practices
-
-### Recommended Workflow
-
-1. **Always use Comprehensive mode** for full capabilities
-2. **Run setup from project root** for best detection
-3. **Commit .claude folder** to share configuration with team
-4. **Update regularly** to get latest optimizations
-
-### Team Setup
-
-For consistent team configuration:
-1. One team member runs Claudify
-2. Commit `.claude/` folder to repository
-3. Team members clone and immediately have Claude Code ready
-4. Everyone uses same commands and agents
-
-### CI/CD Integration
-
-Claudify includes Azure DevOps support:
-- Pipeline templates in `.claude/pipelines/`
-- Automated testing integration
-- Deployment validation scripts
-- Quality gates configuration
-
-## Advanced Configuration
-
-### Custom Namespace
-
-If automatic detection doesn't work:
-```powershell
-# You'll be prompted to enter manually
-Enter your project namespace: Acme.ProductName
+**Cause**: Stale convention cache
+**Solution**:
+```bash
+.\setup.ps1 -TargetRepository "." -RefreshAnalysis
 ```
 
-### Selective Installation
+### Commands Don't Work
 
-For minimal setup, choose Standard mode:
-- Installs only essential components
-- Faster setup time
-- Can upgrade to Comprehensive later
+**Check**:
+1. Did you navigate to the project directory? `cd src/YourProject.Web`
+2. Is Claude Code running in that directory? `pwd`
+3. Are command files in `.claude/commands/`? `ls .claude/commands/`
 
-### Preserving Customizations
+## Uninstalling
 
-Your customizations are preserved:
-- CLAUDE.md modifications kept
-- FEATURES.md additions maintained
-- Custom commands in .claude/commands/
-- Project-specific agents retained
+Delete the `.claude` directory:
 
-## Success Indicators
-
-You know setup succeeded when you see:
-
-```
-Setup Complete!
-  - Commands installed
-  - Agents configured
-  - Project namespace applied: YourNamespace
-  - Documentation generated
-
-Start using Claude Code:
-  claude code
-  /comprehensive-review
+```bash
+rm -rf .claude
 ```
 
-## Getting Help
-
-### Resources
-
-- **Documentation**: See `/docs` folder in Claudify
-- **Commands Help**: Run `/help` in Claude Code
-- **Agent List**: Run `/agents` to see available agents
-- **Example Usage**: Check command files for examples
-
-### Support Channels
-
-- Internal team wiki for organization-specific guidance
-- Claude Code documentation at [claude.ai/docs](https://claude.ai/docs)
-- Team lead for architecture questions
+Claudify is completely self-contained in this directory.
 
 ## Next Steps
 
-After successful setup:
-
-1. **Explore Commands**: Try `/comprehensive-review` for code analysis
-2. **Create Features**: Use `/add-backend-feature` or `/add-frontend-feature`
-3. **Fix Issues**: Use `/fix-backend-bug` or `/fix-frontend-bug`
-4. **Security Audit**: Run `/security-audit` regularly
-5. **Learn Agents**: Explore specialized agents with `/agents`
+1. **Learn commands**: Run `claude` and type `/` to see available commands
+2. **Read command docs**: Check `.claude/commands/README.md`
+3. **Try a command**: `/add-frontend-feature "Test Feature"`
+4. **Explore agents**: Run `/agents` to see specialized agents
 
 ---
 
-**Claudify Setup Guide** - Configure Claude Code for your .NET/Angular project.
+**Claudify 5.0.0** - Pure, context-aware commands for Claude Code.

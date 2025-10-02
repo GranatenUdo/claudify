@@ -5,6 +5,78 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] - 2025-10-02
+
+### 🎉 Major Breaking Release - Pure, Context-Aware Commands
+
+This release removes the template system entirely and aligns Claudify with official Claude Code best practices. Commands are now pure and path-agnostic, working in whatever directory context Claude Code is launched from.
+
+### 🌟 Breaking Changes
+
+#### Pure Command Architecture
+- **Removed Template System**: All `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}` template variables removed
+- **No Path Hardcoding**: Commands contain zero hardcoded paths
+- **Pure Bash Commands**: Changed from `cd {{WebProject}} && npm run build` to `npm run build`
+- **Context-Driven**: Commands work in current directory context provided by Claude Code
+- **No Project Detection**: Setup no longer detects or configures projects
+
+#### Simplified Setup
+- **Removed Project Detection**: Setup.ps1 no longer scans for projects or prompts for "primary" selection
+- **Removed Template Replacement**: Setup.ps1 does not modify command files
+- **Pure File Copy**: Setup only copies commands and agents to `.claude/` directory
+- **Reduced Complexity**: Setup.ps1 reduced from 1089 lines to 256 lines (76% reduction)
+
+#### Removed Files
+- **`.claude/config/projects.json`**: No longer generated or used
+- **`.claude/templates/` folder**: Entire directory removed (was unused)
+- **Template documentation**: All mustache-style template documentation removed
+
+### Added
+- **Git Worktrees Support**: Documentation for multi-project development using official Claude Code patterns
+- **Directory Context Usage**: Clear documentation on how commands work with `cd` navigation
+- **Migration Guide**: Instructions for upgrading from v4.x to v5.0.0
+
+### Changed
+- **All Commands with Bash**: Removed `cd` prefixes from all bash command invocations
+- **Setup Workflow**: Simplified to file copy + optional analyzer
+- **Multi-Project Workflow**: Now use `cd` to switch projects or git worktrees for parallel work
+- **Documentation**: README.md, CLAUDE.md, and guides rewritten for v5.0 architecture
+- **Philosophy**: Aligned with official Anthropic guidance: "intentionally low-level and unopinionated"
+
+### Removed
+- **Template System**: Entire mustache-style replacement system removed
+- **Project Detection**: No project scanning or configuration during setup
+- **Primary Project Concept**: No "primary" selection (was limiting)
+- **`Apply-ProjectTemplates` function**: Deleted from setup.ps1
+- **`Get-ProjectNamesInteractive` function**: Deleted from setup.ps1
+- **`Resolve-DuplicateNames` function**: Deleted from setup.ps1
+- **Business Impact Agent**: Removed from `/smart-research` command (fabricated metrics)
+
+### Migration from 4.x
+
+**Breaking**: Commands no longer work with v4.x project configuration.
+
+**To upgrade**:
+1. Re-run setup: `.\setup.ps1 -TargetRepository "."`
+2. Delete obsolete config: `.claude/config/projects.json` (if exists)
+3. Navigate to project before using commands: `cd src/YourProject.Web`
+4. Launch Claude Code: `claude`
+5. Commands now work in current directory context
+
+**Multi-project workflows**: Use `cd` to switch projects or git worktrees for parallel development.
+
+### Why This Change?
+
+Research into official Anthropic Claude Code best practices revealed:
+- Commands should be "intentionally low-level and unopinionated"
+- No hardcoded paths or project-specific configuration
+- Work in directory context provided by Claude Code
+- Dynamic runtime behavior, not static template replacement
+
+v5.0.0 aligns Claudify with these official principles.
+
+---
+
 ## [4.0.0] - 2025-10-02
 
 ### 🎉 Major Release - Dual-Mode Convention Detection System

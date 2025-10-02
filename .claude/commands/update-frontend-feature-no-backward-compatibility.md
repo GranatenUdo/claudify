@@ -80,8 +80,8 @@ category: development
   subagent_type="ux-design-expert"
 )
 
-@Bash(command="cd {{WebProject}} && npm run build", description="Build")
-@Bash(command="cd {{WebProject}} && npm test -- --watch=false", description="Test")
+@Bash(command="npm run build", description="Build")
+@Bash(command="npm test -- --watch=false", description="Test")
 
 ## ✅ Complete
 Breaking changes implemented. Coordinate with backend updates.

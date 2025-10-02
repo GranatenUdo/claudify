@@ -1,33 +1,33 @@
 # Claudify
 
-![Version](https://img.shields.io/badge/version-4.0.0-blue)
+![Version](https://img.shields.io/badge/version-5.0.0-blue)
 
-**Automated configuration system for Claude Code in .NET/Angular projects.**
+**Intelligent Claude Code setup for .NET/Angular projects.**
 
-Claudify configures Claude Code to generate code that matches YOUR project's conventions automatically.
+Claudify installs specialized commands and agents that understand your project conventions automatically.
 
 ## What It Does
 
-**Without Claudify**: Claude generates generic "best practice" code that doesn't match your style.
-**With Claudify**: Claude examines your codebase and generates code that matches your conventions.
+**Without Claudify**: Generic Claude Code commands that don't match your project style.
+**With Claudify**: 40+ specialized commands that detect and match your coding conventions.
 
 ## How It Works
 
 Claudify offers two convention detection modes:
 
-### Smart Mode (Default, Recommended)
-- Analyzes your project conventions during setup (~60 seconds)
+### Smart Mode (Recommended)
+- Analyzes your entire codebase during setup (~60 seconds)
+- Caches conventions to `.claude/config/project-knowledge.json`
 - Commands generate matching code instantly
 - 95-100% accuracy for naming, patterns, and architecture
-- Best for teams with established conventions
+- Best for established projects with consistent conventions
 
 ### Adaptive Mode (Lightweight)
-- Skips analysis, commands examine relevant code on-demand
+- Skips upfront analysis
+- Commands examine 2-3 similar files on-demand when generating code
 - Always reflects current codebase state
-- 90% accuracy from examining 2-3 similar files
+- 90% accuracy
 - Best for rapidly changing projects
-
-Both modes work seamlessly - commands automatically fall back to adaptive detection if no cache exists.
 
 ## Quick Start
 
@@ -39,20 +39,68 @@ git clone https://github.com/GranatenUdo/claudify.git
 cd your-dotnet-angular-project
 ..\claudify\setup.ps1 -TargetRepository "."
 
-# Choose mode when prompted (Smart Mode recommended)
+# Choose Smart or Adaptive mode
 # Setup completes in 1-2 minutes
 
-# Start using Claude Code with convention matching
-claude /add-backend-feature "Order Management"
+# Navigate to the project you want to work on
+cd src/YourProject.Web
+
+# Launch Claude Code
+claude
+
+# Use commands - they work in your current directory context
+> /add-frontend-feature "User Profile"
 ```
+
+## Commands Work in Your Directory Context
+
+**Key concept**: Commands operate in whatever directory Claude Code is launched from.
+
+```bash
+# Working on frontend
+cd src/MyProject.Web
+claude
+> /add-frontend-feature "Dashboard"
+# Creates component in MyProject.Web
+
+# Working on backend
+cd src/MyProject.Api
+claude
+> /add-backend-feature "Orders"
+# Creates API in MyProject.Api
+```
+
+**No configuration needed**. Commands automatically work with your current directory.
+
+## Multi-Project Development
+
+Use git worktrees for working on multiple projects simultaneously:
+
+```bash
+# Create worktrees
+git worktree add ../repo-admin-web main
+git worktree add ../repo-public-web main
+
+# Terminal 1: Admin work
+cd ../repo-admin-web/src/Admin.Web
+claude
+> /add-frontend-feature "Admin Dashboard"
+
+# Terminal 2: Public work
+cd ../repo-public-web/src/Public.Web
+claude
+> /add-frontend-feature "Landing Page"
+```
+
+Each Claude session has independent context.
 
 ## Features
 
-- **Project-Aware Generation**: Code matches your conventions automatically
 - **40+ Specialized Commands**: Backend, frontend, testing, analysis, deployment
 - **30+ Expert Agents**: Security, architecture, code review, UX, technical debt
-- **Dual-Mode System**: Choose between pre-analyzed (fast) or on-demand (always current)
-- **Zero Breaking Changes**: Fully backward compatible with existing setups
+- **Convention Detection**: Smart (pre-analyzed) or Adaptive (on-demand)
+- **Context-Aware**: Commands work in your current directory automatically
+- **Zero Configuration**: No project setup or path configuration needed
 
 ## Commands
 
@@ -88,24 +136,21 @@ claude /add-backend-feature "Order Management"
 - **PowerShell**: Version 7+ (cross-platform)
 - **.NET**: Version 8 or 9
 - **Angular**: Version 17+
-- **Node.js**: Version 18+ (for Smart Mode analyzer)
+- **Node.js**: Version 18+ (for Smart Mode analyzer only)
 - **Claude Code**: Latest version
 
-## Configuration
+## Installation
 
 After setup, Claudify creates:
 
 ```
 your-project/
 ├── .claude/
-│   ├── commands/          # 40+ project-configured commands
-│   ├── agents/            # 30+ specialized agents
-│   ├── config/
-│   │   ├── projects.json          # Project structure
-│   │   ├── project-knowledge.json # Convention cache (Smart Mode)
-│   │   └── claudify.json          # Mode configuration
-│   └── templates/         # Code generation templates
-└── .claudify/             # Temporary resources (gitignored)
+│   ├── commands/          # 40+ specialized commands
+│   ├── agents/            # 30+ expert agents
+│   └── config/
+│       ├── project-knowledge.json # Convention cache (Smart Mode)
+│       └── claudify.json          # Mode configuration
 ```
 
 ## Refreshing Analysis
@@ -116,68 +161,68 @@ If your codebase conventions change:
 .\setup.ps1 -TargetRepository "." -RefreshAnalysis
 ```
 
-This updates the convention analysis without reinstalling Claudify.
+Updates convention analysis without reinstalling.
 
 ## How Convention Detection Works
 
 ### Smart Mode (Pre-Analysis)
-1. Setup runs TypeScript analyzer on your entire codebase
+1. Setup runs TypeScript analyzer on entire codebase
 2. Detects 18+ patterns: naming, constructors, properties, collections, error handling, validation, testing
 3. Saves to `.claude/config/project-knowledge.json`
 4. Commands read cache and generate matching code instantly
 
 ### Adaptive Mode (On-Demand)
 1. When generating code, commands examine 2-3 similar existing files
-2. Detect patterns from those files: constructors, properties, collections, naming
+2. Detect patterns: constructors, properties, collections, naming, error handling
 3. Generate new code matching observed patterns
-4. No cache needed, always reflects current code state
+4. No cache needed, always current
 
 ### Fallback Strategy
-Commands automatically fall back to adaptive mode if:
+Commands automatically fall back to Adaptive Mode if:
 - Cache doesn't exist (Adaptive Mode was chosen)
 - Cache is missing or corrupted
-- First-time setup before analysis runs
+- Node.js not available during setup
 
 ## Supported Project Types
 
-- **.NET 8/9** Web APIs with typical structure
+- **.NET 8/9** Web APIs
 - **Angular 17-19** applications
 - **.NET test projects** (xUnit, NUnit, MSTest)
-- **Multi-project solutions** with multiple APIs/frontends
+- **Multi-project solutions** (monorepos)
 
-## Project Structure Requirements
+## Example Project Structure
 
-Claudify works best with standard project layouts:
+Claudify works with standard .NET/Angular layouts:
 
 ```
 your-solution/
 ├── src/
-│   ├── YourCompany.Product.Web/        # Angular + .NET host
-│   ├── YourCompany.Product.Api/        # .NET Web API
-│   ├── YourCompany.Product.Domain/     # Domain models
-│   └── YourCompany.Product.Infrastructure/
+│   ├── MyCompany.Product.Web/        # Angular + .NET host
+│   ├── MyCompany.Product.Api/        # .NET Web API
+│   ├── MyCompany.Product.Domain/     # Domain models
+│   └── MyCompany.Product.Infrastructure/
 └── tests/
-    ├── YourCompany.Product.Tests/
-    └── YourCompany.Product.ArchitectureTests/
+    ├── MyCompany.Product.Tests/
+    └── MyCompany.Product.ArchitectureTests/
 ```
 
 ## Security Considerations
 
 - Each agent restricted to minimal required tools
-- No hardcoded paths or secrets in configuration
+- No hardcoded paths in commands or agents
 - All configuration stored locally in `.claude/config/`
-- Convention cache contains only detected patterns, no sensitive data
+- Convention cache contains only detected patterns (no code, no secrets)
 
 ## Version
 
-**Current**: 4.0.0
+**Current**: 5.0.0
 
-**What's New in 4.0.0**:
-- Dual-Mode convention detection (Smart + Adaptive)
-- All 32 commands support pattern detection
-- Automatic fallback between modes
-- Interactive mode selection during setup
-- `.\setup.ps1 -RefreshAnalysis` for updating conventions
+**What's New in 5.0.0** (Breaking):
+- Commands are now pure and path-agnostic
+- Work in current directory context (no hardcoded paths)
+- Simplified setup (just copies files, no project detection)
+- Commands use bash commands directly (`npm run build` not `cd X && npm run build`)
+- Aligns with official Claude Code best practices
 
 See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 
@@ -198,14 +243,18 @@ See [CHANGELOG.md](CHANGELOG.md) for complete version history.
    - Smart Mode (recommended): Analyzes project once, instant generation
    - Adaptive Mode: On-demand detection, always current
 
-4. **Confirm Projects**:
-   - Setup detects your projects automatically
-   - Confirm or override detected names
-
-5. **Start Using**:
+4. **Navigate & Launch**:
    ```bash
-   claude /add-backend-feature "User Management"
+   cd src/YourProject.Web
+   claude
    ```
+
+5. **Use Commands**:
+   ```bash
+   > /add-frontend-feature "User Dashboard"
+   ```
+
+Commands work in your current directory automatically.
 
 ## Troubleshooting
 
@@ -213,13 +262,16 @@ See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 A: Run `.\setup.ps1 -RefreshAnalysis` to update convention cache.
 
 **Q: Node.js not found during setup**
-A: Install Node.js 18+ for Smart Mode, or choose Adaptive Mode during setup.
+A: Choose Adaptive Mode during setup, or install Node.js 18+ for Smart Mode.
 
 **Q: Analyzer fails**
-A: Commands automatically fall back to Adaptive Mode. Check Node.js version: `node --version`
+A: Commands automatically fall back to Adaptive Mode. Check: `node --version`
 
 **Q: Want to switch from Adaptive to Smart Mode**
 A: Run `.\setup.ps1 -RefreshAnalysis` to generate convention cache.
+
+**Q: How do I work on multiple projects?**
+A: Use `cd` to switch projects, or use git worktrees for parallel sessions.
 
 ## Contributing
 
@@ -227,7 +279,7 @@ Contributions welcome! Please:
 1. Follow existing command/agent structure
 2. Test on real .NET/Angular projects
 3. Update documentation for new features
-4. Ensure backward compatibility
+4. Commands must be path-agnostic (no hardcoded paths)
 
 ## License
 

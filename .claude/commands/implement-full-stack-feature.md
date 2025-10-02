@@ -230,7 +230,7 @@ WRONG: `dotnet test --no-build`
 
 ### Build Verification
 @Bash(command="dotnet build", description="Backend build")
-@Bash(command="cd {{WebProject}} && npm run build", description="Frontend build")
+@Bash(command="npm run build", description="Frontend build")
 @Bash(command="dotnet test --filter Category!=Integration", description="Quick tests")
 
 ## Summary Output
