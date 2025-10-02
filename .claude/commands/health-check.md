@@ -153,10 +153,19 @@ model: opus
 - [ ] Actionable fixes provided
 - [ ] Trends tracked
 
+## Convention Awareness
+
+Health checks consider project patterns:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Evaluates health against established patterns
+- **Without cached conventions**: Based on observed patterns in codebase
+
+Health scoring adapts to your project's architecture and conventions.
+
 ## 🎯 Why This Works
 - **Parallel analysis** - All health checks simultaneously
 - **Real scoring** - Actual calculations, not templates
 - **Prioritized actions** - Focus on what matters
 - **Fast feedback** - 90 seconds to full report
+- **Pattern-aware** - Respects your conventions
 
 Remember: Fix security first, then performance, then quality!

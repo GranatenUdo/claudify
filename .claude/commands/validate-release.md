@@ -154,10 +154,19 @@ model: opus
 - [ ] Documentation updated
 - [ ] Risk assessed
 
+## Convention Awareness
+
+Release validation considers project conventions:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Validates against established standards
+- **Without cached conventions**: Based on observed patterns in codebase
+
+Validation criteria adapt to your project's release practices.
+
 ## 🎯 Why This Works
 - **Parallel validation** - All checks run simultaneously
 - **Intelligent analysis** - Risk assessment, not just pass/fail
 - **Fast decision** - 90 seconds to go/no-go
 - **Clear report** - Actionable next steps
+- **Pattern-aware** - Respects your conventions
 
 Remember: Fast validation catches 80% of release issues!

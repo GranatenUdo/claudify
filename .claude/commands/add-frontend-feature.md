@@ -28,14 +28,50 @@ category: development
 @Task(
   description="Implementation",
   prompt="Implement '$ARGUMENTS' frontend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Component naming: Use {{naming.classes}}
+  - Method naming: Use {{naming.methods}}
+  - Error handling: Match backend {{patterns.errorHandling}}
+  - State management: Use detected approach
+  - Testing: Use {{testing.framework}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Actively examine 2-3 similar files:
+  1. Use Glob to find relevant files:
+     - Frontend components: **/src/app/**/*.component.ts
+     - Frontend services: **/src/app/**/*.service.ts
+  2. Read those files and detect:
+     - Signal usage vs observables
+     - Change detection strategy (OnPush vs Default)
+     - Template syntax (*ngIf vs @if)
+     - Service patterns (BaseApiService inheritance)
+     - Error handling approach
+     - State management pattern
+  3. Apply the patterns you observed
+
+  ### IF NO FILES FOUND (Empty Project):
+  Use simple production-ready defaults:
+  - Angular 19 with signals
+  - OnPush change detection
+  - Modern @if/@for syntax
+  - Try/catch error handling
+  - BaseApiService if available
+
+  ## Step 2: Generate Code
+
   CREATE:
-  1. Angular 19 components with signals
-  2. Services extending BaseApiService
-  3. Templates with *ngIf/*ngFor (NOT @if/@for)
-  4. OnPush change detection
-  5. Result<T> error handling
-  
+  1. Angular component(s) following project conventions
+  2. TypeScript service(s) with appropriate error handling
+  3. HTML template(s) with responsive design
+  4. Component styles (CSS/SCSS)
+
+  USE: Angular 19 features, TypeScript, CLAUDE.md patterns
   OUTPUT: Working implementation",
   subagent_type="frontend-implementation-expert"
 )
@@ -57,13 +93,33 @@ category: development
 @Task(
   description="Tests",
   prompt="Test '$ARGUMENTS' frontend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Use detected testing patterns:
+  - Framework: {{testing.framework}}
+  - Pattern: {{testing.pattern}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine existing test files:
+  1. Use Glob: **/*.spec.ts or **/*.test.ts
+  2. Read 1-2 test files and detect:
+     - Test framework (Jasmine vs Jest)
+     - Test patterns (AAA vs BDD)
+     - Mock approach (spies vs jest mocks)
+
+  ### IF NO FILES FOUND:
+  Use Jasmine/Karma (Angular default).
+
   CREATE:
-  1. Component tests with signals
+  1. Component tests (test component logic and rendering)
   2. Service tests with mocked HTTP
   3. User interaction tests
-  4. Test factories from mock-data-helpers
-  
+  4. Test data factories if mock-data-helpers exist
+
   OUTPUT: Comprehensive test suite",
   subagent_type="test-quality-analyzer"
 )

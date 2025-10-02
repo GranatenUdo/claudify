@@ -27,18 +27,43 @@ category: development
 @Task(
   description="Feature update",
   prompt="Update '$ARGUMENTS' frontend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and maintain cached conventions:
+  - Component naming: Keep {{naming.classes}}
+  - Method naming: Keep {{naming.methods}}
+  - Error handling: Keep {{patterns.errorHandling}}
+  - State management: Keep detected approach
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the files being updated:
+  1. Use Read to examine the target files
+  2. Detect existing patterns:
+     - Signal usage vs observables
+     - Change detection strategy
+     - Template syntax used
+     - Service patterns
+     - Error handling approach
+  3. Maintain consistency with detected patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Preserve existing code style exactly as found
+
   IMPLEMENT:
-  1. Component updates with signals
-  2. Templates with *ngIf/*ngFor (NOT @if/@for)
-  3. Service methods with Result<T>
-  4. Maintain OnPush and responsiveness
-  
+  1. Component updates following existing patterns
+  2. Templates using existing syntax
+  3. Service methods matching existing error handling
+  4. Maintain existing change detection strategy
+
   COMPATIBILITY:
   - Keep existing inputs/outputs
   - Add features as optional
   - No breaking changes
-  
+
   OUTPUT: Updated implementation",
   subagent_type="frontend-implementation-expert"
 )

@@ -122,4 +122,8 @@ Reduced waiting time
 - Line reduction: Keep concise
 - Actionable output: Always provide next steps
 
+## Convention Awareness
+
+When optimizing commands, respect project patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns.
+
 Remember: Every line should help ship value. If it doesn't directly contribute to working features, remove it.

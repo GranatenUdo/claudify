@@ -18,23 +18,26 @@ model: opus
 @Task(
   description="Research architecture pattern",
   prompt="Research architecture pattern '$ARGUMENTS':
-  
+
+  FIRST: Check .claude/config/project-knowledge.json for existing architecture patterns.
+
   INVESTIGATE:
-  1. When this pattern actually makes sense
+  1. When this pattern actually makes sense FOR US
   2. Real companies using it successfully (and failures)
-  3. Complexity vs. benefit trade-off
-  
+  3. Complexity vs. benefit trade-off IN OUR CONTEXT
+
   Find:
   - Case studies with outcomes (not just adoption stories)
-  - Martin Fowler / Microsoft architecture guidance
-  - Post-mortems from companies that tried and failed
-  
+  - Architecture guidance relevant to our stack
+  - Post-mortems from similar-sized companies
+
   Critical questions:
+  - Does this align with our existing patterns?
   - At what scale does this pay off?
-  - What problems does it REALLY solve?
+  - What problems does it REALLY solve for us?
   - What new problems does it create?
-  
-  Be skeptical. Include failure stories.",
+
+  Be skeptical. Consider our project's patterns first.",
   subagent_type="tech-lead-engineer"
 )
 
@@ -209,6 +212,14 @@ We'll know we made the right choice if:
 - [Failure Post-mortem](link)
 ```
 
+## Convention Awareness
+
+This command considers project context:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Evaluates compatibility with existing architecture
+- **Without cached conventions**: Analyzes based on observed patterns in codebase
+
+Recommendations respect your architectural choices rather than pushing trends.
+
 ## Why This Architecture Research Works
 
 1. **Reality-based** - Includes failures, not just successes
@@ -216,5 +227,6 @@ We'll know we made the right choice if:
 3. **Trade-off honest** - No silver bullets
 4. **Migration-focused** - How to actually get there
 5. **Reversible** - Includes exit strategies
+6. **Pattern-respectful** - Works with your existing architecture
 
 Remember: The best architecture is the one your team can actually maintain.

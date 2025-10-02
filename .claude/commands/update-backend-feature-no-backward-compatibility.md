@@ -27,19 +27,43 @@ category: development
 @Task(
   description="Clean implementation",
   prompt="Rebuild '$ARGUMENTS' without compatibility:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Constructors: Follow {{patterns.entityConstructors}}
+  - Properties: Use {{naming.properties}}
+  - Collections: Use {{patterns.collectionProperties}}
+  - Date fields: Use {{naming.dateFields}}
+  - Error handling: Use {{patterns.errorHandling}}
+  - Validation: Use {{patterns.validation}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Actively examine 2-3 similar files:
+  1. Use Glob to find relevant files:
+     - Entities: **/*Domain*/Models/Entities/*.cs or **/Models/Entities/*.cs
+     - Services: **/*Service.cs
+  2. Read those files and detect patterns
+  3. Apply the patterns you observed
+
+  ### IF NO FILES FOUND (Empty Project):
+  Use simple production-ready defaults
+
   REMOVE:
   1. Legacy parameters and overloads
   2. Backward compatibility code
   3. Deprecated endpoints
   4. Old database columns
-  
+
   IMPLEMENT:
   1. Clean service interfaces
   2. Modern C# 13 patterns only
   3. Simplified API surface
   4. Optimized data model
-  
+
   OUTPUT: Clean, modern implementation",
   subagent_type="tech-lead-engineer"
 )

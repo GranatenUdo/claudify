@@ -66,19 +66,41 @@ category: quality
 @Task(
   description="Implement fix with tests",
   prompt="Fix '$ARGUMENTS' based on diagnosis:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Error handling: Match {{patterns.errorHandling}}
+  - Component naming: Use {{naming.classes}}
+  - Testing: Use {{testing.framework}} with {{testing.pattern}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the file being fixed:
+  1. Use Read to examine the buggy file
+  2. Detect existing patterns:
+     - Signal vs observable usage
+     - Template syntax (*ngIf vs @if)
+     - Error handling approach
+     - Change detection strategy
+  3. Maintain consistency with detected patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Use simple, safe defaults (try/catch, OnPush)
+
   IMPLEMENT:
-  1. Root cause fix with signals architecture
-  2. Proper Angular 19 syntax (*ngIf, *ngFor)
-  3. OnPush change detection maintained
-  4. Result<T> error handling
-  
+  1. Root cause fix following project conventions
+  2. Maintain consistency with existing components
+  3. Error handling matching project pattern
+
   CREATE TESTS:
   1. Regression test for original bug
-  2. Signal update verification
+  2. Component behavior verification
   3. User interaction tests
-  4. Mock data using test factories
-  
+  4. Use project's testing approach
+
   OUTPUT: Fixed code + tests",
   subagent_type="frontend-implementation-expert"
 )

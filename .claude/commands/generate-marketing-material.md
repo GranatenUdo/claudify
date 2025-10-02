@@ -55,5 +55,9 @@ category: marketing
   subagent_type="marketing-strategist"
 )
 
+## Convention Awareness
+
+Marketing materials reference project capabilities via `.claude/config/project-knowledge.json` (if present) or observed features.
+
 ## ✅ Complete
 Marketing materials ready in marketing/ directory.

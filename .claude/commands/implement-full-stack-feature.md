@@ -50,37 +50,103 @@ model: opus
 @Task(
   description="Implement backend API",
   prompt="Implement backend for '$ARGUMENTS' using C# 13/.NET 9:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Constructors: Follow {{patterns.entityConstructors}}
+  - Properties: Use {{naming.properties}}
+  - Collections: Use {{patterns.collectionProperties}}
+  - Date fields: Use {{naming.dateFields}}
+  - Error handling: Use {{patterns.errorHandling}}
+  - Validation: Use {{patterns.validation}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Actively examine 2-3 similar files:
+  1. Use Glob to find relevant files:
+     - Entities: **/*Domain*/Models/Entities/*.cs or **/Models/Entities/*.cs
+     - Services: **/*Service.cs
+  2. Read those files and detect:
+     - Constructor patterns
+     - Property patterns
+     - Collection types
+     - Date naming conventions
+     - Error handling approach
+     - Validation style
+  3. Apply the patterns you observed
+
+  ### IF NO FILES FOUND (Empty Project):
+  Use simple production-ready defaults:
+  - Public parameterless constructors
+  - Public { get; set; } properties
+  - List<T> collections
+  - CreatedAt/UpdatedAt date fields
+  - Exception-based error handling
+
   CREATE:
-  1. Entity with factory method and IOrganizationScoped
-  2. Repository with organization filtering
-  3. Service with Result<T> pattern
-  4. RESTful controller with proper HTTP semantics
-  5. Integration test for multi-tenant isolation
-  
+  1. Entity class (following detected patterns)
+  2. Repository interface + implementation
+  3. Service class (following detected error handling)
+  4. RESTful controller with [Authorize]
+  5. Integration tests
+
   USE: Primary constructors, collection expressions, modern C# 13
-  VALIDATE: Build compiles, tests pass, security enforced
-  
-  Generate complete working code with organization scoping.",
+  VALIDATE: Build compiles, tests pass
+
+  Generate complete working code.",
   subagent_type="tech-lead-engineer"
 )
 
-### 🎯 Frontend Developer - UI Implementation  
+### 🎯 Frontend Developer - UI Implementation
 @Task(
   description="Implement frontend components",
-  prompt="Implement Angular 19 frontend for '$ARGUMENTS':
-  
+  prompt="Implement Angular frontend for '$ARGUMENTS':
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Component naming: Use {{naming.classes}}
+  - Method naming: Use {{naming.methods}}
+  - Error handling: Match backend {{patterns.errorHandling}}
+  - State management: Use detected approach
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Actively examine 2-3 similar files:
+  1. Use Glob to find relevant files:
+     - Components: **/src/app/**/*.component.ts
+     - Services: **/src/app/**/*.service.ts
+  2. Read those files and detect:
+     - Signal usage vs observables
+     - Change detection strategy
+     - Template syntax (*ngIf vs @if)
+     - Service patterns
+     - Error handling approach
+     - State management pattern
+  3. Apply the patterns you observed
+
+  ### IF NO FILES FOUND (Empty Project):
+  Use simple production-ready defaults:
+  - Angular 19 with signals
+  - OnPush change detection
+  - Modern @if/@for syntax
+  - Try/catch error handling
+
   CREATE:
-  1. Service with signals (NO Observables)
-  2. List component with OnPush change detection
-  3. Form component with reactive forms
-  4. Templates with *ngIf/*ngFor (NOT @if/@for)
-  5. Component tests with signal verification
-  
-  USE: signal(), computed(), async/await, Result<T>
-  VALIDATE: Builds successfully, tests pass, responsive design
-  
-  Generate complete working Angular 19 code.",
+  1. Service(s) with appropriate state management
+  2. Component(s) with proper change detection
+  3. Template(s) with responsive design
+  4. Component tests
+
+  USE: Modern Angular features, TypeScript
+  VALIDATE: Builds successfully, tests pass
+
+  Generate complete working Angular code.",
   subagent_type="frontend-implementation-expert"
 )
 
@@ -88,14 +154,36 @@ model: opus
 @Task(
   description="Create test coverage",
   prompt="Create tests for '$ARGUMENTS':
-  
-  BACKEND: Service unit test, multi-tenant integration test, auth test
-  FRONTEND: Service test with mocked API, component test, signal reactivity
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Use detected testing patterns:
+  - Framework: {{testing.framework}}
+  - Pattern: {{testing.pattern}}
+  - Mocking: {{testing.mockingLibrary}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine existing test files:
+  1. Use Glob to find test files:
+     - Backend: **/*Tests/*.cs or **/*Test/*.cs
+     - Frontend: **/*.spec.ts or **/*.test.ts
+  2. Read 1-2 test files and detect:
+     - Test framework and assertion style
+     - Mocking approach
+     - Test naming patterns
+
+  ### IF NO FILES FOUND:
+  Use defaults: xUnit for .NET, Jasmine/Karma for Angular
+
+  BACKEND: Service unit test, integration test, auth test
+  FRONTEND: Service test with mocked API, component test
   E2E: Happy path workflow, error handling
-  
-  USE: xUnit for .NET, Jasmine/Karma for Angular
+
   FOCUS: Business logic, not framework testing
-  
+
   Generate executable test code.",
   subagent_type="test-quality-analyzer"
 )

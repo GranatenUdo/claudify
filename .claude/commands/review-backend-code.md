@@ -26,6 +26,8 @@ category: quality
 ### Tech Lead - C# 13 & Architecture Review
 @Task(description="Backend code review", prompt="Review backend code in '$ARGUMENTS' for HIGH-IMPACT issues:
 
+FIRST: Check if .claude/config/project-knowledge.json exists for project conventions.
+
 FOCUS ON TOP 3 ISSUES:
 1. BREAKS in production (null refs, deadlocks, memory leaks)
 2. SECURITY vulnerabilities (missing org scoping, SQL injection, exposed data)
@@ -74,7 +76,7 @@ CRITICAL CHECKS ONLY:
 2. SQL injection (parameterized queries only)
 3. Authorization ([Authorize] attributes)
 4. Sensitive data (no passwords/keys in logs)
-5. Result<T> error messages (no internal details)
+5. Error messages (no internal details exposed to clients)
 
 If SECURE: Say 'Security ✓'
 If ISSUES: Provide exact fix with code
@@ -107,35 +109,35 @@ Focus on exploitable vulnerabilities.", subagent_type="security-vulnerability-sc
 2. [Second priority]
 3. [Third priority]
 
-## C# 13 Code Examples
+## Convention Awareness
 
-### Good Pattern (C# 13)
+This command respects the dual-mode convention system:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Reviews against established project patterns
+- **Without cached conventions**: Reviews based on observed codebase patterns
+
+Recommendations align with YOUR project's choices, not external "best practices".
+
+## Code Examples
+
+### Pattern Consistency Example
 ```csharp
-// Primary constructor with DI
-public class UserService(IUserRepository repository, ILogger<UserService> logger)
+// IF project uses Result<T> pattern (from project-knowledge.json or observed):
+public async Task<Result<User>> GetAsync(Guid id, string orgId)
 {
-    public async Task<Result<User>> GetAsync(Guid id, string orgId)
-    {
-        // Collection expression
-        var allowedStatuses = [Status.Active, Status.Pending];
-        
-        var user = await repository.GetByIdAsync(id, orgId);
-        return user ?? Result<User>.Failure("Not found");
-    }
+    var user = await repository.GetByIdAsync(id, orgId);
+    return user ?? Result<User>.Failure("Not found");
+}
+
+// IF project uses exception pattern (from project-knowledge.json or observed):
+public async Task<User> GetAsync(Guid id, string orgId)
+{
+    var user = await repository.GetByIdAsync(id, orgId)
+        ?? throw new NotFoundException($"User {id} not found");
+    return user;
 }
 ```
 
-### Bad Pattern
-```csharp
-public class UserService
-{
-    // Missing null checks, no org scoping
-    public async Task<User> GetAsync(Guid id)
-    {
-        return await _context.Users.FirstAsync(u => u.Id == id);
-    }
-}
-```
+Both are valid - consistency with project conventions matters most.
 
 ## Value Principles
 1. **Production Focus**: Find what will actually break

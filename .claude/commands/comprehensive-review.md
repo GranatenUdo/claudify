@@ -84,21 +84,39 @@ model: opus
 @Task(
   description="Architecture pattern violations",
   prompt="Review '$ARGUMENTS' for ARCHITECTURE VIOLATIONS:
-  
-  TOP 3 PATTERN VIOLATIONS:
-  1. Controllers accessing repositories directly
-  2. Services throwing exceptions instead of Result<T>
-  3. Missing factory methods for entity creation
-  
+
+  FIRST: Check if .claude/config/project-knowledge.json exists to understand THIS project's conventions.
+
+  IF project-knowledge.json EXISTS (cached conventions):
+  - Load and respect the project's established patterns
+  - Check for INCONSISTENCIES with project's OWN conventions
+  - Flag deviations from the project's chosen approaches
+  - Ensure new code follows established patterns
+
+  IF project-knowledge.json NOT EXISTS (no cached conventions):
+  - Analyze the codebase to detect EXISTING patterns
+  - Check for INTERNAL consistency within observed patterns
+  - Flag mixing of different approaches without clear reason
+  - Base recommendations on what's already predominant in the code
+
+  Common checks:
+  1. Layer violations (e.g., Infrastructure depending on Application)
+  2. Inconsistent error handling within the codebase
+  3. Mixed patterns without clear boundaries
+  4. Abstraction leaks across boundaries
+
   Use Grep to analyze:
-  - Layer violations
-  - Pattern inconsistencies
-  - Abstraction leaks
-  
-  Return ONLY violations that break system design.
-  Show correct pattern implementation.
-  
-  Ignore minor deviations.",
+  - Pattern consistency across similar components
+  - Layer boundary violations
+  - Deviation from established conventions
+
+  Return ONLY violations that:
+  - Break the project's own consistency
+  - Violate clear architectural boundaries
+  - Create maintenance problems
+
+  Do NOT impose external 'best practices' - respect the project's choices.
+  Focus on CONSISTENCY within the project's chosen patterns.",
   subagent_type="tech-lead-engineer"
 )
 
@@ -159,11 +177,20 @@ After parallel analysis completes, consolidate findings:
 - Results are consolidated into actionable findings
 - Provides concrete fixes, not just problem identification
 
+## Convention Awareness
+
+This command is aware of the dual-mode convention system:
+- **With cached conventions** (`.claude/config/project-knowledge.json` exists): Reviews align with established project patterns
+- **Without cached conventions**: Reviews based on observed patterns in the codebase
+
+All recommendations respect the project's chosen approaches rather than imposing external standards.
+
 ## What We SKIP
 - Perfect code style
 - 100% test coverage
 - Theoretical improvements
 - Academic best practices
 - Minor optimizations
+- Imposing external patterns over project conventions
 
-Focus: Identify the most impactful issues that affect system quality.
+Focus: Identify the most impactful issues that affect system quality while respecting project conventions.

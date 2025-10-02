@@ -27,18 +27,45 @@ category: development
 @Task(
   description="Feature update",
   prompt="Update '$ARGUMENTS' backend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and maintain cached conventions:
+  - Constructors: Keep {{patterns.entityConstructors}}
+  - Properties: Keep {{naming.properties}}
+  - Collections: Keep {{patterns.collectionProperties}}
+  - Date fields: Keep {{naming.dateFields}}
+  - Error handling: Keep {{patterns.errorHandling}}
+  - Validation: Keep {{patterns.validation}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the files being updated:
+  1. Use Read to examine the target files
+  2. Detect existing patterns:
+     - Constructor style in current code
+     - Property patterns used
+     - Collection types used
+     - Error handling approach
+     - Validation patterns
+  3. Maintain consistency with detected patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Preserve existing code style exactly as found
+
   IMPLEMENT:
   1. Core functionality updates requested
   2. Maintain backward compatibility
-  3. Apply C# 13 patterns safely
-  4. Preserve Result<T> and org scoping
-  
+  3. Apply modern C# 13 patterns safely
+  4. Preserve existing error handling and patterns
+
   COMPATIBILITY:
   - Keep existing signatures
   - Add optional params/overloads
   - Version endpoints if breaking
-  
+
   OUTPUT: Updated implementation",
   subagent_type="tech-lead-engineer"
 )

@@ -5,7 +5,6 @@ argument-hint: research question or topic (e.g., "should we migrate to .NET 9", 
 complexity: moderate
 estimated-time: 3-5 minutes
 category: research
-model: opus
 ---
 
 # 🧠 Smart Research: $ARGUMENTS
@@ -18,23 +17,30 @@ model: opus
 @Task(
   description="Technical deep dive",
   prompt="Research technical aspects of '$ARGUMENTS':
-  
+
+  FIRST: Check if .claude/config/project-knowledge.json exists to understand project conventions.
+
   FIND:
   1. How is this actually implemented in production systems?
   2. What are the real performance/security implications?
   3. What breaks when you do this wrong?
-  
+
   Search for:
-  - Implementation patterns in our codebase
+  - Implementation patterns in our codebase (respect existing patterns)
   - GitHub repos with actual code (not tutorials)
   - Stack Overflow problems (not just solutions)
-  
+
   SYNTHESIZE findings into:
-  - What works (with evidence)
+  - What works in THIS project context (with evidence)
   - What fails (with examples)
-  - What we should do (with reasoning)
-  
-  Skip theory. Find what practitioners actually do.",
+  - What aligns with our conventions (or requires change)
+
+  Base recommendations on:
+  - Project's existing patterns (if cached)
+  - Observed codebase patterns (if not cached)
+  - Practical needs, not theoretical ideals
+
+  Skip prescriptive 'best practices'. Find what fits THIS project.",
   subagent_type="best-practices-researcher"
 )
 
@@ -158,6 +164,14 @@ After parallel research completes, synthesize into:
 4. **Honest about trade-offs** - Including "do nothing" option
 5. **Measurable outcomes** - Know if it worked
 
+## Convention Awareness
+
+This command adapts to your project:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Recommendations align with established patterns
+- **Without cached conventions**: Recommendations based on observed codebase patterns
+
+Research findings are contextual to YOUR project, not generic "best practices".
+
 ## What We DON'T Do
 
 ❌ TodoWrite ceremony
@@ -166,5 +180,6 @@ After parallel research completes, synthesize into:
 ❌ ADRs for non-architectural decisions
 ❌ Pages of boilerplate text
 ❌ Research for research's sake
+❌ Prescribe patterns without context (Result<T>, factory methods, etc.)
 
-Remember: **Research should reduce uncertainty, not create documentation.**
+Remember: **Research should reduce uncertainty, not impose patterns.**

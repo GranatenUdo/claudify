@@ -159,6 +159,14 @@ services.AddApplicationInsightsTelemetry();
 - **Cost Savings**: $X/month in infrastructure
 ```
 
+## Convention Awareness
+
+This command adapts to project patterns:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Optimizations align with established patterns
+- **Without cached conventions**: Based on observed codebase patterns
+
+Performance improvements respect your architectural choices.
+
 ## Why This Works
 
 1. **Metrics-driven** - Everything measurable
@@ -166,5 +174,6 @@ services.AddApplicationInsightsTelemetry();
 3. **Prioritized** - Biggest wins first
 4. **Validated** - With actual measurements
 5. **ROI-focused** - Time vs. benefit clear
+6. **Pattern-aligned** - Works within your architecture
 
 Remember: Optimize what matters to users, not what's interesting to developers.

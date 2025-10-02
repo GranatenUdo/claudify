@@ -63,13 +63,31 @@ category: quality
 @Task(
   description="Fix compilation errors",
   prompt="Fix compilation issues found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Constructor pattern: {{patterns.entityConstructors}}
+  - Properties: {{naming.properties}}
+  - Collections: {{patterns.collectionProperties}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the broken files:
+  1. Use Read to check the compilation error files
+  2. Maintain existing code style and patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Use minimal safe fixes
+
   COMMON FIXES:
   1. Nullable: Add ? or ! operators, null checks
   2. C# 13: Fix primary constructors, use [...] for collections
   3. Packages: Run dotnet restore, update versions
   4. Usings: Add missing using statements
-  
+
   Apply minimal fixes for compilation.
   Generate working code changes.",
   subagent_type="tech-lead-engineer"
@@ -79,13 +97,32 @@ category: quality
 @Task(
   description="Fix test failures",
   prompt="Fix test failures found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Use detected testing patterns:
+  - Framework: {{testing.framework}}
+  - Pattern: {{testing.pattern}}
+  - Mocking: {{testing.mockingLibrary}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine existing test files:
+  1. Use Glob: **/*Tests/*.cs
+  2. Read a working test to detect patterns
+  3. Apply same patterns to fix
+
+  ### IF NO PATTERNS DETECTED:
+  Use xUnit with Moq defaults
+
   COMMON FIXES:
   1. Mocks: Setup all required mocks with returns
   2. Async: Add async/await, ConfigureAwait(false)
   3. Org context: Set test OrganizationId
   4. Database: Use in-memory database for tests
-  
+
   Fix failing tests with minimal changes.
   Generate working test fixes.",
   subagent_type="test-quality-analyzer"

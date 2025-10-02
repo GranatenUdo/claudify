@@ -250,11 +250,20 @@ grep -r "password\|api[_-]key\|token" --include="*.cs" --include="*.json"
 - [ ] PCI DSS: N/A
 ```
 
+## Convention Awareness
+
+This command respects project patterns:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Security fixes follow established patterns
+- **Without cached conventions**: Based on observed security patterns
+
+All security remediation aligns with your existing architecture.
+
 ## Parallel Execution Advantages
 - **Comprehensive**: Multiple specialized agents check different vectors
 - **Parallel**: All security checks run simultaneously
 - **Thorough**: Covers multiple security aspects
 - **Actionable**: Specific fixes provided
 - **Prioritized**: Risk-based ordering
+- **Pattern-aligned**: Fixes match your conventions
 
 Remember: Prioritize CRITICAL issues for immediate resolution.

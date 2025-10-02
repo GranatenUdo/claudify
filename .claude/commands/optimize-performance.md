@@ -69,5 +69,9 @@ category: optimization
   subagent_type="test-quality-analyzer"
 )
 
+## Convention Awareness
+
+Optimizations respect project patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns (if not).
+
 ## ✅ Complete
 Performance optimization complete. Review the metrics report to verify improvements.

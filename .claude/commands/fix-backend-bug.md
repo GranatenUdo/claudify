@@ -24,7 +24,7 @@ category: quality
   - Null references and defensive programming gaps
   - Async/await deadlocks or .Result usage
   - EF tracking issues or Include() problems
-  - Result<T> pattern violations
+  - Inconsistent error handling (check project conventions)
   
   OUTPUT: Root cause with file:line and confidence level",
   subagent_type="tech-lead-engineer"
@@ -63,17 +63,40 @@ category: quality
 @Task(
   description="Implement fix with tests",
   prompt="Fix '$ARGUMENTS' based on diagnosis:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Error handling: Use {{patterns.errorHandling}}
+  - Validation: Use {{patterns.validation}}
+  - Constructor pattern: Match {{patterns.entityConstructors}}
+  - Testing: Use {{testing.framework}} with {{testing.pattern}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the file being fixed:
+  1. Use Read to examine the buggy file
+  2. Detect existing patterns:
+     - Error handling approach in this file
+     - Validation patterns used
+     - Code style and conventions
+  3. Maintain consistency with detected patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Use simple, safe defaults (exceptions, guard clauses)
+
   IMPLEMENT:
-  1. Root cause fix following CLAUDE.md patterns
+  1. Root cause fix following project conventions
   2. Defensive programming additions
-  3. Proper error handling with Result<T>
-  
+  3. Error handling consistent with project pattern
+
   CREATE TESTS:
   1. Regression test reproducing original bug
   2. Edge case tests around the fix
   3. Multi-tenant isolation test if applicable
-  
+
   OUTPUT: Fixed code + comprehensive tests",
   subagent_type="tech-lead-engineer"
 )

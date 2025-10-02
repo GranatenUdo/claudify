@@ -157,10 +157,19 @@ model: opus
 - Capacity: Additional headroom available
 ```
 
+## Convention Awareness
+
+This command respects existing patterns:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Optimizations follow established patterns
+- **Without cached conventions**: Based on observed performance patterns
+
+All optimizations work within your architecture, maintaining consistency.
+
 ## 🎯 Why This Works
 - **5 parallel agents** - All layers optimized simultaneously
 - **Integrated fixes** - Analysis and implementation together
 - **Measurable results** - Concrete before/after metrics
 - **Parallel execution** - Multiple agents work simultaneously
+- **Pattern-respecting** - Maintains architectural consistency
 
 Remember: Fix the bottlenecks users actually feel.

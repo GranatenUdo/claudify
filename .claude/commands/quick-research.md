@@ -16,14 +16,16 @@ model: opus
 @Task(
   description="Codebase research",
   prompt="Research '$ARGUMENTS' in codebase:
-  
+
+  FIRST: Check .claude/config/project-knowledge.json for project conventions if it exists.
+
   FIND:
-  1. Implementations and patterns
+  1. Implementations and patterns (respect existing)
   2. Current usage examples
   3. Known issues (TODOs, FIXMEs)
   4. Related documentation
-  
-  FOCUS: Actual code, not theory
+
+  FOCUS: Actual code and project patterns, not theory
   OUTPUT: Findings with file:line references",
   subagent_type="best-practices-researcher"
 )
@@ -46,18 +48,21 @@ model: opus
 @Task(
   description="Solution synthesis",
   prompt="Synthesize research for '$ARGUMENTS':
-  
+
   DELIVER:
   1. Direct answer (1 paragraph)
-  2. Our codebase approach
-  3. Industry best practice
-  4. Specific recommendation
-  5. Code example if applicable
-  
+  2. Our codebase approach (align with conventions if cached)
+  3. Common practices (contextual, not prescriptive)
+  4. Specific recommendation for THIS project
+  5. Code example matching project patterns
+
   FORMAT: Actionable, not academic
-  OUTPUT: Clear next steps",
+  OUTPUT: Clear next steps aligned with project",
   subagent_type="tech-lead-engineer"
 )
+
+## Convention Awareness
+Adapts to your project's patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns (if not).
 
 ## ✅ Answer Ready
 Research complete with actionable recommendations.

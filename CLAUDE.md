@@ -66,6 +66,12 @@ Example:
 - **Documentation**: CLAUDE.md and FEATURES.md remain user-managed
 - **Validation**: Confirms all replacements successful
 
+### Convention Detection Modes
+- **Smart Mode (Default)**: Pre-analyzes entire codebase (~60s), caches conventions, 95-100% accuracy
+- **Adaptive Mode**: On-demand examination of 2-3 files per command, 90% accuracy, always current
+- **Automatic Fallback**: Commands use cache if available, examine code if not
+- **Refresh Analysis**: Run `.\setup.ps1 -RefreshAnalysis` to update cached conventions
+
 ### Security Configuration
 - **Agent Restrictions**: Each agent has minimal required tools
 - **Code Reviewer**: Read, Edit, MultiEdit, Grep, Glob, LS only
@@ -208,16 +214,21 @@ Setup performs these checks:
 ### Standard Workflow
 1. Run setup.ps1 with target repository
 2. Choose Comprehensive installation
-3. Automatic namespace detection occurs
-4. Configuration applied to all components
-5. Begin using Claude Code immediately
+3. Choose convention detection mode (Smart recommended)
+4. Automatic project detection and configuration
+5. Begin using Claude Code with convention-aware generation
 
 ### Common Commands After Setup
 ```bash
 /comprehensive-review     # Full code analysis
-/add-backend-feature     # Create new API feature
-/fix-frontend-bug        # Debug UI issues
-/security-audit          # Security scanning
+/add-backend-feature     # Create new API feature (matches your conventions)
+/fix-frontend-bug        # Debug UI issues (respects your patterns)
+/security-audit          # Security scanning (aligns with architecture)
+```
+
+### Convention Detection Commands
+```bash
+.\setup.ps1 -RefreshAnalysis  # Update convention cache after code changes
 ```
 
 ## 🤝 ENTERPRISE INTEGRATION

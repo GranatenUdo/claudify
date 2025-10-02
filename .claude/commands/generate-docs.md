@@ -70,5 +70,9 @@ category: documentation
   subagent_type="technical-documentation-writer"
 )
 
+## Convention Awareness
+
+Documentation aligns with project patterns via `.claude/config/project-knowledge.json` (if present) or observed conventions.
+
 ## ✅ Complete
 Documentation generated in docs/ directory.

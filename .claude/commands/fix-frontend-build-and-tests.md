@@ -62,13 +62,31 @@ category: quality
 @Task(
   description="Fix TypeScript errors",
   prompt="Fix TypeScript issues found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Component naming: {{naming.classes}}
+  - Method naming: {{naming.methods}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine the broken files:
+  1. Use Read to check the error files
+  2. Detect template syntax used (*ngIf vs @if)
+  3. Maintain existing patterns
+
+  ### IF NO PATTERNS DETECTED:
+  Use minimal safe fixes
+
   COMMON FIXES:
   1. Type errors: Add types, fix interfaces, use assertions
   2. Imports: Fix paths, add missing imports
   3. Null safety: Add ?. operator, initialize signals
-  4. Angular 19: Use *ngIf/*ngFor, not @if/@for
-  
+  4. Template syntax: Match existing project syntax
+
   Apply minimal fixes for compilation.
   Generate working code changes.",
   subagent_type="frontend-implementation-expert"
@@ -78,13 +96,31 @@ category: quality
 @Task(
   description="Fix test failures",
   prompt="Fix test failures found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Use detected testing patterns:
+  - Framework: {{testing.framework}}
+  - Pattern: {{testing.pattern}}
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Examine existing test files:
+  1. Use Glob: **/*.spec.ts
+  2. Read a working test to detect patterns
+  3. Apply same patterns to fix
+
+  ### IF NO PATTERNS DETECTED:
+  Use Jasmine/Karma defaults
+
   COMMON FIXES:
   1. Providers: Add all required mocks to TestBed
   2. Async: Use fakeAsync/tick or waitForAsync
   3. Signals: Initialize with test values
   4. DOM: Add fixture.detectChanges() calls
-  
+
   Fix failing tests with minimal changes.
   Generate working test fixes.",
   subagent_type="test-quality-analyzer"

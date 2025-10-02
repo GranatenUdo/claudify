@@ -104,6 +104,10 @@ After analysis, update CHANGELOG.md:
 /update-changelog release:1.3.0
 ```
 
+## Convention Awareness
+
+Changelog updates consider project conventions via `.claude/config/project-knowledge.json` (if present) or observed patterns.
+
 ---
 
 **Note**: Always specify category or use descriptive verbs (Added, Fixed, Changed) for auto-categorization.

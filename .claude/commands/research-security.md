@@ -148,4 +148,12 @@ model: opus
 4. **Actionable fixes** - Copy-paste solutions
 5. **Severity-based** - Prioritizes critical issues
 
+## Convention Awareness
+
+This command respects project patterns:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Security fixes align with established patterns
+- **Without cached conventions**: Based on observed security patterns in codebase
+
+Security improvements work within your architecture, not against it.
+
 Remember: Research that doesn't lead to patches is just FUD.

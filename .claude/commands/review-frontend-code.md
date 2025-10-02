@@ -33,12 +33,13 @@ FOCUS ON TOP 3 ISSUES:
 
 CHECK SPECIFICALLY:
 ✓ Signal usage (update vs set, computed efficiency)
-✓ Change detection (OnPush everywhere?)
+✓ Change detection (OnPush where beneficial?)
 ✓ Memory leaks (subscriptions cleaned up?)
-✓ Result<T> pattern (proper error handling?)
-✓ Angular 19 syntax (*ngIf not @if)
-✓ Organization scoping (enforced?)
-✓ Type safety (no 'any' types)
+✓ Consistent error handling (matches project conventions)
+✓ Template syntax consistency (check project's approach)
+✓ Type safety (minimize 'any' types)
+
+Read .claude/config/project-knowledge.json if it exists to check for pattern consistency.
 
 FOR EACH ISSUE:
 - Problem: [Specific description]
@@ -87,9 +88,17 @@ Skip theoretical risks.", subagent_type="security-vulnerability-scanner")
 2. [Second priority]
 3. [Third priority]
 
+## Convention Awareness
+
+This command respects the dual-mode convention system:
+- **With cached conventions** (`.claude/config/project-knowledge.json`): Reviews against established project patterns
+- **Without cached conventions**: Reviews based on observed patterns in the codebase
+
+All recommendations align with project conventions rather than imposing external standards.
+
 ## Value Principles
 1. **Impact Focus**: Find what could actually break
-2. **Pattern Compliance**: Ensure consistency
+2. **Pattern Compliance**: Ensure consistency with project's chosen patterns
 3. **User Experience**: Consider real user impact
 4. **Quick Validation**: 5-8 minutes to insights
 5. **Actionable Output**: Specific fixes, not vague concerns

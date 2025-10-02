@@ -98,12 +98,31 @@ Choose ⚡ parallel commands for faster results:
 - `implement-full-stack-feature` - Frontend and backend work in parallel
 - `security-audit` - Concurrent security checks across different vectors
 
+## 🎯 Convention-Aware System
+
+All commands now support dual-mode operation:
+
+### With Project Knowledge Cache
+- **File**: `.claude/config/project-knowledge.json`
+- **Behavior**: Commands respect cached conventions (error handling, constructors, etc.)
+- **Benefits**: Consistent with established patterns, faster execution
+
+### Without Cache (Default)
+- **Behavior**: Commands analyze codebase to detect patterns
+- **Benefits**: Works with any project, adapts to existing code
+
+### Key Features
+- **No prescriptive patterns** - Respects YOUR project's choices
+- **Context-aware recommendations** - Based on what you already use
+- **Flexible adaptation** - Works with Result<T> OR exceptions, factory methods OR constructors
+
 ## 💡 Best Practices
 
 1. **Use specialized research** for important decisions
 2. **Leverage parallel execution** for complex tasks
 3. **Choose the right depth** - not every question needs deep research
 4. **Focus on actionable output** - research should lead to decisions
+5. **Trust convention detection** - Let commands adapt to your patterns
 
 ## 🚫 Deprecated Commands
 

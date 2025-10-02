@@ -27,19 +27,41 @@ category: development
 @Task(
   description="Clean rebuild",
   prompt="Rebuild '$ARGUMENTS' frontend cleanly:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Check if .claude/config/project-knowledge.json exists:
+
+  ### IF EXISTS (Smart Mode):
+  Read and apply cached conventions:
+  - Component naming: Use {{naming.classes}}
+  - Method naming: Use {{naming.methods}}
+  - Error handling: Match backend {{patterns.errorHandling}}
+  - State management: Use detected approach
+
+  ### IF NOT EXISTS (Adaptive Mode):
+  Actively examine 2-3 similar files:
+  1. Use Glob to find relevant files:
+     - Components: **/src/app/**/*.component.ts
+     - Services: **/src/app/**/*.service.ts
+  2. Read those files and detect patterns
+  3. Apply the patterns you observed
+
+  ### IF NO FILES FOUND (Empty Project):
+  Use simple production-ready defaults
+
   REMOVE:
   1. Legacy Observable code
   2. Backward compatibility logic
   3. Deprecated components
   4. Old routing patterns
-  
+
   IMPLEMENT:
   1. Pure signal architecture
   2. Modern Angular 19 patterns only
   3. Simplified component tree
   4. Optimized bundle size
-  
+
   OUTPUT: Clean, modern implementation",
   subagent_type="frontend-implementation-expert"
 )
