@@ -1,13 +1,13 @@
-# Migration Guide: Upgrading to Claudify v4.0.0
+# Migration Guide: Upgrading to Claudify v5.0.0
 
 **Last Updated**: 2025-10-02
-**Target Audience**: Existing Claudify users upgrading from v3.x to v4.0.0
+**Target Audience**: Existing Claudify users upgrading from v4.x to v5.0.0
 
 ---
 
 ## ⚠️ BREAKING CHANGES
 
-v4.0.0 is a **major breaking release** that removes the template system and aligns with official Claude Code best practices.
+v5.0.0 is a **major breaking release** that removes the template system and aligns with official Claude Code best practices.
 
 ### What Changed
 
@@ -25,7 +25,7 @@ Research into official Anthropic Claude Code best practices revealed:
 - Work in directory context provided by Claude Code
 - Commands describe actions, not paths
 
-v4.0.0 implements this philosophy correctly.
+v5.0.0 implements this philosophy correctly.
 
 ---
 
@@ -47,12 +47,10 @@ cd your-project
 ..\claudify\setup.ps1 -TargetRepository "."
 ```
 
-Choose Smart or Adaptive mode when prompted.
-
 ### Step 3: Delete Obsolete Files
 
 ```bash
-# Delete old config files (if exist from v3.x):
+# Delete old config files (if exist from v4.x):
 rm .claude/config/projects.json
 rm .claude/config/project-knowledge.json
 rm .claude/config/claudify.json
@@ -61,11 +59,11 @@ rm .claude/config/claudify.json
 rm -rf .claudify-sdk/
 ```
 
-These files and directories are no longer used in v4.0.0.
+These files and directories are no longer used in v5.0.0.
 
 ### Step 4: Update Your Workflow
 
-**OLD workflow (v3.x)**:
+**OLD workflow (v4.x)**:
 ```bash
 cd your-project-root
 claude
@@ -73,7 +71,7 @@ claude
 # Worked because paths were hardcoded during setup
 ```
 
-**NEW workflow (v4.0.0)**:
+**NEW workflow (v5.0.0)**:
 ```bash
 # Navigate to specific project first
 cd src/YourProject.Web
@@ -88,22 +86,22 @@ claude
 
 ### Single Project
 
-**Before (v3.x)**:
+**Before (v4.x)**:
 - Run `claude` from anywhere in repo
 - Commands used hardcoded paths from template replacement
 
-**After (v4.0.0)**:
+**After (v5.0.0)**:
 - Navigate to project directory: `cd src/YourProject.Web`
 - Run `claude` from that directory
 - Commands work in current context
 
 ### Multi-Project Development
 
-**Before (v3.x)**:
+**Before (v4.x)**:
 - Setup asked for "primary" project
 - Other projects unusable without re-running setup
 
-**After (v4.0.0)**:
+**After (v5.0.0)**:
 - Use `cd` to switch between projects
 - Or use git worktrees for parallel work
 - All projects equally accessible
@@ -155,13 +153,6 @@ claude
 
 ## What Stayed the Same
 
-### Convention Detection
-- ✅ Smart Mode (analyzes project, caches conventions)
-- ✅ Adaptive Mode (on-demand examination)
-- ✅ `.\setup.ps1 -RefreshAnalysis` command
-- ✅ `.claude/config/project-knowledge.json` cache format
-- ✅ All 18+ pattern categories detected
-
 ### Commands & Agents
 - ✅ All 40+ commands available
 - ✅ All 30+ agents available
@@ -204,15 +195,15 @@ cd ../worktree-public/src/Public.Web && claude
 .\claudify\setup.ps1 -TargetRepository "."
 ```
 
-This overwrites old command files with new v4.0.0 versions.
+This overwrites old command files with new v5.0.0 versions.
 
 ---
 
-## Comparison: v3.x vs v4.0.0
+## Comparison: v4.x vs v5.0.0
 
-| Aspect | v3.x | v4.0.0 |
+| Aspect | v4.x | v5.0.0 |
 |--------|------|--------|
-| Setup Complexity | 1089 lines, project detection | 255 lines, pure copy |
+| Setup Complexity | 1089 lines, project detection | 109 lines, pure copy |
 | Project Selection | "Primary" selection required | No selection needed |
 | Command Paths | Hardcoded via templates | Pure, context-aware |
 | Multi-Project | One primary only | All projects via `cd` |
@@ -221,9 +212,9 @@ This overwrites old command files with new v4.0.0 versions.
 
 ---
 
-## Benefits of v4.0.0
+## Benefits of v5.0.0
 
-✅ **Simpler**: Setup is just file copy + optional analyzer
+✅ **Simpler**: Setup is just file copy
 ✅ **Flexible**: All projects equally accessible
 ✅ **Portable**: Commands work in any directory
 ✅ **Aligned**: Follows official Claude Code best practices
@@ -232,18 +223,18 @@ This overwrites old command files with new v4.0.0 versions.
 
 ---
 
-## Rollback to v3.x
+## Rollback to v4.x
 
 If you need to rollback:
 
 ```bash
 cd claudify
-git checkout tags/v3.0.0
+git checkout tags/v4.0.0
 cd ../your-project
 ..\claudify\setup.ps1 -TargetRepository "."
 ```
 
-However, v4.0.0 is recommended for better alignment with Claude Code.
+However, v5.0.0 is recommended for better alignment with Claude Code.
 
 ---
 

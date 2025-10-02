@@ -5,7 +5,7 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2025-10-02
+## [5.0.0] - 2025-10-02
 
 ### 🎉 Major Release - Pure, Context-Aware Commands
 
@@ -62,33 +62,36 @@ This release aligns Claudify with official Claude Code best practices. Commands 
 - **Business Impact Agent**: Removed from `/smart-research` (fabricated metrics)
 - **Hooks System**: Removed (v3.x legacy)
 
-### Breaking Changes from v3.x
+### Breaking Changes from v4.x
 
 **Commands are context-driven**:
-- v3.x: Run `claude` from repo root, commands use hardcoded paths
-- v4.0.0: Navigate to project (`cd src/MyProject.Web`), then run `claude`
+- v4.x: Run `claude` from repo root, commands use hardcoded paths
+- v5.0.0: Navigate to project (`cd src/MyProject.Web`), then run `claude`
 
 **Multi-project workflow**:
-- v3.x: One "primary" project only
-- v4.0.0: All projects accessible via `cd` or git worktrees
+- v4.x: One "primary" project only
+- v5.0.0: All projects accessible via `cd` or git worktrees
 
 **Setup**:
-- v3.x: Project detection and template replacement
-- v4.0.0: Pure file copy only
+- v4.x: Project detection and template replacement
+- v5.0.0: Pure file copy only
 
-### Migration from v3.x
+### Migration from v4.x
 
 1. Re-run setup: `.\setup.ps1 -TargetRepository "."`
-2. Delete old config: `.claude/config/projects.json` (if exists)
-3. Navigate to project: `cd src/YourProject.Web`
-4. Launch Claude Code: `claude`
-5. Commands now work in current directory
+2. Delete old config: `.claude/config/projects.json`, `.claude/config/project-knowledge.json` (if exist)
+3. Delete analyzer: `.claudify-sdk/` (if exists)
+4. Navigate to project: `cd src/YourProject.Web`
+5. Launch Claude Code: `claude`
+6. Commands now work in current directory
 
 For multi-project repos, use `cd` to switch or git worktrees for parallel work.
 
 ---
 
-## [3.x] - Previous Implementation Details
+## [4.0.0] - 2025-09-02
+
+### Previous Implementation Details
   - `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
   - `{{ProjectNamespace}}.Api` → `{{ApiProject}}`
 - **Configuration Format**: Now saves to `projects.json` instead of `namespace.json`

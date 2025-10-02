@@ -152,4 +152,4 @@ Claudify is completely self-contained in this directory.
 
 ---
 
-**Claudify 4.0.0** - Pure, context-aware commands for Claude Code.
+**Claudify 5.0.0** - Pure, context-aware commands for Claude Code.
