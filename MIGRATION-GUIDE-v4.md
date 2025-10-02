@@ -18,12 +18,12 @@ This gives you flexibility to choose between speed (Smart) and always-current de
 
 ### Key Changes
 
-- ✅ **Interactive mode selection** during setup
-- ✅ **All 32 commands** now support pattern detection
-- ✅ **Automatic fallback** from Smart to Adaptive if cache missing
-- ✅ **New command**: `.\setup.ps1 -RefreshAnalysis` to update conventions
-- ✅ **Convention cache**: `.claude/config/project-knowledge.json` (Smart Mode)
-- ✅ **Mode tracking**: `.claude/config/claudify.json`
+- **Interactive mode selection** during setup
+- **All 32 commands** now support pattern detection
+- **Automatic fallback** from Smart to Adaptive if cache missing
+- **New command**: `.\setup.ps1 -RefreshAnalysis` to update conventions
+- **Convention cache**: `.claude/config/project-knowledge.json` (Smart Mode)
+- **Mode tracking**: `.claude/config/claudify.json`
 
 ---
 
@@ -87,22 +87,21 @@ Setup will:
 
 ### Preserved Files (Not Touched)
 
-- ✅ `CLAUDE.md` - Your project documentation
-- ✅ `FEATURES.md` - Your feature list
-- ✅ `.claude/config/projects.json` - Project configuration
-- ✅ Any custom commands you added
-- ✅ Any custom agents you created
+- `CLAUDE.md` - Your project documentation
+- `FEATURES.md` - Your feature list
+- `.claude/config/projects.json` - Project configuration
+- Any custom commands you added
+- Any custom agents you created
 
 ### Updated Files
 
-- 🔄 `.claude/commands/*.md` - All commands get pattern detection
-- 🔄 `.claude/agents/*.md` - Agents become convention-aware
+- `.claude/commands/*.md` - All commands get pattern detection
+- `.claude/agents/*.md` - Agents become convention-aware
 
 ### New Files Created
 
-- 🆕 `.claude/config/project-knowledge.json` - Convention cache (Smart Mode only)
-- 🆕 `.claude/config/claudify.json` - Mode configuration
-- 🆕 `.claude/templates/PATTERN-DETECTION-BLOCK.md` - Reference documentation
+- `.claude/config/project-knowledge.json` - Convention cache (Smart Mode only)
+- `.claude/config/claudify.json` - Mode configuration
 
 ---
 
@@ -117,10 +116,10 @@ Setup will:
 4. Commands read cache and generate matching code instantly
 
 **When to Use**:
-- ✅ Teams with established conventions
-- ✅ Want fastest code generation
-- ✅ Consistent patterns across codebase
-- ✅ Node.js 18+ available
+- Teams with established conventions
+- Want fastest code generation
+- Consistent patterns across codebase
+- Node.js 18+ available
 
 **Pros**:
 - 95-100% accuracy
@@ -140,10 +139,10 @@ Setup will:
 4. Generates code matching observed patterns
 
 **When to Use**:
-- ✅ Rapidly changing codebases
-- ✅ Mixed conventions in different areas
-- ✅ Want always-current detection
-- ✅ Don't want dependency on Node.js
+- Rapidly changing codebases
+- Mixed conventions in different areas
+- Want always-current detection
+- Don't want dependency on Node.js
 
 **Pros**:
 - Always reflects current code
@@ -353,13 +352,13 @@ cd path/to/your/project
 4. Continue using Claude Code as before, now with better pattern matching
 
 **Key Benefits of v4.0.0**:
-- ✅ Smarter code generation that matches YOUR conventions
-- ✅ Flexibility to choose analysis strategy
-- ✅ Automatic fallback for reliability
-- ✅ Backward compatible with no breaking changes
+- Smarter code generation that matches YOUR conventions
+- Flexibility to choose analysis strategy
+- Automatic fallback for reliability
+- Backward compatible with no breaking changes
 
 **Recommended Setup**: Smart Mode with periodic `.\setup.ps1 -RefreshAnalysis` after major changes.
 
 ---
 
-**Happy coding with Claudify v4.0.0!**
+**Claudify v4.0.0 - Convention-aware code generation for Claude Code**

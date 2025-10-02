@@ -1,12 +1,12 @@
 # CLAUDE.md - Claudify System Documentation
 
-## 🧠 CONTEXT
+## CONTEXT
 **System**: Claudify - Claude Code Setup System
 **Version**: 4.0.0
 **Purpose**: Automated configuration system for Claude Code in .NET/Angular projects
 **Architecture**: Three-phase system with namespace detection
 
-## 🏗️ SYSTEM ARCHITECTURE
+## SYSTEM ARCHITECTURE
 
 ### Three-Phase Implementation
 1. **Bootstrap Phase** (setup.ps1)
@@ -50,7 +50,7 @@ Example:
 - Detected: `MyCompany.ProductName.Web` (from MyCompany.ProductName.Web.csproj)
 - Result: `cd src/MyCompany.ProductName.Web`
 
-## ⚡ CONFIGURATION RULES
+## CONFIGURATION RULES
 
 ### Project Structure Requirements
 - **Standard .NET Layout**: Projects follow `src/[Namespace].Web`, `src/[Namespace].Api`
@@ -78,7 +78,7 @@ Example:
 - **Tech Lead**: Read, Write, Edit, Grep, Glob, LS, TodoWrite only
 - **Frontend Developer**: Read, Write, Edit, MultiEdit, Grep, Glob, LS only
 
-## 💻 IMPLEMENTATION PATTERNS
+## IMPLEMENTATION PATTERNS
 
 ### PowerShell Configuration
 ```powershell
@@ -142,7 +142,7 @@ All commands use mustache-style templates with specific project variables:
 
 These templates are automatically replaced with your actual project names during setup.
 
-## 🔒 SECURITY ARCHITECTURE
+## SECURITY ARCHITECTURE
 
 ### Agent Tool Matrix
 Each agent operates with restricted permissions:
@@ -160,7 +160,7 @@ Each agent operates with restricted permissions:
 - **Audit Trail**: All operations tracked
 - **Validation**: Automatic verification of setup
 
-## 📊 PERFORMANCE OPTIMIZATION
+## PERFORMANCE OPTIMIZATION
 
 ### Parallel Agent Execution
 - Opus 4 agents support simultaneous analysis
@@ -173,7 +173,7 @@ Each agent operates with restricted permissions:
 - Validation: < 1 second
 - Total setup time: < 2 minutes
 
-## 🔍 QUALITY ASSURANCE
+## QUALITY ASSURANCE
 
 ### Automatic Validation
 Setup performs these checks:
@@ -185,14 +185,14 @@ Setup performs these checks:
 
 ### Success Indicators
 ```powershell
-✅ Setup Complete!
-  ✓ Commands installed
-  ✓ Agents configured
-  ✓ Project namespace applied: YourCompany.YourProject
-  ✓ Documentation generated
+Setup Complete!
+  - Commands installed
+  - Agents configured
+  - Project namespace applied: YourCompany.YourProject
+  - Documentation generated
 ```
 
-## 📈 VERSIONING
+## VERSIONING
 
 ### Current Version: 4.0.0
 - Interactive project configuration
@@ -207,7 +207,7 @@ Setup performs these checks:
 - Works with standard project structures
 - Cross-platform (Windows, Linux, macOS)
 
-## 🚀 USAGE PATTERNS
+## USAGE PATTERNS
 
 ### Standard Workflow
 1. Run setup.ps1 with target repository
@@ -229,7 +229,7 @@ Setup performs these checks:
 .\setup.ps1 -RefreshAnalysis  # Update convention cache after code changes
 ```
 
-## 🤝 ENTERPRISE INTEGRATION
+## ENTERPRISE INTEGRATION
 
 ### CI/CD Support
 - Azure DevOps pipeline templates included
@@ -243,7 +243,7 @@ Setup performs these checks:
 - Unified development patterns
 - Knowledge sharing through agents
 
-## 📋 TROUBLESHOOTING
+## TROUBLESHOOTING
 
 ### Common Solutions
 | Issue | Solution |

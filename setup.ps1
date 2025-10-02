@@ -205,7 +205,6 @@ if ($CleanInstall) {
     Write-Host "Affected items:" -ForegroundColor DarkGray
     Write-Host "  - .claude/commands/* (all commands)" -ForegroundColor DarkGray
     Write-Host "  - .claude/agents/* (all agents)" -ForegroundColor DarkGray
-    Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
     Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
     Write-Host "  Note: CLAUDE.md is a user-managed file" -ForegroundColor Green
     
@@ -314,9 +313,6 @@ if (Test-Path $sourceVersion) {
     Copy-Item -Path $sourceVersion -Destination $destVersion -Force
 }
 
-# Templates and scripts directories removed in v4.0.0
-# Generators now installed from templates/generators/ into .claude/generators/
-
 # Copy important documentation files
 $docFiles = @(
     "README.md",
@@ -399,8 +395,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     $paths = @(
         (Join-Path $claudePath "commands"),
         (Join-Path $claudePath "agents"),
-        (Join-Path $claudePath "generators"),
-        (Join-Path $claudePath "validation"),
         (Join-Path $claudePath "templates" "documentation")
     )
     
@@ -414,8 +408,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     # Define component lists based on mode
     $commandsToInstall = @()
     $agentsToInstall = @()
-    $installGenerators = $false
-    $installTools = $false
     
     switch ($setupMode) {
         "minimal" {
@@ -436,7 +428,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
                 "technical-debt-analyzer",
                 "test-quality-analyzer"
             )
-            $installGenerators = $true
         }
         "comprehensive" {
             $commandsToInstall = @(
@@ -491,8 +482,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
                 "marketing-strategist",
                 "sales-pitch-creator"
             )
-            $installGenerators = $true
-            $installTools = $true
         }
     }
     
@@ -537,73 +526,7 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         }
     }
     Write-Success "  Agents: $installedAgents installed$(if ($failedAgents -gt 0) { ", $failedAgents failed" })"
-    
-    # Install generators (if applicable)
-    if ($installGenerators) {
-        Write-Info "Installing generators..."
-        $generatorFiles = @(
-            "command-generator.ps1",
-            "agent-generator.ps1"
-        )
-        $installedGenerators = 0
-        foreach ($generator in $generatorFiles) {
-            $sourcePath = Join-Path $claudifyPath "templates" "generators" $generator
-            $destPath = Join-Path $claudePath "generators" $generator
-            
-            if (Test-Path $sourcePath) {
-                Copy-Item -Path $sourcePath -Destination $destPath -Force
-                Write-Detail "[OK] $generator"
-                $installedGenerators++
-            }
-        }
-        
-        # Copy generator README
-        $sourceReadme = Join-Path $claudifyPath "templates" "META-GENERATOR-README.md"
-        $destReadme = Join-Path $claudePath "generators" "README.md"
-        if (Test-Path $sourceReadme) {
-            Copy-Item -Path $sourceReadme -Destination $destReadme -Force
-        }
-        
-        Write-Success "  Generators: $installedGenerators installed"
-    }
-    
-    # Copy validation tools
-    Write-Info "Installing validation tools..."
-    $validationFiles = @(
-        "architecture-validator.ps1",
-        "code-quality-validator.ps1",
-        "test-coverage-analyzer.ps1"
-    )
-    $installedValidation = 0
-    foreach ($validation in $validationFiles) {
-        $sourcePath = Join-Path $claudifyPath ".claude" "validation" $validation
-        $destPath = Join-Path $claudePath "validation" $validation
-        
-        if (Test-Path $sourcePath) {
-            Copy-Item -Path $sourcePath -Destination $destPath -Force
-            $installedValidation++
-        }
-    }
-    Write-Success "  Validation tools: $installedValidation installed"
-    
-    # Copy documentation templates
-    $templatesDocPath = Join-Path $claudePath "templates" "documentation"
-    if (-not (Test-Path $templatesDocPath)) {
-        New-Item -ItemType Directory -Path $templatesDocPath -Force | Out-Null
-    }
-    
-    $sourceTemplates = Join-Path $claudifyPath ".claude" "templates" "documentation" "*.template"
-    if (Test-Path (Split-Path $sourceTemplates -Parent)) {
-        Copy-Item -Path $sourceTemplates -Destination $templatesDocPath -Force -ErrorAction SilentlyContinue
-    }
-    
-    # Copy design guidelines
-    $sourceGuidelines = Join-Path $claudifyPath ".claude" "COMMAND-AGENT-DESIGN-GUIDELINES.md"
-    $destGuidelines = Join-Path $claudePath "COMMAND-AGENT-DESIGN-GUIDELINES.md"
-    if (Test-Path $sourceGuidelines) {
-        Copy-Item -Path $sourceGuidelines -Destination $destGuidelines -Force
-    }
-    
+
     # Project Detection and Configuration
     Write-Info "`n[CONFIG] Detecting and configuring project names..."
     
@@ -1158,10 +1081,7 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     Write-Host "========================" -ForegroundColor DarkGray
     Write-Success "OK: Commands installed: $installedCommands"
     Write-Success "OK: Agents installed: $installedAgents"
-    if ($installGenerators) { Write-Success "OK: Generators installed: 2" }
-    if ($installTools) { Write-Success "OK: Agent tools installed: 3 sets" }
-    Write-Success "OK: Validation tools: $installedValidation"
-    
+
     # Final success message
     Write-Host ""
     Write-Success "✅ Claudify setup completed successfully!"

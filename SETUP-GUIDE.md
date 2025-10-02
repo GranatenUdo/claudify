@@ -4,16 +4,16 @@
 
 Before running Claudify, ensure you have:
 
-✅ **PowerShell 7+** installed (cross-platform)
+**PowerShell 7+** installed (cross-platform)
 - Windows: Pre-installed or via Microsoft Store
 - macOS: `brew install powershell`
 - Linux: [Installation guide](https://docs.microsoft.com/powershell/scripting/install/installing-powershell)
 
-✅ **Claude Code CLI** installed and configured
+**Claude Code CLI** installed and configured
 - Run `claude --version` to verify installation
 - Ensure you're logged in with `claude login`
 
-✅ **.NET/Angular Project** following standard conventions
+**.NET/Angular Project** following standard conventions
 - .NET 8 or 9 backend
 - Angular 17-19 frontend
 - Standard project structure (src/, tests/ folders)
@@ -84,19 +84,19 @@ You'll see an interactive configuration process:
   Detected web project(s):
     - MyCompany.MyProject.Web (at src\MyCompany.MyProject.Web\MyCompany.MyProject.Web.csproj)
   Enter primary web project name [MyCompany.MyProject.Web]: ⏎
-  ✓ Web project: MyCompany.MyProject.Web
+  Web project: MyCompany.MyProject.Web
 
   [API Project Configuration]
   Detected API project(s):
     - MyCompany.MyProject.Api (at src\MyCompany.MyProject.Api\MyCompany.MyProject.Api.csproj)
   Enter API project name [MyCompany.MyProject.Api]: ⏎
-  ✓ API project: MyCompany.MyProject.Api
+  API project: MyCompany.MyProject.Api
 
   [Architecture Test Project Configuration]
   Detected architecture test project(s):
     - MyCompany.MyProject.ArchitectureTests (at tests\MyCompany.MyProject.ArchitectureTests\MyCompany.MyProject.ArchitectureTests.csproj)
   Enter architecture test project name [MyCompany.MyProject.ArchitectureTests]: ⏎
-  ✓ Architecture test project: MyCompany.MyProject.ArchitectureTests
+  Architecture test project: MyCompany.MyProject.ArchitectureTests
 
   [Configuration Summary]
   The following projects will be configured:
@@ -113,11 +113,11 @@ You'll see an interactive configuration process:
     ... (more files)
   [OK] Processed 12 file(s) with project templates
 
-✅ Setup Complete!
-  ✓ Commands installed
-  ✓ Agents configured
-  ✓ Project configuration applied
-  ✓ CLAUDE.md and FEATURES.md preserved (user-managed)
+Setup Complete!
+  - Commands installed
+  - Agents configured
+  - Project configuration applied
+  - CLAUDE.md and FEATURES.md preserved (user-managed)
 ```
 
 ### Step 5: Start Using Claude Code
@@ -213,11 +213,11 @@ grep -r "{{.*}}" .claude/
 ### Expected Results
 
 After successful setup:
-- ✅ 30+ agents available
-- ✅ 40+ commands installed
-- ✅ No template markers remaining
-- ✅ Commands execute without errors
-- ✅ Documentation reflects your project
+- 30+ agents available
+- 40+ commands installed
+- No template markers remaining
+- Commands execute without errors
+- Documentation reflects your project
 
 ## Troubleshooting
 
@@ -315,11 +315,11 @@ Your customizations are preserved:
 You know setup succeeded when you see:
 
 ```
-✅ Setup Complete!
-  ✓ Commands installed
-  ✓ Agents configured
-  ✓ Project namespace applied: YourNamespace
-  ✓ Documentation generated
+Setup Complete!
+  - Commands installed
+  - Agents configured
+  - Project namespace applied: YourNamespace
+  - Documentation generated
 
 Start using Claude Code:
   claude code
@@ -353,4 +353,4 @@ After successful setup:
 
 ---
 
-**Claudify Setup Complete!** Your project is now configured for accelerated development with Claude Code.
+**Claudify Setup Guide** - Configure Claude Code for your .NET/Angular project.

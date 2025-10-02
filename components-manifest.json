@@ -286,61 +286,7 @@
         "description": "Analyze test coverage and quality",
         "tags": ["testing", "coverage", "quality"]
       }
-    ],
-    "templates": {
-      "documentation": [
-        {
-          "name": "api-documentation",
-          "file": "templates/documentation/api-documentation.md.template",
-          "description": "Comprehensive API reference template",
-          "tags": ["api", "documentation", "template"]
-        },
-        {
-          "name": "architecture-guide",
-          "file": "templates/documentation/architecture-guide.md.template",
-          "description": "System architecture documentation template",
-          "tags": ["architecture", "documentation", "template"]
-        },
-        {
-          "name": "development-guide",
-          "file": "templates/documentation/development-guide.md.template",
-          "description": "Developer onboarding and workflow template",
-          "tags": ["development", "onboarding", "template"]
-        },
-        {
-          "name": "troubleshooting-guide",
-          "file": "templates/documentation/troubleshooting-guide.md.template",
-          "description": "Common issues and solutions template",
-          "tags": ["troubleshooting", "support", "template"]
-        },
-        {
-          "name": "quick-reference",
-          "file": "templates/documentation/quick-reference.md.template",
-          "description": "Quick reference cheat sheet template",
-          "tags": ["reference", "quickstart", "template"]
-        },
-        {
-          "name": "documentation-generator",
-          "file": "templates/documentation/documentation-generator.ps1",
-          "description": "Intelligent documentation generation system",
-          "tags": ["generator", "automation", "documentation"]
-        },
-        {
-          "name": "project-analyzer",
-          "file": "scripts/analysis/project-analyzer.ps1",
-          "description": "Analyze project for documentation data",
-          "tags": ["analysis", "automation"]
-        }
-      ],
-      "infrastructure": [
-        {
-          "name": "kubernetes-deployment",
-          "file": "templates/infrastructure/kubernetes-deployment.yaml.template",
-          "description": "Parameterized Kubernetes deployment template",
-          "tags": ["kubernetes", "deployment", "infrastructure"]
-        }
-      ]
-    }
+    ]
   },
   "selectionRules": {
     "minimal": {

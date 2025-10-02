@@ -29,7 +29,6 @@ This release introduces dual-mode convention detection, allowing users to choose
 - **Mode Selection Prompt**: Interactive choice between Smart and Adaptive modes during setup
 - **Convention Cache**: `.claude/config/project-knowledge.json` stores detected patterns (Smart Mode)
 - **Refresh Command**: `.\setup.ps1 -RefreshAnalysis` to update cached conventions
-- **Pattern Detection Block**: Reusable pattern detection logic in `.claude/templates/PATTERN-DETECTION-BLOCK.md`
 - **Mode Configuration File**: `.claude/config/claudify.json` tracks selected mode and analysis timestamp
 - **Adaptive Fallback**: All commands work without convention cache by examining code on-demand
 - **Migration Guide**: `MIGRATION-GUIDE-v4.md` for upgrading from v3.x

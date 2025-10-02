@@ -44,31 +44,6 @@ category: research
   subagent_type="best-practices-researcher"
 )
 
-### 💰 Business Impact Agent
-@Task(
-  description="Business and ROI analysis",
-  prompt="Analyze business impact of '$ARGUMENTS':
-  
-  QUANTIFY:
-  1. What's the REAL problem this solves?
-  2. What's the cost of NOT doing this?
-  3. What's the ROI timeline?
-  
-  Consider:
-  - Developer time saved/wasted
-  - User experience impact
-  - Technical debt created/resolved
-  - Maintenance burden change
-  
-  Provide:
-  - Cost to implement (hours)
-  - Value delivered (concrete)
-  - Payback period
-  
-  No hand-waving. Use numbers where possible.",
-  subagent_type="tech-lead-engineer"
-)
-
 ### ⚡ Implementation Reality Agent
 @Task(
   description="Implementation feasibility check",
@@ -129,8 +104,8 @@ After parallel research completes, synthesize into:
 
 ## 📊 Evidence Supporting This
 1. **Technical**: [Concrete technical finding]
-2. **Business**: [Quantified business impact]  
-3. **Practical**: [Real-world validation]
+2. **Practical**: [Real-world validation]
+3. **Alternatives**: [What else was considered]
 
 ## ⚖️ Trade-offs Analysis
 | Approach | Pros | Cons | Time | Risk |
@@ -158,11 +133,11 @@ After parallel research completes, synthesize into:
 
 ## What This Research Command Does RIGHT
 
-1. **Parallel specialized agents** - Each has a different lens
+1. **Three parallel specialized agents** - Technical, implementation reality, alternatives
 2. **Synthesis over enumeration** - Connects findings
 3. **Decision-focused** - Ends with clear recommendation
 4. **Honest about trade-offs** - Including "do nothing" option
-5. **Measurable outcomes** - Know if it worked
+5. **Evidence-based** - Only reports what can be verified
 
 ## Convention Awareness
 
@@ -175,11 +150,12 @@ Research findings are contextual to YOUR project, not generic "best practices".
 ## What We DON'T Do
 
 ❌ TodoWrite ceremony
-❌ Fake metrics and percentages
+❌ Fake metrics and percentages (especially fabricated ROI/cost savings)
 ❌ Mermaid diagrams for simple decisions
 ❌ ADRs for non-architectural decisions
 ❌ Pages of boilerplate text
 ❌ Research for research's sake
 ❌ Prescribe patterns without context (Result<T>, factory methods, etc.)
+❌ Invent business impact numbers when data doesn't exist
 
-Remember: **Research should reduce uncertainty, not impose patterns.**
+Remember: **Research should reduce uncertainty, not fabricate evidence.**

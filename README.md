@@ -9,7 +9,7 @@ Claudify configures Claude Code to generate code that matches YOUR project's con
 ## What It Does
 
 **Without Claudify**: Claude generates generic "best practice" code that doesn't match your style.
-**With Claudify**: Claude examines your codebase and generates code that fits perfectly.
+**With Claudify**: Claude examines your codebase and generates code that matches your conventions.
 
 ## How It Works
 
@@ -17,7 +17,7 @@ Claudify offers two convention detection modes:
 
 ### Smart Mode (Default, Recommended)
 - Analyzes your project conventions during setup (~60 seconds)
-- Commands generate perfectly matching code instantly
+- Commands generate matching code instantly
 - 95-100% accuracy for naming, patterns, and architecture
 - Best for teams with established conventions
 
@@ -42,7 +42,7 @@ cd your-dotnet-angular-project
 # Choose mode when prompted (Smart Mode recommended)
 # Setup completes in 1-2 minutes
 
-# Start using Claude Code with perfect convention matching
+# Start using Claude Code with convention matching
 claude /add-backend-feature "Order Management"
 ```
 
