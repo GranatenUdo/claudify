@@ -1,9 +1,6 @@
 ---
 description: Update backend feature with parallel analysis and compatibility
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔄 Update Backend Feature: $ARGUMENTS
@@ -27,18 +24,34 @@ category: development
 @Task(
   description="Feature update",
   prompt="Update '$ARGUMENTS' backend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to examine the target files
+  2. Detect existing patterns:
+     - Constructor style in current code
+     - Property patterns used
+     - Collection types used
+     - Error handling approach
+     - Validation patterns
+  3. Maintain consistency with detected patterns
+
+  If no patterns detected:
+  - Preserve existing code style exactly as found
+
   IMPLEMENT:
   1. Core functionality updates requested
   2. Maintain backward compatibility
-  3. Apply C# 13 patterns safely
-  4. Preserve Result<T> and org scoping
-  
+  3. Apply modern C# 13 patterns safely
+  4. Preserve existing error handling and patterns
+
   COMPATIBILITY:
   - Keep existing signatures
   - Add optional params/overloads
   - Version endpoints if breaking
-  
+
   OUTPUT: Updated implementation",
   subagent_type="tech-lead-engineer"
 )
@@ -72,9 +85,26 @@ category: development
 
 ## Phase 2: Parallel Validation (30 seconds)
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 @Bash(command="dotnet build --configuration Release", description="Build")
-@Bash(command="dotnet test --no-build --filter FullyQualifiedName~$ARGUMENTS", description="Tests")
-@Bash(command="cd src/{{WebProject}} && npm run update:api", description="Update client")
+@Bash(command="dotnet test --filter FullyQualifiedName~$ARGUMENTS", description="Tests")
+@Bash(command="npm run update:api", description="Update client")
 
 ## ✅ Complete
 Feature updated with backward compatibility maintained. Update CHANGELOG.md.

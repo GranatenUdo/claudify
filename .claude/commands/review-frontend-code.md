@@ -2,10 +2,6 @@
 description: Review frontend code for high-impact issues and provide actionable improvements
 allowed-tools: [Task, Read, Grep, Glob, TodoWrite]
 argument-hint: component, service, or directory to review
-agent-dependencies: [Frontend Developer, Security Reviewer]
-complexity: simple
-estimated-time: 5-8 minutes
-category: quality
 ---
 
 # 🎯 Review Frontend Code: $ARGUMENTS
@@ -33,12 +29,11 @@ FOCUS ON TOP 3 ISSUES:
 
 CHECK SPECIFICALLY:
 ✓ Signal usage (update vs set, computed efficiency)
-✓ Change detection (OnPush everywhere?)
+✓ Change detection (OnPush where beneficial?)
 ✓ Memory leaks (subscriptions cleaned up?)
-✓ Result<T> pattern (proper error handling?)
-✓ Angular 19 syntax (*ngIf not @if)
-✓ Organization scoping (enforced?)
-✓ Type safety (no 'any' types)
+✓ Consistent error handling (matches project conventions)
+✓ Template syntax consistency (check project's approach)
+✓ Type safety (minimize 'any' types)
 
 FOR EACH ISSUE:
 - Problem: [Specific description]
@@ -46,7 +41,7 @@ FOR EACH ISSUE:
 - Fix: [Exact code to implement]
 - Priority: [Critical/High/Medium]
 
-Skip style preferences. Focus on what actually matters.", subagent_type="Frontend Developer")
+Skip style preferences. Focus on what actually matters.", subagent_type="frontend-implementation-expert")
 
 ### Security Quick Check
 @Task(description="Security review", prompt="Security check for '$ARGUMENTS' frontend code:
@@ -60,7 +55,7 @@ CHECK ONLY:
 If SECURE: Say 'Security ✓'
 If ISSUES: Provide exact fix
 
-Skip theoretical risks.", subagent_type="Security Reviewer")
+Skip theoretical risks.", subagent_type="security-vulnerability-scanner")
 
 ## Phase 3: Actionable Output (2 min)
 
@@ -87,9 +82,13 @@ Skip theoretical risks.", subagent_type="Security Reviewer")
 2. [Second priority]
 3. [Third priority]
 
+## Convention Awareness
+
+This command reviews based on observed patterns in the codebase. All recommendations align with project conventions rather than imposing external standards.
+
 ## Value Principles
 1. **Impact Focus**: Find what could actually break
-2. **Pattern Compliance**: Ensure consistency
+2. **Pattern Compliance**: Ensure consistency with project's chosen patterns
 3. **User Experience**: Consider real user impact
 4. **Quick Validation**: 5-8 minutes to insights
 5. **Actionable Output**: Specific fixes, not vague concerns

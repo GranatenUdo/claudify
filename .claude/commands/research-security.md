@@ -2,12 +2,11 @@
 description: Security-focused research for vulnerabilities and best practices
 allowed-tools: [Task, WebSearch, WebFetch, Grep, Read]
 argument-hint: security concern or vulnerability type (e.g., "JWT validation", "SQL injection", "multi-tenant isolation")
-complexity: moderate
-estimated-time: 3-4 minutes
-category: security
 ---
 
 # 🔒 Security Research: $ARGUMENTS
+
+**For complex vulnerabilities or novel attack vectors, enable extended thinking for comprehensive threat analysis.**
 
 ## Phase 1: Parallel Security Analysis (2 minutes)
 
@@ -32,7 +31,7 @@ category: security
   - Time to exploit
   
   Provide proof-of-concept if safe to demonstrate.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔐 Defense Research Agent
@@ -56,7 +55,7 @@ category: security
   - Automated detection methods
   
   Include code examples that work in our stack.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔍 Codebase Vulnerability Scan
@@ -80,7 +79,7 @@ category: security
   - Specific fix required
   
   Be paranoid. Assume attackers know our code.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ## Phase 2: Synthesis (1 minute)
@@ -144,5 +143,9 @@ category: security
 3. **Codebase-specific** - Finds OUR vulnerabilities
 4. **Actionable fixes** - Copy-paste solutions
 5. **Severity-based** - Prioritizes critical issues
+
+## Convention Awareness
+
+Security fixes are based on observed patterns in the codebase and work within your architecture, not against it.
 
 Remember: Research that doesn't lead to patches is just FUD.

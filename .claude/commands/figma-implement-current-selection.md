@@ -1,9 +1,6 @@
 ---
 description: Convert Figma design to Angular component with parallel generation
 allowed-tools: [Task, Read, Write, Bash]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: development
 ---
 
 # 🎨 Figma to Code: $ARGUMENTS
@@ -28,14 +25,37 @@ category: development
 @Task(
   description="Generate component",
   prompt="Create Angular component for '$ARGUMENTS':
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Glob to find 2-3 similar files:
+     - Components: **/src/app/**/*.component.ts
+  2. Read those files and detect:
+     - Signal usage vs observables
+     - Template syntax (*ngIf vs @if)
+     - Change detection strategy
+  3. Apply the patterns you observed
+
+  If no code files found, examine project configuration:
+  1. Read package.json to check Angular version:
+     - @angular/core version 18+? Use signals and @if/@for
+     - @angular/core version <18? Use observables and *ngIf
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "No existing components found. What patterns to use?"
+     - "Options: Signals vs Observables, @if vs *ngIf"
+  5. Use user's explicit choice
+
   GENERATE:
-  1. Component with signals and OnPush
-  2. Template with *ngIf/*ngFor
+  1. Component following detected patterns
+  2. Template with detected syntax
   3. Styles matching Figma exactly
   4. Responsive layout
   5. Accessibility attributes
-  
+
   WRITE TO: src/app/components/$ARGUMENTS/
   OUTPUT: Working Angular component",
   subagent_type="frontend-implementation-expert"
@@ -55,7 +75,7 @@ category: development
   subagent_type="test-quality-analyzer"
 )
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Verify build")
+@Bash(command="npm run build", description="Verify build")
 
 ## ✅ Complete
 Figma design implemented as Angular component.

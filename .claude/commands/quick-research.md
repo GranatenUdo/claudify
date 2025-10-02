@@ -1,26 +1,25 @@
 ---
 description: Fast parallel research with actionable answers
 allowed-tools: [Task, Grep, Read, WebSearch, Glob]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: research
 ---
 
 # ⚡ Quick Research: $ARGUMENTS
+
+**For complex questions despite being quick research, enable extended thinking for comprehensive answers.**
 
 ## Parallel Smart Discovery (90 seconds)
 
 @Task(
   description="Codebase research",
   prompt="Research '$ARGUMENTS' in codebase:
-  
+
   FIND:
-  1. Implementations and patterns
+  1. Implementations and patterns (respect existing)
   2. Current usage examples
   3. Known issues (TODOs, FIXMEs)
   4. Related documentation
-  
-  FOCUS: Actual code, not theory
+
+  FOCUS: Actual code and project patterns, not theory
   OUTPUT: Findings with file:line references",
   subagent_type="best-practices-researcher"
 )
@@ -43,18 +42,21 @@ category: research
 @Task(
   description="Solution synthesis",
   prompt="Synthesize research for '$ARGUMENTS':
-  
+
   DELIVER:
   1. Direct answer (1 paragraph)
-  2. Our codebase approach
-  3. Industry best practice
-  4. Specific recommendation
-  5. Code example if applicable
-  
+  2. Our codebase approach (based on observed patterns)
+  3. Common practices (contextual, not prescriptive)
+  4. Specific recommendation for THIS project
+  5. Code example matching project patterns
+
   FORMAT: Actionable, not academic
-  OUTPUT: Clear next steps",
+  OUTPUT: Clear next steps aligned with project",
   subagent_type="tech-lead-engineer"
 )
+
+## Convention Awareness
+Adapts to your project's patterns observed in the codebase.
 
 ## ✅ Answer Ready
 Research complete with actionable recommendations.

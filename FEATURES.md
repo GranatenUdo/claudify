@@ -80,7 +80,6 @@ Claudify configures Claude Code for .NET/Angular projects by detecting project s
 - **CLAUDE.md**: User-managed project-specific guidelines (not generated)
 - **FEATURES.md**: User-managed features documentation (not generated)
 - **agent-configs/**: JSON configurations for each agent
-- **hooks/**: Event-driven automation scripts
 - **commands/**: Custom command definitions with project variables
 
 ## 📊 Analysis and Reporting

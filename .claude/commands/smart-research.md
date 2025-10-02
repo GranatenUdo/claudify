@@ -2,12 +2,11 @@
 description: Parallel research that finds insights, not just information
 allowed-tools: [Task, WebSearch, WebFetch, Read, Grep, Glob]
 argument-hint: research question or topic (e.g., "should we migrate to .NET 9", "best auth pattern for multi-tenant")
-complexity: moderate
-estimated-time: 3-5 minutes
-category: research
 ---
 
 # 🧠 Smart Research: $ARGUMENTS
+
+**For complex topics or unfamiliar domains, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Deep Analysis (2 minutes)
 
@@ -15,49 +14,28 @@ category: research
 @Task(
   description="Technical deep dive",
   prompt="Research technical aspects of '$ARGUMENTS':
-  
+
   FIND:
   1. How is this actually implemented in production systems?
   2. What are the real performance/security implications?
   3. What breaks when you do this wrong?
-  
+
   Search for:
-  - Implementation patterns in our codebase
+  - Implementation patterns in our codebase (respect existing patterns)
   - GitHub repos with actual code (not tutorials)
   - Stack Overflow problems (not just solutions)
-  
-  SYNTHESIZE findings into:
-  - What works (with evidence)
-  - What fails (with examples)
-  - What we should do (with reasoning)
-  
-  Skip theory. Find what practitioners actually do.",
-  subagent_type="researcher"
-)
 
-### 💰 Business Impact Agent
-@Task(
-  description="Business and ROI analysis",
-  prompt="Analyze business impact of '$ARGUMENTS':
-  
-  QUANTIFY:
-  1. What's the REAL problem this solves?
-  2. What's the cost of NOT doing this?
-  3. What's the ROI timeline?
-  
-  Consider:
-  - Developer time saved/wasted
-  - User experience impact
-  - Technical debt created/resolved
-  - Maintenance burden change
-  
-  Provide:
-  - Cost to implement (hours)
-  - Value delivered (concrete)
-  - Payback period
-  
-  No hand-waving. Use numbers where possible.",
-  subagent_type="business-domain-analyst"
+  SYNTHESIZE findings into:
+  - What works in THIS project context (with evidence)
+  - What fails (with examples)
+  - What aligns with our existing patterns
+
+  Base recommendations on:
+  - Observed codebase patterns
+  - Practical needs, not theoretical ideals
+
+  Skip prescriptive 'best practices'. Find what fits THIS project.",
+  subagent_type="best-practices-researcher"
 )
 
 ### ⚡ Implementation Reality Agent
@@ -81,7 +59,7 @@ category: research
   - Testing requirements
   
   Give me the truth, not the sales pitch.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🔄 Alternative Solutions Agent
@@ -120,8 +98,8 @@ After parallel research completes, synthesize into:
 
 ## 📊 Evidence Supporting This
 1. **Technical**: [Concrete technical finding]
-2. **Business**: [Quantified business impact]  
-3. **Practical**: [Real-world validation]
+2. **Practical**: [Real-world validation]
+3. **Alternatives**: [What else was considered]
 
 ## ⚖️ Trade-offs Analysis
 | Approach | Pros | Cons | Time | Risk |
@@ -149,19 +127,25 @@ After parallel research completes, synthesize into:
 
 ## What This Research Command Does RIGHT
 
-1. **Parallel specialized agents** - Each has a different lens
+1. **Three parallel specialized agents** - Technical, implementation reality, alternatives
 2. **Synthesis over enumeration** - Connects findings
 3. **Decision-focused** - Ends with clear recommendation
 4. **Honest about trade-offs** - Including "do nothing" option
-5. **Measurable outcomes** - Know if it worked
+5. **Evidence-based** - Only reports what can be verified
+
+## Convention Awareness
+
+This command adapts to your project by examining existing code patterns. Research findings are contextual to YOUR project, not generic "best practices".
 
 ## What We DON'T Do
 
 ❌ TodoWrite ceremony
-❌ Fake metrics and percentages
+❌ Fake metrics and percentages (especially fabricated ROI/cost savings)
 ❌ Mermaid diagrams for simple decisions
 ❌ ADRs for non-architectural decisions
 ❌ Pages of boilerplate text
 ❌ Research for research's sake
+❌ Prescribe patterns without context (Result<T>, factory methods, etc.)
+❌ Invent business impact numbers when data doesn't exist
 
-Remember: **Research should reduce uncertainty, not create documentation.**
+Remember: **Research should reduce uncertainty, not fabricate evidence.**

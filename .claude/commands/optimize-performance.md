@@ -1,9 +1,6 @@
 ---
 description: Fix performance bottlenecks with parallel analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Bash, Grep]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: optimization
 ---
 
 # ⚡ Optimize Performance: $ARGUMENTS
@@ -68,6 +65,10 @@ category: optimization
   OUTPUT: Performance metrics report",
   subagent_type="test-quality-analyzer"
 )
+
+## Convention Awareness
+
+Optimizations respect patterns observed in the codebase.
 
 ## ✅ Complete
 Performance optimization complete. Review the metrics report to verify improvements.

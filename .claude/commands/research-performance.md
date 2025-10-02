@@ -2,12 +2,11 @@
 description: Performance research for optimization opportunities and bottlenecks
 allowed-tools: [Task, WebSearch, Grep, Read, Bash]
 argument-hint: performance issue or optimization target (e.g., "database queries", "bundle size", "API latency")
-complexity: moderate
-estimated-time: 3-4 minutes
-category: optimization
 ---
 
 # ⚡ Performance Research: $ARGUMENTS
+
+**For complex performance issues or system-wide optimizations, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Performance Investigation (2 minutes)
 
@@ -32,7 +31,7 @@ category: optimization
   - Cost of poor performance (user impact)
   
   Focus on measurable, achievable targets.",
-  subagent_type="researcher"
+  subagent_type="best-practices-researcher"
 )
 
 ### 🔧 Optimization Patterns Agent
@@ -56,7 +55,7 @@ category: optimization
   - Solutions with measured improvements
   
   Include specific code examples.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🐌 Bottleneck Detection Agent
@@ -81,7 +80,7 @@ category: optimization
   - Specific optimization needed
   
   Focus on the worst offenders.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ## Phase 2: Measurement & Validation (1 minute)
@@ -156,6 +155,10 @@ services.AddApplicationInsightsTelemetry();
 - **Cost Savings**: $X/month in infrastructure
 ```
 
+## Convention Awareness
+
+Performance improvements are based on observed codebase patterns and respect your architectural choices.
+
 ## Why This Works
 
 1. **Metrics-driven** - Everything measurable
@@ -163,5 +166,6 @@ services.AddApplicationInsightsTelemetry();
 3. **Prioritized** - Biggest wins first
 4. **Validated** - With actual measurements
 5. **ROI-focused** - Time vs. benefit clear
+6. **Pattern-aligned** - Works within your architecture
 
 Remember: Optimize what matters to users, not what's interesting to developers.

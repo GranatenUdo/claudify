@@ -1,9 +1,6 @@
 ---
 description: Update frontend feature with parallel analysis and compatibility
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔄 Update Frontend Feature: $ARGUMENTS
@@ -27,18 +24,34 @@ category: development
 @Task(
   description="Feature update",
   prompt="Update '$ARGUMENTS' frontend:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to examine the target files
+  2. Detect existing patterns:
+     - Signal usage vs observables
+     - Change detection strategy
+     - Template syntax used
+     - Service patterns
+     - Error handling approach
+  3. Maintain consistency with detected patterns
+
+  If no patterns detected:
+  - Preserve existing code style exactly as found
+
   IMPLEMENT:
-  1. Component updates with signals
-  2. Templates with *ngIf/*ngFor (NOT @if/@for)
-  3. Service methods with Result<T>
-  4. Maintain OnPush and responsiveness
-  
+  1. Component updates following existing patterns
+  2. Templates using existing syntax
+  3. Service methods matching existing error handling
+  4. Maintain existing change detection strategy
+
   COMPATIBILITY:
   - Keep existing inputs/outputs
   - Add features as optional
   - No breaking changes
-  
+
   OUTPUT: Updated implementation",
   subagent_type="frontend-implementation-expert"
 )
@@ -72,10 +85,10 @@ category: development
 
 ## Phase 2: Parallel Validation (30 seconds)
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Build")
-@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test")
-@Bash(command="cd src/{{WebProject}} && npm run lint --fix", description="Lint")
-@Bash(command="cd src/{{WebProject}} && npm run typecheck", description="Types")
+@Bash(command="npm run build", description="Build")
+@Bash(command="npm test -- --watch=false", description="Test")
+@Bash(command="npm run lint --fix", description="Lint")
+@Bash(command="npm run typecheck", description="Types")
 
 ## ✅ Complete
 Feature updated with backward compatibility. Update CHANGELOG.md.

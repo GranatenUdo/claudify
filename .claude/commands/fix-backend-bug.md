@@ -1,9 +1,6 @@
 ---
 description: Fix backend bugs with parallel root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Bash]
-estimated-time: 1-2 minutes (parallel)
-complexity: moderate
-category: quality
 ---
 
 # 🔧 Fix Backend Bug: $ARGUMENTS
@@ -24,7 +21,7 @@ category: quality
   - Null references and defensive programming gaps
   - Async/await deadlocks or .Result usage
   - EF tracking issues or Include() problems
-  - Result<T> pattern violations
+  - Inconsistent error handling (check project conventions)
   
   OUTPUT: Root cause with file:line and confidence level",
   subagent_type="tech-lead-engineer"
@@ -63,17 +60,39 @@ category: quality
 @Task(
   description="Implement fix with tests",
   prompt="Fix '$ARGUMENTS' based on diagnosis:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to examine the buggy file
+  2. Detect existing patterns:
+     - Error handling approach in this file
+     - Validation patterns used
+     - Code style and conventions
+  3. Maintain consistency with detected patterns
+
+  If no patterns detected, examine project configuration:
+  1. Read .csproj files to check installed packages:
+     - FluentValidation installed? Use FluentValidation patterns
+     - LanguageExt.Core installed? Use Result<T> for error handling
+     - Serilog installed? Use structured logging
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "What error handling pattern does this project use?"
+     - "Options: Exceptions, Result<T>, OneOf, custom error types"
+  4. Use user's explicit choice
+
   IMPLEMENT:
-  1. Root cause fix following CLAUDE.md patterns
+  1. Root cause fix following project conventions
   2. Defensive programming additions
-  3. Proper error handling with Result<T>
-  
+  3. Error handling consistent with project pattern
+
   CREATE TESTS:
   1. Regression test reproducing original bug
   2. Edge case tests around the fix
   3. Multi-tenant isolation test if applicable
-  
+
   OUTPUT: Fixed code + comprehensive tests",
   subagent_type="tech-lead-engineer"
 )
@@ -92,9 +111,26 @@ category: quality
 
 ## Phase 3: Parallel Validation
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 @Bash(command="dotnet build --configuration Release", description="Build")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Unit tests")
-@Bash(command="dotnet test tests/{{ArchitectureTestProject}}", description="Architecture")
+@Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
+@Bash(command="dotnet test --filter FullyQualifiedName~ArchitectureTests", description="Architecture")
 
 ## ✅ Complete
 Bug fixed with regression test. Update CHANGELOG.md under "### Fixed".

@@ -2,10 +2,6 @@
 description: Analyze and optimize existing commands for maximum value delivery
 allowed-tools: [Read, Write, Task, TodoWrite]
 argument-hint: command name to optimize (without .md extension)
-agent-dependencies: [Tech Lead]
-complexity: simple
-estimated-time: 5-8 minutes
-category: meta-automation
 ---
 
 # 🎯 Optimize Command for Value: $ARGUMENTS
@@ -46,7 +42,7 @@ PROVIDE:
 2. What to FOCUS ON (top 3 deliverables)
 3. Agents to consolidate
 4. Parallel execution opportunities
-5. Rewritten core prompt (concise, value-focused)", subagent_type="Tech Lead")
+5. Rewritten core prompt (concise, value-focused)", subagent_type="tech-lead-engineer")
 
 ## Phase 2: Generate Value-Focused Version (3 min)
 
@@ -121,5 +117,9 @@ Reduced waiting time
 - Time reduction: Optimize where possible
 - Line reduction: Keep concise
 - Actionable output: Always provide next steps
+
+## Convention Awareness
+
+When optimizing commands, respect project patterns observed in the codebase.
 
 Remember: Every line should help ship value. If it doesn't directly contribute to working features, remove it.

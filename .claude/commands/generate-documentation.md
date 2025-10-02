@@ -1,9 +1,6 @@
 ---
 description: Generate documentation by analyzing actual code
 allowed-tools: [Task, Read, Write, Grep, Glob]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: documentation
 ---
 
 # 📚 Generate Documentation: $ARGUMENTS
@@ -81,6 +78,10 @@ category: documentation
   WRITE TO: docs/README-$ARGUMENTS.md",
   subagent_type="technical-documentation-writer"
 )
+
+## Convention Awareness
+
+Documentation generation adapts to observed codebase patterns.
 
 ## ✅ Complete
 Documentation generated in docs/ directory.

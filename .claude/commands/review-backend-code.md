@@ -2,10 +2,6 @@
 description: Review backend code for high-impact issues with C# 13, RESTful, and T-SQL focus
 allowed-tools: [Task, Read, Grep, Glob, TodoWrite]
 argument-hint: controller, service, or directory to review
-agent-dependencies: [Tech Lead, Security Reviewer]
-complexity: simple
-estimated-time: 5-8 minutes
-category: quality
 ---
 
 # 🎯 Review Backend Code: $ARGUMENTS
@@ -64,7 +60,7 @@ FOR EACH ISSUE:
 - Fix: [Exact code to implement]
 - Priority: [Critical/High/Medium]
 
-Skip style preferences. Focus on production issues.", subagent_type="Tech Lead")
+Skip style preferences. Focus on production issues.", subagent_type="tech-lead-engineer")
 
 ### Security Reviewer - Critical Validation
 @Task(description="Security review", prompt="Security review for '$ARGUMENTS' backend:
@@ -74,12 +70,12 @@ CRITICAL CHECKS ONLY:
 2. SQL injection (parameterized queries only)
 3. Authorization ([Authorize] attributes)
 4. Sensitive data (no passwords/keys in logs)
-5. Result<T> error messages (no internal details)
+5. Error messages (no internal details exposed to clients)
 
 If SECURE: Say 'Security ✓'
 If ISSUES: Provide exact fix with code
 
-Focus on exploitable vulnerabilities.", subagent_type="Security Reviewer")
+Focus on exploitable vulnerabilities.", subagent_type="security-vulnerability-scanner")
 
 ## Phase 3: Actionable Output (2 min)
 
@@ -107,35 +103,31 @@ Focus on exploitable vulnerabilities.", subagent_type="Security Reviewer")
 2. [Second priority]
 3. [Third priority]
 
-## C# 13 Code Examples
+## Convention Awareness
 
-### Good Pattern (C# 13)
+This command reviews based on observed codebase patterns. Recommendations align with YOUR project's choices, not external "best practices".
+
+## Code Examples
+
+### Pattern Consistency Example
 ```csharp
-// Primary constructor with DI
-public class UserService(IUserRepository repository, ILogger<UserService> logger)
+// IF project uses Result<T> pattern (observed in codebase):
+public async Task<Result<User>> GetAsync(Guid id, string orgId)
 {
-    public async Task<Result<User>> GetAsync(Guid id, string orgId)
-    {
-        // Collection expression
-        var allowedStatuses = [Status.Active, Status.Pending];
-        
-        var user = await repository.GetByIdAsync(id, orgId);
-        return user ?? Result<User>.Failure("Not found");
-    }
+    var user = await repository.GetByIdAsync(id, orgId);
+    return user ?? Result<User>.Failure("Not found");
+}
+
+// IF project uses exception pattern (observed in codebase):
+public async Task<User> GetAsync(Guid id, string orgId)
+{
+    var user = await repository.GetByIdAsync(id, orgId)
+        ?? throw new NotFoundException($"User {id} not found");
+    return user;
 }
 ```
 
-### Bad Pattern
-```csharp
-public class UserService
-{
-    // Missing null checks, no org scoping
-    public async Task<User> GetAsync(Guid id)
-    {
-        return await _context.Users.FirstAsync(u => u.Id == id);
-    }
-}
-```
+Both are valid - consistency with observed project patterns matters most.
 
 ## Value Principles
 1. **Production Focus**: Find what will actually break

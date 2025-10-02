@@ -2,12 +2,11 @@
 description: Architecture decision research with trade-off analysis
 allowed-tools: [Task, WebSearch, WebFetch, Read, Grep, Glob]
 argument-hint: architecture decision or pattern (e.g., "microservices vs monolith", "event sourcing", "CQRS")
-complexity: moderate
-estimated-time: 4-5 minutes
-category: architecture
 ---
 
 # 🏛️ Architecture Research: $ARGUMENTS
+
+**For major architecture decisions or complex trade-off analysis, enable extended thinking for comprehensive evaluation.**
 
 ## Phase 1: Parallel Architecture Analysis (3 minutes)
 
@@ -15,24 +14,25 @@ category: architecture
 @Task(
   description="Research architecture pattern",
   prompt="Research architecture pattern '$ARGUMENTS':
-  
+
   INVESTIGATE:
-  1. When this pattern actually makes sense
+  1. When this pattern actually makes sense FOR US
   2. Real companies using it successfully (and failures)
-  3. Complexity vs. benefit trade-off
-  
+  3. Complexity vs. benefit trade-off IN OUR CONTEXT
+
   Find:
   - Case studies with outcomes (not just adoption stories)
-  - Martin Fowler / Microsoft architecture guidance
-  - Post-mortems from companies that tried and failed
-  
+  - Architecture guidance relevant to our stack
+  - Post-mortems from similar-sized companies
+
   Critical questions:
+  - Does this align with patterns observed in our codebase?
   - At what scale does this pay off?
-  - What problems does it REALLY solve?
+  - What problems does it REALLY solve for us?
   - What new problems does it create?
-  
-  Be skeptical. Include failure stories.",
-  subagent_type="tech-lead"
+
+  Be skeptical. Consider our project's patterns first.",
+  subagent_type="tech-lead-engineer"
 )
 
 ### 💰 Cost-Benefit Agent
@@ -59,7 +59,7 @@ category: architecture
   - Point of positive ROI
   
   Include hidden costs most ignore.",
-  subagent_type="business-domain-analyst"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🔄 Migration Path Agent
@@ -106,7 +106,7 @@ category: architecture
   Sometimes the best architecture is the simplest one that could possibly work.
   
   Include the 'do nothing' option.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ## Phase 2: Our Codebase Analysis (1 minute)
@@ -206,6 +206,10 @@ We'll know we made the right choice if:
 - [Failure Post-mortem](link)
 ```
 
+## Convention Awareness
+
+This command analyzes your existing codebase patterns to evaluate architecture decisions. Recommendations respect your architectural choices rather than pushing trends.
+
 ## Why This Architecture Research Works
 
 1. **Reality-based** - Includes failures, not just successes
@@ -213,5 +217,6 @@ We'll know we made the right choice if:
 3. **Trade-off honest** - No silver bullets
 4. **Migration-focused** - How to actually get there
 5. **Reversible** - Includes exit strategies
+6. **Pattern-respectful** - Works with your existing architecture
 
 Remember: The best architecture is the one your team can actually maintain.

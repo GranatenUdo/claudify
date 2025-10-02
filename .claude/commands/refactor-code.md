@@ -1,9 +1,6 @@
 ---
 description: Refactor code with parallel analysis and fixes
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep]
-estimated-time: 2 minutes (parallel)
-complexity: simple
-category: quality
 ---
 
 # 🔧 Refactor Code: $ARGUMENTS
@@ -28,14 +25,25 @@ category: quality
 @Task(
   description="Simplify code",
   prompt="Refactor '$ARGUMENTS' complexity:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to examine target files
+  2. Detect existing patterns and maintain them
+  3. Don't introduce new patterns during refactoring
+
+  If no patterns detected:
+  - Keep existing code style exactly
+
   FIX:
   1. Extract methods from long functions
   2. Use early returns for nested ifs
   3. Apply guard clauses
   4. Simplify boolean logic
-  5. Use C# 13 features (primary constructors, collection expressions)
-  
+  5. Use modern features while maintaining patterns
+
   OUTPUT: Simplified code implementations",
   subagent_type="code-simplifier"
 )
@@ -43,18 +51,29 @@ category: quality
 @Task(
   description="Extract patterns",
   prompt="Extract common patterns in '$ARGUMENTS':
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Glob to find related files
+  2. Read files to understand patterns
+  3. Extract patterns consistent with existing code
+
+  If no patterns detected:
+  - Create simple, reusable abstractions
+
   IDENTIFY:
   1. Duplicate mapping logic
   2. Repeated repository patterns
   3. Common validation logic
   4. Similar error handling
-  
+
   CREATE:
   1. Generic base classes
   2. Shared utility methods
   3. Common interfaces
-  
+
   OUTPUT: Extracted reusable components",
   subagent_type="tech-lead-engineer"
 )
@@ -76,3 +95,5 @@ category: quality
 
 ## ✅ Complete
 Code refactored for simplicity, reusability, and performance.
+
+**If changes are significant, update CHANGELOG.md under "### Changed" section.**

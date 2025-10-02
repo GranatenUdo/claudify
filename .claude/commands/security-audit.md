@@ -2,12 +2,11 @@
 description: Parallel security audit with 5 specialized agents checking different attack vectors
 allowed-tools: [Task, Read, Grep, Glob, Bash]
 argument-hint: scope to audit (e.g., "all", "api", "frontend", "infrastructure")
-complexity: moderate
-estimated-time: 1-2 minutes (parallel execution)
-category: security
 ---
 
 # 🔒 Parallel Security Audit: $ARGUMENTS
+
+**For complex security analysis or novel threat vectors, enable extended thinking for comprehensive threat modeling.**
 
 ## Parallel Multi-Vector Security Analysis
 
@@ -39,7 +38,7 @@ category: security
   - Fix code
   
   Focus on exploitable issues only.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🔑 Secrets & Credentials Agent
@@ -69,7 +68,7 @@ category: security
   - Severity level
   - Immediate action required
   - Proper secret management approach",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 🌐 Infrastructure Security Agent
@@ -135,7 +134,7 @@ category: security
   - Attack vector
   - Risk level
   - Implementation fix",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### 📊 Compliance & Audit Agent
@@ -171,7 +170,7 @@ category: security
   - Regulation violated
   - Business impact
   - Remediation priority",
-  subagent_type="business-domain-analyst"
+  subagent_type="tech-lead-engineer"
 )
 
 ## 🎯 Consolidated Security Report
@@ -247,11 +246,16 @@ grep -r "password\|api[_-]key\|token" --include="*.cs" --include="*.json"
 - [ ] PCI DSS: N/A
 ```
 
+## Convention Awareness
+
+Security fixes are based on observed patterns in the codebase. All security remediation aligns with your existing architecture.
+
 ## Parallel Execution Advantages
 - **Comprehensive**: Multiple specialized agents check different vectors
 - **Parallel**: All security checks run simultaneously
 - **Thorough**: Covers multiple security aspects
 - **Actionable**: Specific fixes provided
 - **Prioritized**: Risk-based ordering
+- **Pattern-aligned**: Fixes match your conventions
 
 Remember: Prioritize CRITICAL issues for immediate resolution.

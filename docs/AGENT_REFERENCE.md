@@ -85,7 +85,7 @@ Agents are typically invoked through commands. For example:
 The setup script recommends agents based on your project type:
 - **.NET projects**: code-reviewer, security-reviewer, tech-lead
 - **Angular projects**: frontend-developer, ux-reviewer
-- **Multi-tenant apps**: security-reviewer (with tenant validation hooks)
+- **Multi-tenant apps**: security-reviewer (with tenant validation)
 - **Legacy systems**: technical-debt-analyst
 
 ## Notes

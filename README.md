@@ -1,125 +1,271 @@
-# Claudify - Claude Code Configuration for .NET/Angular Projects
+# Claudify
 
-![Version](https://img.shields.io/badge/version-4.0.0-blue)
-![Released](https://img.shields.io/badge/released-2025--08--20-green)
+![Version](https://img.shields.io/badge/version-5.0.0-blue)
 
-Claudify is a setup tool that configures Claude Code for .NET/Angular projects. It detects your project structure and applies project-specific configurations to commands and agents.
+**Intelligent Claude Code setup for .NET/Angular projects.**
 
-## Features
+Claudify installs specialized commands and agents that understand your project conventions automatically.
 
-### Project Detection
-- Detects Angular projects by finding `angular.json` files
-- Detects .NET API projects by checking for `Microsoft.NET.Sdk.Web` in .csproj files
-- Detects test projects by looking for `Microsoft.NET.Sdk` with "Test" in the project name
-- Handles duplicate project names by prepending the parent folder name
-- Provides interactive prompts for confirmation or manual entry when detection is uncertain
+## What It Does
 
-### Configuration
-- Replaces template variables in commands with your actual project names
-- Supports multiple projects (you can enter them comma-separated)
-- Saves configuration to `.claude/config/projects.json`
-- Preserves existing CLAUDE.md and FEATURES.md files (these are user-managed)
-
-## Setup
-
-### Prerequisites
-- PowerShell 7+ (cross-platform)
-- Claude Code CLI installed
-- .NET/Angular project following standard conventions
-
-### Installation
-
-#### Windows
-```powershell
-# From claudify directory:
-.\setup.ps1 -TargetRepository "C:\path\to\your\repo"
-```
-
-#### Linux/macOS  
-```bash
-# From claudify directory:
-pwsh setup.ps1 -TargetRepository "/path/to/your/repo"
-```
-
-### What Happens During Setup
-
-1. **Project Detection**:
-   - Scans for angular.json files
-   - Scans for .csproj files with SDK type detection
-   - Groups projects by type (Web, API, Test)
-
-2. **Installation Mode**:
-   - Minimal - Core components (typically 15-25 files)
-   - Comprehensive - All available components (40 or more files)
-
-3. **Configuration**:
-   - Applies project names to command templates
-   - Installs selected commands and agents
-   - Preserves existing CLAUDE.md and FEATURES.md files
-
-4. **Usage**:
-   ```bash
-   claude code
-   /comprehensive-review
-   ```
+**Without Claudify**: Generic Claude Code commands that don't match your project style.
+**With Claudify**: 40+ specialized commands that detect and match your coding conventions.
 
 ## How It Works
 
-1. Scans your repository for project files (angular.json, .csproj)
-2. Identifies project types based on SDK references and naming patterns
-3. Replaces template placeholders in commands with your actual project names
-4. Copies the configured commands and agents to your `.claude` directory
-5. Optionally sets up hooks for workflow automation
+Claudify commands detect your project conventions dynamically by examining existing code:
+
+1. When generating code, commands use Glob to find 2-3 similar files
+2. Commands read those files and detect patterns (naming, error handling, validation, etc.)
+3. New code is generated matching the observed patterns
+4. If no files found (empty project), sensible defaults are used
+
+**Always current** - examines actual code state every time, no caching.
+
+## Quick Start
+
+```bash
+# Clone Claudify
+git clone https://github.com/GranatenUdo/claudify.git
+
+# Run setup on your project
+cd your-dotnet-angular-project
+..\claudify\setup.ps1 -TargetRepository "."
+
+# Setup completes in seconds
+
+# Navigate to the project you want to work on
+cd src/YourProject.Web
+
+# Launch Claude Code
+claude
+
+# Use commands - they work in your current directory context
+> /add-frontend-feature "User Profile"
+```
+
+## Commands Work in Your Directory Context
+
+**Key concept**: Commands operate in whatever directory Claude Code is launched from.
+
+```bash
+# Working on frontend
+cd src/MyProject.Web
+claude
+> /add-frontend-feature "Dashboard"
+# Creates component in MyProject.Web
+
+# Working on backend
+cd src/MyProject.Api
+claude
+> /add-backend-feature "Orders"
+# Creates API in MyProject.Api
+```
+
+**No configuration needed**. Commands automatically work with your current directory.
+
+## Multi-Project Development
+
+Use git worktrees for working on multiple projects simultaneously:
+
+```bash
+# Create worktrees
+git worktree add ../repo-admin-web main
+git worktree add ../repo-public-web main
+
+# Terminal 1: Admin work
+cd ../repo-admin-web/src/Admin.Web
+claude
+> /add-frontend-feature "Admin Dashboard"
+
+# Terminal 2: Public work
+cd ../repo-public-web/src/Public.Web
+claude
+> /add-frontend-feature "Landing Page"
+```
+
+Each Claude session has independent context.
+
+## Features
+
+- **40+ Specialized Commands**: Backend, frontend, testing, analysis, deployment
+- **30+ Expert Agents**: Security, architecture, code review, UX, technical debt
+- **Convention Detection**: Examines your code dynamically (always current, no caching)
+- **Context-Aware**: Commands work in your current directory automatically
+- **Zero Configuration**: No project setup or path configuration needed
+
+## Commands
+
+### Development
+- `/add-backend-feature` - Create .NET API feature with tests
+- `/add-frontend-feature` - Create Angular component with types
+- `/implement-full-stack-feature` - Full-stack feature with parallel agents
+- `/fix-backend-bug` - Debug and fix .NET issues
+- `/fix-frontend-bug` - Debug and fix UI issues
+
+### Code Quality
+- `/comprehensive-review` - Multi-agent code quality review
+- `/review-backend-code` - Backend-specific code review
+- `/review-frontend-code` - Frontend-specific code review
+- `/refactor-code` - Improve code quality and maintainability
+
+### Analysis
+- `/security-audit` - Security vulnerability scanning
+- `/optimize-performance` - Performance analysis and fixes
+- `/health-check` - Overall codebase health assessment
+- `/validate-release` - Release readiness validation
+
+### Updates
+- `/update-backend-feature` - Enhance API with backward compatibility
+- `/update-frontend-feature` - Update UI with compatibility
+- `*-no-backward-compatibility` - Breaking change updates
+
+[See full command list in `.claude/commands/`]
+
+## Requirements
+
+- **Operating System**: Windows, Linux, or macOS
+- **PowerShell**: Version 7+ (cross-platform)
+- **.NET**: Version 8 or 9
+- **Angular**: Version 17+
+- **Claude Code**: Latest version
+
+## Installation
+
+After setup, Claudify creates:
+
+```
+your-project/
+├── .claude/
+│   ├── commands/          # 40+ specialized commands
+│   └── agents/            # 30+ expert agents
+```
+
+## How Convention Detection Works
+
+When you use a command that generates code:
+
+1. **Examine existing code**: Glob to find 2-3 similar files, read and detect patterns
+2. **Discover from configuration**: If no code exists, check package.json, .csproj, angular.json, CLAUDE.md
+3. **Ask user**: If still unclear, prompt for explicit preferences
+4. **Apply patterns**: Generate code matching discovered conventions
+
+**Detection categories**:
+- Naming conventions (classes, methods, properties, fields)
+- Constructor patterns (parameterless vs parameterized)
+- Property patterns (public set vs init-only vs readonly)
+- Collection types (List<T> vs IReadOnlyList<T>)
+- Error handling (exceptions vs Result<T>)
+- Validation (constructor vs FluentValidation vs DataAnnotations)
+- Testing (framework, mocking library, patterns)
+
+**Always current** - examines actual code/config state every time, no caching.
+**Unopinionated** - discovers patterns, never prescribes defaults.
 
 ## Supported Project Types
 
-- .NET 8/9 Web APIs
-- Angular 17-19 applications
-- .NET test projects
-- Multi-project solutions
+- **.NET 8/9** Web APIs
+- **Angular 17-19** applications
+- **.NET test projects** (xUnit, NUnit, MSTest)
+- **Multi-project solutions** (monorepos)
 
-## Repository Structure
+## Example Project Structure
+
+Claudify works with standard .NET/Angular layouts:
 
 ```
-claudify/
-├── setup.ps1                     # Setup orchestrator
-├── components-manifest.json      # Component registry
-├── .claude/
-│   ├── commands/                 # Command definitions
-│   ├── agents/                   # Agent configurations
-│   ├── hooks/                    # Automation workflows
-│   └── generators/               # Code scaffolding tools
-├── docs/                         # Documentation
-└── VERSION                       # Current version (4.0.0)
+your-solution/
+├── src/
+│   ├── MyCompany.Product.Web/        # Angular + .NET host
+│   ├── MyCompany.Product.Api/        # .NET Web API
+│   ├── MyCompany.Product.Domain/     # Domain models
+│   └── MyCompany.Product.Infrastructure/
+└── tests/
+    ├── MyCompany.Product.Tests/
+    └── MyCompany.Product.ArchitectureTests/
 ```
 
 ## Security Considerations
 
-- Each agent is restricted to specific tools based on its role
-- No hardcoded paths or secrets in the configuration
-- All configuration is stored locally in `.claude/config/`
+- Each agent restricted to minimal required tools
+- No hardcoded paths in commands or agents
+- All configuration stored locally in `.claude/config/`
+- Convention cache contains only detected patterns (no code, no secrets)
 
-## Documentation
+## Version
 
-- Configuration files are documented inline with comments
-- For issues or questions, please use your organization's support channel
-- The setup script checks for updates when run
-- Additional documentation will be created in `.claude/docs/` after setup
+**Current**: 5.0.0
 
-## Version History
-
-**4.0.0** - Current Release
-- Project detection based on SDK types and file markers
-- Automatic handling of duplicate project names
-- Documentation files (CLAUDE.md, FEATURES.md) are preserved and user-managed
-- Simplified installation with two clear options (Minimal/Comprehensive)
+**What's New in 5.0.0** (Breaking):
+- Commands are pure and path-agnostic (no hardcoded paths)
+- Work in current directory context
+- Simplified setup - just copies files (109 lines, down from 1089)
+- Dynamic convention detection (discovers from code/config, asks user, no caching)
+- No prescriptive defaults - commands discover patterns or ask
+- Aligns with official Claude Code best practices ("intentionally low-level and unopinionated")
 
 See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 
 ## Getting Started
 
-1. Clone or download this repository
-2. Run `setup.ps1 -TargetRepository "path/to/your/repo"`
-3. Choose installation mode (Minimal or Comprehensive)
-4. Review the detected projects and confirm or correct them
-5. Begin using Claude Code with your configured commands
+1. **Clone Claudify**:
+   ```bash
+   git clone https://github.com/GranatenUdo/claudify.git
+   ```
+
+2. **Run Setup**:
+   ```bash
+   cd your-dotnet-angular-project
+   ..\claudify\setup.ps1 -TargetRepository "."
+   ```
+
+3. **Navigate & Launch**:
+   ```bash
+   cd src/YourProject.Web
+   claude
+   ```
+
+5. **Use Commands**:
+   ```bash
+   > /add-frontend-feature "User Dashboard"
+   ```
+
+Commands work in your current directory automatically.
+
+## Troubleshooting
+
+**Q: Commands generate wrong patterns**
+A: Commands detect patterns by examining existing code and configuration. Ensure you have either:
+- Similar existing code files for commands to examine, OR
+- Configuration files (package.json, .csproj) with installed dependencies, OR
+- Specify preferences in CLAUDE.md
+
+If patterns are unclear, commands will ask you to choose explicitly.
+
+**Q: How do I work on multiple projects?**
+A: Use `cd` to switch projects, or use git worktrees for parallel sessions.
+
+**Q: Commands don't find my files**
+A: Ensure you navigate to the correct project directory before running `claude`. Check your current directory with `pwd`.
+
+## Contributing
+
+Contributions welcome! Please:
+1. Follow existing command/agent structure
+2. Test on real .NET/Angular projects
+3. Update documentation for new features
+4. Commands must be path-agnostic (no hardcoded paths)
+
+## License
+
+[Your License Here]
+
+## Support
+
+For issues, questions, or feature requests:
+- GitHub Issues: https://github.com/GranatenUdo/claudify/issues
+- Documentation: See `.claude/commands/README.md` after setup
+
+---
+
+**Built by GranatenUdo** | **Powered by Claude Code**

@@ -1,9 +1,6 @@
 ---
 description: Generate compelling marketing material from technical features
 allowed-tools: [Task, Read, Write]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: marketing
 ---
 
 # 📢 Generate Marketing: $ARGUMENTS
@@ -54,6 +51,10 @@ category: marketing
   OUTPUT: Platform-optimized content",
   subagent_type="marketing-strategist"
 )
+
+## Convention Awareness
+
+Marketing materials are based on observed features and capabilities in the codebase.
 
 ## ✅ Complete
 Marketing materials ready in marketing/ directory.

@@ -1,46 +1,66 @@
 # Claudify Documentation
 
-This directory contains documentation for the Claudify setup system.
+This directory contains comprehensive documentation for the Claudify system.
 
-## Available Documentation
+## Documentation Files
 
-- [Setup Guide](SETUP_GUIDE.md) - Detailed installation and configuration instructions
-- [Agent Reference](AGENT_REFERENCE.md) - Documentation of available agents and their capabilities
-- [Command Reference](COMMAND_REFERENCE.md) - List of available commands and their usage
-- [Troubleshooting](TROUBLESHOOTING.md) - Common issues and solutions
+- **[COMMAND_REFERENCE.md](COMMAND_REFERENCE.md)** - Complete list of all 40+ commands with descriptions and examples
+- **[AGENT_REFERENCE.md](AGENT_REFERENCE.md)** - Complete list of all 30+ specialized agents
+- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Detailed setup and installation instructions
 
 ## Quick Links
 
+- [Main README](../README.md) - Project overview and quick start
+- [Command Reference](COMMAND_REFERENCE.md) - Browse all available commands
+- [Agent Reference](AGENT_REFERENCE.md) - Browse all available agents
+- [Setup Guide](SETUP_GUIDE.md) - Installation instructions
+- [Migration Guide](../MIGRATION-GUIDE-v4.md) - Upgrading from v3.x to v4.0.0
+- [Changelog](../CHANGELOG.md) - Complete version history
+
+## Project Information
+
 - **Version**: 4.0.0
-- **Released**: 2025-08-20
-- **Repository**: Internal repository (see your organization's documentation)
+- **Released**: 2025-10-02
+- **Repository**: https://github.com/GranatenUdo/claudify
 
 ## Getting Help
 
-If you encounter issues:
-1. Check the troubleshooting guide
-2. Review the setup logs in `.claude/logs/`
-3. Contact your organization's support channel
+For issues, questions, or feature requests:
+- GitHub Issues: https://github.com/GranatenUdo/claudify/issues
+- Browse documentation in this folder
 
-## Project Structure After Setup
+## What Claudify v4.0.0 Provides
 
-After running the setup script, your project will have:
+After running setup, your project will have:
 
 ```
 your-project/
 ├── .claude/
-│   ├── commands/       # Configured slash commands
-│   ├── agents/         # Agent definitions
-│   ├── hooks/          # Automation hooks (optional)
-│   ├── config/         # Configuration files
-│   │   └── projects.json
-│   └── docs/           # Generated documentation
-├── CLAUDE.md           # Your project-specific instructions (user-managed)
-└── FEATURES.md         # Your feature documentation (user-managed)
+│   ├── commands/       # 40+ specialized commands
+│   └── agents/         # 30+ expert agents
 ```
 
-## Notes
+**Key principles**:
+- Pure, context-aware commands (no hardcoded paths)
+- Dynamic convention detection (examines code at runtime)
+- Zero configuration needed
+- Works with current directory context
 
-- CLAUDE.md and FEATURES.md are preserved during setup and remain user-managed
-- The setup script detects projects based on file markers (angular.json, .csproj)
-- All template variables are replaced with your actual project names
+## Usage Model
+
+```bash
+# Navigate to your project
+cd src/YourProject.Web
+
+# Launch Claude Code
+claude
+
+# Commands work in current directory
+> /add-frontend-feature "Dashboard"
+```
+
+Commands automatically detect your conventions by examining existing code and configuration files.
+
+---
+
+**Built by GranatenUdo** | **Powered by Claude Code**

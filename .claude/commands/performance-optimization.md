@@ -2,12 +2,11 @@
 description: Parallel performance optimization across all layers - 5 agents find and fix bottlenecks
 allowed-tools: [Task, Read, Grep, Glob, Bash, Edit, MultiEdit]
 argument-hint: area to optimize (e.g., "database", "api", "frontend", "all")
-complexity: moderate
-estimated-time: 2-3 minutes
-category: optimization
 ---
 
 # ⚡ Parallel Performance Optimization: $ARGUMENTS
+
+**For complex performance optimization or system-wide bottlenecks, enable extended thinking for comprehensive analysis.**
 
 ## Phase 1: Parallel Analysis & Fix
 
@@ -29,7 +28,7 @@ category: optimization
   - Optimization opportunities
   
   Focus on queries taking >100ms.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ### 🚀 API Performance Agent
@@ -50,7 +49,7 @@ category: optimization
   - Memory optimizations
   
   Target sub-200ms response times.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🎨 Frontend Performance Agent
@@ -71,7 +70,7 @@ category: optimization
   - Rendering optimizations
   
   Target <3s load time, <100ms interactions.",
-  subagent_type="frontend-developer"
+  subagent_type="frontend-implementation-expert"
 )
 
 ### 🏗️ Infrastructure Performance Agent
@@ -113,7 +112,7 @@ category: optimization
   - ROI calculation
   
   Provide hard numbers only.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ## Phase 2: Parallel Validation
@@ -121,8 +120,8 @@ category: optimization
 ### Build & Benchmark
 @Bash(command="dotnet build --configuration Release", description="Release build")
 @Bash(command="dotnet test --configuration Release --filter Category=Performance", description="Performance tests")
-@Bash(command="cd src/{{WebProject}} && npm run build:prod", description="Production build")
-@Bash(command="cd src/{{WebProject}} && npm run analyze", description="Bundle analysis")
+@Bash(command="npm run build:prod", description="Production build")
+@Bash(command="npm run analyze", description="Bundle analysis")
 
 ## 📈 Optimization Report
 
@@ -154,10 +153,15 @@ category: optimization
 - Capacity: Additional headroom available
 ```
 
+## Convention Awareness
+
+This command respects existing patterns observed in the codebase. All optimizations work within your architecture, maintaining consistency.
+
 ## 🎯 Why This Works
 - **5 parallel agents** - All layers optimized simultaneously
 - **Integrated fixes** - Analysis and implementation together
 - **Measurable results** - Concrete before/after metrics
 - **Parallel execution** - Multiple agents work simultaneously
+- **Pattern-respecting** - Maintains architectural consistency
 
 Remember: Fix the bottlenecks users actually feel.

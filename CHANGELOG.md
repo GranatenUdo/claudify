@@ -5,15 +5,93 @@ All notable changes to Claudify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2025-08-20
+## [5.0.0] - 2025-10-02
 
-### 🎉 Major Release - Intelligent Project Detection & User-Managed Documentation
+### 🎉 Major Release - Pure, Context-Aware Commands
 
-This release introduces smart project detection based on file markers and SDK types, robust handling of duplicate project names, and complete removal of automatic documentation generation in favor of user-managed files.
+This release aligns Claudify with official Claude Code best practices. Commands are now pure and path-agnostic, working in whatever directory context Claude Code is launched from.
 
-### Breaking Changes
-- **Template Variables Changed**: 
-  - `{{ProjectNamespace}}.Web` → `{{WebProject}}`
+### 🌟 Major Features
+
+#### Pure Command Architecture
+- **No Hardcoded Paths**: Commands contain zero path templates or hardcoded directories
+- **Context-Driven**: Commands work in current directory context provided by Claude Code
+- **Pure Bash Commands**: `npm run build` instead of `cd {{WebProject}} && npm run build`
+- **Multi-Project Support**: Use `cd` to switch projects or git worktrees for parallel work
+- **Official Alignment**: Follows Anthropic's "intentionally low-level and unopinionated" philosophy
+
+#### Dynamic Convention Detection
+- **No Caching**: Commands examine code at runtime, always current
+- **Discovery Over Prescription**: Examines package.json, .csproj, angular.json, CLAUDE.md before suggesting patterns
+- **User Preferences**: Asks user for explicit choice when patterns unclear
+- **18+ Pattern Categories**: Naming, constructors, properties, collections, error handling, validation, testing
+- **Always Current**: No stale cache issues, examines actual code state
+
+#### Simplified Setup
+- **Pure File Copy**: Setup.ps1 only copies commands and agents
+- **90% Reduction**: Setup simplified from 1089 lines to 109 lines
+- **No Configuration**: No project detection, no analyzers, no mode selection
+- **Instant**: Setup completes in seconds
+
+### Added
+- **Dynamic Pattern Detection**: Commands examine code at runtime (no caching)
+- **Discovery Pattern**: Commands check package.json, .csproj, angular.json, CLAUDE.md before suggesting patterns
+- **User Preference Prompts**: Commands ask for explicit choices when patterns unclear
+- **Git Worktrees Guide**: Documentation for multi-project development
+- **Migration Guide**: `MIGRATION-GUIDE-v4.md` for upgrading from v3.x
+- **dotnet Build Warning**: Commands warn against `--no-build` flag
+
+### Changed
+- **All Commands**: Removed `cd` prefixes and path templates
+- **Setup Process**: No project detection or interactive configuration
+- **Multi-Project Workflow**: Use `cd` to switch projects instead of "primary" selection
+- **Documentation**: README.md, CLAUDE.md, SETUP-GUIDE.md rewritten
+- **Philosophy**: Commands describe actions, Claude Code provides context
+
+### Removed
+- **Template System**: All `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}` variables removed
+- **Project Detection**: No scanning, no "primary" selection, no configuration
+- **All Configuration Files**: `.claude/config/projects.json`, `.claude/config/project-knowledge.json`, `.claude/config/claudify.json`
+- **`.claude/templates/` folder**: Entire directory removed (was unused)
+- **`.claudify-sdk/` folder**: TypeScript analyzer removed (violates "unopinionated" principle - NOTE: Delete this directory manually)
+- **Caching System**: No convention caching (violates Claude Code best practices)
+- **Prescriptive Defaults**: No "use xUnit" defaults - commands discover or ask instead
+- **Setup Functions**: Deleted `Get-ProjectNamesInteractive`, `Apply-ProjectTemplates`, `Resolve-DuplicateNames`
+- **RefreshAnalysis Flag**: No longer exists (no cache to refresh)
+- **Mode Selection**: No Smart/Adaptive choice (only dynamic detection)
+- **Business Impact Agent**: Removed from `/smart-research` (fabricated metrics)
+- **Hooks System**: Removed (v3.x legacy)
+
+### Breaking Changes from v4.x
+
+**Commands are context-driven**:
+- v4.x: Run `claude` from repo root, commands use hardcoded paths
+- v5.0.0: Navigate to project (`cd src/MyProject.Web`), then run `claude`
+
+**Multi-project workflow**:
+- v4.x: One "primary" project only
+- v5.0.0: All projects accessible via `cd` or git worktrees
+
+**Setup**:
+- v4.x: Project detection and template replacement
+- v5.0.0: Pure file copy only
+
+### Migration from v4.x
+
+1. Re-run setup: `.\setup.ps1 -TargetRepository "."`
+2. Delete old config: `.claude/config/projects.json`, `.claude/config/project-knowledge.json` (if exist)
+3. Delete analyzer: `.claudify-sdk/` (if exists)
+4. Navigate to project: `cd src/YourProject.Web`
+5. Launch Claude Code: `claude`
+6. Commands now work in current directory
+
+For multi-project repos, use `cd` to switch or git worktrees for parallel work.
+
+---
+
+## [4.0.0] - 2025-09-02
+
+### Previous Implementation Details
   - `{{ProjectNamespace}}.ArchitectureTests` → `{{ArchitectureTestProject}}`
   - `{{ProjectNamespace}}.Api` → `{{ApiProject}}`
 - **Configuration Format**: Now saves to `projects.json` instead of `namespace.json`
@@ -296,11 +374,6 @@ This release establishes Claudify with automatic namespace detection and project
   - UX Reviewer
   - Infrastructure Architect
   - Technical Debt Analyst
-- Advanced hooks system:
-  - Multi-tenant validation
-  - Context enhancement
-  - Pre-commit quality checks
-  - Changelog reminders
 - Agent tools for specialized analysis
 - Generators for creating custom components
 - Template system for documentation
@@ -309,7 +382,6 @@ This release establishes Claudify with automatic namespace detection and project
 - Persistent .claudify directory for re-running setup with different configurations
 
 ### Security
-- Multi-tenant isolation validation hooks
 - Security scanning tools
 - Dependency vulnerability analysis
 
@@ -324,9 +396,8 @@ This release establishes Claudify with automatic namespace detection and project
 
 1. Update VERSION file
 2. Update CHANGELOG.md with release notes
-3. Update components-manifest.json with new version
-4. Tag the release in git
-5. Create GitHub release with changelog excerpt
+3. Tag the release in git
+4. Create GitHub release with changelog excerpt
 
 ## Version History
 

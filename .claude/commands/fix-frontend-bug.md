@@ -1,9 +1,6 @@
 ---
 description: Fix frontend bugs with parallel diagnosis and UX validation
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 1-2 minutes (parallel)
-complexity: moderate
-category: quality
 ---
 
 # 🔧 Fix Frontend Bug: $ARGUMENTS
@@ -66,19 +63,41 @@ category: quality
 @Task(
   description="Implement fix with tests",
   prompt="Fix '$ARGUMENTS' based on diagnosis:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to examine the buggy file
+  2. Detect existing patterns:
+     - Signal vs observable usage
+     - Template syntax (*ngIf vs @if)
+     - Error handling approach
+     - Change detection strategy
+  3. Maintain consistency with detected patterns
+
+  If no patterns detected, examine project configuration:
+  1. Read package.json to check Angular version:
+     - @angular/core version 18+? Use signals and @if/@for
+     - @angular/core version <18? Use observables and *ngIf
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "What patterns does this project use?"
+     - "Options: Signals vs Observables, OnPush vs Default"
+  5. Use user's explicit choice
+
   IMPLEMENT:
-  1. Root cause fix with signals architecture
-  2. Proper Angular 19 syntax (*ngIf, *ngFor)
-  3. OnPush change detection maintained
-  4. Result<T> error handling
-  
+  1. Root cause fix following project conventions
+  2. Maintain consistency with existing components
+  3. Error handling matching project pattern
+
   CREATE TESTS:
   1. Regression test for original bug
-  2. Signal update verification
+  2. Component behavior verification
   3. User interaction tests
-  4. Mock data using test factories
-  
+  4. Use project's testing approach
+
   OUTPUT: Fixed code + tests",
   subagent_type="frontend-implementation-expert"
 )
@@ -99,9 +118,9 @@ category: quality
 
 ## Phase 3: Parallel Validation
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Build")
-@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test")
-@Bash(command="cd src/{{WebProject}} && npm run lint && npm run typecheck", description="Validate")
+@Bash(command="npm run build", description="Build")
+@Bash(command="npm test -- --watch=false", description="Test")
+@Bash(command="npm run lint && npm run typecheck", description="Validate")
 
 ## ✅ Complete
 Bug fixed with tests. Update CHANGELOG.md under "### Fixed".

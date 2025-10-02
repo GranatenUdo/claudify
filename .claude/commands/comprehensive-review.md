@@ -2,12 +2,11 @@
 description: Multi-agent code review for security, performance, and quality issues
 allowed-tools: [Task, Read, Grep, Glob]
 argument-hint: what to review (e.g., "FieldService" or "api/controllers")
-complexity: simple
-estimated-time: 1-2 minutes
-category: quality
 ---
 
 # Comprehensive Review: $ARGUMENTS
+
+**For complex codebases or architecture analysis, enable extended thinking for comprehensive review.**
 
 ## Parallel Multi-Agent Analysis
 
@@ -30,7 +29,7 @@ category: quality
   Provide exact fix code for each issue found.
   
   Skip theoretical risks - focus on actual vulnerabilities.",
-  subagent_type="security-reviewer"
+  subagent_type="security-vulnerability-scanner"
 )
 
 ### Performance Review Agent
@@ -52,7 +51,7 @@ category: quality
   Show before/after code for each fix.
   
   Ignore micro-optimizations.",
-  subagent_type="technical-debt-analyst"
+  subagent_type="technical-debt-analyzer"
 )
 
 ### Code Quality Agent  
@@ -74,29 +73,38 @@ category: quality
   Provide refactored code for complex sections.
   
   Skip style preferences.",
-  subagent_type="code-reviewer"
+  subagent_type="code-review-expert"
 )
 
 ### Architecture Review Agent
 @Task(
   description="Architecture pattern violations",
   prompt="Review '$ARGUMENTS' for ARCHITECTURE VIOLATIONS:
-  
-  TOP 3 PATTERN VIOLATIONS:
-  1. Controllers accessing repositories directly
-  2. Services throwing exceptions instead of Result<T>
-  3. Missing factory methods for entity creation
-  
+
+  - Examine existing code to detect patterns and conventions
+  - Check for INTERNAL consistency within observed patterns
+  - Flag mixing of different approaches without clear reason
+  - Base recommendations on what's already predominant in the code
+
+  Common checks:
+  1. Layer violations (e.g., Infrastructure depending on Application)
+  2. Inconsistent error handling within the codebase
+  3. Mixed patterns without clear boundaries
+  4. Abstraction leaks across boundaries
+
   Use Grep to analyze:
-  - Layer violations
-  - Pattern inconsistencies
-  - Abstraction leaks
-  
-  Return ONLY violations that break system design.
-  Show correct pattern implementation.
-  
-  Ignore minor deviations.",
-  subagent_type="tech-lead"
+  - Pattern consistency across similar components
+  - Layer boundary violations
+  - Deviation from established conventions
+
+  Return ONLY violations that:
+  - Break the project's own consistency
+  - Violate clear architectural boundaries
+  - Create maintenance problems
+
+  Do NOT impose external 'best practices' - respect the project's choices.
+  Focus on CONSISTENCY within the project's chosen patterns.",
+  subagent_type="tech-lead-engineer"
 )
 
 ### Test Quality Agent
@@ -118,7 +126,7 @@ category: quality
   Provide test code for uncovered paths.
   
   Skip test style issues.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ## Consolidated Report Format
@@ -156,11 +164,16 @@ After parallel analysis completes, consolidate findings:
 - Results are consolidated into actionable findings
 - Provides concrete fixes, not just problem identification
 
+## Convention Awareness
+
+This command adapts to observed codebase patterns. All recommendations respect the project's chosen approaches rather than imposing external standards.
+
 ## What We SKIP
 - Perfect code style
 - 100% test coverage
 - Theoretical improvements
 - Academic best practices
 - Minor optimizations
+- Imposing external patterns over project conventions
 
-Focus: Identify the most impactful issues that affect system quality.
+Focus: Identify the most impactful issues that affect system quality while respecting project conventions.

@@ -2,9 +2,6 @@
 description: Fix backend build and test failures with parallel diagnosis
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
 argument-hint: error message or test failure description
-complexity: simple
-estimated-time: 2.5 minutes
-category: quality
 ---
 
 # 🔧 Fix Backend Build & Tests: $ARGUMENTS
@@ -23,7 +20,7 @@ category: quality
   4. C# 13 issues: Primary constructors, collection expressions
   
   Return: Specific build issues found",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### 🧪 Test Failure Analyzer
@@ -38,7 +35,7 @@ category: quality
   4. Database: In-memory DB setup, migrations
   
   Return: Test failure patterns found",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🗄️ Migration Checker
@@ -63,32 +60,68 @@ category: quality
 @Task(
   description="Fix compilation errors",
   prompt="Fix compilation issues found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Read to check the compilation error files
+  2. Maintain existing code style and patterns
+
+  If no patterns detected, examine project configuration:
+  1. Read .csproj files to check dependencies
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "What coding patterns should I follow for this fix?"
+  4. Use user's explicit choice or minimal safe fixes
+
   COMMON FIXES:
   1. Nullable: Add ? or ! operators, null checks
   2. C# 13: Fix primary constructors, use [...] for collections
   3. Packages: Run dotnet restore, update versions
   4. Usings: Add missing using statements
-  
+
   Apply minimal fixes for compilation.
   Generate working code changes.",
-  subagent_type="tech-lead"
+  subagent_type="tech-lead-engineer"
 )
 
 ### ✅ Test Fixer
 @Task(
   description="Fix test failures",
   prompt="Fix test failures found:
-  
+
+  ## PATTERN DETECTION (REQUIRED)
+
+  Examine existing code to detect conventions:
+
+  1. Use Glob: **/*Tests/*.cs
+  2. Read a working test to detect patterns
+  3. Apply same patterns to fix
+
+  If no patterns detected, examine project configuration:
+  1. Read test .csproj files to check test frameworks:
+     - xunit installed? Use xUnit patterns
+     - nunit installed? Use NUnit patterns
+     - MSTest.TestFramework? Use MSTest patterns
+     - Moq installed? Use Moq for mocking
+     - NSubstitute installed? Use NSubstitute
+     - FluentAssertions installed? Use for assertions
+  2. Check CLAUDE.md for specified test patterns
+  3. If still unclear, ask user:
+     - "What test framework and mocking library?"
+     - "Options: xUnit+Moq, NUnit+NSubstitute, etc."
+  4. Use user's explicit choice
+
   COMMON FIXES:
   1. Mocks: Setup all required mocks with returns
   2. Async: Add async/await, ConfigureAwait(false)
   3. Org context: Set test OrganizationId
   4. Database: Use in-memory database for tests
-  
+
   Fix failing tests with minimal changes.
   Generate working test fixes.",
-  subagent_type="test-quality-analyst"
+  subagent_type="test-quality-analyzer"
 )
 
 ### 🐳 Docker Fixer
@@ -108,10 +141,27 @@ category: quality
 
 ## Phase 3: Parallel Validation (30 seconds)
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 ### Full Validation Suite
 @Bash(command="dotnet restore --no-cache", description="Package restore")
-@Bash(command="dotnet build --no-restore", description="Build verification")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Unit tests")
+@Bash(command="dotnet build", description="Build verification")
+@Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
 @Bash(command="docker build -t test-backend . 2>&1 | tail -10", description="Docker build")
 
 ## Quick Reference
