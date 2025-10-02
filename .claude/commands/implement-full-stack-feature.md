@@ -211,10 +211,27 @@ model: opus
 
 ## Phase 3: Parallel Final Checks
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 ### Build Verification
-@Bash(command="dotnet build --no-restore", description="Backend build")
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Frontend build")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Quick tests")
+@Bash(command="dotnet build", description="Backend build")
+@Bash(command="cd {{WebProject}} && npm run build", description="Frontend build")
+@Bash(command="dotnet test --filter Category!=Integration", description="Quick tests")
 
 ## Summary Output
 
@@ -242,3 +259,5 @@ model: opus
 - **Validated output** - built-in quality checks
 
 Remember: MVP that works > perfect that takes forever
+
+**Remember to update CHANGELOG.md under "### Added" section.**

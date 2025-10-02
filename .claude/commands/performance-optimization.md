@@ -124,8 +124,8 @@ model: opus
 ### Build & Benchmark
 @Bash(command="dotnet build --configuration Release", description="Release build")
 @Bash(command="dotnet test --configuration Release --filter Category=Performance", description="Performance tests")
-@Bash(command="cd src/{{WebProject}} && npm run build:prod", description="Production build")
-@Bash(command="cd src/{{WebProject}} && npm run analyze", description="Bundle analysis")
+@Bash(command="cd {{WebProject}} && npm run build:prod", description="Production build")
+@Bash(command="cd {{WebProject}} && npm run analyze", description="Bundle analysis")
 
 ## 📈 Optimization Report
 

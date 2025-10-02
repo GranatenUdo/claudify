@@ -281,7 +281,7 @@ For consistent team configuration:
 
 Claudify includes Azure DevOps support:
 - Pipeline templates in `.claude/pipelines/`
-- Automated testing hooks
+- Automated testing integration
 - Deployment validation scripts
 - Quality gates configuration
 

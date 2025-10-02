@@ -37,7 +37,7 @@ v4.0.0 is designed to be **100% backward compatible**:
 - Existing commands continue to work
 - Project configuration format unchanged
 - No changes to agent definitions
-- All hooks remain functional
+- All generators remain functional
 
 ---
 

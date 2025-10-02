@@ -34,6 +34,7 @@ This release introduces dual-mode convention detection, allowing users to choose
 - **Adaptive Fallback**: All commands work without convention cache by examining code on-demand
 - **Migration Guide**: `MIGRATION-GUIDE-v4.md` for upgrading from v3.x
 - **Testing Guide**: `TESTING-GUIDE-v4.md` comprehensive testing protocol
+- **dotnet Build Instruction**: Backend commands now include explicit warning to NEVER use '--no-build' flag
 
 ### Changed
 - **All 32 Commands**: Enhanced with pattern detection that works in both modes
@@ -49,13 +50,15 @@ This release introduces dual-mode convention detection, allowing users to choose
 - **Cache Staleness**: Refresh command allows updating conventions after code changes
 - **Node.js Dependency**: Adaptive Mode works without Node.js installation
 - **Convention Mismatches**: Generated code now matches observed patterns 90-95%+
+- **RefreshAnalysis Bug**: Now creates `claudify.json` if missing (previously only updated existing file)
 
 ### Breaking Changes
 **NONE** - v4.0.0 is fully backward compatible with v3.x installations
 
-### Deprecated
+### Removed
 - **-AnalyzeProject Flag**: Replaced with interactive mode selection during setup
-- **-SkipAnalyzer Flag**: Replaced with Adaptive Mode choice (still works for backward compatibility)
+- **-SkipAnalyzer Flag**: Removed completely in favor of mode selection
+- **Hooks System**: Removed entire hooks directory and all automation hooks (add-context.ps1, pre-commit-quality-check.ps1, check-changelog-updates.ps1) - simplified to core functionality only
 
 ---
 
@@ -342,11 +345,6 @@ This release establishes Claudify with automatic namespace detection and project
   - UX Reviewer
   - Infrastructure Architect
   - Technical Debt Analyst
-- Advanced hooks system:
-  - Multi-tenant validation
-  - Context enhancement
-  - Pre-commit quality checks
-  - Changelog reminders
 - Agent tools for specialized analysis
 - Generators for creating custom components
 - Template system for documentation
@@ -355,7 +353,6 @@ This release establishes Claudify with automatic namespace detection and project
 - Persistent .claudify directory for re-running setup with different configurations
 
 ### Security
-- Multi-tenant isolation validation hooks
 - Security scanning tools
 - Dependency vulnerability analysis
 

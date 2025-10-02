@@ -80,8 +80,12 @@ category: development
   subagent_type="ux-design-expert"
 )
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Build")
-@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test")
+@Bash(command="cd {{WebProject}} && npm run build", description="Build")
+@Bash(command="cd {{WebProject}} && npm test -- --watch=false", description="Test")
 
 ## ✅ Complete
 Breaking changes implemented. Coordinate with backend updates.
+
+**Remember to update CHANGELOG.md:**
+- Add entry under "### Changed" section
+- Add entry under "### Breaking Changes" section (describe what breaks)

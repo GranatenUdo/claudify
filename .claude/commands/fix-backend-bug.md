@@ -115,8 +115,25 @@ category: quality
 
 ## Phase 3: Parallel Validation
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 @Bash(command="dotnet build --configuration Release", description="Build")
-@Bash(command="dotnet test --no-build --filter Category!=Integration", description="Unit tests")
+@Bash(command="dotnet test --filter Category!=Integration", description="Unit tests")
 @Bash(command="dotnet test tests/{{ArchitectureTestProject}}", description="Architecture")
 
 ## ✅ Complete

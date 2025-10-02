@@ -82,8 +82,30 @@ category: development
   subagent_type="infrastructure-architect"
 )
 
+## IMPORTANT: dotnet Command Usage
+
+**NEVER use '--no-build' flag with dotnet commands.**
+
+Always run:
+- `dotnet build` - Ensures latest code is compiled
+- `dotnet test` - Builds then tests (do NOT use --no-build)
+- `dotnet run` - Builds then runs
+
+The '--no-build' flag skips compilation and can cause:
+- Tests running against stale code
+- Missing compilation errors
+- False test results
+
+CORRECT: `dotnet test`
+WRONG: `dotnet test --no-build`
+
 @Bash(command="dotnet build --configuration Release", description="Verify build")
-@Bash(command="cd src/{{WebProject}} && npm run update:api", description="Update client")
+@Bash(command="dotnet test", description="Run tests")
+@Bash(command="cd {{WebProject}} && npm run update:api", description="Update client")
 
 ## ✅ Complete
 Breaking changes implemented. Update all consumers before deployment.
+
+**Remember to update CHANGELOG.md:**
+- Add entry under "### Changed" section
+- Add entry under "### Breaking Changes" section (describe what breaks)

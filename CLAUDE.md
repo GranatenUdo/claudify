@@ -26,7 +26,6 @@
    - Components loaded from configured `.claude` directory
    - Agents operate with security-restricted tool access
    - Commands utilize specialized Opus 4 agents
-   - Hooks provide automated workflows
 
 ### Project Detection and Template System
 The setup uses a mustache-style template system with automatic project detection:
@@ -130,7 +129,6 @@ function Resolve-DuplicateNames {
 .claude/
 ├── commands/          # 40+ project-configured commands
 ├── agents/           # 30+ specialized agents
-├── hooks/            # Automated workflows
 ├── generators/       # Scaffolding tools
 └── validation/       # Quality checks
 ```
@@ -237,7 +235,7 @@ Setup performs these checks:
 - Azure DevOps pipeline templates included
 - Docker containerization configured
 - Automated testing integrated
-- Deployment validation hooks
+- Deployment validation
 
 ### Team Collaboration
 - Consistent setup across all team members

@@ -81,7 +81,7 @@ category: development
   subagent_type="test-quality-analyzer"
 )
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Verify build")
+@Bash(command="cd {{WebProject}} && npm run build", description="Verify build")
 
 ## ✅ Complete
 Figma design implemented as Angular component.

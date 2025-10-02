@@ -31,7 +31,6 @@ your-project/
 ├── .claude/
 │   ├── commands/       # Configured slash commands
 │   ├── agents/         # Agent definitions
-│   ├── hooks/          # Automation hooks (optional)
 │   ├── config/         # Configuration files
 │   │   └── projects.json
 │   └── docs/           # Generated documentation

@@ -265,61 +265,6 @@
         "file": "agent-generator.ps1",
         "description": "Generate new specialized agents",
         "tags": ["meta", "automation"]
-      },
-      {
-        "name": "hook-generator",
-        "file": "hook-generator.ps1",
-        "description": "Generate validation hooks",
-        "tags": ["automation", "validation"]
-      }
-    ],
-    "hooks": [
-      {
-        "name": "check-tenant-scoping",
-        "file": "check-tenant-scoping.ps1",
-        "description": "Validate multi-tenant isolation",
-        "tags": ["multi-tenant", "security", "validation"],
-        "requiredFor": ["multi-tenant"]
-      },
-      {
-        "name": "after-component-creation",
-        "file": "after-component-creation.ps1",
-        "description": "Post-creation automation",
-        "tags": ["automation", "workflow"]
-      },
-      {
-        "name": "validate-tenant-scoping",
-        "file": "validate-tenant-scoping.ps1",
-        "description": "Enhanced multi-tenant validation with auto-detection",
-        "tags": ["multi-tenant", "security", "validation", "parameterized"],
-        "requiredFor": ["multi-tenant"]
-      },
-      {
-        "name": "add-context",
-        "file": "add-context.ps1",
-        "description": "Enrich prompts with project context",
-        "tags": ["context", "enhancement", "automation"],
-        "requiredFor": ["all"]
-      },
-      {
-        "name": "pre-commit-quality-check",
-        "file": "pre-commit-quality-check.ps1",
-        "description": "Quality checks before commits",
-        "tags": ["quality", "validation", "git"],
-        "requiredFor": ["all"]
-      },
-      {
-        "name": "install-hooks",
-        "file": "install-hooks.ps1",
-        "description": "Hook installation wizard",
-        "tags": ["setup", "automation"]
-      },
-      {
-        "name": "check-changelog-updates",
-        "file": "check-changelog-updates.ps1",
-        "description": "Remind users to update changelog after significant changes",
-        "tags": ["changelog", "reminder", "automation"],
-        "requiredFor": ["all"]
       }
     ],
     "validation": [
@@ -404,7 +349,6 @@
         "agents:code-reviewer",
         "commands:essential:*",
         "commands:documentation:update-changelog",
-        "hooks:add-context",
         "generators:command-generator"
       ]
     },
@@ -420,8 +364,6 @@
         "commands:quality:analyze-technical-debt",
         "commands:documentation:generate-documentation",
         "generators:*",
-        "hooks:pre-commit-quality-check",
-        "hooks:[validate-tenant-scoping if multi-tenant]",
         "validation:code-quality-validator"
       ]
     },

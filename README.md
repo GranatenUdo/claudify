@@ -104,7 +104,6 @@ your-project/
 │   │   ├── projects.json          # Project structure
 │   │   ├── project-knowledge.json # Convention cache (Smart Mode)
 │   │   └── claudify.json          # Mode configuration
-│   ├── hooks/             # Automated workflows
 │   └── templates/         # Code generation templates
 └── .claudify/             # Temporary resources (gitignored)
 ```

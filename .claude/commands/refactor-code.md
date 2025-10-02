@@ -112,3 +112,5 @@ category: quality
 
 ## ✅ Complete
 Code refactored for simplicity, reusability, and performance.
+
+**If changes are significant, update CHANGELOG.md under "### Changed" section.**

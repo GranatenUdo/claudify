@@ -7,7 +7,6 @@
 #
 # Optional Flags:
 #   -RefreshAnalysis   Refresh project convention analysis (requires Node.js 18+)
-#   -SkipAnalyzer      [DEPRECATED] Use mode selection during setup instead
 #
 # Quick Commands:
 #   .\setup.ps1 "C:\MyProject"             # Full setup with mode selection
@@ -26,13 +25,7 @@ param(
         Mandatory=$false,
         HelpMessage="Refresh the project convention analysis only (requires Node.js 18+)."
     )]
-    [switch]$RefreshAnalysis,
-
-    [Parameter(
-        Mandatory=$false,
-        HelpMessage="DEPRECATED: Use mode selection during setup instead. Skip convention analysis and use adaptive mode."
-    )]
-    [switch]$SkipAnalyzer
+    [switch]$RefreshAnalysis
 )
 
 $ErrorActionPreference = "Stop"
@@ -89,14 +82,21 @@ if ($RefreshAnalysis) {
             Write-Host "✅ Convention analysis complete!" -ForegroundColor Green
             Write-Host "Saved to: .claude/config/project-knowledge.json" -ForegroundColor Gray
 
-            # Update mode config
+            # Create or update mode config
             $modeConfigPath = Join-Path $configPath "claudify.json"
             if (Test-Path $modeConfigPath) {
                 $modeConfig = Get-Content $modeConfigPath -Raw | ConvertFrom-Json
                 $modeConfig.analyzedAt = (Get-Date -Format "o")
                 $modeConfig.mode = "smart"
-                $modeConfig | ConvertTo-Json | Set-Content $modeConfigPath -NoNewline
+            } else {
+                $modeConfig = @{
+                    mode = "smart"
+                    analyzedAt = (Get-Date -Format "o")
+                    version = $version
+                    installDate = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+                }
             }
+            $modeConfig | ConvertTo-Json | Set-Content $modeConfigPath -NoNewline
 
             exit 0
         } else {
@@ -206,7 +206,6 @@ if ($CleanInstall) {
     Write-Host "  - .claude/commands/* (all commands)" -ForegroundColor DarkGray
     Write-Host "  - .claude/agents/* (all agents)" -ForegroundColor DarkGray
     Write-Host "  - .claude/agent-configs/* (all agent configs)" -ForegroundColor DarkGray
-    Write-Host "  - .claude/hooks/* (all hooks)" -ForegroundColor DarkGray
     Write-Host "  - .claudify/* (all cached resources)" -ForegroundColor DarkGray
     Write-Host "  Note: CLAUDE.md is a user-managed file" -ForegroundColor Green
     
@@ -315,29 +314,14 @@ if (Test-Path $sourceVersion) {
     Copy-Item -Path $sourceVersion -Destination $destVersion -Force
 }
 
-# Copy templates directory
-$sourceTemplates = Join-Path $scriptDir "templates"
-$destTemplates = Join-Path $tempClaudifyPath "templates"
-if (Test-Path $sourceTemplates) {
-    Write-Host "  - Copying templates..." -ForegroundColor DarkGray
-    Copy-Item -Path $sourceTemplates -Destination $destTemplates -Recurse -Force
-}
-
-# Copy scripts directory
-$sourceScripts = Join-Path $scriptDir "scripts"
-$destScripts = Join-Path $tempClaudifyPath "scripts"
-if (Test-Path $sourceScripts) {
-    Write-Host "  - Copying scripts directory..." -ForegroundColor DarkGray
-    Copy-Item -Path $sourceScripts -Destination $destScripts -Recurse -Force
-}
+# Templates and scripts directories removed in v4.0.0
+# Generators now installed from templates/generators/ into .claude/generators/
 
 # Copy important documentation files
 $docFiles = @(
     "README.md",
     "SETUP-GUIDE.md",
-    "CHANGELOG.md",
-    "docs/AGENT-COLLABORATION-GUIDE.md",
-    "docs/AGENT-COLLABORATION-EXAMPLES.md"
+    "CHANGELOG.md"
 )
 
 Write-Host "  - Copying documentation files..." -ForegroundColor DarkGray
@@ -415,7 +399,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     $paths = @(
         (Join-Path $claudePath "commands"),
         (Join-Path $claudePath "agents"),
-        (Join-Path $claudePath "hooks"),
         (Join-Path $claudePath "generators"),
         (Join-Path $claudePath "validation"),
         (Join-Path $claudePath "templates" "documentation")
@@ -433,7 +416,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     $agentsToInstall = @()
     $installGenerators = $false
     $installTools = $false
-    $installHooks = $false
     
     switch ($setupMode) {
         "minimal" {
@@ -455,7 +437,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
                 "test-quality-analyzer"
             )
             $installGenerators = $true
-            $installHooks = $true
         }
         "comprehensive" {
             $commandsToInstall = @(
@@ -512,7 +493,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
             )
             $installGenerators = $true
             $installTools = $true
-            $installHooks = $true
         }
     }
     
@@ -563,8 +543,7 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         Write-Info "Installing generators..."
         $generatorFiles = @(
             "command-generator.ps1",
-            "agent-generator.ps1",
-            "hook-generator.ps1"
+            "agent-generator.ps1"
         )
         $installedGenerators = 0
         foreach ($generator in $generatorFiles) {
@@ -586,29 +565,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         }
         
         Write-Success "  Generators: $installedGenerators installed"
-    }
-    
-    # Install hooks (if applicable)
-    if ($installHooks) {
-        Write-Info "Installing hooks..."
-        $hookFiles = @(
-            "add-context.ps1",
-            "pre-commit-quality-check.ps1",
-            "check-changelog-updates.ps1"
-        )
-        
-        $installedHooks = 0
-        foreach ($hook in $hookFiles) {
-            $sourcePath = Join-Path $claudifyPath ".claude" "hooks" $hook
-            $destPath = Join-Path $claudePath "hooks" $hook
-            
-            if (Test-Path $sourcePath) {
-                Copy-Item -Path $sourcePath -Destination $destPath -Force
-                Write-Detail "[OK] $hook"
-                $installedHooks++
-            }
-        }
-        Write-Success "  Hooks: $installedHooks installed"
     }
     
     # Copy validation tools
@@ -783,23 +739,33 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         
         if ($webProjects.Count -gt 0) {
             Write-Host "  Detected Angular project(s):" -ForegroundColor White
-            foreach ($proj in $webProjects) {
-                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
-            }
-            
-            $defaultWeb = if ($webProjects.Count -eq 1) { 
-                $webProjects[0].Name 
-            } else { 
-                ($webProjects | ForEach-Object { $_.Name }) -join ", " 
-            }
-            
+
             if ($webProjects.Count -eq 1) {
-                Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+                # Single project - simple accept/override
+                $proj = $webProjects[0]
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
+                Write-Host "  Press Enter to accept, or enter different path: " -NoNewline -ForegroundColor Yellow
+                $userInput = Read-Host
+                $confirmedProjects.WebProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $proj.Path } else { $userInput }
             } else {
-                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+                # Multiple projects - select PRIMARY
+                Write-Host "  Found $($webProjects.Count) Angular projects:" -ForegroundColor White
+                for ($i = 0; $i -lt $webProjects.Count; $i++) {
+                    $proj = $webProjects[$i]
+                    Write-Host "    [$($i+1)] $($proj.Name)" -ForegroundColor Gray
+                    Write-Host "        Path: $($proj.Path)" -ForegroundColor DarkGray
+                }
+                Write-Host "`n  Select PRIMARY web project for commands [1]: " -NoNewline -ForegroundColor Yellow
+                $selection = Read-Host
+
+                $index = if ([string]::IsNullOrWhiteSpace($selection)) { 0 } else { [int]$selection - 1 }
+                if ($index -ge 0 -and $index -lt $webProjects.Count) {
+                    $confirmedProjects.WebProject = $webProjects[$index].Path
+                } else {
+                    Write-Warning "  Invalid selection, using first project"
+                    $confirmedProjects.WebProject = $webProjects[0].Path
+                }
             }
-            $userInput = Read-Host
-            $confirmedProjects.WebProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultWeb } else { $userInput }
         } else {
             Write-Host "  No Angular project detected (no angular.json found)." -ForegroundColor Yellow
             Write-Host "  Enter web project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
@@ -818,23 +784,33 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         
         if ($apiProjects.Count -gt 0) {
             Write-Host "  Detected .NET Web API project(s):" -ForegroundColor White
-            foreach ($proj in $apiProjects) {
-                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
-            }
-            
-            $defaultApi = if ($apiProjects.Count -eq 1) { 
-                $apiProjects[0].Name 
-            } else { 
-                ($apiProjects | ForEach-Object { $_.Name }) -join ", " 
-            }
-            
+
             if ($apiProjects.Count -eq 1) {
+                # Single project - simple accept/override
+                $proj = $apiProjects[0]
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
                 Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+                $userInput = Read-Host
+                $confirmedProjects.ApiProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $proj.Name } else { $userInput }
             } else {
-                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+                # Multiple projects - select PRIMARY
+                Write-Host "  Found $($apiProjects.Count) API projects:" -ForegroundColor White
+                for ($i = 0; $i -lt $apiProjects.Count; $i++) {
+                    $proj = $apiProjects[$i]
+                    Write-Host "    [$($i+1)] $($proj.Name)" -ForegroundColor Gray
+                    Write-Host "        Path: $($proj.Path)" -ForegroundColor DarkGray
+                }
+                Write-Host "`n  Select PRIMARY API project for commands [1]: " -NoNewline -ForegroundColor Yellow
+                $selection = Read-Host
+
+                $index = if ([string]::IsNullOrWhiteSpace($selection)) { 0 } else { [int]$selection - 1 }
+                if ($index -ge 0 -and $index -lt $apiProjects.Count) {
+                    $confirmedProjects.ApiProject = $apiProjects[$index].Name
+                } else {
+                    Write-Warning "  Invalid selection, using first project"
+                    $confirmedProjects.ApiProject = $apiProjects[0].Name
+                }
             }
-            $userInput = Read-Host
-            $confirmedProjects.ApiProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultApi } else { $userInput }
         } else {
             Write-Host "  No .NET Web API project detected (no Microsoft.NET.Sdk.Web found)." -ForegroundColor Yellow
             Write-Host "  Enter API project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
@@ -854,52 +830,64 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         
         if ($archProjects.Count -gt 0) {
             Write-Host "  Detected architecture test project(s):" -ForegroundColor White
-            foreach ($proj in $archProjects) {
-                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
-            }
-            
-            $defaultArch = if ($archProjects.Count -eq 1) { 
-                $archProjects[0].Name 
-            } else { 
-                ($archProjects | ForEach-Object { $_.Name }) -join ", " 
-            }
-            
+
             if ($archProjects.Count -eq 1) {
+                # Single project - simple accept/override
+                $proj = $archProjects[0]
+                Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
                 Write-Host "  Press Enter to accept, or enter different name: " -NoNewline -ForegroundColor Yellow
+                $userInput = Read-Host
+                $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $proj.Name } else { $userInput }
             } else {
-                Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
+                # Multiple projects - select PRIMARY
+                Write-Host "  Found $($archProjects.Count) architecture test projects:" -ForegroundColor White
+                for ($i = 0; $i -lt $archProjects.Count; $i++) {
+                    $proj = $archProjects[$i]
+                    Write-Host "    [$($i+1)] $($proj.Name)" -ForegroundColor Gray
+                    Write-Host "        Path: $($proj.Path)" -ForegroundColor DarkGray
+                }
+                Write-Host "`n  Select PRIMARY test project for commands [1]: " -NoNewline -ForegroundColor Yellow
+                $selection = Read-Host
+
+                $index = if ([string]::IsNullOrWhiteSpace($selection)) { 0 } else { [int]$selection - 1 }
+                if ($index -ge 0 -and $index -lt $archProjects.Count) {
+                    $confirmedProjects.ArchitectureTestProject = $archProjects[$index].Name
+                } else {
+                    Write-Warning "  Invalid selection, using first project"
+                    $confirmedProjects.ArchitectureTestProject = $archProjects[0].Name
+                }
             }
-            $userInput = Read-Host
-            $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultArch } else { $userInput }
         } else {
             # Look for any test project as fallback
             if ($testProjects.Count -gt 0) {
                 Write-Host "  Detected test project(s) (no architecture-specific tests found):" -ForegroundColor White
-                foreach ($proj in $testProjects) {
+
+                if ($testProjects.Count -eq 1) {
+                    # Single test project
+                    $proj = $testProjects[0]
                     Write-Host "    - $($proj.Name) (at $($proj.Path))" -ForegroundColor Gray
-                }
-                
-                # Try to find architecture test project, but handle empty results safely
-                $archTestProjects = @($testProjects | Where-Object { $_.Name -like "*Architecture*" })
-                
-                if ($archTestProjects.Count -gt 0) {
-                    $defaultTest = $archTestProjects[0].Name
+                    Write-Host "  Press Enter to use as architecture tests, or enter different name: " -NoNewline -ForegroundColor Yellow
+                    $userInput = Read-Host
+                    $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $proj.Name } else { $userInput }
                 } else {
-                    # Fall back to first test project or all test projects
-                    $defaultTest = if ($testProjects.Count -eq 1) { 
-                        $testProjects[0].Name 
-                    } else { 
-                        ($testProjects | ForEach-Object { $_.Name }) -join ", " 
+                    # Multiple test projects - select PRIMARY
+                    Write-Host "  Found $($testProjects.Count) test projects:" -ForegroundColor White
+                    for ($i = 0; $i -lt $testProjects.Count; $i++) {
+                        $proj = $testProjects[$i]
+                        Write-Host "    [$($i+1)] $($proj.Name)" -ForegroundColor Gray
+                        Write-Host "        Path: $($proj.Path)" -ForegroundColor DarkGray
+                    }
+                    Write-Host "`n  Select PRIMARY test project for commands [1]: " -NoNewline -ForegroundColor Yellow
+                    $selection = Read-Host
+
+                    $index = if ([string]::IsNullOrWhiteSpace($selection)) { 0 } else { [int]$selection - 1 }
+                    if ($index -ge 0 -and $index -lt $testProjects.Count) {
+                        $confirmedProjects.ArchitectureTestProject = $testProjects[$index].Name
+                    } else {
+                        Write-Warning "  Invalid selection, using first project"
+                        $confirmedProjects.ArchitectureTestProject = $testProjects[0].Name
                     }
                 }
-                
-                if ($testProjects.Count -eq 1) {
-                    Write-Host "  Press Enter to use as architecture tests, or enter different name: " -NoNewline -ForegroundColor Yellow
-                } else {
-                    Write-Host "  Press Enter to accept all, or enter names (comma-separated): " -NoNewline -ForegroundColor Yellow
-                }
-                $userInput = Read-Host
-                $confirmedProjects.ArchitectureTestProject = if ([string]::IsNullOrWhiteSpace($userInput)) { $defaultTest } else { $userInput }
             } else {
                 Write-Host "  No test project detected (no .csproj with Test in name)." -ForegroundColor Yellow
                 Write-Host "  Enter architecture test project name(s) (comma-separated) or press Enter to skip: " -NoNewline -ForegroundColor Yellow
@@ -976,7 +964,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         $filesToUpdate = @()
         $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "commands") -Filter "*.md" -ErrorAction SilentlyContinue
         $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "agents") -Filter "*.md" -ErrorAction SilentlyContinue
-        $filesToUpdate += Get-ChildItem -Path (Join-Path $ClaudePath "hooks") -Filter "*.ps1" -ErrorAction SilentlyContinue
         
         foreach ($file in $filesToUpdate) {
             $content = Get-Content -Path $file.FullName -Raw -ErrorAction SilentlyContinue
@@ -1089,13 +1076,6 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
         }
     }
 
-    # Override with SkipAnalyzer flag if provided (backward compatibility)
-    if ($SkipAnalyzer) {
-        $skipAnalyzer = $true
-        $conventionMode = "adaptive"
-        Write-Warning "  [DEPRECATED] -SkipAnalyzer flag detected. Use mode selection in future."
-    }
-
     # Project analysis (Smart Mode)
     if (-not $skipAnalyzer) {
         Write-Info "`n[ANALYSIS] Project Analysis:"
@@ -1178,8 +1158,7 @@ function Write-Detail { param($msg) Write-Host "  $msg" -ForegroundColor DarkGra
     Write-Host "========================" -ForegroundColor DarkGray
     Write-Success "OK: Commands installed: $installedCommands"
     Write-Success "OK: Agents installed: $installedAgents"
-    if ($installGenerators) { Write-Success "OK: Generators installed: 3" }
-    if ($installHooks) { Write-Success "OK: Hooks installed: 3" }
+    if ($installGenerators) { Write-Success "OK: Generators installed: 2" }
     if ($installTools) { Write-Success "OK: Agent tools installed: 3 sets" }
     Write-Success "OK: Validation tools: $installedValidation"
     

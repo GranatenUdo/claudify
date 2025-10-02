@@ -121,9 +121,9 @@ category: quality
 
 ## Phase 3: Parallel Validation
 
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Build")
-@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test")
-@Bash(command="cd src/{{WebProject}} && npm run lint && npm run typecheck", description="Validate")
+@Bash(command="cd {{WebProject}} && npm run build", description="Build")
+@Bash(command="cd {{WebProject}} && npm test -- --watch=false", description="Test")
+@Bash(command="cd {{WebProject}} && npm run lint && npm run typecheck", description="Validate")
 
 ## ✅ Complete
 Bug fixed with tests. Update CHANGELOG.md under "### Fixed".

@@ -144,10 +144,10 @@ category: quality
 ## Phase 3: Parallel Validation (30 seconds)
 
 ### Full Validation Suite
-@Bash(command="cd src/{{WebProject}} && npm install", description="Install dependencies")
-@Bash(command="cd src/{{WebProject}} && npm run build", description="Build verification")
-@Bash(command="cd src/{{WebProject}} && npm test -- --watch=false", description="Test execution")
-@Bash(command="cd src/{{WebProject}} && npm run lint --fix", description="Lint with autofix")
+@Bash(command="cd {{WebProject}} && npm install", description="Install dependencies")
+@Bash(command="cd {{WebProject}} && npm run build", description="Build verification")
+@Bash(command="cd {{WebProject}} && npm test -- --watch=false", description="Test execution")
+@Bash(command="cd {{WebProject}} && npm run lint --fix", description="Lint with autofix")
 
 ## Quick Reference
 

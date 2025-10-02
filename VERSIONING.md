@@ -21,7 +21,7 @@ Claudify follows [Semantic Versioning](https://semver.org/) (SemVer) to ensure c
 - Incompatible changes to component manifest structure
 
 ### When to increment MINOR (1.X.0)
-- Adding new commands, agents, or hooks
+- Adding new commands or agents
 - Adding new features to existing components
 - Enhancing functionality without breaking existing usage
 - Adding new optional parameters
