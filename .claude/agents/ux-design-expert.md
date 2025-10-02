@@ -1,7 +1,6 @@
 ---
 name: ux-design-expert
 description: Use this agent when you need to design user interfaces, create user flows, improve user experience, design wireframes, mockups, or prototypes, evaluate usability, create design systems, or provide guidance on UI/UX best practices. This includes tasks like designing new features, improving existing interfaces, creating user journey maps, conducting heuristic evaluations, or establishing design patterns and components.\n\n<example>\nContext: The user wants to design a new feature for their application.\nuser: "I need to design a user interface for a new task management feature"\nassistant: "I'll use the ux-design-expert agent to help design an intuitive and beautiful interface for your task management feature."\n<commentary>\nSince the user needs UI/UX design work, use the Task tool to launch the ux-design-expert agent to create the design.\n</commentary>\n</example>\n\n<example>\nContext: The user wants to improve the user experience of an existing feature.\nuser: "The onboarding flow feels clunky and users are dropping off. Can you help improve it?"\nassistant: "Let me engage the ux-design-expert agent to analyze and redesign your onboarding flow for better user retention."\n<commentary>\nThe user needs UX improvements, so use the Task tool to launch the ux-design-expert agent to analyze and improve the onboarding flow.\n</commentary>\n</example>
-model: opus
 tools: Read, Write, Glob
 ---
 

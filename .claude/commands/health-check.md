@@ -2,10 +2,6 @@
 description: Parallel health analysis with intelligent scoring and actionable recommendations
 allowed-tools: [Task, Bash, Grep, Read]
 argument-hint: area to check (e.g., "security", "performance", "all")
-complexity: simple
-estimated-time: 1.5 minutes
-category: devops
-model: opus
 ---
 
 # 🏥 Project Health Check: $ARGUMENTS

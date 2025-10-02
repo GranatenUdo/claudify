@@ -1,7 +1,6 @@
 ---
 name: visual-design-expert
 description: Use this agent when you need to create, review, or improve visual designs including UI mockups, user interface layouts, color schemes, typography choices, iconography, visual hierarchies, or any aspect of visual communication and aesthetics. This includes designing beautiful images, crafting user experience interactions, creating wireframes, developing design systems, or providing expert feedback on visual design decisions. <example>Context: The user needs help designing a landing page layout. user: "I need to design a hero section for our new product landing page" assistant: "I'll use the visual-design-expert agent to help create a beautiful and effective hero section design" <commentary>Since the user needs visual design expertise for a landing page component, use the Task tool to launch the visual-design-expert agent.</commentary></example> <example>Context: The user wants to improve the visual appeal of their application. user: "The dashboard looks bland and unprofessional. Can you suggest improvements?" assistant: "Let me engage the visual-design-expert agent to analyze the current design and provide professional recommendations" <commentary>The user is asking for visual design improvements, so use the visual-design-expert agent to provide expert design recommendations.</commentary></example>
-model: opus
 tools: Read, Write, Glob
 ---
 

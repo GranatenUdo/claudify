@@ -2,10 +2,6 @@
 description: Architecture decision research with trade-off analysis
 allowed-tools: [Task, WebSearch, WebFetch, Read, Grep, Glob]
 argument-hint: architecture decision or pattern (e.g., "microservices vs monolith", "event sourcing", "CQRS")
-complexity: moderate
-estimated-time: 4-5 minutes
-category: architecture
-model: opus
 ---
 
 # 🏛️ Architecture Research: $ARGUMENTS

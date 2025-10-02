@@ -2,9 +2,6 @@
 description: Fix backend build and test failures with parallel diagnosis
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
 argument-hint: error message or test failure description
-complexity: simple
-estimated-time: 2.5 minutes
-category: quality
 ---
 
 # 🔧 Fix Backend Build & Tests: $ARGUMENTS

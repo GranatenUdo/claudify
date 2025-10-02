@@ -2,10 +2,6 @@
 description: Parallel security audit with 5 specialized agents checking different attack vectors
 allowed-tools: [Task, Read, Grep, Glob, Bash]
 argument-hint: scope to audit (e.g., "all", "api", "frontend", "infrastructure")
-complexity: moderate
-estimated-time: 1-2 minutes (parallel execution)
-category: security
-model: opus
 ---
 
 # 🔒 Parallel Security Audit: $ARGUMENTS

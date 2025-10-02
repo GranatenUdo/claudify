@@ -1,7 +1,6 @@
 ---
 name: best-practices-researcher
 description: Use this agent when you need to research and discover current best practices, industry standards, or proven methodologies for any technical or business domain. This includes researching coding patterns, architectural decisions, framework usage, security implementations, performance optimizations, or any area where established best practices would improve quality and reliability. <example>Context: The user wants to know the current best practices for implementing authentication in a microservices architecture. user: "What are the best practices for authentication in microservices?" assistant: "I'll use the best-practices-researcher agent to find the most current and widely accepted authentication patterns for microservices architectures." <commentary>Since the user is asking about best practices, use the Task tool to launch the best-practices-researcher agent to conduct thorough research on authentication patterns in microservices.</commentary></example> <example>Context: The user is implementing a caching strategy and wants to follow industry standards. user: "I need to implement caching for our API. What are the best approaches?" assistant: "Let me use the best-practices-researcher agent to research the latest caching strategies and patterns for APIs." <commentary>The user needs guidance on caching best practices, so use the best-practices-researcher agent to research proven caching strategies.</commentary></example>
-model: opus
 tools: Read, Grep, Glob, WebSearch, WebFetch
 ---
 

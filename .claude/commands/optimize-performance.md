@@ -1,9 +1,6 @@
 ---
 description: Fix performance bottlenecks with parallel analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Bash, Grep]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: optimization
 ---
 
 # ⚡ Optimize Performance: $ARGUMENTS

@@ -1,9 +1,6 @@
 ---
 description: Breaking backend update with migration strategy
 allowed-tools: [Task, Read, Edit, MultiEdit, Bash]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔨 Breaking Backend Update: $ARGUMENTS

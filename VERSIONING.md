@@ -46,24 +46,14 @@ Claudify follows [Semantic Versioning](https://semver.org/) (SemVer) to ensure c
    echo "1.1.0" > VERSION
    ```
 
-2. **Update components-manifest.json**
-   ```json
-   {
-     "claudifyVersion": "1.1.0",
-     "version": "1.1.0",
-     "releaseDate": "2025-07-28",
-     ...
-   }
-   ```
-
-3. **Update CHANGELOG.md**
+2. **Update CHANGELOG.md**
    - Move items from [Unreleased] to new version section
    - Add release date
    - Summarize key changes
 
-4. **Commit version changes**
+3. **Commit version changes**
    ```bash
-   git add VERSION components-manifest.json CHANGELOG.md
+   git add VERSION CHANGELOG.md
    git commit -m "chore: Release version 1.1.0"
    ```
 

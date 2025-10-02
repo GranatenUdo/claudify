@@ -2,10 +2,6 @@
 description: Validate release readiness with parallel checks and intelligent risk assessment
 allowed-tools: [Task, Bash, Grep, Read]
 argument-hint: release version (e.g., "v1.2.3" or "next")
-complexity: simple
-estimated-time: 1.5 minutes
-category: devops
-model: opus
 ---
 
 # 🚀 Validate Release: $ARGUMENTS

@@ -1,7 +1,6 @@
 ---
 name: sales-pitch-creator
 description: Use this agent when you need to create compelling sales materials, pitch decks, or persuasive content to sell a software-as-a-service solution. This includes transforming technical documentation and marketing materials into customer-facing sales presentations, executive summaries, ROI analyses, case studies, or any materials designed to convince prospects to purchase or adopt the SaaS solution. Examples: <example>Context: The user needs to create a sales pitch deck for their SaaS platform. user: 'I need a pitch deck for our project management software based on our technical docs' assistant: 'I'll use the sales-pitch-creator agent to craft a compelling pitch deck that highlights the business value of your solution' <commentary>Since the user needs sales materials created from technical documentation, use the Task tool to launch the sales-pitch-creator agent.</commentary></example> <example>Context: The user wants to create an executive summary to sell their SaaS to C-level executives. user: 'Create an executive summary that will convince CEOs to buy our platform' assistant: 'Let me engage the sales-pitch-creator agent to develop a persuasive executive summary targeted at C-level decision makers' <commentary>The user needs persuasive sales content for executives, so use the sales-pitch-creator agent.</commentary></example>
-model: opus
 tools: Read, Grep, Glob, WebSearch
 ---
 

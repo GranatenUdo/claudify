@@ -2,10 +2,6 @@
 description: Parallel performance optimization across all layers - 5 agents find and fix bottlenecks
 allowed-tools: [Task, Read, Grep, Glob, Bash, Edit, MultiEdit]
 argument-hint: area to optimize (e.g., "database", "api", "frontend", "all")
-complexity: moderate
-estimated-time: 2-3 minutes
-category: optimization
-model: opus
 ---
 
 # ⚡ Parallel Performance Optimization: $ARGUMENTS

@@ -1,9 +1,6 @@
 ---
 description: Update backend feature with parallel analysis and compatibility
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔄 Update Backend Feature: $ARGUMENTS

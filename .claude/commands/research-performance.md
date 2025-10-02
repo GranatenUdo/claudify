@@ -2,10 +2,6 @@
 description: Performance research for optimization opportunities and bottlenecks
 allowed-tools: [Task, WebSearch, Grep, Read, Bash]
 argument-hint: performance issue or optimization target (e.g., "database queries", "bundle size", "API latency")
-complexity: moderate
-estimated-time: 3-4 minutes
-category: optimization
-model: opus
 ---
 
 # ⚡ Performance Research: $ARGUMENTS

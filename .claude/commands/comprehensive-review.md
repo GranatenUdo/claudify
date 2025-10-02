@@ -2,10 +2,6 @@
 description: Multi-agent code review for security, performance, and quality issues
 allowed-tools: [Task, Read, Grep, Glob]
 argument-hint: what to review (e.g., "FieldService" or "api/controllers")
-complexity: simple
-estimated-time: 1-2 minutes
-category: quality
-model: opus
 ---
 
 # Comprehensive Review: $ARGUMENTS

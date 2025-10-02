@@ -1,9 +1,6 @@
 ---
 description: Fix frontend bugs with parallel diagnosis and UX validation
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 1-2 minutes (parallel)
-complexity: moderate
-category: quality
 ---
 
 # 🔧 Fix Frontend Bug: $ARGUMENTS

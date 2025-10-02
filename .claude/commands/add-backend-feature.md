@@ -1,9 +1,6 @@
 ---
 description: Create backend API with parallel implementation
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Bash]
-estimated-time: 2-3 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🚀 Backend Feature: $ARGUMENTS

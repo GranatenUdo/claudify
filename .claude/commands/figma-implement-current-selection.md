@@ -1,9 +1,6 @@
 ---
 description: Convert Figma design to Angular component with parallel generation
 allowed-tools: [Task, Read, Write, Bash]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: development
 ---
 
 # 🎨 Figma to Code: $ARGUMENTS

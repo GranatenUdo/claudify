@@ -2,10 +2,6 @@
 description: Review backend code for high-impact issues with C# 13, RESTful, and T-SQL focus
 allowed-tools: [Task, Read, Grep, Glob, TodoWrite]
 argument-hint: controller, service, or directory to review
-agent-dependencies: [Tech Lead, Security Reviewer]
-complexity: simple
-estimated-time: 5-8 minutes
-category: quality
 ---
 
 # 🎯 Review Backend Code: $ARGUMENTS

@@ -1,9 +1,6 @@
 ---
 description: Create Angular 19 frontend with parallel implementation
 allowed-tools: [Task, Bash, Read, Write, Edit, MultiEdit]
-estimated-time: 2-3 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🎨 Frontend Feature: $ARGUMENTS

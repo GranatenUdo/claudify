@@ -2,10 +2,6 @@
 description: Smart changelog update with git analysis and semantic versioning
 allowed-tools: [Task, WebSearch, WebFetch, Read, Edit, Write, Bash]
 argument-hint: change description (e.g., "Added user authentication" or "release:1.2.0")
-estimated-time: 30 seconds
-complexity: simple
-category: documentation
-model: opus
 ---
 
 # 📝 Update Changelog: $ARGUMENTS

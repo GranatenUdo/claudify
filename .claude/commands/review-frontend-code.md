@@ -2,10 +2,6 @@
 description: Review frontend code for high-impact issues and provide actionable improvements
 allowed-tools: [Task, Read, Grep, Glob, TodoWrite]
 argument-hint: component, service, or directory to review
-agent-dependencies: [Frontend Developer, Security Reviewer]
-complexity: simple
-estimated-time: 5-8 minutes
-category: quality
 ---
 
 # 🎯 Review Frontend Code: $ARGUMENTS

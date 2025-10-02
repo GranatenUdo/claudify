@@ -2,10 +2,6 @@
 description: Analyze and optimize existing commands for maximum value delivery
 allowed-tools: [Read, Write, Task, TodoWrite]
 argument-hint: command name to optimize (without .md extension)
-agent-dependencies: [Tech Lead]
-complexity: simple
-estimated-time: 5-8 minutes
-category: meta-automation
 ---
 
 # 🎯 Optimize Command for Value: $ARGUMENTS

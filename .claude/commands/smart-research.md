@@ -2,9 +2,6 @@
 description: Parallel research that finds insights, not just information
 allowed-tools: [Task, WebSearch, WebFetch, Read, Grep, Glob]
 argument-hint: research question or topic (e.g., "should we migrate to .NET 9", "best auth pattern for multi-tenant")
-complexity: moderate
-estimated-time: 3-5 minutes
-category: research
 ---
 
 # 🧠 Smart Research: $ARGUMENTS

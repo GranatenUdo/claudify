@@ -2,10 +2,6 @@
 description: Parallel full-stack feature implementation with specialized agents
 allowed-tools: [Task, Read, Write, Edit, MultiEdit, Bash, Grep, Glob]
 argument-hint: feature name and requirements (e.g., "user notifications with real-time updates")
-complexity: moderate
-estimated-time: 2-3 minutes
-category: development
-model: opus
 ---
 
 # 🚀 Parallel Full-Stack Feature: $ARGUMENTS

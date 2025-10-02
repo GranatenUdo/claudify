@@ -1,7 +1,6 @@
 ---
 name: test-quality-analyzer
 description: Use this agent when you need to evaluate the quality, coverage, and effectiveness of test code including unit tests, integration tests, and UI/E2E tests. This agent analyzes test structure, assertions, mocking strategies, test data management, and identifies gaps or improvements in test suites. <example>\nContext: The user wants to review the quality of recently written test code.\nuser: "I've just written some unit tests for the FieldService class"\nassistant: "I'll use the test-quality-analyzer agent to review your test code"\n<commentary>\nSince the user has written tests and wants them reviewed, use the Task tool to launch the test-quality-analyzer agent.\n</commentary>\n</example>\n<example>\nContext: The user needs to assess integration test quality.\nuser: "Can you check if my repository integration tests are following best practices?"\nassistant: "Let me analyze your integration tests using the test-quality-analyzer agent"\n<commentary>\nThe user is asking for test quality analysis, so use the Task tool to launch the test-quality-analyzer agent.\n</commentary>\n</example>\n<example>\nContext: The user wants E2E test review.\nuser: "I've added new Playwright tests for the field management feature"\nassistant: "I'll review your Playwright tests using the test-quality-analyzer agent to ensure they follow best practices"\n<commentary>\nSince UI tests were written, use the Task tool to launch the test-quality-analyzer agent for review.\n</commentary>\n</example>
-model: opus
 tools: Read, Grep, Glob
 ---
 

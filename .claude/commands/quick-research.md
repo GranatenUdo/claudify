@@ -1,10 +1,6 @@
 ---
 description: Fast parallel research with actionable answers
 allowed-tools: [Task, Grep, Read, WebSearch, Glob]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: research
-model: opus
 ---
 
 # ⚡ Quick Research: $ARGUMENTS

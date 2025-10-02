@@ -2,10 +2,6 @@
 description: Security-focused research for vulnerabilities and best practices
 allowed-tools: [Task, WebSearch, WebFetch, Grep, Read]
 argument-hint: security concern or vulnerability type (e.g., "JWT validation", "SQL injection", "multi-tenant isolation")
-complexity: moderate
-estimated-time: 3-4 minutes
-category: security
-model: opus
 ---
 
 # 🔒 Security Research: $ARGUMENTS

@@ -1,9 +1,6 @@
 ---
 description: Refactor code with parallel analysis and fixes
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep]
-estimated-time: 2 minutes (parallel)
-complexity: simple
-category: quality
 ---
 
 # 🔧 Refactor Code: $ARGUMENTS

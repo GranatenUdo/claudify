@@ -393,9 +393,8 @@ This release establishes Claudify with automatic namespace detection and project
 
 1. Update VERSION file
 2. Update CHANGELOG.md with release notes
-3. Update components-manifest.json with new version
-4. Tag the release in git
-5. Create GitHub release with changelog excerpt
+3. Tag the release in git
+4. Create GitHub release with changelog excerpt
 
 ## Version History
 

@@ -1,7 +1,6 @@
 ---
 name: feature-scope-architect
 description: Use this agent when you need to analyze the scope and complexity of a software feature, refine functional requirements, or extract requirements from existing code. This agent excels at breaking down high-level feature requests into detailed technical specifications, identifying edge cases, dependencies, and potential implementation challenges. Perfect for feature planning, requirement refinement, and scope analysis sessions.\n\nExamples:\n<example>\nContext: The user wants to analyze and refine requirements for a new feature.\nuser: "We need to add a notification system that alerts users when their tasks are overdue"\nassistant: "I'll use the feature-scope-architect agent to analyze this feature request and provide refined functional requirements."\n<commentary>\nSince the user is requesting a feature analysis and requirement refinement, use the Task tool to launch the feature-scope-architect agent.\n</commentary>\n</example>\n<example>\nContext: The user has existing code and wants to extract/document its functional requirements.\nuser: "Here's our authentication module - can you extract and document what it actually does?"\nassistant: "Let me use the feature-scope-architect agent to analyze this code and extract the functional requirements."\n<commentary>\nThe user wants to reverse-engineer requirements from code, so use the feature-scope-architect agent.\n</commentary>\n</example>
-model: opus
 tools: Read, Grep, Glob
 ---
 

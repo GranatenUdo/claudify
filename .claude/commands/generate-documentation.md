@@ -1,9 +1,6 @@
 ---
 description: Generate documentation by analyzing actual code
 allowed-tools: [Task, Read, Write, Grep, Glob]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: documentation
 ---
 
 # 📚 Generate Documentation: $ARGUMENTS

@@ -1,9 +1,6 @@
 ---
 description: Update frontend feature with parallel analysis and compatibility
 allowed-tools: [Task, Bash, Grep, Read, Edit, MultiEdit]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔄 Update Frontend Feature: $ARGUMENTS

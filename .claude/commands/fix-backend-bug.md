@@ -1,9 +1,6 @@
 ---
 description: Fix backend bugs with parallel root cause analysis
 allowed-tools: [Task, Read, Edit, MultiEdit, Grep, Bash]
-estimated-time: 1-2 minutes (parallel)
-complexity: moderate
-category: quality
 ---
 
 # 🔧 Fix Backend Bug: $ARGUMENTS

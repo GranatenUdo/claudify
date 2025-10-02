@@ -1,9 +1,6 @@
 ---
 description: Breaking frontend update with clean rebuild
 allowed-tools: [Task, Read, Edit, MultiEdit, Bash]
-estimated-time: 2 minutes (parallel)
-complexity: moderate
-category: development
 ---
 
 # 🔨 Breaking Frontend Update: $ARGUMENTS

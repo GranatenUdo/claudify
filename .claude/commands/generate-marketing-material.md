@@ -1,9 +1,6 @@
 ---
 description: Generate compelling marketing material from technical features
 allowed-tools: [Task, Read, Write]
-estimated-time: 90 seconds (parallel)
-complexity: simple
-category: marketing
 ---
 
 # 📢 Generate Marketing: $ARGUMENTS
