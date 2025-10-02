@@ -85,16 +85,7 @@ model: opus
   description="Architecture pattern violations",
   prompt="Review '$ARGUMENTS' for ARCHITECTURE VIOLATIONS:
 
-  FIRST: Check if .claude/config/project-knowledge.json exists to understand THIS project's conventions.
-
-  IF project-knowledge.json EXISTS (cached conventions):
-  - Load and respect the project's established patterns
-  - Check for INCONSISTENCIES with project's OWN conventions
-  - Flag deviations from the project's chosen approaches
-  - Ensure new code follows established patterns
-
-  IF project-knowledge.json NOT EXISTS (no cached conventions):
-  - Analyze the codebase to detect EXISTING patterns
+  - Examine existing code to detect patterns and conventions
   - Check for INTERNAL consistency within observed patterns
   - Flag mixing of different approaches without clear reason
   - Base recommendations on what's already predominant in the code
@@ -179,11 +170,7 @@ After parallel analysis completes, consolidate findings:
 
 ## Convention Awareness
 
-This command is aware of the dual-mode convention system:
-- **With cached conventions** (`.claude/config/project-knowledge.json` exists): Reviews align with established project patterns
-- **Without cached conventions**: Reviews based on observed patterns in the codebase
-
-All recommendations respect the project's chosen approaches rather than imposing external standards.
+This command adapts to observed codebase patterns. All recommendations respect the project's chosen approaches rather than imposing external standards.
 
 ## What We SKIP
 - Perfect code style

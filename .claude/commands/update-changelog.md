@@ -106,7 +106,7 @@ After analysis, update CHANGELOG.md:
 
 ## Convention Awareness
 
-Changelog updates consider project conventions via `.claude/config/project-knowledge.json` (if present) or observed patterns.
+Changelog updates follow patterns observed in the existing CHANGELOG.md file.
 
 ---
 

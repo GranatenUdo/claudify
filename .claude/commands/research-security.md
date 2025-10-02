@@ -150,10 +150,6 @@ model: opus
 
 ## Convention Awareness
 
-This command respects project patterns:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Security fixes align with established patterns
-- **Without cached conventions**: Based on observed security patterns in codebase
-
-Security improvements work within your architecture, not against it.
+Security fixes are based on observed patterns in the codebase and work within your architecture, not against it.
 
 Remember: Research that doesn't lead to patches is just FUD.

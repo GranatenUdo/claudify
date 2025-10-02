@@ -156,11 +156,7 @@ model: opus
 
 ## Convention Awareness
 
-Release validation considers project conventions:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Validates against established standards
-- **Without cached conventions**: Based on observed patterns in codebase
-
-Validation criteria adapt to your project's release practices.
+Release validation is based on observed patterns in the codebase. Validation criteria adapt to your project's release practices.
 
 ## 🎯 Why This Works
 - **Parallel validation** - All checks run simultaneously

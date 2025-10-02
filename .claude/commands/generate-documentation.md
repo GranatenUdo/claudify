@@ -84,7 +84,7 @@ category: documentation
 
 ## Convention Awareness
 
-Documentation generation adapts to project patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns.
+Documentation generation adapts to observed codebase patterns.
 
 ## ✅ Complete
 Documentation generated in docs/ directory.

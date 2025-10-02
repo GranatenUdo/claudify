@@ -72,7 +72,7 @@ category: documentation
 
 ## Convention Awareness
 
-Documentation aligns with project patterns via `.claude/config/project-knowledge.json` (if present) or observed conventions.
+Documentation adapts to observed codebase patterns.
 
 ## ✅ Complete
 Documentation generated in docs/ directory.

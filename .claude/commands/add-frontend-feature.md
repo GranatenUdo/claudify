@@ -31,19 +31,9 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Component naming: Use {{naming.classes}}
-  - Method naming: Use {{naming.methods}}
-  - Error handling: Match backend {{patterns.errorHandling}}
-  - State management: Use detected approach
-  - Testing: Use {{testing.framework}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Frontend components: **/src/app/**/*.component.ts
      - Frontend services: **/src/app/**/*.service.ts
   2. Read those files and detect:
@@ -55,13 +45,17 @@ category: development
      - State management pattern
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults:
-  - Angular 19 with signals
-  - OnPush change detection
-  - Modern @if/@for syntax
-  - Try/catch error handling
-  - BaseApiService if available
+  If no code files found, examine project configuration:
+  1. Read package.json to check installed packages:
+     - @angular/core version 18+? Use signals and @if/@for syntax
+     - @angular/core version <18? Use observables and *ngIf/*ngFor
+     - ngrx or akita installed? Use that state management
+  2. Check angular.json for project configuration and defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "No existing code found. What patterns do you prefer?"
+     - "Options: Signals vs Observables, OnPush vs Default, @if vs *ngIf"
+  5. Use user's explicit choice
 
   ## Step 2: Generate Code
 
@@ -96,23 +90,25 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
-
-  ### IF EXISTS (Smart Mode):
-  Use detected testing patterns:
-  - Framework: {{testing.framework}}
-  - Pattern: {{testing.pattern}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
   Examine existing test files:
   1. Use Glob: **/*.spec.ts or **/*.test.ts
   2. Read 1-2 test files and detect:
      - Test framework (Jasmine vs Jest)
      - Test patterns (AAA vs BDD)
      - Mock approach (spies vs jest mocks)
+  3. Apply observed patterns
 
-  ### IF NO FILES FOUND:
-  Use Jasmine/Karma (Angular default).
+  If no test files found, examine project configuration:
+  1. Read package.json to check test dependencies:
+     - jest installed? Use Jest patterns and mocks
+     - jasmine-core installed? Use Jasmine patterns and spies
+     - karma installed? Use Karma configuration
+  2. Check angular.json test configuration
+  3. Check CLAUDE.md for specified test patterns
+  4. If still unclear, ask user:
+     - "No existing tests found. What test framework do you prefer?"
+     - "Options: Jest, Jasmine/Karma"
+  5. Use user's explicit choice
 
   CREATE:
   1. Component tests (test component logic and rendering)

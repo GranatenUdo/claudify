@@ -49,14 +49,19 @@ cd your-project
 
 Choose Smart or Adaptive mode when prompted.
 
-### Step 3: Delete Obsolete Config
+### Step 3: Delete Obsolete Files
 
 ```bash
-# If this file exists from v3.x, delete it:
+# Delete old config files (if exist from v3.x):
 rm .claude/config/projects.json
+rm .claude/config/project-knowledge.json
+rm .claude/config/claudify.json
+
+# Delete analyzer directory (violates Claude Code best practices):
+rm -rf .claudify-sdk/
 ```
 
-This file is no longer used in v4.0.0.
+These files and directories are no longer used in v4.0.0.
 
 ### Step 4: Update Your Workflow
 

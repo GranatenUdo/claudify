@@ -13,21 +13,14 @@ Claudify installs specialized commands and agents that understand your project c
 
 ## How It Works
 
-Claudify offers two convention detection modes:
+Claudify commands detect your project conventions dynamically by examining existing code:
 
-### Smart Mode (Recommended)
-- Analyzes your entire codebase during setup (~60 seconds)
-- Caches conventions to `.claude/config/project-knowledge.json`
-- Commands generate matching code instantly
-- 95-100% accuracy for naming, patterns, and architecture
-- Best for established projects with consistent conventions
+1. When generating code, commands use Glob to find 2-3 similar files
+2. Commands read those files and detect patterns (naming, error handling, validation, etc.)
+3. New code is generated matching the observed patterns
+4. If no files found (empty project), sensible defaults are used
 
-### Adaptive Mode (Lightweight)
-- Skips upfront analysis
-- Commands examine 2-3 similar files on-demand when generating code
-- Always reflects current codebase state
-- 90% accuracy
-- Best for rapidly changing projects
+**Always current** - examines actual code state every time, no caching.
 
 ## Quick Start
 
@@ -39,8 +32,7 @@ git clone https://github.com/GranatenUdo/claudify.git
 cd your-dotnet-angular-project
 ..\claudify\setup.ps1 -TargetRepository "."
 
-# Choose Smart or Adaptive mode
-# Setup completes in 1-2 minutes
+# Setup completes in seconds
 
 # Navigate to the project you want to work on
 cd src/YourProject.Web
@@ -98,7 +90,7 @@ Each Claude session has independent context.
 
 - **40+ Specialized Commands**: Backend, frontend, testing, analysis, deployment
 - **30+ Expert Agents**: Security, architecture, code review, UX, technical debt
-- **Convention Detection**: Smart (pre-analyzed) or Adaptive (on-demand)
+- **Convention Detection**: Examines your code dynamically (always current, no caching)
 - **Context-Aware**: Commands work in your current directory automatically
 - **Zero Configuration**: No project setup or path configuration needed
 
@@ -136,7 +128,6 @@ Each Claude session has independent context.
 - **PowerShell**: Version 7+ (cross-platform)
 - **.NET**: Version 8 or 9
 - **Angular**: Version 17+
-- **Node.js**: Version 18+ (for Smart Mode analyzer only)
 - **Claude Code**: Latest version
 
 ## Installation
@@ -147,41 +138,29 @@ After setup, Claudify creates:
 your-project/
 ├── .claude/
 │   ├── commands/          # 40+ specialized commands
-│   ├── agents/            # 30+ expert agents
-│   └── config/
-│       ├── project-knowledge.json # Convention cache (Smart Mode)
-│       └── claudify.json          # Mode configuration
+│   └── agents/            # 30+ expert agents
 ```
-
-## Refreshing Analysis
-
-If your codebase conventions change:
-
-```bash
-.\setup.ps1 -TargetRepository "." -RefreshAnalysis
-```
-
-Updates convention analysis without reinstalling.
 
 ## How Convention Detection Works
 
-### Smart Mode (Pre-Analysis)
-1. Setup runs TypeScript analyzer on entire codebase
-2. Detects 18+ patterns: naming, constructors, properties, collections, error handling, validation, testing
-3. Saves to `.claude/config/project-knowledge.json`
-4. Commands read cache and generate matching code instantly
+When you use a command that generates code:
 
-### Adaptive Mode (On-Demand)
-1. When generating code, commands examine 2-3 similar existing files
-2. Detect patterns: constructors, properties, collections, naming, error handling
-3. Generate new code matching observed patterns
-4. No cache needed, always current
+1. **Examine existing code**: Glob to find 2-3 similar files, read and detect patterns
+2. **Discover from configuration**: If no code exists, check package.json, .csproj, angular.json, CLAUDE.md
+3. **Ask user**: If still unclear, prompt for explicit preferences
+4. **Apply patterns**: Generate code matching discovered conventions
 
-### Fallback Strategy
-Commands automatically fall back to Adaptive Mode if:
-- Cache doesn't exist (Adaptive Mode was chosen)
-- Cache is missing or corrupted
-- Node.js not available during setup
+**Detection categories**:
+- Naming conventions (classes, methods, properties, fields)
+- Constructor patterns (parameterless vs parameterized)
+- Property patterns (public set vs init-only vs readonly)
+- Collection types (List<T> vs IReadOnlyList<T>)
+- Error handling (exceptions vs Result<T>)
+- Validation (constructor vs FluentValidation vs DataAnnotations)
+- Testing (framework, mocking library, patterns)
+
+**Always current** - examines actual code/config state every time, no caching.
+**Unopinionated** - discovers patterns, never prescribes defaults.
 
 ## Supported Project Types
 
@@ -218,11 +197,12 @@ your-solution/
 **Current**: 4.0.0
 
 **What's New in 4.0.0** (Breaking):
-- Commands are now pure and path-agnostic
-- Work in current directory context (no hardcoded paths)
-- Simplified setup (just copies files, no project detection)
-- Commands use bash commands directly (`npm run build` not `cd X && npm run build`)
-- Aligns with official Claude Code best practices
+- Commands are pure and path-agnostic (no hardcoded paths)
+- Work in current directory context
+- Simplified setup - just copies files (109 lines, down from 1089)
+- Dynamic convention detection (discovers from code/config, asks user, no caching)
+- No prescriptive defaults - commands discover patterns or ask
+- Aligns with official Claude Code best practices ("intentionally low-level and unopinionated")
 
 See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 
@@ -239,11 +219,7 @@ See [CHANGELOG.md](CHANGELOG.md) for complete version history.
    ..\claudify\setup.ps1 -TargetRepository "."
    ```
 
-3. **Choose Mode**:
-   - Smart Mode (recommended): Analyzes project once, instant generation
-   - Adaptive Mode: On-demand detection, always current
-
-4. **Navigate & Launch**:
+3. **Navigate & Launch**:
    ```bash
    cd src/YourProject.Web
    claude
@@ -259,19 +235,18 @@ Commands work in your current directory automatically.
 ## Troubleshooting
 
 **Q: Commands generate wrong patterns**
-A: Run `.\setup.ps1 -RefreshAnalysis` to update convention cache.
+A: Commands detect patterns by examining existing code and configuration. Ensure you have either:
+- Similar existing code files for commands to examine, OR
+- Configuration files (package.json, .csproj) with installed dependencies, OR
+- Specify preferences in CLAUDE.md
 
-**Q: Node.js not found during setup**
-A: Choose Adaptive Mode during setup, or install Node.js 18+ for Smart Mode.
-
-**Q: Analyzer fails**
-A: Commands automatically fall back to Adaptive Mode. Check: `node --version`
-
-**Q: Want to switch from Adaptive to Smart Mode**
-A: Run `.\setup.ps1 -RefreshAnalysis` to generate convention cache.
+If patterns are unclear, commands will ask you to choose explicitly.
 
 **Q: How do I work on multiple projects?**
 A: Use `cd` to switch projects, or use git worktrees for parallel sessions.
+
+**Q: Commands don't find my files**
+A: Ensure you navigate to the correct project directory before running `claude`. Check your current directory with `pwd`.
 
 ## Contributing
 

@@ -30,20 +30,9 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Constructors: Follow detected pattern {{patterns.entityConstructors}}
-  - Properties: Use detected style {{naming.properties}}
-  - Collections: Use detected types {{patterns.collectionProperties}}
-  - Date fields: Use detected naming {{naming.dateFields}}
-  - Error handling: Use detected approach {{patterns.errorHandling}}
-  - Validation: Use detected pattern {{patterns.validation}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Backend entities: **/*Domain*/Models/Entities/*.cs or **/Models/Entities/*.cs
      - Backend services: **/*Service.cs
   2. Read those files and detect:
@@ -55,13 +44,18 @@ category: development
      - Validation style (constructor vs FluentValidation)
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults:
-  - Public parameterless constructors
-  - Public { get; set; } properties
-  - List<T> collections
-  - CreatedAt/UpdatedAt date fields
-  - Exception-based error handling
+  If no code files found, examine project configuration:
+  1. Read .csproj files to check NuGet packages:
+     - FluentValidation installed? Use FluentValidation pattern
+     - LanguageExt.Core installed? Use Result<T> pattern
+     - Otherwise: Exception-based error handling
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "No existing code found. What patterns do you prefer?"
+     - "Constructor style? [Parameterless/Parameterized/Factory]"
+     - "Error handling? [Exceptions/Result<T>]"
+     - "Validation? [Constructor/FluentValidation/DataAnnotations]"
+  4. Use user's explicit choices
 
   ## Step 2: Generate Code
 
@@ -84,15 +78,6 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
-
-  ### IF EXISTS (Smart Mode):
-  Use detected testing patterns:
-  - Framework: {{testing.framework}}
-  - Pattern: {{testing.pattern}}
-  - Mocking: {{testing.mockingLibrary}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
   Examine existing test files:
   1. Use Glob: **/*Tests/*.cs or **/*Test/*.cs
   2. Read 1-2 test files and detect:
@@ -100,9 +85,20 @@ category: development
      - Assertion style (xUnit Assert vs FluentAssertions)
      - Mocking library (Moq vs NSubstitute)
      - Test naming pattern
+  3. Apply observed patterns
 
-  ### IF NO FILES FOUND:
-  Use xUnit with AAA pattern and Moq (common defaults).
+  If no test files found, examine project configuration:
+  1. Read test .csproj files to check NuGet packages:
+     - xunit.core installed? Use xUnit
+     - NUnit installed? Use NUnit
+     - MSTest installed? Use MSTest
+     - FluentAssertions installed? Use FluentAssertions
+     - Moq installed? Use Moq
+     - NSubstitute installed? Use NSubstitute
+  2. If no test packages installed, ask user:
+     - "No test framework detected. Which do you want to use?"
+     - "[1] xUnit with Moq [2] NUnit [3] MSTest [4] Other"
+  3. Use user's choice
 
   CREATE:
   1. Unit tests (services, domain logic)

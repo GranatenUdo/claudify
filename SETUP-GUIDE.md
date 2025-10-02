@@ -42,34 +42,11 @@ cd /path/to/your/project
 pwsh ../claudify/setup.ps1 -TargetRepository "."
 ```
 
-### Step 3: Choose Convention Mode
-
-When prompted, select your convention detection mode:
+### Step 3: Setup Completes
 
 ```
-Choose detection mode:
-  [1] SMART MODE (Recommended)
-      • Analyzes your project once (~60 seconds)
-      • Commands generate matching code instantly
-      • 95-100% accuracy, best for teams
+✓ Claudify installation complete!
 
-  [2] ADAPTIVE MODE (Lightweight)
-      • Skips analysis, commands examine code on-demand
-      • 90% accuracy, always reflects current code
-      • Best for rapidly changing codebases
-
-Select mode [1/2] (default: 1):
-```
-
-**Smart Mode**: Recommended for established projects with consistent conventions
-**Adaptive Mode**: Best for rapidly evolving codebases or when Node.js unavailable
-
-### Step 4: Setup Completes
-
-```
-✓ Claudify components installed!
-
-🎯 Mode: smart
 📁 Location: .claude
 
 Next steps:
@@ -80,7 +57,7 @@ Next steps:
   3. Try a command:
      /add-frontend-feature "My Feature"
 
-Commands will automatically work in your current directory context.
+Commands automatically detect your conventions by examining existing code.
 ```
 
 ## What Gets Installed
@@ -89,10 +66,7 @@ Commands will automatically work in your current directory context.
 your-project/
 ├── .claude/
 │   ├── commands/          # 40+ specialized commands
-│   ├── agents/            # 30+ expert agents
-│   └── config/
-│       ├── project-knowledge.json # Convention cache (Smart Mode only)
-│       └── claudify.json          # Mode configuration
+│   └── agents/            # 30+ expert agents
 ```
 
 ## Using Claudify Commands
@@ -145,56 +119,12 @@ claude
 > /add-frontend-feature "Home Page"
 ```
 
-## Refreshing Convention Analysis
-
-If your codebase conventions change (e.g., you refactor from exceptions to Result<T>):
-
-```bash
-.\setup.ps1 -TargetRepository "." -RefreshAnalysis
-```
-
-This re-runs the analyzer without reinstalling commands/agents.
-
-## Switching Between Modes
-
-**Adaptive → Smart**:
-```bash
-.\setup.ps1 -TargetRepository "." -RefreshAnalysis
-```
-
-**Smart → Adaptive**:
-```bash
-rm .claude/config/project-knowledge.json
-```
-
-Commands automatically fall back to Adaptive Mode when cache is missing.
-
 ## Troubleshooting
-
-### Node.js Not Found
-
-**During setup**:
-- Choose Adaptive Mode (option 2)
-- Or install Node.js 18+ and re-run setup
-
-**After setup**:
-- Commands work fine in Adaptive Mode
-- To use Smart Mode: Install Node.js, then run `-RefreshAnalysis`
-
-### Analyzer Fails
-
-Commands automatically fall back to Adaptive Mode. Check:
-```bash
-node --version  # Should be 18+
-```
 
 ### Commands Generate Wrong Patterns
 
-**Cause**: Stale convention cache
-**Solution**:
-```bash
-.\setup.ps1 -TargetRepository "." -RefreshAnalysis
-```
+**Cause**: No similar files to examine, or patterns unclear
+**Solution**: Ensure you have existing code files for commands to examine. Commands detect patterns from actual code.
 
 ### Commands Don't Work
 

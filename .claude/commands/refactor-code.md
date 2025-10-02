@@ -31,23 +31,14 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and maintain cached conventions:
-  - Constructors: Keep {{patterns.entityConstructors}}
-  - Properties: Keep {{naming.properties}}
-  - Collections: Keep {{patterns.collectionProperties}}
-  - Error handling: Keep {{patterns.errorHandling}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the files being refactored:
   1. Use Read to examine target files
   2. Detect existing patterns and maintain them
   3. Don't introduce new patterns during refactoring
 
-  ### IF NO PATTERNS DETECTED:
-  Keep existing code style exactly
+  If no patterns detected:
+  - Keep existing code style exactly
 
   FIX:
   1. Extract methods from long functions
@@ -66,19 +57,14 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and maintain cached conventions when extracting
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine similar files to detect patterns:
   1. Use Glob to find related files
   2. Read files to understand patterns
   3. Extract patterns consistent with existing code
 
-  ### IF NO PATTERNS DETECTED:
-  Create simple, reusable abstractions
+  If no patterns detected:
+  - Create simple, reusable abstractions
 
   IDENTIFY:
   1. Duplicate mapping logic

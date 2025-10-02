@@ -30,19 +30,8 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and maintain cached conventions:
-  - Constructors: Keep {{patterns.entityConstructors}}
-  - Properties: Keep {{naming.properties}}
-  - Collections: Keep {{patterns.collectionProperties}}
-  - Date fields: Keep {{naming.dateFields}}
-  - Error handling: Keep {{patterns.errorHandling}}
-  - Validation: Keep {{patterns.validation}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the files being updated:
   1. Use Read to examine the target files
   2. Detect existing patterns:
      - Constructor style in current code
@@ -52,8 +41,8 @@ category: development
      - Validation patterns
   3. Maintain consistency with detected patterns
 
-  ### IF NO PATTERNS DETECTED:
-  Preserve existing code style exactly as found
+  If no patterns detected:
+  - Preserve existing code style exactly as found
 
   IMPLEMENT:
   1. Core functionality updates requested

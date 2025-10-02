@@ -66,21 +66,17 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Constructor pattern: {{patterns.entityConstructors}}
-  - Properties: {{naming.properties}}
-  - Collections: {{patterns.collectionProperties}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the broken files:
   1. Use Read to check the compilation error files
   2. Maintain existing code style and patterns
 
-  ### IF NO PATTERNS DETECTED:
-  Use minimal safe fixes
+  If no patterns detected, examine project configuration:
+  1. Read .csproj files to check dependencies
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "What coding patterns should I follow for this fix?"
+  4. Use user's explicit choice or minimal safe fixes
 
   COMMON FIXES:
   1. Nullable: Add ? or ! operators, null checks
@@ -100,22 +96,25 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Use detected testing patterns:
-  - Framework: {{testing.framework}}
-  - Pattern: {{testing.pattern}}
-  - Mocking: {{testing.mockingLibrary}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine existing test files:
   1. Use Glob: **/*Tests/*.cs
   2. Read a working test to detect patterns
   3. Apply same patterns to fix
 
-  ### IF NO PATTERNS DETECTED:
-  Use xUnit with Moq defaults
+  If no patterns detected, examine project configuration:
+  1. Read test .csproj files to check test frameworks:
+     - xunit installed? Use xUnit patterns
+     - nunit installed? Use NUnit patterns
+     - MSTest.TestFramework? Use MSTest patterns
+     - Moq installed? Use Moq for mocking
+     - NSubstitute installed? Use NSubstitute
+     - FluentAssertions installed? Use for assertions
+  2. Check CLAUDE.md for specified test patterns
+  3. If still unclear, ask user:
+     - "What test framework and mocking library?"
+     - "Options: xUnit+Moq, NUnit+NSubstitute, etc."
+  4. Use user's explicit choice
 
   COMMON FIXES:
   1. Mocks: Setup all required mocks with returns

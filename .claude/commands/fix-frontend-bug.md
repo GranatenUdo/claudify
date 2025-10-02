@@ -69,16 +69,8 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Error handling: Match {{patterns.errorHandling}}
-  - Component naming: Use {{naming.classes}}
-  - Testing: Use {{testing.framework}} with {{testing.pattern}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the file being fixed:
   1. Use Read to examine the buggy file
   2. Detect existing patterns:
      - Signal vs observable usage
@@ -87,8 +79,16 @@ category: quality
      - Change detection strategy
   3. Maintain consistency with detected patterns
 
-  ### IF NO PATTERNS DETECTED:
-  Use simple, safe defaults (try/catch, OnPush)
+  If no patterns detected, examine project configuration:
+  1. Read package.json to check Angular version:
+     - @angular/core version 18+? Use signals and @if/@for
+     - @angular/core version <18? Use observables and *ngIf
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "What patterns does this project use?"
+     - "Options: Signals vs Observables, OnPush vs Default"
+  5. Use user's explicit choice
 
   IMPLEMENT:
   1. Root cause fix following project conventions

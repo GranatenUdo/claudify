@@ -71,7 +71,7 @@ category: optimization
 
 ## Convention Awareness
 
-Optimizations respect project patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns (if not).
+Optimizations respect patterns observed in the codebase.
 
 ## ✅ Complete
 Performance optimization complete. Review the metrics report to verify improvements.

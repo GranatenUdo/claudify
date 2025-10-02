@@ -39,8 +39,6 @@ CHECK SPECIFICALLY:
 ✓ Template syntax consistency (check project's approach)
 ✓ Type safety (minimize 'any' types)
 
-Read .claude/config/project-knowledge.json if it exists to check for pattern consistency.
-
 FOR EACH ISSUE:
 - Problem: [Specific description]
 - Impact: [What happens if not fixed]
@@ -90,11 +88,7 @@ Skip theoretical risks.", subagent_type="security-vulnerability-scanner")
 
 ## Convention Awareness
 
-This command respects the dual-mode convention system:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Reviews against established project patterns
-- **Without cached conventions**: Reviews based on observed patterns in the codebase
-
-All recommendations align with project conventions rather than imposing external standards.
+This command reviews based on observed patterns in the codebase. All recommendations align with project conventions rather than imposing external standards.
 
 ## Value Principles
 1. **Impact Focus**: Find what could actually break

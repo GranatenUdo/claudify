@@ -20,24 +20,23 @@ This release aligns Claudify with official Claude Code best practices. Commands 
 - **Multi-Project Support**: Use `cd` to switch projects or git worktrees for parallel work
 - **Official Alignment**: Follows Anthropic's "intentionally low-level and unopinionated" philosophy
 
-#### Convention Detection System
-- **Smart Mode**: Pre-analyzes entire codebase during setup (~60 seconds), caches conventions, 95-100% accuracy
-- **Adaptive Mode**: On-demand examination of 2-3 similar files when generating code, 90% accuracy, always current
-- **Automatic Fallback**: Commands fall back to Adaptive Mode if cache missing
-- **Refresh Analysis**: `.\setup.ps1 -RefreshAnalysis` updates cached conventions
+#### Dynamic Convention Detection
+- **No Caching**: Commands examine code at runtime, always current
+- **Discovery Over Prescription**: Examines package.json, .csproj, angular.json, CLAUDE.md before suggesting patterns
+- **User Preferences**: Asks user for explicit choice when patterns unclear
 - **18+ Pattern Categories**: Naming, constructors, properties, collections, error handling, validation, testing
+- **Always Current**: No stale cache issues, examines actual code state
 
 #### Simplified Setup
-- **Pure File Copy**: Setup.ps1 only copies commands and agents (no project detection)
-- **76% Reduction**: Setup simplified from 1089 lines to 255 lines
-- **No Configuration**: No project detection, no template replacement, no "primary" selection
-- **Faster**: Setup completes in seconds
+- **Pure File Copy**: Setup.ps1 only copies commands and agents
+- **90% Reduction**: Setup simplified from 1089 lines to 109 lines
+- **No Configuration**: No project detection, no analyzers, no mode selection
+- **Instant**: Setup completes in seconds
 
 ### Added
-- **Convention Cache**: `.claude/config/project-knowledge.json` stores detected patterns (Smart Mode)
-- **Mode Configuration**: `.claude/config/claudify.json` tracks selected mode
-- **Refresh Command**: `.\setup.ps1 -RefreshAnalysis` to update conventions
-- **TypeScript Analyzer**: 1,612 LOC analyzer (`.claudify-sdk/`) for Smart Mode
+- **Dynamic Pattern Detection**: Commands examine code at runtime (no caching)
+- **Discovery Pattern**: Commands check package.json, .csproj, angular.json, CLAUDE.md before suggesting patterns
+- **User Preference Prompts**: Commands ask for explicit choices when patterns unclear
 - **Git Worktrees Guide**: Documentation for multi-project development
 - **Migration Guide**: `MIGRATION-GUIDE-v4.md` for upgrading from v3.x
 - **dotnet Build Warning**: Commands warn against `--no-build` flag
@@ -52,9 +51,14 @@ This release aligns Claudify with official Claude Code best practices. Commands 
 ### Removed
 - **Template System**: All `{{WebProject}}`, `{{ApiProject}}`, `{{ArchitectureTestProject}}` variables removed
 - **Project Detection**: No scanning, no "primary" selection, no configuration
-- **`.claude/config/projects.json`**: No longer generated or used
+- **All Configuration Files**: `.claude/config/projects.json`, `.claude/config/project-knowledge.json`, `.claude/config/claudify.json`
 - **`.claude/templates/` folder**: Entire directory removed (was unused)
+- **`.claudify-sdk/` folder**: TypeScript analyzer removed (violates "unopinionated" principle - NOTE: Delete this directory manually)
+- **Caching System**: No convention caching (violates Claude Code best practices)
+- **Prescriptive Defaults**: No "use xUnit" defaults - commands discover or ask instead
 - **Setup Functions**: Deleted `Get-ProjectNamesInteractive`, `Apply-ProjectTemplates`, `Resolve-DuplicateNames`
+- **RefreshAnalysis Flag**: No longer exists (no cache to refresh)
+- **Mode Selection**: No Smart/Adaptive choice (only dynamic detection)
 - **Business Impact Agent**: Removed from `/smart-research` (fabricated metrics)
 - **Hooks System**: Removed (v3.x legacy)
 

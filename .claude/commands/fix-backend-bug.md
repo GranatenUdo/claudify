@@ -66,17 +66,8 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Error handling: Use {{patterns.errorHandling}}
-  - Validation: Use {{patterns.validation}}
-  - Constructor pattern: Match {{patterns.entityConstructors}}
-  - Testing: Use {{testing.framework}} with {{testing.pattern}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the file being fixed:
   1. Use Read to examine the buggy file
   2. Detect existing patterns:
      - Error handling approach in this file
@@ -84,8 +75,16 @@ category: quality
      - Code style and conventions
   3. Maintain consistency with detected patterns
 
-  ### IF NO PATTERNS DETECTED:
-  Use simple, safe defaults (exceptions, guard clauses)
+  If no patterns detected, examine project configuration:
+  1. Read .csproj files to check installed packages:
+     - FluentValidation installed? Use FluentValidation patterns
+     - LanguageExt.Core installed? Use Result<T> for error handling
+     - Serilog installed? Use structured logging
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "What error handling pattern does this project use?"
+     - "Options: Exceptions, Result<T>, OneOf, custom error types"
+  4. Use user's explicit choice
 
   IMPLEMENT:
   1. Root cause fix following project conventions

@@ -252,11 +252,7 @@ grep -r "password\|api[_-]key\|token" --include="*.cs" --include="*.json"
 
 ## Convention Awareness
 
-This command respects project patterns:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Security fixes follow established patterns
-- **Without cached conventions**: Based on observed security patterns
-
-All security remediation aligns with your existing architecture.
+Security fixes are based on observed patterns in the codebase. All security remediation aligns with your existing architecture.
 
 ## Parallel Execution Advantages
 - **Comprehensive**: Multiple specialized agents check different vectors

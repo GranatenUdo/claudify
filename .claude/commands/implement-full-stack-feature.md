@@ -53,20 +53,9 @@ model: opus
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Constructors: Follow {{patterns.entityConstructors}}
-  - Properties: Use {{naming.properties}}
-  - Collections: Use {{patterns.collectionProperties}}
-  - Date fields: Use {{naming.dateFields}}
-  - Error handling: Use {{patterns.errorHandling}}
-  - Validation: Use {{patterns.validation}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Entities: **/*Domain*/Models/Entities/*.cs or **/Models/Entities/*.cs
      - Services: **/*Service.cs
   2. Read those files and detect:
@@ -78,13 +67,17 @@ model: opus
      - Validation style
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults:
-  - Public parameterless constructors
-  - Public { get; set; } properties
-  - List<T> collections
-  - CreatedAt/UpdatedAt date fields
-  - Exception-based error handling
+  If no code files found, examine project configuration:
+  1. Read .csproj files to check installed packages:
+     - FluentValidation installed? Use for validation
+     - LanguageExt.Core installed? Use Result<T> patterns
+     - AutoMapper installed? Use for mapping
+     - MediatR installed? Use for CQRS pattern
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "No existing backend code found. What patterns to use?"
+     - "Options: Exceptions vs Result<T>, FluentValidation vs DataAnnotations"
+  4. Use user's explicit choice
 
   CREATE:
   1. Entity class (following detected patterns)
@@ -107,18 +100,9 @@ model: opus
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Component naming: Use {{naming.classes}}
-  - Method naming: Use {{naming.methods}}
-  - Error handling: Match backend {{patterns.errorHandling}}
-  - State management: Use detected approach
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Components: **/src/app/**/*.component.ts
      - Services: **/src/app/**/*.service.ts
   2. Read those files and detect:
@@ -130,12 +114,17 @@ model: opus
      - State management pattern
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults:
-  - Angular 19 with signals
-  - OnPush change detection
-  - Modern @if/@for syntax
-  - Try/catch error handling
+  If no code files found, examine project configuration:
+  1. Read package.json to check Angular version:
+     - @angular/core version 18+? Use signals and @if/@for
+     - @angular/core version <18? Use observables and *ngIf
+     - ngrx or akita installed? Use that state management
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "No existing frontend code found. What patterns to use?"
+     - "Options: Signals vs Observables, OnPush vs Default"
+  5. Use user's explicit choice
 
   CREATE:
   1. Service(s) with appropriate state management
@@ -157,16 +146,8 @@ model: opus
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Use detected testing patterns:
-  - Framework: {{testing.framework}}
-  - Pattern: {{testing.pattern}}
-  - Mocking: {{testing.mockingLibrary}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine existing test files:
   1. Use Glob to find test files:
      - Backend: **/*Tests/*.cs or **/*Test/*.cs
      - Frontend: **/*.spec.ts or **/*.test.ts
@@ -175,8 +156,20 @@ model: opus
      - Mocking approach
      - Test naming patterns
 
-  ### IF NO FILES FOUND:
-  Use defaults: xUnit for .NET, Jasmine/Karma for Angular
+  If no test files found, examine project configuration:
+  1. Backend: Read test .csproj files for frameworks:
+     - xunit? Use xUnit patterns
+     - nunit? Use NUnit patterns
+     - Moq? Use Moq for mocking
+     - NSubstitute? Use NSubstitute
+  2. Frontend: Read package.json for test frameworks:
+     - jest? Use Jest patterns
+     - jasmine-core? Use Jasmine patterns
+  3. Check CLAUDE.md for specified test patterns
+  4. If still unclear, ask user:
+     - "No existing tests found. What test frameworks to use?"
+     - "Options: xUnit+Moq, NUnit+NSubstitute, Jest, Jasmine"
+  5. Use user's explicit choice
 
   BACKEND: Service unit test, integration test, auth test
   FRONTEND: Service test with mocked API, component test

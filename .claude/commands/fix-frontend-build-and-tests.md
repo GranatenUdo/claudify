@@ -65,21 +65,19 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Component naming: {{naming.classes}}
-  - Method naming: {{naming.methods}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine the broken files:
   1. Use Read to check the error files
   2. Detect template syntax used (*ngIf vs @if)
   3. Maintain existing patterns
 
-  ### IF NO PATTERNS DETECTED:
-  Use minimal safe fixes
+  If no patterns detected, examine project configuration:
+  1. Read package.json to check Angular version
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "What Angular patterns should I follow?"
+  5. Use user's explicit choice or minimal safe fixes
 
   COMMON FIXES:
   1. Type errors: Add types, fix interfaces, use assertions
@@ -99,21 +97,23 @@ category: quality
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Use detected testing patterns:
-  - Framework: {{testing.framework}}
-  - Pattern: {{testing.pattern}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Examine existing test files:
   1. Use Glob: **/*.spec.ts
   2. Read a working test to detect patterns
   3. Apply same patterns to fix
 
-  ### IF NO PATTERNS DETECTED:
-  Use Jasmine/Karma defaults
+  If no patterns detected, examine project configuration:
+  1. Read package.json to check test frameworks:
+     - jest installed? Use Jest patterns
+     - jasmine-core installed? Use Jasmine patterns
+     - karma installed? Use Karma configuration
+  2. Check angular.json test configuration
+  3. Check CLAUDE.md for specified test patterns
+  4. If still unclear, ask user:
+     - "What test framework does this project use?"
+     - "Options: Jest, Jasmine/Karma"
+  5. Use user's explicit choice
 
   COMMON FIXES:
   1. Providers: Add all required mocks to TestBed

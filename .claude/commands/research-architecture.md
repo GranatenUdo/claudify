@@ -19,8 +19,6 @@ model: opus
   description="Research architecture pattern",
   prompt="Research architecture pattern '$ARGUMENTS':
 
-  FIRST: Check .claude/config/project-knowledge.json for existing architecture patterns.
-
   INVESTIGATE:
   1. When this pattern actually makes sense FOR US
   2. Real companies using it successfully (and failures)
@@ -32,7 +30,7 @@ model: opus
   - Post-mortems from similar-sized companies
 
   Critical questions:
-  - Does this align with our existing patterns?
+  - Does this align with patterns observed in our codebase?
   - At what scale does this pay off?
   - What problems does it REALLY solve for us?
   - What new problems does it create?
@@ -214,11 +212,7 @@ We'll know we made the right choice if:
 
 ## Convention Awareness
 
-This command considers project context:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Evaluates compatibility with existing architecture
-- **Without cached conventions**: Analyzes based on observed patterns in codebase
-
-Recommendations respect your architectural choices rather than pushing trends.
+This command analyzes your existing codebase patterns to evaluate architecture decisions. Recommendations respect your architectural choices rather than pushing trends.
 
 ## Why This Architecture Research Works
 

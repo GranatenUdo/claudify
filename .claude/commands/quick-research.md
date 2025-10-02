@@ -17,8 +17,6 @@ model: opus
   description="Codebase research",
   prompt="Research '$ARGUMENTS' in codebase:
 
-  FIRST: Check .claude/config/project-knowledge.json for project conventions if it exists.
-
   FIND:
   1. Implementations and patterns (respect existing)
   2. Current usage examples
@@ -51,7 +49,7 @@ model: opus
 
   DELIVER:
   1. Direct answer (1 paragraph)
-  2. Our codebase approach (align with conventions if cached)
+  2. Our codebase approach (based on observed patterns)
   3. Common practices (contextual, not prescriptive)
   4. Specific recommendation for THIS project
   5. Code example matching project patterns
@@ -62,7 +60,7 @@ model: opus
 )
 
 ## Convention Awareness
-Adapts to your project's patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns (if not).
+Adapts to your project's patterns observed in the codebase.
 
 ## ✅ Answer Ready
 Research complete with actionable recommendations.

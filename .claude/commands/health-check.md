@@ -155,11 +155,7 @@ model: opus
 
 ## Convention Awareness
 
-Health checks consider project patterns:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Evaluates health against established patterns
-- **Without cached conventions**: Based on observed patterns in codebase
-
-Health scoring adapts to your project's architecture and conventions.
+Health checks adapt to observed codebase patterns. Health scoring respects your project's architecture and conventions.
 
 ## 🎯 Why This Works
 - **Parallel analysis** - All health checks simultaneously

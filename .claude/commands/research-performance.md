@@ -161,11 +161,7 @@ services.AddApplicationInsightsTelemetry();
 
 ## Convention Awareness
 
-This command adapts to project patterns:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Optimizations align with established patterns
-- **Without cached conventions**: Based on observed codebase patterns
-
-Performance improvements respect your architectural choices.
+Performance improvements are based on observed codebase patterns and respect your architectural choices.
 
 ## Why This Works
 

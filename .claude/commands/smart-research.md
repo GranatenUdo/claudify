@@ -18,8 +18,6 @@ category: research
   description="Technical deep dive",
   prompt="Research technical aspects of '$ARGUMENTS':
 
-  FIRST: Check if .claude/config/project-knowledge.json exists to understand project conventions.
-
   FIND:
   1. How is this actually implemented in production systems?
   2. What are the real performance/security implications?
@@ -33,11 +31,10 @@ category: research
   SYNTHESIZE findings into:
   - What works in THIS project context (with evidence)
   - What fails (with examples)
-  - What aligns with our conventions (or requires change)
+  - What aligns with our existing patterns
 
   Base recommendations on:
-  - Project's existing patterns (if cached)
-  - Observed codebase patterns (if not cached)
+  - Observed codebase patterns
   - Practical needs, not theoretical ideals
 
   Skip prescriptive 'best practices'. Find what fits THIS project.",
@@ -141,11 +138,7 @@ After parallel research completes, synthesize into:
 
 ## Convention Awareness
 
-This command adapts to your project:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Recommendations align with established patterns
-- **Without cached conventions**: Recommendations based on observed codebase patterns
-
-Research findings are contextual to YOUR project, not generic "best practices".
+This command adapts to your project by examining existing code patterns. Research findings are contextual to YOUR project, not generic "best practices".
 
 ## What We DON'T Do
 

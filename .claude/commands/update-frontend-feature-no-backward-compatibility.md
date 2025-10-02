@@ -30,25 +30,25 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Component naming: Use {{naming.classes}}
-  - Method naming: Use {{naming.methods}}
-  - Error handling: Match backend {{patterns.errorHandling}}
-  - State management: Use detected approach
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Components: **/src/app/**/*.component.ts
      - Services: **/src/app/**/*.service.ts
   2. Read those files and detect patterns
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults
+  If no code files found, examine project configuration:
+  1. Read package.json to check Angular version:
+     - @angular/core version 18+? Use signals and @if/@for
+     - @angular/core version <18? Use observables and *ngIf
+     - State management libraries installed?
+  2. Check angular.json for project defaults
+  3. Check CLAUDE.md for specified patterns
+  4. If still unclear, ask user:
+     - "No existing code found. What patterns to use?"
+     - "Options: Signals vs Observables, template syntax"
+  5. Use user's explicit choice
 
   REMOVE:
   1. Legacy Observable code

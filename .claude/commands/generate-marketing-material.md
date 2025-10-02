@@ -57,7 +57,7 @@ category: marketing
 
 ## Convention Awareness
 
-Marketing materials reference project capabilities via `.claude/config/project-knowledge.json` (if present) or observed features.
+Marketing materials are based on observed features and capabilities in the codebase.
 
 ## ✅ Complete
 Marketing materials ready in marketing/ directory.

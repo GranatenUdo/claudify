@@ -100,21 +100,13 @@ Choose ⚡ parallel commands for faster results:
 
 ## 🎯 Convention-Aware System
 
-All commands now support dual-mode operation:
-
-### With Project Knowledge Cache
-- **File**: `.claude/config/project-knowledge.json`
-- **Behavior**: Commands respect cached conventions (error handling, constructors, etc.)
-- **Benefits**: Consistent with established patterns, faster execution
-
-### Without Cache (Default)
-- **Behavior**: Commands analyze codebase to detect patterns
-- **Benefits**: Works with any project, adapts to existing code
+All commands adapt to your project's patterns by examining the existing codebase:
 
 ### Key Features
 - **No prescriptive patterns** - Respects YOUR project's choices
 - **Context-aware recommendations** - Based on what you already use
 - **Flexible adaptation** - Works with Result<T> OR exceptions, factory methods OR constructors
+- **Pattern detection** - Examines code to understand conventions
 
 ## 💡 Best Practices
 

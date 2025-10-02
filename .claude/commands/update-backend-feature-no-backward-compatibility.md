@@ -30,27 +30,24 @@ category: development
 
   ## PATTERN DETECTION (REQUIRED)
 
-  Check if .claude/config/project-knowledge.json exists:
+  Examine existing code to detect conventions:
 
-  ### IF EXISTS (Smart Mode):
-  Read and apply cached conventions:
-  - Constructors: Follow {{patterns.entityConstructors}}
-  - Properties: Use {{naming.properties}}
-  - Collections: Use {{patterns.collectionProperties}}
-  - Date fields: Use {{naming.dateFields}}
-  - Error handling: Use {{patterns.errorHandling}}
-  - Validation: Use {{patterns.validation}}
-
-  ### IF NOT EXISTS (Adaptive Mode):
-  Actively examine 2-3 similar files:
-  1. Use Glob to find relevant files:
+  1. Use Glob to find 2-3 similar files:
      - Entities: **/*Domain*/Models/Entities/*.cs or **/Models/Entities/*.cs
      - Services: **/*Service.cs
   2. Read those files and detect patterns
   3. Apply the patterns you observed
 
-  ### IF NO FILES FOUND (Empty Project):
-  Use simple production-ready defaults
+  If no code files found, examine project configuration:
+  1. Read .csproj files to check installed packages:
+     - FluentValidation? Use for validation
+     - LanguageExt.Core? Use Result<T> patterns
+     - AutoMapper? Use for mapping
+  2. Check CLAUDE.md for specified patterns
+  3. If still unclear, ask user:
+     - "No existing code found. What patterns to use?"
+     - "Options: Exceptions vs Result<T>, validation approach"
+  4. Use user's explicit choice
 
   REMOVE:
   1. Legacy parameters and overloads

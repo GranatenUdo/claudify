@@ -124,6 +124,6 @@ Reduced waiting time
 
 ## Convention Awareness
 
-When optimizing commands, respect project patterns via `.claude/config/project-knowledge.json` (if present) or observed patterns.
+When optimizing commands, respect project patterns observed in the codebase.
 
 Remember: Every line should help ship value. If it doesn't directly contribute to working features, remove it.

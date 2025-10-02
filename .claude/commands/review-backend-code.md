@@ -26,8 +26,6 @@ category: quality
 ### Tech Lead - C# 13 & Architecture Review
 @Task(description="Backend code review", prompt="Review backend code in '$ARGUMENTS' for HIGH-IMPACT issues:
 
-FIRST: Check if .claude/config/project-knowledge.json exists for project conventions.
-
 FOCUS ON TOP 3 ISSUES:
 1. BREAKS in production (null refs, deadlocks, memory leaks)
 2. SECURITY vulnerabilities (missing org scoping, SQL injection, exposed data)
@@ -111,24 +109,20 @@ Focus on exploitable vulnerabilities.", subagent_type="security-vulnerability-sc
 
 ## Convention Awareness
 
-This command respects the dual-mode convention system:
-- **With cached conventions** (`.claude/config/project-knowledge.json`): Reviews against established project patterns
-- **Without cached conventions**: Reviews based on observed codebase patterns
-
-Recommendations align with YOUR project's choices, not external "best practices".
+This command reviews based on observed codebase patterns. Recommendations align with YOUR project's choices, not external "best practices".
 
 ## Code Examples
 
 ### Pattern Consistency Example
 ```csharp
-// IF project uses Result<T> pattern (from project-knowledge.json or observed):
+// IF project uses Result<T> pattern (observed in codebase):
 public async Task<Result<User>> GetAsync(Guid id, string orgId)
 {
     var user = await repository.GetByIdAsync(id, orgId);
     return user ?? Result<User>.Failure("Not found");
 }
 
-// IF project uses exception pattern (from project-knowledge.json or observed):
+// IF project uses exception pattern (observed in codebase):
 public async Task<User> GetAsync(Guid id, string orgId)
 {
     var user = await repository.GetByIdAsync(id, orgId)
@@ -137,7 +131,7 @@ public async Task<User> GetAsync(Guid id, string orgId)
 }
 ```
 
-Both are valid - consistency with project conventions matters most.
+Both are valid - consistency with observed project patterns matters most.
 
 ## Value Principles
 1. **Production Focus**: Find what will actually break
